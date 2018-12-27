@@ -17,7 +17,7 @@ namespace TAF.Core.Utility
     using System.Reflection;
     using System.Threading.Tasks;
 
-    using TAF.Test.Utility;
+    using Test.Utility;
 
     /// <summary>
     /// The extensions.

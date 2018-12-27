@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Taf.Core.Utility {
+namespace TAF.Core.Utility {
     using System;
     
     
