@@ -1085,101 +1085,101 @@ namespace TAF.Core.Utility
             return myStr.ToString();
         }
 
-        /// <summary>
-        /// 汉字转换成全拼的拼音
-        /// </summary>
-        /// <param name="strText">
-        /// 汉字字符串
-        /// </param>
-        /// <returns>
-        /// 转换后的拼音字符串
-        /// </returns>
-        public static string ConvertCh(this string strText)
-        {
-            if (string.IsNullOrEmpty(strText))
-            {
-                return string.Empty;
-            }
-
-            var reg = new Regex("^[\u4e00-\u9fa5]$"); // 验证是否输入汉字
-            var arr = new byte[2];
-            var pystr = string.Empty;
-            int asc = 0, M1 = 0, M2 = 0;
-            var mChar = strText.ToCharArray(); // 获取汉字对应的字符数组
-            for (var j = 0; j < mChar.Length; j++)
-            {
-                // 如果输入的是汉字
-                if (reg.IsMatch(mChar[j].ToString()))
-                {
-                    arr = Encoding.Default.GetBytes(mChar[j].ToString());
-                    M1 = arr[0];
-                    M2 = arr[1];
-                    asc = M1 * 256 + M2 - 65536;
-                    if (asc > 0 && asc < 160)
-                    {
-                        pystr += mChar[j];
-                    }
-                    else
-                    {
-                        switch (asc)
-                        {
-                            case -9254:
-                                pystr += "Zhen";
-                                break;
-                            case -8985:
-                                pystr += "Qian";
-                                break;
-                            case -5463:
-                                pystr += "Jia";
-                                break;
-                            case -8274:
-                                pystr += "Ge";
-                                break;
-                            case -5448:
-                                pystr += "Ga";
-                                break;
-                            case -5447:
-                                pystr += "La";
-                                break;
-                            case -4649:
-                                pystr += "Chen";
-                                break;
-                            case -5436:
-                                pystr += "Mao";
-                                break;
-                            case -5213:
-                                pystr += "Mao";
-                                break;
-                            case -3597:
-                                pystr += "Die";
-                                break;
-                            case -5659:
-                                pystr += "Tian";
-                                break;
-                            default:
-                                for (var i = getValue.Length - 1; i >= 0; i--)
-                                {
-                                    if (getValue[i] <= asc)
-                                    {
-                                        // 判断汉字的拼音区编码是否在指定范围内
-                                        pystr += getName[i]; // 如果不超出范围则获取对应的拼音
-                                        break;
-                                    }
-                                }
-
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    // 如果不是汉字
-                    pystr += mChar[j].ToString(); // 如果不是汉字则返回
-                }
-            }
-
-            return pystr; // 返回获取到的汉字拼音
-        }
+//        /// <summary>
+//        /// 汉字转换成全拼的拼音
+//        /// </summary>
+//        /// <param name="strText">
+//        /// 汉字字符串
+//        /// </param>
+//        /// <returns>
+//        /// 转换后的拼音字符串
+//        /// </returns>
+//        public static string ConvertCh(this string strText)
+//        {
+//            if (string.IsNullOrEmpty(strText))
+//            {
+//                return string.Empty;
+//            }
+//
+//            var reg = new Regex("^[\u4e00-\u9fa5]$"); // 验证是否输入汉字
+//            var arr = new byte[2];
+//            var pystr = string.Empty;
+//            int asc = 0, M1 = 0, M2 = 0;
+//            var mChar = strText.ToCharArray(); // 获取汉字对应的字符数组
+//            for (var j = 0; j < mChar.Length; j++)
+//            {
+//                // 如果输入的是汉字
+//                if (reg.IsMatch(mChar[j].ToString()))
+//                {
+//                    arr = Encoding.Default.GetBytes(mChar[j].ToString());
+//                    M1 = arr[0];
+//                    M2 = arr[1];
+//                    asc = M1 * 256 + M2 - 65536;
+//                    if (asc > 0 && asc < 160)
+//                    {
+//                        pystr += mChar[j];
+//                    }
+//                    else
+//                    {
+//                        switch (asc)
+//                        {
+//                            case -9254:
+//                                pystr += "Zhen";
+//                                break;
+//                            case -8985:
+//                                pystr += "Qian";
+//                                break;
+//                            case -5463:
+//                                pystr += "Jia";
+//                                break;
+//                            case -8274:
+//                                pystr += "Ge";
+//                                break;
+//                            case -5448:
+//                                pystr += "Ga";
+//                                break;
+//                            case -5447:
+//                                pystr += "La";
+//                                break;
+//                            case -4649:
+//                                pystr += "Chen";
+//                                break;
+//                            case -5436:
+//                                pystr += "Mao";
+//                                break;
+//                            case -5213:
+//                                pystr += "Mao";
+//                                break;
+//                            case -3597:
+//                                pystr += "Die";
+//                                break;
+//                            case -5659:
+//                                pystr += "Tian";
+//                                break;
+//                            default:
+//                                for (var i = getValue.Length - 1; i >= 0; i--)
+//                                {
+//                                    if (getValue[i] <= asc)
+//                                    {
+//                                        // 判断汉字的拼音区编码是否在指定范围内
+//                                        pystr += getName[i]; // 如果不超出范围则获取对应的拼音
+//                                        break;
+//                                    }
+//                                }
+//
+//                                break;
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    // 如果不是汉字
+//                    pystr += mChar[j].ToString(); // 如果不是汉字则返回
+//                }
+//            }
+//
+//            return pystr; // 返回获取到的汉字拼音
+//        }
 
         #endregion
 

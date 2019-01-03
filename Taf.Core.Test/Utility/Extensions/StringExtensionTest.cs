@@ -35,7 +35,7 @@ namespace TAF.Core.Test
             pinyin = string.Empty;
             Assert.Equal(string.Empty, pinyin.GetChineseSpell());
             Assert.Equal("ZG", "中国".GetChineseSpell());
-            Assert.Equal("ZhongGuo", "中国".ConvertCh());
+//            Assert.Equal("ZhongGuo", "中国".ConvertCh());
             Assert.Equal("A1BCB2", "a1宝藏b2".GetChineseSpell());
             Assert.Equal("TT", "饕餮".GetChineseSpell());
         }

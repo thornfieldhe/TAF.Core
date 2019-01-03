@@ -48,9 +48,12 @@ namespace TAF.Core.Test
         [Fact]
         public void TestRandomsRandomArray()
         {
-            var a = new[] { 1, 2, 3, 4, 5, 6 };
+            var a = new[] { 1, 2, 3, 4, 5, 6 ,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
             Randoms.GetRandomArray(a);
-            Assert.True(a[0] != 1);
+            var m1=a[0];  
+            Randoms.GetRandomArray(a);
+            var m2=a[0];
+            Assert.True(m1 != m2);
         }
 
         /// <summary>
@@ -114,8 +117,8 @@ namespace TAF.Core.Test
         [Fact]
         public void TestGetRndNext()
         {
-            var a = Randoms.GetRndNext(10, 15);
-            var b = new[] { 11, 12, 13, 14 };
+            var a = Randoms.GetRndNext(10, 27);
+            var b = new[] { 11, 12, 13, 14,15,16,17,18,19,20,21,22,23,24,25,26 };
             Console.WriteLine(a);
             Assert.True(a.In(b));
         }
