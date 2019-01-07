@@ -1,4 +1,4 @@
-﻿namespace TAF.Core.Business.Serialization
+﻿namespace TAF.Core
 {
     using System;
 

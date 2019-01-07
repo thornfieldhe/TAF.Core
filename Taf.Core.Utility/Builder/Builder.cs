@@ -1,4 +1,4 @@
-﻿namespace TAF.Core.Business
+﻿namespace TAF.Core
 {
     using System;
     using System.Collections.Generic;

@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace TAF.Core.Utility
 {
-    using System.Collections;
-
     /// <summary>
     /// Fx is the main class for Fluentx and its a shortened name for Fluentx, Fx also is equivelant for the mathematical representation of F(x) :)
     /// </summary>
@@ -52,7 +52,7 @@ namespace TAF.Core.Utility
         private enum LoopStopers
         {
             Break, Continue
-        };
+        }
         private LoopStopers LoopStoper
         {
             get; set;
@@ -457,7 +457,7 @@ namespace TAF.Core.Utility
                 counter++;
                 isSuccess = action();
                 if (!isSuccess)
-                    System.Threading.Thread.Sleep(attemptSleepInMilliSeconds);
+                    Thread.Sleep(attemptSleepInMilliSeconds);
             }
             while (!isSuccess && counter < attempts);
         }
@@ -472,8 +472,7 @@ namespace TAF.Core.Utility
             Int32 x;
             if (Int32.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to UInt32, if it fails it returns the default value specified.
@@ -486,8 +485,7 @@ namespace TAF.Core.Utility
             UInt32 x;
             if (UInt32.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to Int32, if it fails it returns the default value specified.
@@ -500,8 +498,7 @@ namespace TAF.Core.Utility
             Int32 x;
             if (Int32.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to UInt32, if it fails it returns the default value specified.
@@ -514,8 +511,7 @@ namespace TAF.Core.Utility
             UInt32 x;
             if (UInt32.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to Int32, if it fails it returns the default value specified.
@@ -528,8 +524,7 @@ namespace TAF.Core.Utility
             long x;
             if (long.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to UInt32, if it fails it returns the default value specified.
@@ -542,8 +537,7 @@ namespace TAF.Core.Utility
             ulong x;
             if (ulong.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to Int16, if it fails it returns the default value specified.
@@ -556,8 +550,7 @@ namespace TAF.Core.Utility
             Int16 x;
             if (Int16.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to UInt16, if it fails it returns the default value specified.
@@ -570,8 +563,7 @@ namespace TAF.Core.Utility
             UInt16 x;
             if (UInt16.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to Int64, if it fails it returns the default value specified.
@@ -584,8 +576,7 @@ namespace TAF.Core.Utility
             Int64 x;
             if (Int64.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to UInt64, if it fails it returns the default value specified.
@@ -598,8 +589,7 @@ namespace TAF.Core.Utility
             UInt64 x;
             if (UInt64.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to double, if it fails it returns the default value specified.
@@ -612,8 +602,7 @@ namespace TAF.Core.Utility
             double x;
             if (Double.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to float, if it fails it returns the default value specified.
@@ -626,8 +615,7 @@ namespace TAF.Core.Utility
             float x;
             if (Single.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to decimal, if it fails it returns the default value specified.
@@ -640,8 +628,7 @@ namespace TAF.Core.Utility
             decimal x;
             if (Decimal.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to byte, if it fails it returns the default value specified.
@@ -654,8 +641,7 @@ namespace TAF.Core.Utility
             byte x;
             if (Byte.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to sbyte, if it fails it returns the default value specified.
@@ -668,8 +654,7 @@ namespace TAF.Core.Utility
             sbyte x;
             if (SByte.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to bool, if it fails it returns the default value specified.
@@ -682,8 +667,7 @@ namespace TAF.Core.Utility
             bool x;
             if (bool.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to DateTime, if it fails it returns the default value specified.
@@ -696,8 +680,7 @@ namespace TAF.Core.Utility
             DateTime x;
             if (DateTime.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// Tries to parse specified string to Guid, if it fails it returns the default value specified.
@@ -710,8 +693,7 @@ namespace TAF.Core.Utility
             Guid x;
             if (Guid.TryParse(strValue, out x))
                 return x;
-            else
-                return defaultValue;
+            return defaultValue;
         }
         /// <summary>
         /// 
@@ -792,7 +774,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         IConditionBuilder IConditionalAction.ElseIf(Func<bool> condition)
         {
-            this.ConditionValue = condition;
+            ConditionValue = condition;
             return this;
         }
         /// <summary>
@@ -802,7 +784,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         IConditionBuilder IConditionalAction.ElseIf(bool condition)
         {
-            this.ConditionValue = () =>
+            ConditionValue = () =>
             {
                 return condition;
             };
@@ -997,7 +979,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ILoopAction IEarlyLoopBuilder.Do(Action action)
         {
-            while (this.ConditionValue())
+            while (ConditionValue())
             {
                 action();
             }
@@ -1012,7 +994,7 @@ namespace TAF.Core.Utility
         {
             do
             {
-                this.Action();
+                Action();
             }
             while (condition());
             return this;
@@ -1024,9 +1006,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         IEarlyLoop IEarlyLoopBuilder.LateBreakOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            this.LoopStoper = LoopStopers.Break;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper = LoopStopers.Break;
             return this;
         }
         /// <summary>
@@ -1036,9 +1018,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         IEarlyLoop IEarlyLoopBuilder.EarlyBreakOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            this.LoopStoper = LoopStopers.Break;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper = LoopStopers.Break;
             return this;
         }
         /// <summary>
@@ -1048,9 +1030,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         IEarlyLoop IEarlyLoopBuilder.LateContinueOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            this.LoopStoper = LoopStopers.Continue;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper = LoopStopers.Continue;
             return this;
         }
         /// <summary>
@@ -1060,9 +1042,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         IEarlyLoop IEarlyLoopBuilder.EarlyContinueOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            this.LoopStoper = LoopStopers.Continue;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper = LoopStopers.Continue;
             return this;
         }
         /// <summary>
@@ -1072,68 +1054,56 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ILoopAction IEarlyLoop.Do(Action action)
         {
-            while (this.ConditionValue())
+            while (ConditionValue())
             {
-                if (this.LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop)
+                if (LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop)
                 {
-                    if (this.LoopStoperConditionalAction != null)
+                    if (LoopStoperConditionalAction != null)
                     {
-                        if (this.LoopStoperConditionalAction())
+                        if (LoopStoperConditionalAction())
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
                             }
-                            else
-                            {
-                                continue;
-                            }
+
+                            continue;
                         }
                     }
                     else
                     {
-                        if (this.LoopStoperCondition)
+                        if (LoopStoperCondition)
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
                             }
-                            else
-                            {
-                                continue;
-                            }
+
+                            continue;
                         }
                     }
                 }
                 action();
 
-                if (this.LoopStoperLocation == LoopStoperLocations.EndOfTheLoop)
+                if (LoopStoperLocation == LoopStoperLocations.EndOfTheLoop)
                 {
-                    if (this.LoopStoperConditionalAction != null)
+                    if (LoopStoperConditionalAction != null)
                     {
-                        if (this.LoopStoperConditionalAction())
+                        if (LoopStoperConditionalAction())
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
-                            }
-                            else
-                            {
-                                continue;
                             }
                         }
                     }
                     else
                     {
-                        if (this.LoopStoperCondition)
+                        if (LoopStoperCondition)
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
-                            }
-                            else
-                            {
-                                continue;
                             }
                         }
                     }
@@ -1148,9 +1118,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ILateLoop ILateLoopBuilder.LateBreakOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            this.LoopStoper = LoopStopers.Break;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper = LoopStopers.Break;
             return this;
         }
         /// <summary>
@@ -1160,9 +1130,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ILateLoop ILateLoopBuilder.EarlyBreakOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            this.LoopStoper = LoopStopers.Break;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper = LoopStopers.Break;
             return this;
         }
         /// <summary>
@@ -1172,9 +1142,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ILateLoop ILateLoopBuilder.LateContinueOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            this.LoopStoper = LoopStopers.Continue;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper = LoopStopers.Continue;
             return this;
         }
         /// <summary>
@@ -1184,9 +1154,9 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ILateLoop ILateLoopBuilder.EarlyContinueOn(Func<bool> condition)
         {
-            this.LoopStoperConditionalAction = condition;
-            this.LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            this.LoopStoper = LoopStopers.Continue;
+            LoopStoperConditionalAction = condition;
+            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper = LoopStopers.Continue;
             return this;
         }
         /// <summary>
@@ -1198,66 +1168,54 @@ namespace TAF.Core.Utility
         {
             do
             {
-                if (this.LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop)
+                if (LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop)
                 {
-                    if (this.LoopStoperConditionalAction != null)
+                    if (LoopStoperConditionalAction != null)
                     {
-                        if (this.LoopStoperConditionalAction())
+                        if (LoopStoperConditionalAction())
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
                             }
-                            else
-                            {
-                                continue;
-                            }
+
+                            continue;
                         }
                     }
                     else
                     {
-                        if (this.LoopStoperCondition)
+                        if (LoopStoperCondition)
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
                             }
-                            else
-                            {
-                                continue;
-                            }
+
+                            continue;
                         }
                     }
                 }
-                this.Action();
+                Action();
 
-                if (this.LoopStoperLocation == LoopStoperLocations.EndOfTheLoop)
+                if (LoopStoperLocation == LoopStoperLocations.EndOfTheLoop)
                 {
-                    if (this.LoopStoperConditionalAction != null)
+                    if (LoopStoperConditionalAction != null)
                     {
-                        if (this.LoopStoperConditionalAction())
+                        if (LoopStoperConditionalAction())
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
-                            }
-                            else
-                            {
-                                continue;
                             }
                         }
                     }
                     else
                     {
-                        if (this.LoopStoperCondition)
+                        if (LoopStoperCondition)
                         {
-                            if (this.LoopStoper == Fx.LoopStopers.Break)
+                            if (LoopStoper == LoopStopers.Break)
                             {
                                 break;
-                            }
-                            else
-                            {
-                                continue;
                             }
                         }
                     }
@@ -1274,7 +1232,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch
             {
@@ -1290,7 +1248,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception1) { }
             return this;
@@ -1305,7 +1263,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception1) { }
             catch (Exception2) { }
@@ -1322,7 +1280,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception1) { }
             catch (Exception2) { }
@@ -1341,7 +1299,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception1) { }
             catch (Exception2) { }
@@ -1358,7 +1316,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception exception)
             {
@@ -1376,7 +1334,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception1 exception)
             {
@@ -1396,7 +1354,7 @@ namespace TAF.Core.Utility
         {
             try
             {
-                this.Action();
+                Action();
             }
             catch (Exception1 exception)
             {
@@ -1416,7 +1374,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ISwitchCaseBuilder ISwitchBuilder.Case<T>(T compareOperand)
         {
-            this.SwitchCases.Add(new CaseInfo(compareOperand, null));
+            SwitchCases.Add(new CaseInfo(compareOperand, null));
             return this;
         }
         /// <summary>
@@ -1426,7 +1384,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ISwitchTypeCaseBuilder ISwitchTypeBuilder.Case<T>()
         {
-            this.SwitchCases.Add(new CaseInfo(typeof(T), null));
+            SwitchCases.Add(new CaseInfo(typeof(T), null));
             return this;
         }
         /// <summary>
@@ -1436,7 +1394,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ISwitchBuilder ISwitchCaseBuilder.Execute(Action action)
         {
-            this.SwitchCases.Last().Action = action;
+            SwitchCases.Last().Action = action;
             return this;
         }
 
@@ -1447,7 +1405,7 @@ namespace TAF.Core.Utility
         /// <returns></returns>
         ISwitchTypeBuilder ISwitchTypeCaseBuilder.Execute(Action action)
         {
-            this.SwitchCases.Last().Action = action;
+            SwitchCases.Last().Action = action;
             return this;
         }
         /// <summary>
@@ -1458,9 +1416,9 @@ namespace TAF.Core.Utility
         IAction ISwitchBuilder.Default(Action action)
         {
             bool excuteDefault = true;
-            foreach (var switchCase in this.SwitchCases)
+            foreach (var switchCase in SwitchCases)
             {
-                if (object.Equals(this.SwitchMainOperand, switchCase.Operand))
+                if (Equals(SwitchMainOperand, switchCase.Operand))
                 {
                     switchCase.Action();
                     excuteDefault = false;
@@ -1479,9 +1437,9 @@ namespace TAF.Core.Utility
         IAction ISwitchTypeBuilder.Default(Action action)
         {
             bool executeDefault = true;
-            foreach (var switchCase in this.SwitchCases)
+            foreach (var switchCase in SwitchCases)
             {
-                if (object.Equals(this.SwitchMainOperand, switchCase.Operand))
+                if (Equals(SwitchMainOperand, switchCase.Operand))
                 {
                     switchCase.Action();
                     executeDefault = false;

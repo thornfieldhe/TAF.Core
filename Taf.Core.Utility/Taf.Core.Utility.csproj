@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>何翔华</Authors>
+    <Company />
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Description>通用工具库</Description>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/thornfieldhe/TAF.Core</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/thornfieldhe/TAF.Core</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>d:\WorkStation\TAF.Core\Taf.Core.Utility\Taf.Core.Utility.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

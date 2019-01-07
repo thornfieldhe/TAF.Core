@@ -29,7 +29,6 @@ namespace TAF.Core.Test
                                        };
 
             var comparer = TAF.Core.Utility.Comparison<TestInfo>.CreateComparer(m => m.Name);
-
             list1.Sort(comparer);
             Assert.Equal( "a",list1[0].Name);
         }

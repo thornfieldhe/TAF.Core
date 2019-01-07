@@ -1,4 +1,4 @@
-﻿namespace TAF.Core.Business
+﻿namespace TAF.Core
 {
     /// <summary>
     /// 装配器，用于动态组装对象

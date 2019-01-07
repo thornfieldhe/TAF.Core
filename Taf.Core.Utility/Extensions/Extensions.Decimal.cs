@@ -199,5 +199,22 @@ namespace TAF.Core.Utility
 
             return result;
         }
+        
+        /// <summary>
+        /// 把Decimal表示为科学计数法的字符串
+        /// </summary>
+        /// <param name="v">数值</param>
+        /// <param name="sd">有效位数</param>
+        /// <returns></returns>
+        public static string ToScienceString(this decimal v, int sd)
+        {
+            return v.ToString("E" + sd.ToString());
+        }
+
+        public static string ToPercentString(this decimal v, int sd)
+        {
+            return v.ToString("P" + sd.ToString());
+        }
+
     }
 }
