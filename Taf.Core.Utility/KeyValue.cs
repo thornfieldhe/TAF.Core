@@ -7,6 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Runtime.Serialization;
+
 namespace TAF.Core.Utility
 {
     /// <summary>
@@ -16,6 +19,8 @@ namespace TAF.Core.Utility
     /// </typeparam>
     /// <typeparam name="K2">
     /// </typeparam>
+    [DataContract]
+    [Serializable]
     public class KeyValue<K1, K2>
     {
         /// <summary>
@@ -55,6 +60,8 @@ namespace TAF.Core.Utility
     /// <typeparam name="K1"></typeparam>
     /// <typeparam name="K2"></typeparam>
     /// <typeparam name="K3"></typeparam>
+    [DataContract]
+    [Serializable]
     public class KeyValue<K1, K2, K3> : KeyValue<K1, K2>
     {
         public KeyValue()
@@ -81,6 +88,8 @@ namespace TAF.Core.Utility
     /// </typeparam>
     /// <typeparam name="K4">
     /// </typeparam>
+    [DataContract]
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4> : KeyValue<K1, K2, K3>
     {
         /// <summary>
@@ -110,6 +119,8 @@ namespace TAF.Core.Utility
     /// <typeparam name="K4">
     /// </typeparam>
     /// <typeparam name="K5"></typeparam>
+    [DataContract]
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5> : KeyValue<K1, K2, K3, K4>
     {
         /// <summary>
@@ -140,6 +151,8 @@ namespace TAF.Core.Utility
     /// </typeparam>
     /// <typeparam name="K5"></typeparam>
     /// <typeparam name="K6"></typeparam>
+    [DataContract]
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5, K6> : KeyValue<K1, K2, K3, K4, K5>
     {
         /// <summary>
@@ -174,6 +187,8 @@ namespace TAF.Core.Utility
     /// </typeparam>
     /// <typeparam name="K7">
     /// </typeparam>
+    [DataContract]
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5, K6, K7> : KeyValue<K1, K2, K3, K4, K5, K6>
     {
         /// <summary>
