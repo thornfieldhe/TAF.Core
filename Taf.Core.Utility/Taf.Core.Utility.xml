@@ -812,6 +812,8 @@
             验证是否枚举类型
             </summary>
         </member>
+        <!-- 对于成员“T:TAF.Core.Utility.CompareWithDefaultSortedArray`2”忽略有格式错误的 XML 注释 -->
+        <!-- 对于成员“M:TAF.Core.Utility.CompareWithDefaultSortedArray`2.#ctor(`1[],System.Func{`0,`1})”忽略有格式错误的 XML 注释 -->
         <member name="T:TAF.Core.Utility.Extensions">
             <summary>
             The where if extension.
@@ -932,6 +934,15 @@
             <param name="source"></param>
             <param name="keySelector"></param>
             <param name="comparer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.FindIndex``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean})">
+            <summary>
+            查找数组第一条满足需求的元素中所在位置
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="self"></param>
+            <param name="predicate"></param>
             <returns></returns>
         </member>
         <member name="M:TAF.Core.Utility.Extensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
@@ -2430,6 +2441,14 @@
             The <see cref="T:System.String"/>.
             </returns>
         </member>
+        <member name="M:TAF.Core.Utility.Extensions.ToScienceString(System.Decimal,System.Int32)">
+            <summary>
+            把Decimal表示为科学计数法的字符串
+            </summary>
+            <param name="v">数值</param>
+            <param name="sd">有效位数</param>
+            <returns></returns>
+        </member>
         <member name="M:TAF.Core.Utility.Extensions.TryAdd``2(System.Collections.Generic.Dictionary{``0,``1},``0,``1)">
             <summary>
             尝试将键和值添加到字典中：如果不存在，才添加；存在，不添加也不抛导常
@@ -2571,6 +2590,191 @@
             <returns>
             The <see cref="T:System.String"/>.
             </returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.ToScienceString(System.Double,System.Int32)">
+            <summary>
+            转换成科学计数法
+            </summary>
+            <param name="v"></param>
+            <param name="sd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.ToPercentString(System.Double,System.Int32)">
+            <summary>
+            转换成百分比
+            </summary>
+            <param name="v"></param>
+            <param name="sd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sqr(System.Double)">
+            <summary>
+            求平方
+            </summary>
+            <param name="self"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Ln(System.Double)">
+            <summary>
+            求对数
+            </summary>
+            <param name="self"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sub(System.Double[0:,0:,0:],TAF.Core.Utility.Extensions.ArrayDirection,System.Int32)">
+            <summary>
+            得到三维数组中某个子二维数组
+            </summary>
+            <param name="array">输入的三维数组</param>
+            <param name="remove">要去除的维度</param>
+            <param name="retainIndex">被去除维度中要保留数据的索引</param>
+            <returns>结果二维数组</returns>
+            <example>
+            z1 x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            =============
+            z2 x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            去除Z维保留1 等于
+            z1 x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            </example>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sub(System.Double[0:,0:],TAF.Core.Utility.Extensions.ArrayDirection,System.Int32)">
+            <summary>
+            得到二维数组中某个子一维数组
+            </summary>
+            <param name="array">输入的二维数组</param>
+            <param name="remove">要去除的维度</param>
+            <param name="retainIndex">被去除维度中要保留数据的索引</param>
+            <returns>结果一维数组</returns>
+            <example>
+              x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            去除Y维保留1
+            X1 X2 X3 X4
+            1  2  3  5
+            </example>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sum(System.Double[0:,0:,0:],TAF.Core.Utility.Extensions.ArrayDirection,TAF.Core.Utility.Extensions.ArrayDirection)">
+            <summary>
+            把三维数组求和为二维数组
+            </summary>
+            <param name="array">输入的三维数组</param>
+            <param name="d1">保留的第一维</param>
+            <param name="d2">保留的第二维</param>
+            <returns>结果二维数组</returns>
+            <example>
+            z1 x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            =============
+            z2 x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            保留X和Y 等于
+               x1  x2  x3  x4
+            y1 2   4   6   10
+            y2 8   10  12  12
+            y3 14  16  18  14
+            </example>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sum(System.Double[0:,0:,0:])">
+            <summary>
+            对三维数组求和
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sum(System.Double[0:,0:],TAF.Core.Utility.Extensions.ArrayDirection)">
+            <summary>
+            对二维数组根据某个维度进行求和
+            即把二维数组变为一维数组
+            </summary>
+            <param name="array"></param>
+            <param name="d">要保留的维度</param>
+            <returns>结果一维数组</returns>
+            <example>
+            x1 x2 x3 x4
+            y1 1  2  3  5
+            y2 4  5  6  6
+            y3 7  8  9  7
+            根据X维进行求和
+            X1 X2 X3 X4
+            12 15 18 18
+            </example>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Sum(System.Double[0:,0:])">
+            <summary>
+            对二维数组根据进行求和
+               x1 x2 x3
+            y1 1  2  3
+            y2 4  5  6
+            y3 7  8  9 
+            等于
+            45
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Divide(System.Double[],System.Double)">
+            <summary>
+            一维数组中的所有数都除以同一个数 arraA/valueB
+            </summary>
+            <param name="arrayA">一维数组</param>
+            <param name="valueB">分母数</param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Divide(System.Double[0:,0:],System.Double)">
+            <summary>
+            二维数组的所有数都除以同一个数 arrayA/valueB
+            </summary>
+            <param name="arrayA">二维数组</param>
+            <param name="valueB">分母数</param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Divide(System.Double[0:,0:],System.Double[],TAF.Core.Utility.Extensions.ArrayDirection)">
+            <summary>
+            二维数组的所有数按照维度除以一维数组 arrayA/arrayB
+            要保证在这个维度上，元素数量一样
+            </summary>
+            <param name="arrayA">二维数组</param>
+            <param name="arrayB">一维数组</param>
+            <param name="d">除的维度</param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Divide(System.Double[0:,0:,0:],System.Double)">
+            <summary>
+            三维数组的所有数都除以同一个数 arrayA/valueB
+            </summary>
+            <param name="arrayA">三维数组</param>
+            <param name="valueB">分母数</param>
+            <returns></returns>
+        </member>
+        <member name="M:TAF.Core.Utility.Extensions.Divide(System.Double[0:,0:,0:],System.Double[],TAF.Core.Utility.Extensions.ArrayDirection)">
+            <summary>
+            三维数组的所有数按照维度除以一维数组 arrayA/arrayB
+            要保证在这个维度上，元素数量一样
+            </summary>
+            <param name="arrayA">三维数组</param>
+            <param name="arrayB">一维数组</param>
+            <param name="d">除以的维度</param>
+            <returns></returns>
+        </member>
+        <member name="T:TAF.Core.Utility.Extensions.ArrayDirection">
+            <summary>
+            数组维度
+            </summary>
         </member>
         <member name="M:TAF.Core.Utility.Extensions.Description(System.Enum)">
             <summary>

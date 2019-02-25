@@ -140,5 +140,23 @@ namespace TAF.Core.Utility
             return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
         }
 
+
+        /// <summary>
+        /// 查找数组第一条满足需求的元素中所在位置
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="self"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static int FindIndex<T>(this IEnumerable<T> self, Func<T, bool> predicate)
+        {
+            var i = 0;
+            foreach (var o in self)
+            {
+                if (predicate(o)) return i;
+                i++;
+            }
+            return -1;
+        }
     }
 }

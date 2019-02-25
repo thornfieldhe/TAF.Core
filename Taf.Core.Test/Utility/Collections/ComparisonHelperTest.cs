@@ -55,5 +55,38 @@ namespace TAF.Core.Test
             Assert.Equal(4, count);
             Assert.Equal("m",list1.Distinct(r => r.Id).First().Name);
         }
+
+        /// <summary>
+        /// 根据已知顺序列表对当前列表排序
+        /// 根据已知属性顺序对对象排序
+        /// </summary>
+        [Fact]
+        public void SortByCollectionTest()
+        {
+            var sortedName = new string[] {"H", "F", "B","A","C"};
+            var students = new List<TempData>()
+            {
+                new TempData() {Name = "A"}, new TempData() {Name = "B"}, new TempData() {Name = "C"}
+              , new TempData() {Name = "F"}, new TempData() {Name = "H"}
+            };
+
+            students.Sort(new CompareWithDefaultSortedArray<TempData,string>(sortedName,x=>x.Name));
+            Assert.Equal(students[0].Name,"H");
+            Assert.Equal(students[1].Name,"F");
+        }
+
+        private class TempData:IComparable
+        {
+            public string Name { get; set; }
+            public int CompareTo(object obj)
+            {
+                var compare = obj as TempData;
+                if (compare ==null)
+                {
+                    return -1;
+                }
+                return this.Name.CompareTo(compare.Name);
+            }
+        }
     }
 }
