@@ -249,5 +249,9 @@ namespace TAF.Core.Utility
             }
             return EnText.ToString();
         }
+
+        #region RSA加密解密
+
+        #endregion
     }
 }

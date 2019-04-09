@@ -18,9 +18,9 @@ namespace System.ComponentModel.DataAnnotations
     /// <summary>
     /// The base reg validate attribute.
     /// </summary>
-    public abstract class BaseRegValidateAttribute : ValidationAttribute
+    public class RegValidateAttribute : ValidationAttribute
     {
-        protected BaseRegValidateAttribute(string message)
+        protected RegValidateAttribute(string message)
         {
             ErrorMessage = message;
         }
@@ -28,7 +28,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected abstract string Pattern
+        protected virtual string Pattern
         {
             get;
         }

@@ -6885,40 +6885,78 @@
             The <see cref="T:System.String"/>.
             </returns>
         </member>
-        <member name="T:System.ComponentModel.DataAnnotations.BaseRegValidateAttribute">
+        <member name="T:Taf.Core.Utility.RsaHelper">
             <summary>
-            The base reg validate attribute.
+            RSA加解密
+            </summary>
+            <summary>
+            RSA算法类型
+            </summary>
+            <summary>
+            RSA加解密 使用OpenSSL的公钥加密/私钥解密
             </summary>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.BaseRegValidateAttribute.Pattern">
+        <member name="M:Taf.Core.Utility.RsaHelper.#ctor(Taf.Core.Utility.RsaType,System.Text.Encoding,System.String,System.String)">
             <summary>
-            Gets the pattern.
+            实例化RSAHelper
+            </summary>
+            <param name="rsaType">加密算法类型 RSA SHA1;RSA2 SHA256 密钥长度至少为2048</param>
+            <param name="encoding">编码类型</param>
+            <param name="privateKey">私钥</param>
+            <param name="publicKey">公钥</param>
+        </member>
+        <member name="M:Taf.Core.Utility.RsaHelper.Sign(System.String)">
+            <summary>
+            使用私钥签名
+            </summary>
+            <param name="data">原始数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:Taf.Core.Utility.RsaHelper.Verify(System.String,System.String)">
+            <summary>
+            使用公钥验证签名
+            </summary>
+            <param name="data">原始数据</param>
+            <param name="sign">签名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Taf.Core.Utility.RsaHelper.Decrypt(System.String)">
+            <summary>
+            解密
+            </summary>
+            <param name="cipherText">加密后字符串</param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Taf.Core.Utility.RsaHelper.Encrypt(System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="text">原始字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Taf.Core.Utility.RsaHelper.CreateRsaProviderFromPublicKey(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="publicKeyString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Taf.Core.Utility.RsaType">
+            <summary>
+            RSA算法类型
             </summary>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.BaseRegValidateAttribute.FormatErrorMessage(System.String)">
+        <member name="F:Taf.Core.Utility.RsaType.Rsa">
             <summary>
-            格式化错误消息
+            SHA1
             </summary>
-            <param name="name">
-            The name.
-            </param>
-            <returns>
-            The <see cref="T:System.String"/>.
-            </returns>
         </member>
-        <member name="M:System.ComponentModel.DataAnnotations.BaseRegValidateAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+        <member name="F:Taf.Core.Utility.RsaType.Rsa2">
             <summary>
-            是否验证通过
+            RSA2 密钥长度至少为2048
+            SHA256
             </summary>
-            <param name="value">
-            The value.
-            </param>
-            <param name="validationContext">
-            The validation Context.
-            </param>
-            <returns>
-            The <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/>.
-            </returns>
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.DateTimeRequiredAttribute">
             <summary>
@@ -7234,6 +7272,41 @@
             <summary>
             Gets the pattern.
             </summary>
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.RegValidateAttribute">
+            <summary>
+            The base reg validate attribute.
+            </summary>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.RegValidateAttribute.Pattern">
+            <summary>
+            Gets the pattern.
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.RegValidateAttribute.FormatErrorMessage(System.String)">
+            <summary>
+            格式化错误消息
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.RegValidateAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+            是否验证通过
+            </summary>
+            <param name="value">
+            The value.
+            </param>
+            <param name="validationContext">
+            The validation Context.
+            </param>
+            <returns>
+            The <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult"/>.
+            </returns>
         </member>
     </members>
 </doc>

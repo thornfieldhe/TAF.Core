@@ -15,7 +15,7 @@ namespace System.ComponentModel.DataAnnotations
     /// 手机号验证
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class MobilePhoneAttribute : BaseRegValidateAttribute
+    public class MobilePhoneAttribute : RegValidateAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MobilePhoneAttribute"/> class.
@@ -41,7 +41,7 @@ namespace System.ComponentModel.DataAnnotations
     /// 手机号验证
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class EmailAttribute : BaseRegValidateAttribute
+    public class EmailAttribute : RegValidateAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EmailAttribute"/> class.
@@ -67,7 +67,7 @@ namespace System.ComponentModel.DataAnnotations
     /// 整数
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class InteAttribute : BaseRegValidateAttribute
+    public class InteAttribute : RegValidateAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InteAttribute"/> class.
@@ -93,7 +93,7 @@ namespace System.ComponentModel.DataAnnotations
     /// 数字和字母
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class LetterAndNumbersAttribute : BaseRegValidateAttribute
+    public class LetterAndNumbersAttribute : RegValidateAttribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LetterAndNumbersAttribute"/> class.
