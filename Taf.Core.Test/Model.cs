@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using TAF.Core.Utility;
-using TAF.Validation;
+using Taf.Core.Utility;
+using Taf.Validation;
 
-namespace TAF.Test
+namespace Taf.Test
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace TAF.Test
     using System.ComponentModel.DataAnnotations;
     using System.Linq.Expressions;
 
-    using TAF.Core;
+    using Taf.Core;
 
     /// <summary>
     /// 最大长度验证规则

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     using System;
     using System.Collections.Generic;

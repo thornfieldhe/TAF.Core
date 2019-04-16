@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// Represnt the core of a fluent interface in fluentx

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TAF.Test;
+using Taf.Test;
 using Xunit;
 using System;
 using System.Linq;
-using TAF.Core.Utility;
+using Taf.Core.Utility;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
 
 
@@ -28,7 +28,7 @@ namespace TAF.Core.Test
                                            new TestInfo { Id = Guid.NewGuid(), Name = "p" },
                                        };
 
-            var comparer = TAF.Core.Utility.Comparison<TestInfo>.CreateComparer(m => m.Name);
+            var comparer = Taf.Core.Utility.Comparison<TestInfo>.CreateComparer(m => m.Name);
             list1.Sort(comparer);
             Assert.Equal( "a",list1[0].Name);
         }

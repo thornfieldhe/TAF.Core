@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 农历属性

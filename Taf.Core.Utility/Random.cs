@@ -1,7 +1,7 @@
 ﻿using System;
-using TAF.Core.Utility;
+using Taf.Core.Utility;
 
-namespace TAF.Utility
+namespace Taf.Utility
 {
     using System.Text;
     using System.Threading.Tasks;

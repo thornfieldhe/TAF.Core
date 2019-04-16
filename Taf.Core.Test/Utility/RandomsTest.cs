@@ -7,14 +7,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using TAF.Utility;
+using Taf.Utility;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     using System;
     
-    using TAF.Core.Utility;
+    using Taf.Core.Utility;
 
     /// <summary>
     /// The randoms test.

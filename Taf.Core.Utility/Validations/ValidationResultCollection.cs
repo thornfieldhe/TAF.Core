@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Validation
+namespace Taf.Validation
 {
     using System;
     using System.Collections;

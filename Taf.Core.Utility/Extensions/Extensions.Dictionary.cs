@@ -1,4 +1,4 @@
-﻿namespace TAF.Core.Utility
+﻿namespace Taf.Core.Utility
 {
     using System.Collections.Generic;
     using System.Linq;

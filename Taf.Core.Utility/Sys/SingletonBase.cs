@@ -1,4 +1,4 @@
-﻿namespace TAF.Core.Utility
+﻿namespace Taf.Core.Utility
 {
     /// <summary>
     /// 单例基类

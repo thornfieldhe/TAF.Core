@@ -8,10 +8,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using TAF.Core.Utility;
+using Taf.Core.Utility;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     /// <summary>
     /// 日期时间扩展测试

@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Core
+namespace Taf.Core
 {
     /// <summary>
     /// The ValidationEntity interface.

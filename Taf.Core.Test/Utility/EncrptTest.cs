@@ -9,10 +9,9 @@
 
 using System.Text;
 using Taf.Core.Utility;
-using TAF.Core.Utility;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     /// <summary>
     /// 测试Md5算法

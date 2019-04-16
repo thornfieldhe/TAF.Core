@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Core
+namespace Taf.Core
 {
     using System.ComponentModel.DataAnnotations;
 

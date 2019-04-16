@@ -1,4 +1,4 @@
-﻿namespace TAF
+﻿namespace Taf
 {
     public interface IBaseStatus
     {

@@ -1,8 +1,8 @@
 ﻿using System;
-using TAF.Core.Test.Utility;
+using Taf.Core.Test.Utility;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     public class CombHelperTest
     {

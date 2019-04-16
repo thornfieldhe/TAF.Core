@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Core
+namespace Taf.Core
 {
-    using TAF.Validation;
+    using Taf.Validation;
 
     /// <summary>
     /// 验证处理器

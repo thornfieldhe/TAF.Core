@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 列表按照默认顺序进行排序对象

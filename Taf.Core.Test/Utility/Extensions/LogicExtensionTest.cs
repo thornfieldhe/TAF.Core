@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using TAF.Core.Utility;
+using Taf.Core.Utility;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
 
     /// <summary>

@@ -6,7 +6,7 @@
 //   The extensions.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     using System;
     using System.Collections;

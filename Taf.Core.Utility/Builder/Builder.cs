@@ -1,9 +1,9 @@
-﻿namespace TAF.Core
+﻿namespace Taf.Core
 {
     using System;
     using System.Collections.Generic;
 
-    using TAF.Core.Utility;
+    using Taf.Core.Utility;
 
     /// <summary>
     /// </summary>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using TAF.Core.Utility;
-using TAF.Test;
+using Taf.Core.Utility;
+using Taf.Test;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     /// <summary>
     /// EqualityHelperTest 的摘要说明

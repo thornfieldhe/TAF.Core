@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Validation
+namespace Taf.Validation
 {
-    using Core;
+    using Taf.Core;
 
     /// <summary>
     /// 异常验证处理 - 什么也不做

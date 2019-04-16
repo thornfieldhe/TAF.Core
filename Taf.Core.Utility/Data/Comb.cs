@@ -1,4 +1,4 @@
-﻿namespace TAF.Core.Test.Utility
+﻿namespace Taf.Core.Test.Utility
 {
     using System;
 

@@ -6,7 +6,7 @@
 //   基本类型转换扩展
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     using System;
     using System.Collections.Generic;

@@ -7,12 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Validation
+namespace Taf.Validation
 {
     using System;
     using System.Linq;
 
-    using TAF.Core;
+    using Taf.Core;
 
     /// <summary>
     /// 默认验证处理器，直接抛出异常

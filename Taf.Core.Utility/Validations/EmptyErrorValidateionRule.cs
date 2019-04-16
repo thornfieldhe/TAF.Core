@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Validation
+namespace Taf.Validation
 {
     using System.ComponentModel.DataAnnotations;
 
-    using TAF.Core;
+    using Taf.Core;
 
     /// <summary>
     /// 空白验证规则，只需要传入需要返回的错误信息

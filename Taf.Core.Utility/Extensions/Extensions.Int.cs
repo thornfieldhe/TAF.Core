@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// The extensions.

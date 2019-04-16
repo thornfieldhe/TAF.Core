@@ -10,7 +10,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     /// <summary>
     ///     名值对对象

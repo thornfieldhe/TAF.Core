@@ -6,7 +6,7 @@
 //   序列化对象到文件
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     using System;
     using System.IO;

@@ -1,12 +1,12 @@
 ﻿
 
-using TAF.Core.Utility;
-using TAF.Test;
+using Taf.Core.Utility;
+using Taf.Test;
 using Xunit;
 using System;
 using System.Collections.Generic;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     
     /// <summary>

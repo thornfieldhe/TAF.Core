@@ -1,19 +1,19 @@
 
 
-using TAF.Core.Utility;
-using TAF.Test;
+using Taf.Core.Utility;
+using Taf.Test;
 using Xunit;
 
-namespace TAF.Core.Test
+namespace Taf.Core.Test
 {
     /// <summary>
-    /// ÑéÖ¤ÌØĞÔÀ©Õ¹
+    /// éªŒè¯ç‰¹æ€§æ‰©å±•
     /// </summary>
     
     public class SerializeTest
     {
         /// <summary>
-        /// soapĞòÁĞ»¯
+        /// soapåºåˆ—åŒ–
         /// </summary>
         [Fact]
         public void TestSoapSerialize()
@@ -24,9 +24,9 @@ namespace TAF.Core.Test
         }
 
         /// <summary>
-        /// xmlĞòÁĞ»¯
-        /// ¼Ì³Ğ»ùÀàBaseEntityµÄÒµÎñÀà²»ÊÊÓÃxmlĞòÁĞ»¯£¬
-        /// Ö»ÄÜÊ¹ÓÃ×Ö½ÚĞòÁĞ»¯
+        /// xmlåºåˆ—åŒ–
+        /// ç»§æ‰¿åŸºç±»BaseEntityçš„ä¸šåŠ¡ç±»ä¸é€‚ç”¨xmlåºåˆ—åŒ–ï¼Œ
+        /// åªèƒ½ä½¿ç”¨å­—èŠ‚åºåˆ—åŒ–
         /// </summary>
         [Fact]
         public void TestXMlSerialize()

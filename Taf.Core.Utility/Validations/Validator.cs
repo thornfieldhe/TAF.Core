@@ -7,13 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using TAF.Core.Utility;
+using Taf.Core.Utility;
 
-namespace TAF.Validation
+namespace Taf.Validation
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Core;
+    using Taf.Core;
 
     /// <summary>
     /// 验证操作

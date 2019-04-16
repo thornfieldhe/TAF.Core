@@ -6,7 +6,7 @@
 //   字符串操作辅助类
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-namespace TAF.Core.Utility
+namespace Taf.Core.Utility
 {
     using System;
     using System.Collections;

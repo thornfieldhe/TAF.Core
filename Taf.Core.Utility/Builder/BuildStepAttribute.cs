@@ -1,4 +1,4 @@
-﻿namespace TAF.Core
+﻿namespace Taf.Core
 {
     using System;
     using System.Reflection;

@@ -9,7 +9,7 @@
 
 namespace System.ComponentModel.DataAnnotations
 {
-    using TAF.Core.Utility;
+    using Taf.Core.Utility;
 
     /// <summary>
     /// 手机号验证

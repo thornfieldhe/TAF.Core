@@ -13,7 +13,7 @@ namespace System.ComponentModel.DataAnnotations
     using System.Text.RegularExpressions;
 
 
-    using TAF.Core.Utility;
+    using Taf.Core.Utility;
 
     /// <summary>
     /// The base reg validate attribute.
