@@ -7250,6 +7250,70 @@
             The <see cref="T:System.Boolean"/>.
             </returns>
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
+            <summary>
+            The range attribute.
+            </summary>
+        </member>
+        <member name="F:System.ComponentModel.DataAnnotations.RangeAttribute._min">
+            <summary>
+            The _min.
+            </summary>
+        </member>
+        <member name="F:System.ComponentModel.DataAnnotations.RangeAttribute._max">
+            <summary>
+            The _max
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute"/> class.
+            </summary>
+            <param name="min">
+            The min.
+            </param>
+            <param name="max"></param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute"/> class.
+            </summary>
+            <param name="max">
+            The min.
+            </param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Min">
+            <summary>
+            Gets the min.
+            </summary>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Max">
+            <summary>
+            Gets the max.
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
+            <summary>
+            The format error message.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
+            <summary>
+            The is valid.
+            </summary>
+            <param name="value">
+            The value.
+            </param>
+            <returns>
+            The <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.MobilePhoneAttribute">
             <summary>
             手机号验证

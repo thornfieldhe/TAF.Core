@@ -137,7 +137,7 @@ namespace Taf.Core.Utility
         /// <summary>
         /// HTML标签
         /// </summary>
-        public static string HTMLTag = @"<(S*?)[^>]*>.*?|<.*?/>";
+        public static string HtmlTag = @"<(S*?)[^>]*>.*?|<.*?/>";
 
         /// <summary>
         /// 空白行
@@ -147,6 +147,6 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 身份证
         /// </summary>
-        public static string IDCard = @"^(^\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$";
+        public static string IdCard = @"^(^\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$";
     }
 }
