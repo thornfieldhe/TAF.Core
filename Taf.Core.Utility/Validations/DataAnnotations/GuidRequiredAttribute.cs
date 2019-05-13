@@ -17,6 +17,11 @@ namespace System.ComponentModel.DataAnnotations
     [AttributeUsage(AttributeTargets.Property)]
     public class GuidRequiredAttribute : DataTypeAttribute
     {
+        public GuidRequiredAttribute(string message):this()
+        {
+            this.ErrorMessage = message;
+        }
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="GuidRequiredAttribute"/> class.
         /// </summary>
