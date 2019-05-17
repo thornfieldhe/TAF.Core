@@ -8,7 +8,7 @@
     public class CallHandlerEventArgs<T> : EventArgs
     {
 
-        public CoRHandlerBase<T> Handler
+        public BaseCoRHandler<T> Handler
         {
             get; private set;
         }
@@ -17,7 +17,7 @@
             get; private set;
         }
 
-        public CallHandlerEventArgs(CoRHandlerBase<T> handler, T request)
+        public CallHandlerEventArgs(BaseCoRHandler<T> handler, T request)
         {
             this.Handler = handler;
             this.Request = request;

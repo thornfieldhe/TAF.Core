@@ -25,10 +25,10 @@ namespace Taf.Core.Test.Business
         [Fact]
         public void CorTest1()
         {
-            CoRHandlerBase<Request> handler1 = new InternalHandler();
-            CoRHandlerBase<Request> handler2 = new MailHandler();
-            CoRHandlerBase<Request> handler3 = new DiscountHandler();
-            CoRHandlerBase<Request> handler5 = new Regular2Handler();
+            BaseCoRHandler<Request> handler1 = new InternalHandler();
+            BaseCoRHandler<Request> handler2 = new MailHandler();
+            BaseCoRHandler<Request> handler3 = new DiscountHandler();
+            BaseCoRHandler<Request> handler5 = new Regular2Handler();
 
             var request = new Request(20, "Mail");
             handler1.AddSuccessor(handler3);
@@ -45,9 +45,9 @@ namespace Taf.Core.Test.Business
         [Fact]
         public void CorTest2()
         {
-            CoRHandlerBase<Request> handler1 = new InternalHandler();
-            CoRHandlerBase<Request> handler2 = new MailHandler();
-            CoRHandlerBase<Request> handler3 = new DiscountHandler();
+            BaseCoRHandler<Request> handler1 = new InternalHandler();
+            BaseCoRHandler<Request> handler2 = new MailHandler();
+            BaseCoRHandler<Request> handler3 = new DiscountHandler();
             handler3.HasBreakPoint = true;
             handler3.Break += Handler1_Break;
 
@@ -64,11 +64,11 @@ namespace Taf.Core.Test.Business
         [Fact]
         public void CorTest3()
         {
-            CoRHandlerBase<Request> handler1 = new InternalHandler();
-            CoRHandlerBase<Request> handler2 = new MailHandler();
-            CoRHandlerBase<Request> handler3 = new DiscountHandler();
-            CoRHandlerBase<Request> handler4 = new RegularHandler();
-            CoRHandlerBase<Request> handler5 = new Regular2Handler();
+            BaseCoRHandler<Request> handler1 = new InternalHandler();
+            BaseCoRHandler<Request> handler2 = new MailHandler();
+            BaseCoRHandler<Request> handler3 = new DiscountHandler();
+            BaseCoRHandler<Request> handler4 = new RegularHandler();
+            BaseCoRHandler<Request> handler5 = new Regular2Handler();
 
             var request = new Request(20, "Mail");
             handler1.AddSuccessor(handler3);
@@ -90,7 +90,7 @@ namespace Taf.Core.Test.Business
 
     }
 
-    public class InternalHandler : CoRHandlerBase<Request>
+    public class InternalHandler : BaseCoRHandler<Request>
     {
         public override void Excute(Request request)
         {
@@ -103,7 +103,7 @@ namespace Taf.Core.Test.Business
         }
     }
 
-    public class MailHandler : CoRHandlerBase<Request>
+    public class MailHandler : BaseCoRHandler<Request>
     {
         public override void Excute(Request request)
         {
@@ -116,7 +116,7 @@ namespace Taf.Core.Test.Business
         }
     }
 
-    public class DiscountHandler : CoRHandlerBase<Request>
+    public class DiscountHandler : BaseCoRHandler<Request>
     {
         public override void Excute(Request request)
         {
@@ -129,7 +129,7 @@ namespace Taf.Core.Test.Business
         }
     }
 
-    public class RegularHandler : CoRHandlerBase<Request>
+    public class RegularHandler : BaseCoRHandler<Request>
     {
         public override void Excute(Request request)
         {
@@ -142,7 +142,7 @@ namespace Taf.Core.Test.Business
         }
     }
 
-    public class Regular2Handler : CoRHandlerBase<Request>
+    public class Regular2Handler : BaseCoRHandler<Request>
     {
         public override void Excute(Request request)
         {

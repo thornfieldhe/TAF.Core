@@ -3,19 +3,23 @@
     using System;
     using System.Collections.Generic;
 
-    public abstract class CoRHandlerBase<Request>
+    public abstract class BaseCoRHandler<Request>
     {
-        protected CoRHandlerBase()
+        protected BaseCoRHandler()
         {
             if (this.Successors == null)
             {
-                Successors = new List<CoRHandlerBase<Request>>();
+                Successors = new List<BaseCoRHandler<Request>>();
             }
         }
 
         public abstract bool AllowProcess(Request request);
         public abstract void Excute(Request request);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
         public void Process(Request request)
         {
             if (AllowProcess(request))
@@ -42,13 +46,17 @@
 
             if (Successors != null)
             {
-                foreach (CoRHandlerBase<Request> successor in Successors)
+                foreach (BaseCoRHandler<Request> successor in Successors)
                 {
                     successor.HandleRequest(request);
                 }
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="argus"></param>
         public virtual void OnBreak(CallHandlerEventArgs<Request> argus)
         {
             this.Break?.Invoke(this, argus);
@@ -58,11 +66,11 @@
         /// 添加后续节点
         /// </summary>
         /// <param name="success"></param>
-        public void AddSuccessor(CoRHandlerBase<Request> success)
+        public void AddSuccessor(BaseCoRHandler<Request> success)
         {
             if (this.Successors == null)
             {
-                Successors = new List<CoRHandlerBase<Request>>();
+                Successors = new List<BaseCoRHandler<Request>>();
             }
             Successors.Add(success);
         }
@@ -71,21 +79,22 @@
         /// 实现迭代器，并且对容器对象实现隐性递归
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CoRHandlerBase<Request>> Enumerate()
+        public IEnumerable<BaseCoRHandler<Request>> Enumerate()
         {
             yield return this;
-            if ((Successors != null) && (Successors.Count > 0))
-                foreach (CoRHandlerBase<Request> child in Successors)
-                {
-                    foreach (CoRHandlerBase<Request> item in child.Enumerate())
-                        yield return item;
-                }
+            if((Successors       == null)
+            || (Successors.Count <= 0)) yield break;
+            foreach (BaseCoRHandler<Request> child in Successors)
+            {
+                foreach (BaseCoRHandler<Request> item in child.Enumerate())
+                    yield return item;
+            }
         }
 
         /// <summary>
         /// 后继节点
         /// </summary>
-        public List<CoRHandlerBase<Request>> Successors
+        public List<BaseCoRHandler<Request>> Successors
         {
             get; set;
         }

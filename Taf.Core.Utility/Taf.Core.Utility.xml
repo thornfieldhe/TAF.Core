@@ -473,6 +473,57 @@
             数字
             </summary>
         </member>
+        <member name="T:Taf.Core.Utility.Core.CompareAndExecutor`2">
+            <summary>
+            比较并执行对象
+            </summary>
+        </member>
+        <member name="M:Taf.Core.Utility.Core.CompareAndExecutor`2.AllowExcute(Taf.Core.Utility.Core.ComparisonObject{`0,`1})">
+            <summary>
+            是否执行
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Taf.Core.Utility.Core.CompareAndExecutor`2.Execute(Taf.Core.Utility.Core.ComparisonObject{`0,`1})">
+            <summary>
+            执行操作
+            </summary>
+            <param name="comparison"></param>
+        </member>
+        <member name="T:Taf.Core.Utility.Core.ComparisonObject`2">
+            <summary>
+            比较对象
+            </summary>
+        </member>
+        <member name="M:Taf.Core.Utility.Core.ComparisonObject`2.#ctor(`0,`1)">
+            <summary>
+            传入参与比较的2个对象
+            </summary>
+            <param name="source">源</param>
+            <param name="target">目标</param>
+        </member>
+        <member name="P:Taf.Core.Utility.Core.ComparisonObject`2.Source">
+            <summary>
+            比较源
+            </summary>
+        </member>
+        <member name="P:Taf.Core.Utility.Core.ComparisonObject`2.Target">
+            <summary>
+            比较目标
+            </summary>
+        </member>
+        <!-- 对于成员“M:Taf.Core.Utility.Core.ComparisonObject`2.Compare``1(System.Func{`0,``0},System.Func{`1,``0})”忽略有格式错误的 XML 注释 -->
+        <member name="M:Taf.Core.Utility.Core.ComparisonObject`2.AddExecutor(Taf.Core.Utility.Core.CompareAndExecutor{`0,`1})">
+            <summary>
+            添加执行者
+            </summary>
+            <param name="executor"></param>
+        </member>
+        <member name="M:Taf.Core.Utility.Core.ComparisonObject`2.Excute">
+            <summary>
+            调用执行者执行任务
+            </summary>
+        </member>
         <member name="T:Taf.Core.Utility.AnyRadixConvert">
             <summary>
             进制转换器
@@ -813,7 +864,16 @@
             </summary>
         </member>
         <!-- 对于成员“T:Taf.Core.Utility.CompareWithDefaultSortedArray`2”忽略有格式错误的 XML 注释 -->
-        <!-- 对于成员“M:Taf.Core.Utility.CompareWithDefaultSortedArray`2.#ctor(`1[],System.Func{`0,`1})”忽略有格式错误的 XML 注释 -->
+        <member name="M:Taf.Core.Utility.CompareWithDefaultSortedArray`2.#ctor(`1[],System.Func{`0,`1})">
+            <summary>
+            列表按照默认顺序进行排序对象
+            <example>
+            string[] l=new string[]{"A","B","C","a","b","c"},若需按照"A","a","B","b","C","c"排序，则需要在比较
+            对象内部创建一个对已知有限数量列表。将可能元素按照固定顺序先排列好，对于传入比较的两个对象，通过对象的下标进行比较，
+            若不存在于该列表数据，则默认排列到最后
+            </example>
+            </summary>
+        </member>
         <member name="T:Taf.Core.Utility.Extensions">
             <summary>
             The where if extension.
@@ -6035,7 +6095,7 @@
             中文
             </summary>
         </member>
-        <member name="F:Taf.Core.Utility.StringRegExpression.HTMLTag">
+        <member name="F:Taf.Core.Utility.StringRegExpression.HtmlTag">
             <summary>
             HTML标签
             </summary>
@@ -6045,7 +6105,7 @@
             空白行
             </summary>
         </member>
-        <member name="F:Taf.Core.Utility.StringRegExpression.IDCard">
+        <member name="F:Taf.Core.Utility.StringRegExpression.IdCard">
             <summary>
             身份证
             </summary>
@@ -6491,42 +6551,54 @@
             执行次数
             </summary>
         </member>
-        <member name="T:Taf.Core.CallHandlerEventArgs`1">
+        <member name="M:Taf.Core.BaseCoRHandler`1.Process(`0)">
             <summary>
-            职责链响应断点的事件参数
+            
             </summary>
+            <param name="request"></param>
         </member>
-        <member name="M:Taf.Core.CoRHandlerBase`1.HandleRequest(`0)">
+        <member name="M:Taf.Core.BaseCoRHandler`1.HandleRequest(`0)">
             <summary>
             处理客户请求
             </summary>
             <param name="request"></param>
         </member>
-        <member name="M:Taf.Core.CoRHandlerBase`1.AddSuccessor(Taf.Core.CoRHandlerBase{`0})">
+        <member name="M:Taf.Core.BaseCoRHandler`1.OnBreak(Taf.Core.CallHandlerEventArgs{`0})">
+            <summary>
+            
+            </summary>
+            <param name="argus"></param>
+        </member>
+        <member name="M:Taf.Core.BaseCoRHandler`1.AddSuccessor(Taf.Core.BaseCoRHandler{`0})">
             <summary>
             添加后续节点
             </summary>
             <param name="success"></param>
         </member>
-        <member name="M:Taf.Core.CoRHandlerBase`1.Enumerate">
+        <member name="M:Taf.Core.BaseCoRHandler`1.Enumerate">
             <summary>
             实现迭代器，并且对容器对象实现隐性递归
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Taf.Core.CoRHandlerBase`1.Successors">
+        <member name="P:Taf.Core.BaseCoRHandler`1.Successors">
             <summary>
             后继节点
             </summary>
         </member>
-        <member name="P:Taf.Core.CoRHandlerBase`1.HasBreakPoint">
+        <member name="P:Taf.Core.BaseCoRHandler`1.HasBreakPoint">
             <summary>
             是否定义断点
             </summary>
         </member>
-        <member name="E:Taf.Core.CoRHandlerBase`1.Break">
+        <member name="E:Taf.Core.BaseCoRHandler`1.Break">
             <summary>
             断点事件
+            </summary>
+        </member>
+        <member name="T:Taf.Core.CallHandlerEventArgs`1">
+            <summary>
+            职责链响应断点的事件参数
             </summary>
         </member>
         <member name="T:Taf.Core.IBusinessBase">
@@ -7027,6 +7099,70 @@
             The <see cref="T:System.Boolean"/>.
             </returns>
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.DoubleRangeAttribute">
+            <summary>
+            The range attribute.
+            </summary>
+        </member>
+        <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute._min">
+            <summary>
+            The _min.
+            </summary>
+        </member>
+        <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute._max">
+            <summary>
+            The _max
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ComponentModel.DataAnnotations.DoubleRangeAttribute"/> class.
+            </summary>
+            <param name="min">
+            The min.
+            </param>
+            <param name="max"></param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.#ctor(System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.ComponentModel.DataAnnotations.DoubleRangeAttribute"/> class.
+            </summary>
+            <param name="max">
+            The min.
+            </param>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.Min">
+            <summary>
+            Gets the min.
+            </summary>
+        </member>
+        <member name="P:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.Max">
+            <summary>
+            Gets the max.
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.FormatErrorMessage(System.String)">
+            <summary>
+            The format error message.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.IsValid(System.Object)">
+            <summary>
+            The is valid.
+            </summary>
+            <param name="value">
+            The value.
+            </param>
+            <returns>
+            The <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.EqualToAttribute">
             <summary>
             Validates that the property has the same value as the given 'otherProperty' 
@@ -7240,70 +7376,6 @@
             </returns>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.MinAttribute.IsValid(System.Object)">
-            <summary>
-            The is valid.
-            </summary>
-            <param name="value">
-            The value.
-            </param>
-            <returns>
-            The <see cref="T:System.Boolean"/>.
-            </returns>
-        </member>
-        <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
-            <summary>
-            The range attribute.
-            </summary>
-        </member>
-        <member name="F:System.ComponentModel.DataAnnotations.RangeAttribute._min">
-            <summary>
-            The _min.
-            </summary>
-        </member>
-        <member name="F:System.ComponentModel.DataAnnotations.RangeAttribute._max">
-            <summary>
-            The _max
-            </summary>
-        </member>
-        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute"/> class.
-            </summary>
-            <param name="min">
-            The min.
-            </param>
-            <param name="max"></param>
-        </member>
-        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double)">
-            <summary>
-            Initializes a new instance of the <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute"/> class.
-            </summary>
-            <param name="max">
-            The min.
-            </param>
-        </member>
-        <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Min">
-            <summary>
-            Gets the min.
-            </summary>
-        </member>
-        <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Max">
-            <summary>
-            Gets the max.
-            </summary>
-        </member>
-        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
-            <summary>
-            The format error message.
-            </summary>
-            <param name="name">
-            The name.
-            </param>
-            <returns>
-            The <see cref="T:System.String"/>.
-            </returns>
-        </member>
-        <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
             <summary>
             The is valid.
             </summary>
