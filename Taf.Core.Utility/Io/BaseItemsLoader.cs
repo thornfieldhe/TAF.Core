@@ -41,7 +41,7 @@ namespace Taf.Core.Utility.Io
         {
             ItemPath = path;
             ItmeFile = fileName;
-            LoadItems();
+            Items= GetData();
         }
 
 
@@ -51,14 +51,6 @@ namespace Taf.Core.Utility.Io
         public virtual void Reload()
         {
             Load(ItemPath, ItmeFile);
-        }
-
-        /// <summary>
-        /// 系统载入选择项
-        /// </summary>
-        protected virtual void LoadItems()
-        {
-            Items.AddRange(GetData());
         }
 
         /// <summary>

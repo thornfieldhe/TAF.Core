@@ -475,7 +475,7 @@
         </member>
         <member name="T:Taf.Core.Utility.Core.CompareAndExecutor`2">
             <summary>
-            比较并执行对象
+            比较两个对象的某些属性是否一致,如果不一致则对源对象进行一系列的操作
             </summary>
         </member>
         <member name="M:Taf.Core.Utility.Core.CompareAndExecutor`2.AllowExcute(Taf.Core.Utility.Core.ComparisonObject{`0,`1})">
@@ -512,7 +512,7 @@
             比较目标
             </summary>
         </member>
-        <!-- 对于成员“M:Taf.Core.Utility.Core.ComparisonObject`2.Compare``1(System.Func{`0,``0},System.Func{`1,``0})”忽略有格式错误的 XML 注释 -->
+        <!-- Badly formed XML comment ignored for member "M:Taf.Core.Utility.Core.ComparisonObject`2.Compare``1(System.Func{`0,``0},System.Func{`1,``0})" -->
         <member name="M:Taf.Core.Utility.Core.ComparisonObject`2.AddExecutor(Taf.Core.Utility.Core.CompareAndExecutor{`0,`1})">
             <summary>
             添加执行者
@@ -863,7 +863,7 @@
             验证是否枚举类型
             </summary>
         </member>
-        <!-- 对于成员“T:Taf.Core.Utility.CompareWithDefaultSortedArray`2”忽略有格式错误的 XML 注释 -->
+        <!-- Badly formed XML comment ignored for member "T:Taf.Core.Utility.CompareWithDefaultSortedArray`2" -->
         <member name="M:Taf.Core.Utility.CompareWithDefaultSortedArray`2.#ctor(`1[],System.Func{`0,`1})">
             <summary>
             列表按照默认顺序进行排序对象
@@ -965,7 +965,7 @@
             The <see cref="T:System.Linq.IQueryable"/>.
             </returns>
         </member>
-        <!-- 对于成员“M:Taf.Core.Utility.Extensions.WhereIf``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},System.Boolean)”忽略有格式错误的 XML 注释 -->
+        <!-- Badly formed XML comment ignored for member "M:Taf.Core.Utility.Extensions.WhereIf``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Boolean},System.Boolean)" -->
         <member name="M:Taf.Core.Utility.Extensions.WhereIf``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,System.Int32,System.Boolean},System.Boolean)">
             <summary>
             The where if.
@@ -5625,11 +5625,6 @@
         <member name="M:Taf.Core.Utility.Io.BaseItemsLoader`2.Reload">
             <summary>
             重新加载数据
-            </summary>
-        </member>
-        <member name="M:Taf.Core.Utility.Io.BaseItemsLoader`2.LoadItems">
-            <summary>
-            系统载入选择项
             </summary>
         </member>
         <member name="M:Taf.Core.Utility.Io.BaseItemsLoader`2.#ctor">
