@@ -21,7 +21,7 @@ namespace Taf.Core.Utility
     /// </typeparam>
     [DataContract]
     [Serializable]
-    public class KeyValue<K1, K2>
+    public class KeyValue<K1, K2>:IComparable where K1:IComparable
     {
         /// <summary>
         /// </summary>
@@ -52,6 +52,17 @@ namespace Taf.Core.Utility
         {
             get; set;
         }
+
+        public int CompareTo(object obj)
+        {
+            var compare = obj as KeyValue<K1, K2>;
+            if(compare == null)
+            {
+                return -1;
+            }
+
+            return this.Key.CompareTo(compare.Key);
+        }
     }
 
     /// <summary>
@@ -62,7 +73,7 @@ namespace Taf.Core.Utility
     /// <typeparam name="K3"></typeparam>
     [DataContract]
     [Serializable]
-    public class KeyValue<K1, K2, K3> : KeyValue<K1, K2>
+    public class KeyValue<K1, K2, K3> : KeyValue<K1, K2> where K1:IComparable
     {
         public KeyValue()
         {
@@ -90,12 +101,13 @@ namespace Taf.Core.Utility
     /// </typeparam>
     [DataContract]
     [Serializable]
-    public class KeyValue<K1, K2, K3, K4> : KeyValue<K1, K2, K3>
+    public class KeyValue<K1, K2, K3, K4> : KeyValue<K1, K2, K3> where K1:IComparable
     {
         /// <summary>
         /// </summary>
         public KeyValue()
         {
+            
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3, K4 item4)
@@ -121,7 +133,7 @@ namespace Taf.Core.Utility
     /// <typeparam name="K5"></typeparam>
     [DataContract]
     [Serializable]
-    public class KeyValue<K1, K2, K3, K4, K5> : KeyValue<K1, K2, K3, K4>
+    public class KeyValue<K1, K2, K3, K4, K5> : KeyValue<K1, K2, K3, K4> where K1:IComparable
     {
         /// <summary>
         /// </summary>
@@ -153,7 +165,7 @@ namespace Taf.Core.Utility
     /// <typeparam name="K6"></typeparam>
     [DataContract]
     [Serializable]
-    public class KeyValue<K1, K2, K3, K4, K5, K6> : KeyValue<K1, K2, K3, K4, K5>
+    public class KeyValue<K1, K2, K3, K4, K5, K6> : KeyValue<K1, K2, K3, K4, K5> where K1:IComparable
     {
         /// <summary>
         /// </summary>
@@ -189,7 +201,7 @@ namespace Taf.Core.Utility
     /// </typeparam>
     [DataContract]
     [Serializable]
-    public class KeyValue<K1, K2, K3, K4, K5, K6, K7> : KeyValue<K1, K2, K3, K4, K5, K6>
+    public class KeyValue<K1, K2, K3, K4, K5, K6, K7> : KeyValue<K1, K2, K3, K4, K5, K6> where K1:IComparable
     {
         /// <summary>
         /// </summary>

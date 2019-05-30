@@ -74,6 +74,33 @@ namespace Taf.Core.Test
             Assert.Equal(students[0].Name,"H");
             Assert.Equal(students[1].Name,"F");
         }
+        
+        /// <summary>
+        /// 针对KevValue对象进行排序
+        /// </summary>
+        [Fact]
+        public void SortByCollectionTest2()
+        {
+            var sortedString = new string[] {"H", "F", "B","A","C"};
+            var sortedInt = new int[] {4, 8, 3,7,9};
+            var students = new List<KeyValue<int,string>>()
+            {
+                new KeyValue<int,string>() {Value = "A",Key = 1}
+              , new KeyValue<int,string>() {Value = "B",Key = 2}
+              , new KeyValue<int,string>() {Value = "C",Key = 3}
+              , new KeyValue<int,string>() {Value = "F",Key = 4}
+              , new KeyValue<int,string>() {Value = "H",Key = 5}
+            };
+
+            students.Sort(new CompareWithDefaultSortedArray<KeyValue<int,string>,string>(sortedString, x=>x.Value));
+            Assert.Equal(students[0].Value, "H");
+            Assert.Equal(students[1].Value, "F");
+            
+            students.Sort(new CompareWithDefaultSortedArray<KeyValue<int,string>,int>(sortedInt, x=>x.Key));
+            Assert.Equal(students[0].Key, 4);
+            Assert.Equal(students[1].Key, 3);
+            Assert.Equal(students[3].Key, 2);
+        }
 
         private class TempData:IComparable
         {
