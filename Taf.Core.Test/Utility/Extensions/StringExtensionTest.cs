@@ -486,5 +486,27 @@ namespace Taf.Core.Test
             string num = "五八七五二四六";
             Assert.Equal("5875246",num.ChineseToNumber());
         }
+
+        /// <summary>
+        /// 中文转数字字符串
+        /// </summary>
+        [Fact]
+        public void TestRemoveLastString()
+        {
+            var m = "12345</br>";
+            var b = "</br>";
+            Assert.Equal("12345", m.RemoveLastString(b));
+        }
+
+        /// <summary>
+        /// 移除起始字符串
+        /// </summary>
+        [Fact]
+        public void TestRemoveStartString()
+        {
+            var m = "</br>12345";
+            var b = "</br>";
+            Assert.Equal("12345", m.RemoveStartString(b));
+        }
     }
 }

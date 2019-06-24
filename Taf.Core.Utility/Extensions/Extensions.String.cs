@@ -131,12 +131,13 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="source">
         /// </param>
+        /// <param name="separator"></param>
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string RemoveFinalChar(this string source,string separator)
+        public static string RemoveFinalChar(this string source,char separator)
         {
-            if (source.EndsWith(separator, StringComparison.Ordinal) && source.Length > 1)
+            if (source.EndsWith(separator.ToString(), StringComparison.Ordinal) && source.Length > 1)
             {
                 source = source.Substring(0, source.Length - 1);
             }
@@ -220,7 +221,7 @@ namespace Taf.Core.Utility
         /// </returns>
         public static List<string> SplitToList(this string source, char separator=',')
         {
-            source = source.RemoveFinalChar(separator.ToString());
+            source = source.RemoveFinalChar(separator);
             return source.Split(separator).ToList();
         }
 
@@ -505,6 +506,41 @@ namespace Taf.Core.Utility
 
             return @this;
         }
+        
+        /// <summary>
+        /// 移除末尾字符串
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="targetStr"></param>
+        /// <returns></returns>
+        public static string RemoveLastString(this string @this, string targetStr)
+        {
+            var repeat = @this;
+            if (repeat.EndsWith(targetStr) && @this.Length > 1)
+            {
+                @this = repeat.Substring(0, repeat.Length - targetStr.Length);
+            }
+
+            return @this;
+        }
+    
+        /// <summary>
+        /// 移除起始字符串
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="targetStr"></param>
+        /// <returns></returns>
+        public static string RemoveStartString(this string @this, string targetStr)
+        {
+            var repeat = @this;
+            if (repeat.StartsWith(targetStr) && repeat.Length > 1)
+            {
+                @this = repeat.Substring(targetStr.Length, repeat.Length - targetStr.Length);
+            }
+
+            return @this;
+        }
+
 
         #region 正则
 
