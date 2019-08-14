@@ -20,12 +20,12 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// The _min.
         /// </summary>
-        private readonly double _min;
+        protected readonly double Min;
         
         /// <summary>
         /// The _max
         /// </summary>
-        private readonly double _max;
+        protected readonly double Max;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DoubleRangeAttribute"/> class.
@@ -37,8 +37,8 @@ namespace System.ComponentModel.DataAnnotations
         public DoubleRangeAttribute(double min,double max)
             : base("min")
         {
-            _min = min;
-            _max = max;
+            Min = min;
+            Max = max;
         }
 
         /// <summary>
@@ -57,19 +57,9 @@ namespace System.ComponentModel.DataAnnotations
         public DoubleRangeAttribute(double max)
             : this(0,max)
         {
-            _max = max;
-            _min = 0;
+            Max = max;
+            Min = 0;
         }
-
-        /// <summary>
-        /// Gets the min.
-        /// </summary>
-        public object Min => _min;
-
-        /// <summary>
-        /// Gets the max.
-        /// </summary>
-        public object Max => _max;
 
         /// <summary>
         /// The format error message.
@@ -87,7 +77,7 @@ namespace System.ComponentModel.DataAnnotations
                 ErrorMessage = "属性 {0}应大于{1},应小于{2}";
             }
 
-            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, _min,_max);
+            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Min,Max);
         }
 
         /// <summary>
@@ -108,7 +98,56 @@ namespace System.ComponentModel.DataAnnotations
 
             var isDouble = double.TryParse(Convert.ToString(value), out var valueAsDouble);
 
-            return isDouble && valueAsDouble > _min && valueAsDouble<_max;
+            return isDouble && valueAsDouble >= Min && valueAsDouble<=Max;
+        }
+    }
+    
+    
+    
+    /// <summary>
+    /// 浮点数范围[x0,x1]包含边界值
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class DoubleRange2Attribute :DoubleRangeAttribute
+    {
+        /// <summary>
+        /// The format error message.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public override string FormatErrorMessage(string name)
+        {
+            if (ErrorMessage == null && ErrorMessageResourceName == null)
+            {
+                ErrorMessage = "属性 {0}应大于等于{1},应小于等于{2}";
+            }
+
+            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Min, Max);
+        }
+
+        /// <summary>
+        /// The is valid.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public override bool IsValid(object value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+
+            var isDouble = double.TryParse(Convert.ToString(value), out var valueAsDouble);
+
+            return isDouble && valueAsDouble > Min && valueAsDouble <Max;
         }
     }
 }

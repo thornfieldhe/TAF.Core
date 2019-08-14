@@ -20,7 +20,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// The _max.
         /// </summary>
-        private readonly double _max;
+        protected readonly double Max;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MaxAttribute"/> class.
@@ -31,7 +31,7 @@ namespace System.ComponentModel.DataAnnotations
         public MaxAttribute(int max)
             : base("max")
         {
-            _max = max;
+            Max = max;
         }
 
         /// <summary>
@@ -43,13 +43,8 @@ namespace System.ComponentModel.DataAnnotations
         public MaxAttribute(double max)
             : base("max")
         {
-            _max = max;
+            Max = max;
         }
-
-        /// <summary>
-        /// Gets the max.
-        /// </summary>
-        public object Max => _max;
 
         /// <summary>
         /// The format error message.
@@ -67,7 +62,7 @@ namespace System.ComponentModel.DataAnnotations
                 ErrorMessage = "属性 {0}应小于属性{1}";
             }
 
-            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, _max);
+            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Max);
         }
 
         /// <summary>
@@ -88,7 +83,62 @@ namespace System.ComponentModel.DataAnnotations
 
             var isDouble = double.TryParse(Convert.ToString(value), out var valueAsDouble);
 
-            return isDouble && valueAsDouble < _max;
+            return isDouble && valueAsDouble < Max;
+        }
+    }
+    
+    /// <summary>
+    /// 最大值包含边界
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class Max2Attribute:MaxAttribute
+    {
+        public Max2Attribute(int max) : base(max)
+        {
+        }
+
+        public Max2Attribute(double max) : base(max)
+        {
+        }
+        
+        /// <summary>
+        /// The format error message.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+        public override string FormatErrorMessage(string name)
+        {
+            if (ErrorMessage == null && ErrorMessageResourceName == null)
+            {
+                ErrorMessage = "属性 {0}应小于等于属性{1}";
+            }
+
+            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Max);
+        }
+
+        /// <summary>
+        /// The is valid.
+        /// </summary>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public override bool IsValid(object value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+
+            var isDouble = double.TryParse(Convert.ToString(value), out var valueAsDouble);
+
+            return isDouble && valueAsDouble <= Max;
         }
     }
 }

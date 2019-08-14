@@ -7113,7 +7113,7 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.DoubleRangeAttribute">
             <summary>
-            The range attribute.
+            浮点数范围(x0,x1)
             </summary>
         </member>
         <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute._min">
@@ -7134,6 +7134,11 @@
             The min.
             </param>
             <param name="max"></param>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.#ctor">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.#ctor(System.Double)">
             <summary>
@@ -7262,7 +7267,7 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.IntegerAttribute">
             <summary>
-            The integer attribute.
+            限制为数字
             </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.IntegerAttribute.#ctor">
@@ -7294,7 +7299,7 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.MaxAttribute">
             <summary>
-            The max attribute.
+            最大值
             </summary>
         </member>
         <member name="F:System.ComponentModel.DataAnnotations.MaxAttribute._max">
@@ -7347,7 +7352,7 @@
         </member>
         <member name="T:System.ComponentModel.DataAnnotations.MinAttribute">
             <summary>
-            The min attribute.
+            最小值
             </summary>
         </member>
         <member name="F:System.ComponentModel.DataAnnotations.MinAttribute._min">
