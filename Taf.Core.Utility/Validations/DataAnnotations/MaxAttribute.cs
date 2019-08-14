@@ -3,7 +3,7 @@
 //   
 // </copyright>
 // <summary>
-//   最大值
+//   最大值 value < max
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ namespace System.ComponentModel.DataAnnotations
     using System.Globalization;
 
     /// <summary>
-    /// The max attribute.
+    /// 最大值
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class MaxAttribute : DataTypeAttribute
@@ -49,13 +49,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the max.
         /// </summary>
-        public object Max
-        {
-            get
-            {
-                return _max;
-            }
-        }
+        public object Max => _max;
 
         /// <summary>
         /// The format error message.
@@ -70,7 +64,7 @@ namespace System.ComponentModel.DataAnnotations
         {
             if (ErrorMessage == null && ErrorMessageResourceName == null)
             {
-                ErrorMessage = "属性 {0}应小于等于属性{1}";
+                ErrorMessage = "属性 {0}应小于属性{1}";
             }
 
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, _max);
@@ -92,11 +86,9 @@ namespace System.ComponentModel.DataAnnotations
                 return true;
             }
 
-            double valueAsDouble;
+            var isDouble = double.TryParse(Convert.ToString(value), out var valueAsDouble);
 
-            var isDouble = double.TryParse(Convert.ToString(value), out valueAsDouble);
-
-            return isDouble && valueAsDouble <= _max;
+            return isDouble && valueAsDouble < _max;
         }
     }
 }

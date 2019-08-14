@@ -3,7 +3,7 @@
 //   
 // </copyright>
 // <summary>
-//   最小值
+//   最小值 min < value
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ namespace System.ComponentModel.DataAnnotations
     using System.Globalization;
 
     /// <summary>
-    /// The min attribute.
+    /// 最小值
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class MinAttribute : DataTypeAttribute
@@ -53,13 +53,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the min.
         /// </summary>
-        public object Min
-        {
-            get
-            {
-                return _min;
-            }
-        }
+        public object Min => _min;
 
         /// <summary>
         /// The format error message.
@@ -74,7 +68,7 @@ namespace System.ComponentModel.DataAnnotations
         {
             if (ErrorMessage == null && ErrorMessageResourceName == null)
             {
-                ErrorMessage = "属性 {0}应大于等于{1}";
+                ErrorMessage = "属性 {0}应大于{1}";
             }
 
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, _min);
@@ -100,7 +94,7 @@ namespace System.ComponentModel.DataAnnotations
 
             var isDouble = double.TryParse(Convert.ToString(value), out valueAsDouble);
 
-            return isDouble && valueAsDouble >= _min;
+            return isDouble && valueAsDouble > _min;
         }
     }
 }

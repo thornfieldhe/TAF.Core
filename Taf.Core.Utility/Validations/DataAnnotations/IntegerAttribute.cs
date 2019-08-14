@@ -10,7 +10,7 @@
 namespace System.ComponentModel.DataAnnotations
 {
     /// <summary>
-    /// The integer attribute.
+    /// 限制为数字
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class IntegerAttribute : DataTypeAttribute

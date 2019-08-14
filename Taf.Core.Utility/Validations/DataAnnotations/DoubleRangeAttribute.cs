@@ -3,7 +3,7 @@
 //   
 // </copyright>
 // <summary>
-//   范围  min <= value <= max
+//   范围  min < value < max
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ namespace System.ComponentModel.DataAnnotations
     using System.Globalization;
 
     /// <summary>
-    /// The range attribute.
+    /// 浮点数范围(x0,x1)
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DoubleRangeAttribute : DataTypeAttribute
@@ -41,6 +41,9 @@ namespace System.ComponentModel.DataAnnotations
             _max = max;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DoubleRangeAttribute() : this(0)
         {
         }
@@ -81,7 +84,7 @@ namespace System.ComponentModel.DataAnnotations
         {
             if (ErrorMessage == null && ErrorMessageResourceName == null)
             {
-                ErrorMessage = "属性 {0}应大于等于{1},应小于等于{2}";
+                ErrorMessage = "属性 {0}应大于{1},应小于{2}";
             }
 
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, _min,_max);
@@ -105,7 +108,7 @@ namespace System.ComponentModel.DataAnnotations
 
             var isDouble = double.TryParse(Convert.ToString(value), out var valueAsDouble);
 
-            return isDouble && valueAsDouble >= _min && valueAsDouble<=_max;
+            return isDouble && valueAsDouble > _min && valueAsDouble<_max;
         }
     }
 }
