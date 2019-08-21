@@ -13,15 +13,15 @@
     <AssemblyVersion>1.0.7.1</AssemblyVersion>
     <FileVersion>1.0.7.1</FileVersion>
     <Version>1.0.7</Version>
-    <PackageVersion>1.0.9</PackageVersion>
+    <PackageVersion>1.0.11</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>d:\WorkStation\TAF.Core\Taf.Core.Utility\Taf.Core.Utility.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Taf.Core.Utility.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\WorkStation\TAF.Core\Taf.Core.Utility\Taf.Core.Utility.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Taf.Core.Utility.xml</DocumentationFile>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>

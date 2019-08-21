@@ -12,7 +12,7 @@ namespace System.ComponentModel.DataAnnotations
     using System.Globalization;
 
     /// <summary>
-    /// 浮点数范围(x0,x1)
+    /// 范围不包含边界
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DoubleRangeAttribute : DataTypeAttribute
@@ -31,7 +31,7 @@ namespace System.ComponentModel.DataAnnotations
         /// Initializes a new instance of the <see cref="DoubleRangeAttribute"/> class.
         /// </summary>
         /// <param name="min">
-        /// The min.
+        /// 范围不包含边界
         /// </param>
         /// <param name="max"></param>
         public DoubleRangeAttribute(double min,double max)
@@ -42,14 +42,14 @@ namespace System.ComponentModel.DataAnnotations
         }
 
         /// <summary>
-        /// 
+        /// 范围不包含边界
         /// </summary>
         public DoubleRangeAttribute() : this(0)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DoubleRangeAttribute"/> class.
+        /// 范围不包含边界
         /// </summary>
         /// <param name="max">
         /// The min.

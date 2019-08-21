@@ -7116,12 +7116,12 @@
             浮点数范围(x0,x1)
             </summary>
         </member>
-        <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute._min">
+        <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.Min">
             <summary>
             The _min.
             </summary>
         </member>
-        <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute._max">
+        <member name="F:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.Max">
             <summary>
             The _max
             </summary>
@@ -7148,16 +7148,6 @@
             The min.
             </param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.Min">
-            <summary>
-            Gets the min.
-            </summary>
-        </member>
-        <member name="P:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.Max">
-            <summary>
-            Gets the max.
-            </summary>
-        </member>
         <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.FormatErrorMessage(System.String)">
             <summary>
             The format error message.
@@ -7170,6 +7160,33 @@
             </returns>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.DoubleRangeAttribute.IsValid(System.Object)">
+            <summary>
+            The is valid.
+            </summary>
+            <param name="value">
+            The value.
+            </param>
+            <returns>
+            The <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.DoubleRange2Attribute">
+            <summary>
+            浮点数范围[x0,x1]包含边界值
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRange2Attribute.FormatErrorMessage(System.String)">
+            <summary>
+            The format error message.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.DoubleRange2Attribute.IsValid(System.Object)">
             <summary>
             The is valid.
             </summary>
@@ -7302,7 +7319,7 @@
             最大值
             </summary>
         </member>
-        <member name="F:System.ComponentModel.DataAnnotations.MaxAttribute._max">
+        <member name="F:System.ComponentModel.DataAnnotations.MaxAttribute.Max">
             <summary>
             The _max.
             </summary>
@@ -7322,11 +7339,6 @@
             <param name="max">
             The max.
             </param>
-        </member>
-        <member name="P:System.ComponentModel.DataAnnotations.MaxAttribute.Max">
-            <summary>
-            Gets the max.
-            </summary>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.MaxAttribute.FormatErrorMessage(System.String)">
             <summary>
@@ -7350,12 +7362,39 @@
             The <see cref="T:System.Boolean"/>.
             </returns>
         </member>
+        <member name="T:System.ComponentModel.DataAnnotations.Max2Attribute">
+            <summary>
+            最大值包含边界
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.Max2Attribute.FormatErrorMessage(System.String)">
+            <summary>
+            The format error message.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.Max2Attribute.IsValid(System.Object)">
+            <summary>
+            The is valid.
+            </summary>
+            <param name="value">
+            The value.
+            </param>
+            <returns>
+            The <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
         <member name="T:System.ComponentModel.DataAnnotations.MinAttribute">
             <summary>
             最小值
             </summary>
         </member>
-        <member name="F:System.ComponentModel.DataAnnotations.MinAttribute._min">
+        <member name="F:System.ComponentModel.DataAnnotations.MinAttribute.Min">
             <summary>
             The _min.
             </summary>
@@ -7376,11 +7415,6 @@
             The min.
             </param>
         </member>
-        <member name="P:System.ComponentModel.DataAnnotations.MinAttribute.Min">
-            <summary>
-            Gets the min.
-            </summary>
-        </member>
         <member name="M:System.ComponentModel.DataAnnotations.MinAttribute.FormatErrorMessage(System.String)">
             <summary>
             The format error message.
@@ -7393,6 +7427,33 @@
             </returns>
         </member>
         <member name="M:System.ComponentModel.DataAnnotations.MinAttribute.IsValid(System.Object)">
+            <summary>
+            The is valid.
+            </summary>
+            <param name="value">
+            The value.
+            </param>
+            <returns>
+            The <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
+        <member name="T:System.ComponentModel.DataAnnotations.Min2Attribute">
+            <summary>
+            最小值包含
+            </summary>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.Min2Attribute.FormatErrorMessage(System.String)">
+            <summary>
+            The format error message.
+            </summary>
+            <param name="name">
+            The name.
+            </param>
+            <returns>
+            The <see cref="T:System.String"/>.
+            </returns>
+        </member>
+        <member name="M:System.ComponentModel.DataAnnotations.Min2Attribute.IsValid(System.Object)">
             <summary>
             The is valid.
             </summary>

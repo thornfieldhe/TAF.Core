@@ -20,10 +20,10 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// The _min.
         /// </summary>
-        protected readonly double Min;
+        protected double Min;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MinAttribute"/> class.
+        /// 目标值大于最小值不包含最小值
         /// </summary>
         /// <param name="min">
         /// The min.
@@ -100,6 +100,22 @@ namespace System.ComponentModel.DataAnnotations
     [AttributeUsage(AttributeTargets.Property)]
     public class Min2Attribute:MinAttribute
     {
+        /// <summary>
+        /// 目标值大于最小值包含最小值
+        /// </summary>
+        /// <param name="min">
+        /// The min.
+        /// </param>
+        public Min2Attribute(int min)
+            : base(min)
+        {
+            Min = min;
+        }
+
+        public Min2Attribute() : this(0)
+        {
+        }
+        
         /// <summary>
         /// The format error message.
         /// </summary>

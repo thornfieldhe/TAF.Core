@@ -18,12 +18,12 @@ namespace System.ComponentModel.DataAnnotations
     public class MaxAttribute : DataTypeAttribute
     {
         /// <summary>
-        /// The _max.
+        /// 最大值不包含边界
         /// </summary>
-        protected readonly double Max;
+        protected  double Max;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MaxAttribute"/> class.
+        /// 最大值不包含边界
         /// </summary>
         /// <param name="max">
         /// The max.
@@ -93,12 +93,22 @@ namespace System.ComponentModel.DataAnnotations
     [AttributeUsage(AttributeTargets.Property)]
     public class Max2Attribute:MaxAttribute
     {
+        /// <summary>
+        /// 最大值包含边界
+        /// </summary>
+        /// <param name="max"></param>
         public Max2Attribute(int max) : base(max)
         {
+            Max = max;
         }
 
+        /// <summary>
+        /// 最大值包含边界
+        /// </summary>
+        /// <param name="max"></param>
         public Max2Attribute(double max) : base(max)
         {
+            Max = max;
         }
         
         /// <summary>

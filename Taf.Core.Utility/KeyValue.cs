@@ -19,8 +19,6 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K2">
     /// </typeparam>
-    [DataContract]
-    [Serializable]
     public class KeyValue<K1, K2>:IComparable where K1:IComparable
     {
         /// <summary>
@@ -71,8 +69,6 @@ namespace Taf.Core.Utility
     /// <typeparam name="K1"></typeparam>
     /// <typeparam name="K2"></typeparam>
     /// <typeparam name="K3"></typeparam>
-    [DataContract]
-    [Serializable]
     public class KeyValue<K1, K2, K3> : KeyValue<K1, K2> where K1:IComparable
     {
         public KeyValue()
@@ -99,8 +95,6 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K4">
     /// </typeparam>
-    [DataContract]
-    [Serializable]
     public class KeyValue<K1, K2, K3, K4> : KeyValue<K1, K2, K3> where K1:IComparable
     {
         /// <summary>
@@ -131,8 +125,6 @@ namespace Taf.Core.Utility
     /// <typeparam name="K4">
     /// </typeparam>
     /// <typeparam name="K5"></typeparam>
-    [DataContract]
-    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5> : KeyValue<K1, K2, K3, K4> where K1:IComparable
     {
         /// <summary>
@@ -163,8 +155,6 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K5"></typeparam>
     /// <typeparam name="K6"></typeparam>
-    [DataContract]
-    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5, K6> : KeyValue<K1, K2, K3, K4, K5> where K1:IComparable
     {
         /// <summary>
@@ -199,8 +189,6 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K7">
     /// </typeparam>
-    [DataContract]
-    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5, K6, K7> : KeyValue<K1, K2, K3, K4, K5, K6> where K1:IComparable
     {
         /// <summary>
@@ -210,7 +198,7 @@ namespace Taf.Core.Utility
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3, K4 item4, K5 item5, K6 item6, K7 item7)
-            : base(item1, item2, item3, item4, item5, item6) { this.Item4 = item4; }
+            : base(item1, item2, item3, item4, item5, item6) { this.Item7 = item7; }
 
         public K7 Item7
         {
