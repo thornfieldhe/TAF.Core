@@ -74,6 +74,43 @@ namespace Taf.Core.Test
             Assert.Equal(students[0].Name,"H");
             Assert.Equal(students[1].Name,"F");
         }
+        /// <summary>
+        /// 根据已知顺序列表对当前列表排序
+        /// 根据已知属性顺序对对象排序
+        /// </summary>
+        [Fact]
+        public void OrderByCollectionTest()
+        {
+            var sortedName = new string[] {"H", "F", "B","A","C"};
+            var students = new List<TempData>()
+            {
+                new TempData() {Name = "A"}, new TempData() {Name = "B"}, new TempData() {Name = "C"}
+              , new TempData() {Name = "F"}, new TempData() {Name = "H"}
+            };
+
+            students=students.OrderBy(x=>x.Name,sortedName).ToList();
+            Assert.Equal(students[0].Name,"H");
+            Assert.Equal(students[1].Name,"F");
+        }
+        
+        /// <summary>
+        /// 根据已知顺序列表对当前列表排序
+        /// 根据已知属性顺序对对象排序
+        /// </summary>
+        [Fact]
+        public void ThenByCollectionTest()
+        {
+            var sortedName = new string[] {"A", "H", "C","F","B"};
+            var students = new List<TempData>()
+            {
+                new TempData() {Name = "A",Age = 10}, new TempData() {Name = "B",Age = 14}, new TempData() {Name = "C",Age = 10}
+              , new TempData() {Name = "F",Age = 10}, new TempData() {Name = "H",Age = 14}
+            };
+
+            students=students.OrderBy(x=>x.Age).ThenBy(x=>x.Name,sortedName).ToList();
+            Assert.Equal(students[1].Name,"C");
+            Assert.Equal(students[4].Name,"B");
+        }
         
         /// <summary>
         /// 针对KevValue对象进行排序
@@ -81,8 +118,8 @@ namespace Taf.Core.Test
         [Fact]
         public void SortByCollectionTest2()
         {
-            var sortedString = new string[] {"H", "F", "B","A","C"};
-            var sortedInt = new int[] {4, 8, 3,7,9};
+            var sortedString = new [] {"H", "F", "B","A","C"};
+            var sortedInt = new [] {4, 8, 3,7,9};
             var students = new List<KeyValue<int,string>>()
             {
                 new KeyValue<int,string>() {Value = "A",Key = 1}
@@ -105,6 +142,7 @@ namespace Taf.Core.Test
         private class TempData:IComparable
         {
             public string Name { get; set; }
+            public int Age { get; set; }
             public int CompareTo(object obj)
             {
                 var compare = obj as TempData;
