@@ -6,13 +6,28 @@
     /// <typeparam name="T"></typeparam>
     public class SingletonBase<T> where T : new()
     {
+        private static T instance = default(T);
+        private static readonly object padlock = new object();
         protected SingletonBase()
         {
         }
 
-        /// <summary>
-        /// 默认实例
-        /// </summary>
-        public static readonly T Instance = new T();
+        public static T Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new T();
+                        }
+                    }
+                }
+                return instance;
+            }
+        } 
     }
 }
