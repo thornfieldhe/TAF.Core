@@ -28,39 +28,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected override string Pattern
-        {
-            get
-            {
-                return StringRegExpression.Mobile;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 手机号验证
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property)]
-    public class EmailAttribute : RegValidateAttribute
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EmailAttribute"/> class.
-        /// </summary>
-        public EmailAttribute()
-            : base("应为邮箱地址")
-        {
-        }
-
-        /// <summary>
-        /// Gets the pattern.
-        /// </summary>
-        protected override string Pattern
-        {
-            get
-            {
-                return StringRegExpression.Email;
-            }
-        }
+        protected override string Pattern => StringRegExpression.Mobile;
     }
 
     /// <summary>
@@ -80,13 +48,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected override string Pattern
-        {
-            get
-            {
-                return StringRegExpression.Integer;
-            }
-        }
+        protected override string Pattern => StringRegExpression.Integer;
     }
 
     /// <summary>
@@ -106,12 +68,6 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected override string Pattern
-        {
-            get
-            {
-                return StringRegExpression.LetterAndNumbers;
-            }
-        }
+        protected override string Pattern => StringRegExpression.LetterAndNumbers;
     }
 }

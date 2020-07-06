@@ -20,18 +20,21 @@ namespace System.ComponentModel.DataAnnotations
     /// </summary>
     public class RegValidateAttribute : ValidationAttribute
     {
-        protected RegValidateAttribute(string message)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <param name="message"></param>
+        public RegValidateAttribute(string pattern,string message=null)
         {
+            Pattern      = pattern;
             ErrorMessage = message;
         }
 
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected virtual string Pattern
-        {
-            get;
-        }
+        protected virtual string Pattern{ get; }
 
         /// <summary>
         /// 格式化错误消息
@@ -46,7 +49,7 @@ namespace System.ComponentModel.DataAnnotations
         {
             if (ErrorMessage == null && ErrorMessageResourceName == null)
             {
-                ErrorMessage = "正则验证失败";
+                ErrorMessage = $"正则验证失败:{name}";
             }
 
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString);
