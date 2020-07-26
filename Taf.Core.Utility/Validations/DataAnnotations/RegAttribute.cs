@@ -20,15 +20,10 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="MobilePhoneAttribute"/> class.
         /// </summary>
-        public MobilePhoneAttribute()
-            : base("应为手机号码")
+        public MobilePhoneAttribute(string properityName =null)
+            : base(StringRegExpression.Mobile,"应为手机号码",properityName)
         {
         }
-
-        /// <summary>
-        /// Gets the pattern.
-        /// </summary>
-        protected override string Pattern => StringRegExpression.Mobile;
     }
 
     /// <summary>
@@ -40,15 +35,10 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="InteAttribute"/> class.
         /// </summary>
-        public InteAttribute()
-            : base("应为整数")
+        public InteAttribute(string properityName =null)
+            : base(StringRegExpression.Integer,"应为整数",properityName)
         {
         }
-
-        /// <summary>
-        /// Gets the pattern.
-        /// </summary>
-        protected override string Pattern => StringRegExpression.Integer;
     }
 
     /// <summary>
@@ -60,14 +50,9 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Initializes a new instance of the <see cref="LetterAndNumbersAttribute"/> class.
         /// </summary>
-        public LetterAndNumbersAttribute()
-            : base("应为数字和字母")
+        public LetterAndNumbersAttribute(string properityName =null)
+            : base(StringRegExpression.LetterAndNumbers,"应为数字和字母",properityName)
         {
         }
-
-        /// <summary>
-        /// Gets the pattern.
-        /// </summary>
-        protected override string Pattern => StringRegExpression.LetterAndNumbers;
     }
 }

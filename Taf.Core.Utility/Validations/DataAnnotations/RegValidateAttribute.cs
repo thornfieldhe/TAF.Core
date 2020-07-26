@@ -20,21 +20,28 @@ namespace System.ComponentModel.DataAnnotations
     /// </summary>
     public class RegValidateAttribute : ValidationAttribute
     {
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="pattern"></param>
+        /// <param name="properityName">属性名称，可以为空</param>
         /// <param name="message"></param>
-        public RegValidateAttribute(string pattern,string message=null)
-        {
-            Pattern      = pattern;
-            ErrorMessage = message;
+        public RegValidateAttribute(string pattern, string message, string properityName){
+            Pattern       = pattern;
+            ErrorMessage  = message;
+            ProperityName = properityName;
         }
 
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected virtual string Pattern{ get; }
+        protected string Pattern{ get; }
+
+        /// <summary>
+        /// Gets the pattern.
+        /// </summary>
+        protected  string ProperityName{ get; }
 
         /// <summary>
         /// 格式化错误消息
@@ -74,7 +81,7 @@ namespace System.ComponentModel.DataAnnotations
                 return null;
             }
 
-            return Regex.IsMatch(value.ToStr(), Pattern) ? null : new ValidationResult(FormatErrorMessage(string.Empty));
+            return Regex.IsMatch(value.ToStr(), Pattern) ? null : new ValidationResult(FormatErrorMessage(ProperityName??string.Empty));
         }
     }
 }
