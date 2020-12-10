@@ -112,6 +112,9 @@ namespace Taf.Test
         {
             get; set;
         }
+        
+        [MobilePhone("Phone")]
+        public string Phone{ get; set; }
 
 //        /// <summary>
 //        /// The validate.
