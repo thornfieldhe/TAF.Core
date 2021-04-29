@@ -62,7 +62,7 @@ namespace Taf.Core.Utility.Core{
                 link.AddBefore(t, f);
                 return link; 
             }
-            if (link.First==f)// f在首情况
+            if (link.First ==f || link.Last ==t) // f在首情况||t在尾情况
             {
                 a = f.Next;
                 b = t.Previous;
@@ -74,7 +74,7 @@ namespace Taf.Core.Utility.Core{
                 return link;
             }
             
-            if (link.Last==f)// f在尾情况
+            if (link.Last ==f || link.First ==t) // f在尾情况||t在首情况||在中间情况
             {  
                 a = f.Previous;
                 b = t.Next;
@@ -86,40 +86,7 @@ namespace Taf.Core.Utility.Core{
                 return link; 
             }
             
-            
-            if (link.First ==t) // t在首情况
-            {
-                a = f.Previous;
-                b = t.Next;
-                NotAllowNull(a, b);
-                link.Remove(f);
-                link.AddBefore(b, f);
-                link.Remove(t);
-                link.AddAfter(a, t);
-                return link;
-            }
-            
-            if (link.Last ==t) // t在尾情况
-            {  
-                a = f.Next;
-                b = t.Previous;
-                NotAllowNull(a, b);
-                link.Remove(f);
-                link.AddAfter(b, f);
-                link.Remove(t);
-                link.AddBefore(a, t);
-                return link; 
-            }
-            
-            //在中间情况
-            a = f.Previous;
-            b = t.Next;
-            NotAllowNull(a, b);
-            link.Remove(f);
-            link.AddBefore(b, f);
-            link.Remove(t);
-            link.AddAfter(a, t);
-            return link;
+            throw new  Exception("未定义此类情形");
         }
     }
 }

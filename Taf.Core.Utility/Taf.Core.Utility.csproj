@@ -9,10 +9,10 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/thornfieldhe/TAF.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thornfieldhe/TAF.Core</RepositoryUrl>
-    <AssemblyVersion>1.0.7.1</AssemblyVersion>
-    <FileVersion>1.0.7.1</FileVersion>
+    <AssemblyVersion>1.0.22</AssemblyVersion>
+    <FileVersion>1.0.22</FileVersion>
     <Version>1.0.7</Version>
-    <PackageVersion>1.0.19</PackageVersion>
+    <PackageVersion>1.0.22</PackageVersion>
     <TargetFrameworks>netcoreapp2.1;netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
 

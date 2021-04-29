@@ -7,22 +7,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
-namespace Taf.Core.Utility
-{
+namespace Taf.Core.Utility{
     using System;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Xml.Serialization;
-
     using Newtonsoft.Json;
 
     /// <summary>
     /// The extensions.
     /// </summary>
-    public partial class Extensions
-    {
+    public partial class Extensions{
         /// <summary>
         /// The default formatter type.
         /// </summary>
@@ -38,10 +38,8 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string SerializeObjectToString(this object graph, FormatterType formatterType)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
+        public static string SerializeObjectToString(this object graph, FormatterType formatterType){
+            using(var memoryStream = new MemoryStream()){
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(memoryStream, graph);
                 var arrGraph = memoryStream.ToArray();
@@ -57,13 +55,12 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string SerializeObjectToString(this object graph)
-        {
+        public static string SerializeObjectToString(this object graph){
             return SerializeObjectToString(graph, DefaultFormatterType);
         }
 
         /// <summary>
-        /// 把已序列化为字符串类型的对象反序列化为指定的类型 
+        /// 把已序列化为字符串类型的对象反序列化为指定的类型
         /// </summary>
         /// <typeparam name="T">
         /// </typeparam>
@@ -74,13 +71,11 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T DeserializeStringToObject<T>(this string graph, FormatterType formatterType)
-        {
+        public static T DeserializeStringToObject<T>(this string graph, FormatterType formatterType){
             var arrGraph = Convert.FromBase64String(graph);
-            using (var memoryStream = new MemoryStream(arrGraph))
-            {
+            using(var memoryStream = new MemoryStream(arrGraph)){
                 var formatter = new BinaryFormatter();
-                return (T)formatter.Deserialize(memoryStream);
+                return (T) formatter.Deserialize(memoryStream);
             }
         }
 
@@ -95,8 +90,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T DeserializeStringToObject<T>(this string graph)
-        {
+        public static T DeserializeStringToObject<T>(this string graph){
             return DeserializeStringToObject<T>(graph, DefaultFormatterType);
         }
 
@@ -110,17 +104,54 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T DeepCopy<T>(this T t)
-        {
-            using (var stream = new MemoryStream())
-            {
+        public static T DeepCopy<T>(this T t){
+            using(var stream = new MemoryStream()){
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(stream, t);
                 stream.Seek(0, SeekOrigin.Begin);
-                var copy = (T)formatter.Deserialize(stream);
+                var copy = (T) formatter.Deserialize(stream);
                 stream.Close();
                 return copy;
             }
+        }
+
+        private static Dictionary<string, object> _Dic = new Dictionary<string, object>();
+
+        /// <summary>
+        /// 将源对象所有属性赋值给目标对象
+        /// 确保目标对象的属性名称与原对象的属性名称一致，且目标对象属性数量可以少于原对象属性数量
+        /// </summary>
+        /// <param name="tIn"></param>
+        /// <typeparam name="TIn"></typeparam>
+        /// <typeparam name="TOut"></typeparam>
+        /// <returns></returns>
+        public static TOut Copy<TIn, TOut>(this TIn tIn, params string[] skipProperties){
+            var skipKey = skipProperties != null ? $"_{string.Join('_', skipProperties)}" : "";
+            var key     = $"trans_exp_{typeof(TIn).FullName}_{typeof(TOut).FullName}_{skipKey}";
+            if(!_Dic.ContainsKey(key)){
+                var parameterExpression = Expression.Parameter(typeof(TIn), "p");
+                var memberBindingList   = new List<MemberBinding>();
+
+                foreach(var item in typeof(TOut).GetProperties()){
+                    if(!item.CanWrite
+                    || skipProperties.Contains(item.Name))
+                        continue;
+                    var property = Expression.Property(parameterExpression, typeof(TIn).GetProperty(item.Name));
+                    MemberBinding memberBinding = Expression.Bind(item, property);
+                    memberBindingList.Add(memberBinding);
+                }
+
+                var memberInitExpression =
+                    Expression.MemberInit(Expression.New(typeof(TOut)), memberBindingList.ToArray());
+                var lambda =
+                    Expression.Lambda<Func<TIn, TOut>>(memberInitExpression
+                                                     , new ParameterExpression[]{parameterExpression});
+                var func = lambda.Compile();
+
+                _Dic[key] = func;
+            }
+
+            return ((Func<TIn, TOut>) _Dic[key])(tIn);
         }
 
         #region Xml序列化
@@ -136,23 +167,19 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string XMLSerializer<T>(this T obj)
-        {
-            MemoryStream stream = new MemoryStream();
-            XmlSerializer xml = new XmlSerializer(typeof(T));
-            try
-            {
-                // 序列化对象  
+        public static string XMLSerializer<T>(this T obj){
+            MemoryStream  stream = new MemoryStream();
+            XmlSerializer xml    = new XmlSerializer(typeof(T));
+            try{
+                // 序列化对象
                 xml.Serialize(stream, obj);
-            }
-            catch (InvalidOperationException ex)
-            {
+            } catch(InvalidOperationException ex){
                 throw ex;
             }
 
             stream.Position = 0;
-            StreamReader sr = new StreamReader(stream);
-            string str = sr.ReadToEnd();
+            StreamReader sr  = new StreamReader(stream);
+            string       str = sr.ReadToEnd();
             sr.Dispose();
             stream.Dispose();
             return str;
@@ -168,23 +195,17 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T XMLDeserializeFromString<T>(this string xml)
-        {
-            try
-            {
-                if (xml != null)
-                {
-                    using (StringReader sr = new StringReader(xml))
-                    {
+        public static T XMLDeserializeFromString<T>(this string xml){
+            try{
+                if(xml != null){
+                    using(StringReader sr = new StringReader(xml)){
                         XmlSerializer xmldes = new XmlSerializer(typeof(T));
-                        return (T)xmldes.Deserialize(sr);
+                        return (T) xmldes.Deserialize(sr);
                     }
                 }
 
                 return default(T);
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex){
                 throw ex;
             }
         }
@@ -200,11 +221,10 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="jsonString"></param>
         /// <returns></returns>
-        public static T DeSerializesFromString<T>(string jsonString) where T : class
-        {
+        public static T DeSerializesFromString<T>(string jsonString) where T : class{
             var serializer = new JsonSerializer();
-            var sr = new StringReader(jsonString);
-            var o = serializer.Deserialize(new JsonTextReader(sr), typeof(T));
+            var sr         = new StringReader(jsonString);
+            var o          = serializer.Deserialize(new JsonTextReader(sr), typeof(T));
             return o as T;
         }
 
@@ -214,20 +234,17 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string SerializeToString<T>(T t)
-        {
+        public static string SerializeToString<T>(T t){
             return JsonConvert.SerializeObject(t);
         }
 
         #endregion
-
     }
 
     /// <summary>
     /// The formatter type.
     /// </summary>
-    public enum FormatterType
-    {
+    public enum FormatterType{
         /// <summary>
         /// The soap.
         /// </summary>
