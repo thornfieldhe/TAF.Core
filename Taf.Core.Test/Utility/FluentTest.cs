@@ -174,7 +174,7 @@ namespace Taf.Core.Test
                 ++result;
                 return result != 6;
             });
-            Assert.Equal(result, 6);
+            Assert.Equal(6, result);
         }
 
         [Fact]
@@ -187,7 +187,7 @@ namespace Taf.Core.Test
                 ++result;
                 return result == 6;
             });
-            Assert.Equal(result, 6);
+            Assert.Equal(6, result);
         }
 
         [Fact]
@@ -203,7 +203,7 @@ namespace Taf.Core.Test
                 ++result;
             });
 
-            Assert.Equal(result, 6);
+            Assert.Equal(6, result);
         }
 
         [Fact]
@@ -223,7 +223,7 @@ namespace Taf.Core.Test
     ++result;
 });
 
-            Assert.Equal(conditionEvaluationCount, 5);
+            Assert.Equal(5, conditionEvaluationCount);
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace Taf.Core.Test
     ++result;
 });
 
-            Assert.Equal(conditionEvaluationCount, 4);
+            Assert.Equal(4, conditionEvaluationCount);
         }
 
         [Fact]
@@ -260,7 +260,7 @@ namespace Taf.Core.Test
                 return result < 5;
             });
 
-            Assert.Equal(result, 5);
+            Assert.Equal(5, result);
         }
 
         [Fact]
@@ -270,7 +270,7 @@ namespace Taf.Core.Test
 
             Fx.Try(() =>
             {
-            }).Catch<Exception>(ex =>
+            }).Catch<Exception>(_ =>
             {
                 exceptionOccured = true;
             });
@@ -281,12 +281,9 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Try_2_Catch_CatchExcuted()
         {
-            bool exceptionOccured = false;
+            var exceptionOccured = false;
 
-            Fx.Try(() =>
-            {
-                throw new NotImplementedException();
-            }).Catch<NotImplementedException>(ex =>
+            Fx.Try(() => throw new NotImplementedException()).Catch<NotImplementedException>(_ =>
             {
                 exceptionOccured = true;
             });
@@ -302,10 +299,10 @@ namespace Taf.Core.Test
             Fx.Try(() =>
             {
                 throw new NotImplementedException();
-            }).Catch<NotImplementedException, Exception>(ex1 =>
+            }).Catch<NotImplementedException, Exception>(_ =>
             {
                 exceptionOccured = true;
-            }, ex2 =>
+            }, _ =>
             {
             });
 
@@ -322,7 +319,7 @@ namespace Taf.Core.Test
                 //++result;
             }).SwallowIf<NotImplementedException>();
 
-            Assert.Equal(result, 0);
+            Assert.Equal(0, result);
         }
 
         [Fact]
@@ -334,21 +331,16 @@ namespace Taf.Core.Test
                 result += current;
             });
 
-            Assert.Equal(result, 10);
+            Assert.Equal(10, result);
         }
 
         [Fact]
         public void Test_Is_WithSafeNull()
         {
-            User entity = null;
-            bool isIDMatched = false;
-            if (Fx.Is(() => entity.Name == null))
-            {
+            User? entity      = null;
+            var  isIdMatched = Fx.Is(() => entity.Name == null);
 
-                isIDMatched = true;
-            }
-
-            Assert.False(isIDMatched);
+            Assert.False(isIdMatched);
         }
 
         [Fact]

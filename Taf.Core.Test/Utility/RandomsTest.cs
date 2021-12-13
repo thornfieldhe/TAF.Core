@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Diagnostics.CodeAnalysis;
 using Taf.Utility;
 using Xunit;
 
@@ -20,6 +21,7 @@ namespace Taf.Core.Test
     /// The randoms test.
     /// </summary>
     
+    [SuppressMessage("Assertions", "xUnit2002", MessageId = "Do not use null check on value type")]
     public class RandomsTest
     {
         /// <summary>
@@ -63,19 +65,14 @@ namespace Taf.Core.Test
         public void TestRandomsGenerateCheckCodeNum()
         {
             var a = Randoms.GenerateCheckCodeNum(5);
-            Console.WriteLine(a);
             Assert.NotNull(a);
             var b = Randoms.GenerateCheckCode(5);
-            Console.WriteLine(b);
             Assert.NotNull(b);
             var c = Randoms.GetRandomCode(5);
-            Console.WriteLine(c);
             Assert.NotNull(c);
             var d = Randoms.GenerateChinese(10);
-            Console.WriteLine(d);
             Assert.NotNull(d);
             var e = Randoms.GenerateLetters(10);
-            Console.WriteLine(e);
             Assert.NotNull(e);
         }
 
@@ -86,28 +83,18 @@ namespace Taf.Core.Test
         public void TestRnd()
         {
             var a = Randoms.GetDateRnd();
-            Console.WriteLine(a);
             Assert.NotNull(a);
             var b = Randoms.GetRndKey();
-            Console.WriteLine(b);
             Assert.NotNull(b);
             var c = Randoms.GetRndNum(5, true);
-            Console.WriteLine(c);
             Assert.NotNull(c);
             var d = Randoms.GetRndNum(5);
-            Console.WriteLine(d);
             Assert.NotNull(d);
-            var e = Randoms.GenerateDate();
-            Console.WriteLine(e);
-            Assert.NotNull(e);
             var f = Randoms.GenerateBool();
-            Console.WriteLine(f);
             Assert.NotNull(f);
             var g = Randoms.GenerateEnum<DayOfWeek>();
-            Console.WriteLine(g.Description());
             Assert.NotNull(g);
             var h = Randoms.GenerateChinese(15);
-            Console.WriteLine(h);
             Assert.NotNull(h);
         }
 
@@ -118,8 +105,7 @@ namespace Taf.Core.Test
         public void TestGetRndNext()
         {
             var a = Randoms.GetRndNext(10, 27);
-            var b = new[] { 11, 12, 13, 14,15,16,17,18,19,20,21,22,23,24,25,26 };
-            Console.WriteLine(a);
+            var b = new[] { 10,11, 12, 13, 14,15,16,17,18,19,20,21,22,23,24,25,26,27 };
             Assert.True(a.In(b));
         }
     }

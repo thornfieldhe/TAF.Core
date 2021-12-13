@@ -56,7 +56,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T CreateInstance<T>(string className, params object[] parameters)
+        public static T? CreateInstance<T>(string className, params object[] parameters)
         {
             var type = Type.GetType(className) ?? Assembly.GetCallingAssembly().GetType(className);
             return CreateInstance<T>(type, parameters);
@@ -77,7 +77,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T CreateInstance<T>(Type type, params object[] parameters)
+        public static T? CreateInstance<T>(Type type, params object[] parameters)
         {
             return Activator.CreateInstance(type, parameters).To<T>();
         }

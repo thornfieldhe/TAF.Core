@@ -51,7 +51,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static T Value<T>(this System.Enum instance)
+        public static T? Value<T>(this System.Enum instance)
         {
             return Value(instance).To<T>();
         }

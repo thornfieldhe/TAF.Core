@@ -24,11 +24,7 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static bool IsInt(this string s)
-        {
-            int i;
-            return int.TryParse(s, out i);
-        }
+        public static bool IsInt(this string s) => int.TryParse(s, out _);
 
         /// <summary>
         /// 转换成int值
@@ -40,21 +36,14 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public static int ToInt(this bool obj)
-        {
-            return obj ? 1 : 0;
-        }
+        public static int ToInt(this bool obj) => obj ? 1 : 0;
 
         /// <summary>
         /// 是否是bool
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static bool IsBool(this string s)
-        {
-            bool i;
-            return bool.TryParse(s, out i);
-        }
+        public static bool IsBool(this string s) => bool.TryParse(s, out _);
 
         /// <summary>
         /// 转换成bool值
@@ -64,10 +53,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool ToBool(this int obj)
-        {
-            return obj == 1;
-        }
+        public static bool ToBool(this int obj) => obj == 1;
 
         /// <summary>
         /// 在未知对象类型时将对象转换成类型T
@@ -79,7 +65,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T To<T>(this object data)
+        public static T? To<T>(this object? data)
         {
             if (data == null)
             {
@@ -96,7 +82,7 @@ namespace Taf.Core.Utility
             {
                 if (type.Name.ToLower() == "guid")
                 {
-                    return (T)(object)new Guid(data.ToString());
+                    return (T)(object)new Guid(data.ToString() ?? string.Empty);
                 }
 
                 if (data is IConvertible)
@@ -121,7 +107,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static string ToCSV<T>(this IEnumerable<T> list, string separator = ",")
+        public static string ToCsv<T>(this IEnumerable<T> list, string separator = ",")
         {
             if (list == null)
             {
@@ -144,11 +130,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public static int ToInt(this string @this, int defaultValue = default(int))
-        {
-            int x;
-            return int.TryParse(@this, out x) ? x : defaultValue;
-        }
+        public static int ToInt(this string @this, int defaultValue = default(int)) => int.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 转换为可空int
@@ -160,15 +142,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static int? ToIntOrNull(this string @this, int defaultValue = default(int))
+        public static int? ToIntOrNull(this string? @this, int defaultValue = default(int))
         {
             if (@this == null)
             {
                 return null;
             }
 
-            int x;
-            return int.TryParse(@this, out x) ? x : defaultValue;
+            return int.TryParse(@this, out var x) ? x : defaultValue;
         }
 
         /// <summary>
@@ -180,22 +161,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static long ToLong(this string @this, long defaultValue = default(long))
-        {
-            long x;
-            return long.TryParse(@this, out x) ? x : defaultValue;
-        }
+        public static long ToLong(this string @this, long defaultValue = default(long)) => long.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 是否是double
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static bool IsDouble(this string s)
-        {
-            double i;
-            return double.TryParse(s, out i);
-        }
+        public static bool IsDouble(this string s) => double.TryParse(s, out _);
 
         /// <summary>
         /// 转换为double
@@ -207,11 +180,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static double ToDouble(this string @this, double defaultValue = default(double))
-        {
-            double x;
-            return double.TryParse(@this, out x) ? x : defaultValue;
-        }
+        public static double ToDouble(this string @this, double defaultValue = default(double)) => double.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 转换为可空double
@@ -223,15 +192,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static double? ToDoubleOrNull(this string @this, double defaultValue = default(double))
+        public static double? ToDoubleOrNull(this string? @this, double defaultValue = default(double))
         {
             if (@this == null)
             {
                 return null;
             }
 
-            double x;
-            return double.TryParse(@this, out x) ? x : defaultValue;
+            return double.TryParse(@this, out var x) ? x : defaultValue;
         }
 
         /// <summary>
@@ -239,11 +207,7 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static bool IsDecemal(this string s)
-        {
-            decimal i;
-            return decimal.TryParse(s, out i);
-        }
+        public static bool IsDecemal(this string s) => decimal.TryParse(s, out _);
 
         /// <summary>
         /// 转换为decimal
@@ -255,11 +219,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static decimal ToDecimal(this string @this, decimal defaultValue = default(decimal))
-        {
-            decimal x;
-            return decimal.TryParse(@this, out x) ? x : defaultValue;
-        }
+        public static decimal ToDecimal(this string @this, decimal defaultValue = default(decimal)) => decimal.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 转换为可空decimal
@@ -271,15 +231,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static decimal? ToDecimalOrNull(this string @this, decimal defaultValue = default(decimal))
+        public static decimal? ToDecimalOrNull(this string? @this, decimal defaultValue = default(decimal))
         {
             if (@this == null)
             {
                 return null;
             }
 
-            decimal x;
-            return decimal.TryParse(@this, out x) ? x : defaultValue;
+            return decimal.TryParse(@this, out var x) ? x : defaultValue;
         }
 
         /// <summary>
@@ -291,22 +250,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static float ToFloat(this string @this, float defaultValue = default(float))
-        {
-            float x;
-            return float.TryParse(@this, out x) ? x : defaultValue;
-        }
+        public static float ToFloat(this string @this, float defaultValue = default(float)) => float.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 是否是dateTime
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static bool IsDateTime(this string s)
-        {
-            DateTime i;
-            return DateTime.TryParse(s, out i);
-        }
+        public static bool IsDateTime(this string s) => DateTime.TryParse(s, out _);
 
         /// <summary>
         /// 转换为日期
@@ -316,11 +267,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static DateTime ToDate(this string @this)
-        {
-            DateTime target;
-            return DateTime.TryParse(@this, out target) ? target : DateTime.Now;
-        }
+        public static DateTime ToDate(this string @this) => DateTime.TryParse(@this, out var target) ? target : DateTime.Now;
 
         /// <summary>
         /// 转换为可空日期
@@ -330,15 +277,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static DateTime? ToDateOrNull(this string @this)
+        public static DateTime? ToDateOrNull(this string? @this)
         {
             if (@this == null)
             {
                 return null;
             }
 
-            DateTime target;
-            var isValid = DateTime.TryParse(@this, out target);
+            var isValid = DateTime.TryParse(@this, out var target);
             if (isValid)
             {
                 return target;
@@ -357,11 +303,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static Guid ToGuid(this string @this, Guid defaultValue = default(Guid))
-        {
-            Guid x;
-            return Guid.TryParse(@this, out x) ? x : defaultValue;
-        }
+        public static Guid ToGuid(this string @this, Guid defaultValue = default(Guid)) => Guid.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 转换为可空Guid
@@ -373,15 +315,14 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static Guid? ToGuidOrNull(this string @this, Guid defaultValue = default(Guid))
+        public static Guid? ToGuidOrNull(this string? @this, Guid defaultValue = default(Guid))
         {
             if (@this == null)
             {
                 return null;
             }
 
-            Guid x;
-            return Guid.TryParse(@this, out x) ? x : defaultValue;
+            return Guid.TryParse(@this, out var x) ? x : defaultValue;
         }
 
         /// <summary>
@@ -413,7 +354,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static bool ToBool(this string @this)
+        public static bool ToBool(this string? @this)
         {
             if (@this == null)
             {
@@ -426,8 +367,7 @@ namespace Taf.Core.Utility
                 return value.Value;
             }
 
-            bool result;
-            return bool.TryParse(@this, out result) && result;
+            return bool.TryParse(@this, out var result) && result;
         }
 
         /// <summary>
@@ -438,7 +378,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static bool? ToBoolOrNull(this string @this)
+        public static bool? ToBoolOrNull(this string? @this)
         {
             if (@this == null)
             {
@@ -451,8 +391,7 @@ namespace Taf.Core.Utility
                 return value.Value;
             }
 
-            bool result;
-            var isValid = bool.TryParse(@this, out result);
+            var isValid = bool.TryParse(@this, out var result);
             if (isValid)
             {
                 return result;
@@ -493,9 +432,9 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static List<T> ToList<T>(this IList<string> obj)
+        public static List<T> ToList<T>(this IList<string>? obj)
         {
-            return obj == null ? new List<T>() : obj.Select(t => t.To<T>()).ToList();
+            return obj == null ? new List<T>() : obj.Select(t => t.To<T>()).ToList()!;
         }
 
 
@@ -507,9 +446,9 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        private static bool? GetBool(string @this)
+        private static bool? GetBool(string? @this)
         {
-            switch (@this.Trim().ToLower())
+            switch (@this?.Trim().ToLower())
             {
                 case "0":
                     return false;
