@@ -55,9 +55,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string SerializeObjectToString(this object graph){
-            return SerializeObjectToString(graph, DefaultFormatterType);
-        }
+        public static string SerializeObjectToString(this object graph) => SerializeObjectToString(graph, DefaultFormatterType);
 
         /// <summary>
         /// 把已序列化为字符串类型的对象反序列化为指定的类型
@@ -90,9 +88,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T DeserializeStringToObject<T>(this string graph){
-            return DeserializeStringToObject<T>(graph, DefaultFormatterType);
-        }
+        public static T DeserializeStringToObject<T>(this string graph) => DeserializeStringToObject<T>(graph, DefaultFormatterType);
 
         /// <summary>
         /// 深度克隆
@@ -118,8 +114,10 @@ namespace Taf.Core.Utility{
         private static Dictionary<string, object> _Dic = new Dictionary<string, object>();
 
         /// <summary>
-        /// 将源对象所有属性赋值给目标对象
+        /// 将源对象所有属性赋值给目标对象,【仅仅支持系统基本类型，不支持对象】
         /// 确保目标对象的属性名称与原对象的属性名称一致，且目标对象属性数量可以少于原对象属性数量
+        /// 【Dictionary克隆使用Dictionary<string, int> copy = new Dictionary<string, int>(dictionary);】
+        /// 对象内部包含的对象需要分别使用Copy方法进行克隆
         /// </summary>
         /// <param name="tIn"></param>
         /// <typeparam name="TIn"></typeparam>
@@ -167,7 +165,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string XMLSerializer<T>(this T obj){
+        public static string XmlSerializer<T>(this T obj){
             MemoryStream  stream = new MemoryStream();
             XmlSerializer xml    = new XmlSerializer(typeof(T));
             try{
@@ -195,7 +193,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T XMLDeserializeFromString<T>(this string xml){
+        public static T XmlDeserializeFromString<T>(this string xml){
             try{
                 if(xml != null){
                     using(StringReader sr = new StringReader(xml)){
@@ -234,11 +232,9 @@ namespace Taf.Core.Utility{
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string SerializeToString<T>(T t){
-            return JsonConvert.SerializeObject(t);
-        }
+        public static string SerializeToString<T>(T t) => JsonConvert.SerializeObject(t);
 
-        #endregion
+    #endregion
     }
 
     /// <summary>

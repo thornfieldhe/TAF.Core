@@ -32,8 +32,8 @@ namespace Taf.Core.Test
         public void TestXMlSerialize()
         {
             var user = new User() { Name = "xxx" };
-            var serialize = user.XMLSerializer();
-            Assert.Equal(serialize.XMLDeserializeFromString<User>().Name, user.Name);
+            var serialize = user.XmlSerializer();
+            Assert.Equal(serialize.XmlDeserializeFromString<User>().Name, user.Name);
         }
 
     }

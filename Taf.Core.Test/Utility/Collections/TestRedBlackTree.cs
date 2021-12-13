@@ -25,7 +25,7 @@ namespace Taf.Core.Test{
         public void TestSpeed(){
             var list1    = new RedBlackTree<int>();
             var list2    = new SortedSet<int>();
-            var testlist = new int[10000000];
+            var testlist = new int[100000];
             for(var index = 0; index < testlist.Length; index++){
                 testlist[index] = Randoms.GetRandomInt(0, 10000);
             }

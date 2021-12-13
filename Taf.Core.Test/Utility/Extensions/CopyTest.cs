@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Taf.Core.Utility;
+using Taf.Test;
 using Xunit;
 
 // 何翔华
@@ -38,18 +39,21 @@ namespace Taf.Core.Test{
                 var m1= e1.DeepCopy();
                 Assert.Equal(m1.Age,e1.Age);
                 Assert.Equal(m1.Name3,e1.Name3);
+                m1.Age = 120;
+                Assert.NotEqual(m1.Age,e1.Age);
                 var m = e1.Copy<CopyEntity,CopyEntity2>();
+                m.User = e1.User.Copy<User2, User2>();
+                m.Ext  = new Dictionary<string, string>(m.Ext);
                 Assert.Equal(m.Age,   e1.Age);
                 Assert.Equal(m.Name3, e1.Name3);
                 Assert.Equal(m.User.S.Count,e1.User.S.Count);
                 m.Ext.Add("333","444");
                 Assert.NotEqual(m.Ext.Count,e1.Ext.Count);
-
+                m.User.S = new List<string>(){ "1111111111" };
                 Assert.NotNull(e1.Xx);
-                Assert.NotNull(m1.Xx);
-
+                Assert.NotNull(m.Xx);
                 e1.User.S.Add("ffff");
-                Assert.NotEqual(m1.User.S.Count, e1.User.S.Count);
+                Assert.NotEqual(m.User.S.Count, e1.User.S.Count);
         }
     }
 

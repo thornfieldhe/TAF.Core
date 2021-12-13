@@ -35,13 +35,13 @@ namespace Taf.Core.Utility
         /// </returns>
         public static string GetNewPassword(int pwdlen)
         {
-            const string Randomchars = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string randomchars = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var tmpstr = string.Empty;
             var rnd = new Random();
             for (var i = 0; i < pwdlen; i++)
             {
-                var iRandNum = rnd.Next(Randomchars.Length);
-                tmpstr += Randomchars[iRandNum];
+                var iRandNum = rnd.Next(randomchars.Length);
+                tmpstr += randomchars[iRandNum];
             }
 
             return tmpstr;
@@ -57,14 +57,14 @@ namespace Taf.Core.Utility
         /// </returns>
         public static string DesEncrypt(string strText)
         {
-            byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+            byte[] iv = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
             try
             {
                 var byKey = Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8));
                 var des = new DESCryptoServiceProvider();
                 var inputByteArray = Encoding.UTF8.GetBytes(strText);
                 var ms = new MemoryStream();
-                var cs = new CryptoStream(ms, des.CreateEncryptor(byKey, IV), CryptoStreamMode.Write);
+                var cs = new CryptoStream(ms, des.CreateEncryptor(byKey, iv), CryptoStreamMode.Write);
                 cs.Write(inputByteArray, 0, inputByteArray.Length);
                 cs.FlushFinalBlock();
                 return Convert.ToBase64String(ms.ToArray());
@@ -85,14 +85,14 @@ namespace Taf.Core.Utility
         /// </returns>
         public static string DesDecrypt(string strText)
         {
-            byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+            byte[] iv = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
             try
             {
                 var byKey = Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8));
                 var des = new DESCryptoServiceProvider();
                 var inputByteArray = Convert.FromBase64String(strText);
                 var ms = new MemoryStream();
-                var cs = new CryptoStream(ms, des.CreateDecryptor(byKey, IV), CryptoStreamMode.Write);
+                var cs = new CryptoStream(ms, des.CreateDecryptor(byKey, iv), CryptoStreamMode.Write);
                 cs.Write(inputByteArray, 0, inputByteArray.Length);
                 cs.FlushFinalBlock();
                 Encoding encoding = new UTF8Encoding();
@@ -112,7 +112,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetMD5Hash(string input)
+        public static string GetMd5Hash(string input)
         {
             var md5 = MD5.Create();
             var inputBytes = Encoding.ASCII.GetBytes(input);
@@ -135,10 +135,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Md5By16(string text)
-        {
-            return Md5By16(text, Encoding.UTF8);
-        }
+        public static string Md5By16(string text) => Md5By16(text, Encoding.UTF8);
 
         /// <summary>
         /// Md5加密，返回16位结果
@@ -152,10 +149,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Md5By16(string text, Encoding encoding)
-        {
-            return Md5(text, encoding, 4, 8);
-        }
+        public static string Md5By16(string text, Encoding encoding) => Md5(text, encoding, 4, 8);
 
         /// <summary>
         /// Md5加密
@@ -210,10 +204,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Md5By32(string text)
-        {
-            return Md5By32(text, Encoding.UTF8);
-        }
+        public static string Md5By32(string text) => Md5By32(text, Encoding.UTF8);
 
         /// <summary>
         /// Md5加密，返回32位结果
@@ -227,27 +218,24 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Md5By32(string text, Encoding encoding)
-        {
-            return Md5(text, encoding, null, null);
-        }
+        public static string Md5By32(string text, Encoding encoding) => Md5(text, encoding, null, null);
 
         /// <summary> 
         /// SHA1加密字符串 
         /// </summary> 
         /// <param name="text">源字符串</param> 
         /// <returns>加密后的字符串</returns> 
-        public static string SHA1(string text)
+        public static string Sha1(string text)
         {
-            var StrRes = Encoding.Default.GetBytes(text);
-            HashAlgorithm iSHA = new SHA1CryptoServiceProvider();
-            StrRes = iSHA.ComputeHash(StrRes);
-            var EnText = new StringBuilder();
-            foreach (var iByte in StrRes)
+            var strRes = Encoding.Default.GetBytes(text);
+            HashAlgorithm iSha = new SHA1CryptoServiceProvider();
+            strRes = iSha.ComputeHash(strRes);
+            var enText = new StringBuilder();
+            foreach (var iByte in strRes)
             {
-                EnText.Append($"{iByte:x2}");
+                enText.Append($"{iByte:x2}");
             }
-            return EnText.ToString();
+            return enText.ToString();
         }
 
         #region RSA加密解密

@@ -9,11 +9,13 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/thornfieldhe/TAF.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thornfieldhe/TAF.Core</RepositoryUrl>
-    <AssemblyVersion>1.0.22</AssemblyVersion>
-    <FileVersion>1.0.22</FileVersion>
+    <AssemblyVersion>5.0.1</AssemblyVersion>
+    <FileVersion>5.0.1</FileVersion>
     <Version>1.0.7</Version>
-    <PackageVersion>1.0.22</PackageVersion>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp2.2</TargetFrameworks>
+    <PackageVersion>5.0.1</PackageVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
