@@ -303,7 +303,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static Guid ToGuid(this string @this, Guid defaultValue = default(Guid)) => Guid.TryParse(@this, out var x) ? x : defaultValue;
+        public static Guid ToGuid(this string @this, Guid defaultValue = default) => Guid.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 转换为可空Guid

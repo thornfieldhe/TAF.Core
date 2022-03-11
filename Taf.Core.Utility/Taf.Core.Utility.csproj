@@ -9,13 +9,16 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/thornfieldhe/TAF.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thornfieldhe/TAF.Core</RepositoryUrl>
-    <AssemblyVersion>5.0.1</AssemblyVersion>
-    <FileVersion>5.0.1</FileVersion>
+    <AssemblyVersion>5.0.4</AssemblyVersion>
+    <FileVersion>5.0.4</FileVersion>
     <Version>1.0.7</Version>
-    <PackageVersion>5.0.1</PackageVersion>
-    <TargetFramework>net5.0</TargetFramework>
+    <PackageVersion>5.0.4</PackageVersion>
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>thornfield.he.snk</AssemblyOriginatorKeyFile>
+    <PublicSign>true</PublicSign>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

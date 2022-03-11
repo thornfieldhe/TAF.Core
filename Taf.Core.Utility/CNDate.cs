@@ -5,48 +5,48 @@ namespace Taf.Core.Utility
     /// <summary>
     /// 农历属性
     /// </summary>
-    internal class CNDate
+    internal class CnDate
     {
         /// <summary>
         /// 农历年(整型)
         /// </summary>
-        public int cnIntYear = 0;
+        public int CnIntYear;
         /// <summary>
         /// 农历月份(整型)
         /// </summary>
-        public int cnIntMonth = 0;
+        public int CnIntMonth;
         /// <summary>
         /// 农历天(整型)
         /// </summary>
-        public int cnIntDay = 0;
+        public int CnIntDay;
         /// <summary>
         /// 农历年(支干)
         /// </summary>
-        public string cnStrYear = "";
+        public string CnStrYear = "";
         /// <summary>
         /// 农历月份(字符)
         /// </summary>
-        public string cnStrMonth = "";
+        public string CnStrMonth = "";
         /// <summary>
         /// 农历天(字符)
         /// </summary>
-        public string cnStrDay = "";
+        public string CnStrDay = "";
         /// <summary>
         /// 农历属象
         /// </summary>
-        public string cnAnm = "";
+        public string CnAnm = "";
         /// <summary>
         /// 二十四节气
         /// </summary>
-        public string cnSolarTerm = "";
+        public string CnSolarTerm = "";
         /// <summary>
         /// 阴历节日
         /// </summary>
-        public string cnFtvl = "";
+        public string CnFtvl = "";
         /// <summary>
         /// 阳历节日
         /// </summary>
-        public string cnFtvs = "";
+        public string CnFtvs = "";
     }
 
     /// <summary>
@@ -180,7 +180,7 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年的总天数
         /// </summary>
-        private static int lYearDays(int y)
+        private static int LYearDays(int y)
         {
             int i, sum = 348;
             for (i = 0x8000; i > 0x8; i >>= 1)
@@ -188,15 +188,15 @@ namespace Taf.Core.Utility
                 if ((lunarInfo[y - 1900] & i) != 0)
                     sum += 1;
             }
-            return (sum + leapDays(y));
+            return (sum + LeapDays(y));
         }
 
         /// <summary>
         /// 传回农历y年闰月的天数
         /// </summary>
-        private static int leapDays(int y)
+        private static int LeapDays(int y)
         {
-            if (leapMonth(y) != 0)
+            if (LeapMonth(y) != 0)
             {
                 if ((lunarInfo[y - 1900] & 0x10000) != 0)
                     return 30;
@@ -210,7 +210,7 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年闰哪个月 1-12 , 没闰传回 0
         /// </summary>
-        private static int leapMonth(int y)
+        private static int LeapMonth(int y)
         {
             return (int)(lunarInfo[y - 1900] & 0xf);
         }
@@ -218,7 +218,7 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年m月的总天数
         /// </summary>
-        private static int monthDays(int y, int m)
+        private static int MonthDays(int y, int m)
         {
             if ((lunarInfo[y - 1900] & (0x10000 >> m)) == 0)
                 return 29;
@@ -237,7 +237,7 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传入月日的offset 传回干支,0=甲子
         /// </summary>
-        private static String cyclicalm(int num)
+        private static String Cyclicalm(int num)
         {
             return (Gan[num % 10] + Zhi[num % 12]);
         }
@@ -245,10 +245,10 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传入offset 传回干支, 0=甲子
         /// </summary>
-        private static String cyclical(int y)
+        private static String Cyclical(int y)
         {
             var num = y - 1900 + 36;
-            return (cyclicalm(num));
+            return (Cyclicalm(num));
         }
 
         /// <summary>
@@ -257,11 +257,11 @@ namespace Taf.Core.Utility
         private long[] Lunar(int y, int m)
         {
             var nongDate = new long[7];
-            int i = 0, temp = 0, leap = 0;
+            int i, temp  = 0, leap;
             var baseDate = new DateTime(1900 + 1900, 2, 31);
-            var objDate = new DateTime(y + 1900, m + 1, 1);
-            var ts = objDate - baseDate;
-            var offset = (long)ts.TotalDays;
+            var objDate  = new DateTime(y    + 1900, m + 1, 1);
+            var ts       = objDate - baseDate;
+            var offset   = (long)ts.TotalDays;
             if (y < 2000)
                 offset += year19[m - 1];
             if (y > 2000)
@@ -273,7 +273,7 @@ namespace Taf.Core.Utility
 
             for (i = 1900; i < 2050 && offset > 0; i++)
             {
-                temp = lYearDays(i);
+                temp = LYearDays(i);
                 offset -= temp;
                 nongDate[4] += 12;
             }
@@ -285,7 +285,7 @@ namespace Taf.Core.Utility
             }
             nongDate[0] = i;
             nongDate[3] = i - 1864;
-            leap = leapMonth(i); // 闰哪个月
+            leap = LeapMonth(i); // 闰哪个月
             nongDate[6] = 0;
 
             for (i = 1; i < 13 && offset > 0; i++)
@@ -295,11 +295,11 @@ namespace Taf.Core.Utility
                 {
                     --i;
                     nongDate[6] = 1;
-                    temp = leapDays((int)nongDate[0]);
+                    temp = LeapDays((int)nongDate[0]);
                 }
                 else
                 {
-                    temp = monthDays((int)nongDate[0], i);
+                    temp = MonthDays((int)nongDate[0], i);
                 }
 
                 // 解除闰月
@@ -337,10 +337,10 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传出y年m月d日对应的农历.year0 .month1 .day2 .yearCyl3 .monCyl4 .dayCyl5 .isLeap6
         /// </summary>
-        private static long[] calElement(int y, int m, int d)
+        private static long[] CalElement(int y, int m, int d)
         {
             var nongDate = new long[7];
-            int i = 0, temp = 0, leap = 0;
+            int i, temp  = 0, leap;
 
             var baseDate = new DateTime(1900, 1, 31);
 
@@ -354,7 +354,7 @@ namespace Taf.Core.Utility
 
             for (i = 1900; i < 2050 && offset > 0; i++)
             {
-                temp = lYearDays(i);
+                temp = LYearDays(i);
                 offset -= temp;
                 nongDate[4] += 12;
             }
@@ -366,7 +366,7 @@ namespace Taf.Core.Utility
             }
             nongDate[0] = i;
             nongDate[3] = i - 1864;
-            leap = leapMonth(i); // 闰哪个月
+            leap = LeapMonth(i); // 闰哪个月
             nongDate[6] = 0;
 
             for (i = 1; i < 13 && offset > 0; i++)
@@ -376,11 +376,11 @@ namespace Taf.Core.Utility
                 {
                     --i;
                     nongDate[6] = 1;
-                    temp = leapDays((int)nongDate[0]);
+                    temp = LeapDays((int)nongDate[0]);
                 }
                 else
                 {
-                    temp = monthDays((int)nongDate[0], i);
+                    temp = MonthDays((int)nongDate[0], i);
                 }
 
                 // 解除闰月
@@ -415,7 +415,7 @@ namespace Taf.Core.Utility
             return nongDate;
         }
 
-        private static String getChinaDate(int day)
+        private static string GetChinaDate(int day)
         {
             var a = "";
             if (day == 10)
@@ -424,7 +424,7 @@ namespace Taf.Core.Utility
                 return "二十";
             if (day == 30)
                 return "三十";
-            var two = (int)((day) / 10);
+            var two = (day) / 10;
             if (two == 0)
                 a = "初";
             if (two == 1)
@@ -433,7 +433,7 @@ namespace Taf.Core.Utility
                 a = "廿";
             if (two == 3)
                 a = "三";
-            var one = (int)(day % 10);
+            var one = day % 10;
             switch (one)
             {
                 case 1:
@@ -467,7 +467,7 @@ namespace Taf.Core.Utility
             return a;
         }
 
-        private static DateTime sTerm(int y, int n)
+        private static DateTime STerm(int y, int n)
         {
             var ms = 31556925974.7 * (y - 1900);
             double ms1 = sTermInfo[n];
@@ -489,36 +489,36 @@ namespace Taf.Core.Utility
         /// </summary>
         public static int GetDaysByMonth(int y, int m)
         {
-            var days = new int[] { 31, DateTime.IsLeapYear(y) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+            var days = new[] { 31, DateTime.IsLeapYear(y) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             return days[m - 1];
         }
 
         /// <summary>
         /// 获取农历
         /// </summary>
-        public static CNDate getChinaDate(DateTime dt)
+        public static CnDate GetChinaDate(DateTime dt)
         {
-            var cd = new CNDate();
+            var cd = new CnDate();
             var year = dt.Year;
             var month = dt.Month;
             var date = dt.Day;
-            var l = calElement(year, month, date);
-            cd.cnIntYear = (int)l[0];
-            cd.cnIntMonth = (int)l[1];
-            cd.cnIntDay = (int)l[2];
-            cd.cnStrYear = cyclical(year);
-            cd.cnAnm = AnimalsYear(year);
-            cd.cnStrMonth = nStr1[(int)l[1]];
-            cd.cnStrDay = getChinaDate((int)(l[2]));
+            var l = CalElement(year, month, date);
+            cd.CnIntYear = (int)l[0];
+            cd.CnIntMonth = (int)l[1];
+            cd.CnIntDay = (int)l[2];
+            cd.CnStrYear = Cyclical(year);
+            cd.CnAnm = AnimalsYear(year);
+            cd.CnStrMonth = nStr1[(int)l[1]];
+            cd.CnStrDay = GetChinaDate((int)(l[2]));
             var smd = dt.ToString("MMdd");
 
-            var lmd = FormatDate(cd.cnIntMonth, cd.cnIntDay);
+            var lmd = FormatDate(cd.CnIntMonth, cd.CnIntDay);
             for (var i = 0; i < solarTerm.Length; i++)
             {
-                var s1 = sTerm(dt.Year, i).ToString("MMdd");
+                var s1 = STerm(dt.Year, i).ToString("MMdd");
                 if (s1.Equals(dt.ToString("MMdd")))
                 {
-                    cd.cnSolarTerm = solarTerm[i];
+                    cd.CnSolarTerm = solarTerm[i];
                     break;
                 }
             }
@@ -527,7 +527,7 @@ namespace Taf.Core.Utility
                 var s1 = s.Substring(0, 4);
                 if (s1.Equals(smd))
                 {
-                    cd.cnFtvs = s.Substring(4, s.Length - 4);
+                    cd.CnFtvs = s.Substring(4, s.Length - 4);
                     break;
                 }
             }
@@ -536,7 +536,7 @@ namespace Taf.Core.Utility
                 var s1 = s.Substring(0, 4);
                 if (s1.Equals(lmd))
                 {
-                    cd.cnFtvl = s.Substring(4, s.Length - 4);
+                    cd.CnFtvl = s.Substring(4, s.Length - 4);
                     break;
                 }
             }
@@ -544,10 +544,10 @@ namespace Taf.Core.Utility
             year = dt.Year;
             month = dt.Month;
             date = dt.Day;
-            l = calElement(year, month, date);
+            l = CalElement(year, month, date);
             lmd = FormatDate((int)l[1], (int)l[2]);
             if (lmd.Equals("0101"))
-                cd.cnFtvl = "除夕";
+                cd.CnFtvl = "除夕";
             return cd;
         }
         #endregion
@@ -648,7 +648,7 @@ namespace Taf.Core.Utility
         private static DateTime MaxDay = new DateTime(2049, 12, 31);
         private const int GanZhiStartYear = 1864; //干支计算起始年
         private static DateTime GanZhiStartDay = new DateTime(1899, 12, 22);//起始日
-        private const string HZNum = "零一二三四五六七八九";
+        private const string HzNum = "零一二三四五六七八九";
         private const int AnimalStartYear = 1900; //1900年为鼠年
         private static DateTime ChineseConstellationReferDay = new DateTime(2007, 9, 13);//28星宿参考值,本日为角
         #endregion
@@ -899,14 +899,15 @@ namespace Taf.Core.Utility
         #endregion
 
         #region 农历日期初始化
-        /// <summary>
-        /// 用农历的日期来初使化
-        /// </summary>
-        /// <param name="cy">农历年</param>
-        /// <param name="cm">农历月</param>
-        /// <param name="cd">农历日</param>
-        /// <param name="LeapFlag">闰月标志</param>
-        public ChineseCalendar(int cy, int cm, int cd, bool leapMonthFlag)
+
+            /// <summary>
+            /// 用农历的日期来初使化
+            /// </summary>
+            /// <param name="cy">农历年</param>
+            /// <param name="cm">农历月</param>
+            /// <param name="cd">农历日</param>
+            /// <param name="leapMonthFlag"></param>
+            public ChineseCalendar(int cy, int cm, int cd, bool leapMonthFlag)
         {
             int i, leap, Temp, offset;
 
@@ -1068,16 +1069,14 @@ namespace Taf.Core.Utility
         /// </summary>
         private int GetChineseYearDays(int year)
         {
-            int i, f, sumDay, info;
-
-            sumDay = 348; //29天*12个月
-            i = 0x8000;
-            info = LunarDateArray[year - MinYear] & 0x0FFFF;
+            var sumDay = 348;
+            var i      = 0x8000;
+            var info   = LunarDateArray[year - MinYear] & 0x0FFFF;
 
             //计算12个月中有多少天为30天
             for (var m = 0; m < 12; m++)
             {
-                f = info & i;
+                var f = info & i;
                 if (f != 0)
                 {
                     sumDay++;
@@ -1094,29 +1093,25 @@ namespace Taf.Core.Utility
         /// </summary> 
         private string GetChineseHour(DateTime dt)
         {
-            int _hour, _minute, offset, i;
-            int indexGan;
-            string tmpGan;
-
             //计算时辰的地支
-            _hour = dt.Hour;    //获得当前时间小时
-            _minute = dt.Minute;  //获得当前时间分钟
+            var hour   = dt.Hour;
+            var minute = dt.Minute;
 
-            if (_minute != 0)
-                _hour += 1;
-            offset = _hour / 2;
+            if (minute != 0)
+                hour += 1;
+            var offset = hour / 2;
             if (offset >= 12)
                 offset = 0;
             //zhiHour = zhiStr[offset].ToString();
 
             //计算天干
             var ts = this._date - GanZhiStartDay;
-            i = ts.Days % 60;
+            var i  = ts.Days % 60;
 
             //ganStr[i % 10] 为日的天干,(n*2-1) %10得出地支对应,n从1开始
-            indexGan = ((i % 10 + 1) * 2 - 1) % 10 - 1;
+            var indexGan = ((i % 10 + 1) * 2 - 1) % 10 - 1;
 
-            tmpGan = ganStr.Substring(indexGan) + ganStr.Substring(0, indexGan + 2);//凑齐12位
+            var tmpGan = ganStr.Substring(indexGan) + ganStr.Substring(0, indexGan + 2);
             //ganHour = ganStr[((i % 10 + 1) * 2 - 1) % 10 - 1].ToString();
 
             return tmpGan[offset].ToString() + zhiStr[offset].ToString();
@@ -1155,7 +1150,7 @@ namespace Taf.Core.Utility
                 throw new Exception("非法农历日期");
             }
             var leap = GetChineseLeapMonth(year);// 计算该年应该闰哪个月
-            if ((leapMonth == true) && (month != leap))
+            if (leapMonth && (month != leap))
             {
                 throw new Exception("非法农历日期");
             }
@@ -1173,25 +1168,25 @@ namespace Taf.Core.Utility
             switch (n)
             {
                 case '0':
-                    return HZNum[0].ToString();
+                    return HzNum[0].ToString();
                 case '1':
-                    return HZNum[1].ToString();
+                    return HzNum[1].ToString();
                 case '2':
-                    return HZNum[2].ToString();
+                    return HzNum[2].ToString();
                 case '3':
-                    return HZNum[3].ToString();
+                    return HzNum[3].ToString();
                 case '4':
-                    return HZNum[4].ToString();
+                    return HzNum[4].ToString();
                 case '5':
-                    return HZNum[5].ToString();
+                    return HzNum[5].ToString();
                 case '6':
-                    return HZNum[6].ToString();
+                    return HzNum[6].ToString();
                 case '7':
-                    return HZNum[7].ToString();
+                    return HzNum[7].ToString();
                 case '8':
-                    return HZNum[8].ToString();
+                    return HzNum[8].ToString();
                 case '9':
-                    return HZNum[9].ToString();
+                    return HzNum[9].ToString();
                 default:
                     return "";
             }

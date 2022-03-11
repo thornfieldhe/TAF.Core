@@ -23,8 +23,7 @@
         /// <returns>
         /// 返回更新后Dictionary列表
         /// </returns>
-        public static Dictionary<TKey, TValue> TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value)
-        {
+        public static Dictionary<TKey, TValue> TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value) where TKey : notnull{
             if (dict.ContainsKey(key) == false)
             {
                 dict.Add(key, value);
@@ -48,8 +47,7 @@
         /// <returns>
         /// 返回更新后Dictionary列表
         /// </returns>
-        public static Dictionary<TKey, TValue> AddOrReplace<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value)
-        {
+        public static Dictionary<TKey, TValue> AddOrReplace<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value) where TKey : notnull{
             dict[key] = value;
             return dict;
         }
@@ -67,8 +65,7 @@
         /// <param name="replaceExisted">
         /// 如果已存在，是否替换
         /// </param>
-        public static Dictionary<TKey, TValue> AddRange<TKey, TValue>(this Dictionary<TKey, TValue> dict, IEnumerable<KeyValuePair<TKey, TValue>> values, bool replaceExisted)
-        {
+        public static Dictionary<TKey, TValue> AddRange<TKey, TValue>(this Dictionary<TKey, TValue> dict, IEnumerable<KeyValuePair<TKey, TValue>> values, bool replaceExisted) where TKey : notnull{
             foreach (var item in values.Where(item => dict.ContainsKey(item.Key) == false || replaceExisted))
             {
                 dict[item.Key] = item.Value;

@@ -1039,6 +1039,32 @@ namespace Taf.Core.Utility
         {
             return dateTime == null ? string.Empty : ToChineseDateTimeString(dateTime.Value);
         }
+        
+        /// <summary>
+        /// 获取Java 13位时间戳转DateTime
+        /// </summary>
+        /// <param name="timeStamp"></param>
+        /// <returns></returns>
+        public static DateTime ConvertStringToDateTime(this string timeStamp){
+            DateTime ConvertString(int length){
+                var dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+                var lTime   = long.Parse(timeStamp + new string('0', length));
+                var toNow   = new TimeSpan(lTime);
+                return dtStart.Add(toNow);
+            }
+
+            if(long.TryParse(timeStamp, out _)){
+                if(timeStamp.Length == 13){
+                    return ConvertString(4);
+                } else if(timeStamp.Length == 18){
+                    return new DateTime(timeStamp.ToLong());
+                } else if(timeStamp.Length == 10){
+                    return ConvertString(7);
+                }
+            }
+
+            throw new NotSupportedException("不支持该字符串格式转成时间");
+        }
     }
 
     #endregion

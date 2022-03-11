@@ -1,7 +1,7 @@
 ﻿using System;
 using Taf.Core.Utility;
 
-namespace Taf.Utility
+namespace Taf.Core.Utility
 {
     using System.Text;
     using System.Threading.Tasks;
@@ -186,7 +186,7 @@ namespace Taf.Utility
         {
             if (string.IsNullOrEmpty(allChar))
             {
-                allChar = "123456789ABCDEFGHiJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+                allChar = "0123456789ABCDEFGHiJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             }
 
             var randomCode = string.Empty;

@@ -30,6 +30,16 @@ namespace Taf.Core.Test
             Assert.Equal("2012-01-02 11:11", date.ToDate().ToDateTimeString(true));
             Assert.Equal("2012-01-02 11:11:11", date.ToDate().ToDateTimeString(false));
         }
+        
+        /// <summary>
+        /// unix时间字符串(13/10位)转 
+        /// </summary>
+        [Fact]
+        public void TestConvertStringToDateTime()
+        {
+            Assert.Equal(new DateTime(2022,1,1), "1640966400000".ConvertStringToDateTime());
+            Assert.Equal(new DateTime(2022,1,1), "1640966400".ConvertStringToDateTime());
+        }
 
         /// <summary>
         /// 获取格式化日期字符串

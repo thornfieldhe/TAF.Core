@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Taf.Core.Utility;
-using Taf.Utility;
 using Xunit;
 
 namespace Taf.Core.Test{

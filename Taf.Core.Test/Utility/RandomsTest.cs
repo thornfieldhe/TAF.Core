@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
-using Taf.Utility;
+using Taf.Core.Utility;
 using Xunit;
 
 namespace Taf.Core.Test
