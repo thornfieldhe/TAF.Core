@@ -19,6 +19,7 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K2">
     /// </typeparam>
+    [Serializable]
     public class KeyValue<K1, K2>:IComparable where K1:IComparable
     {
         /// <summary>
@@ -69,6 +70,7 @@ namespace Taf.Core.Utility
     /// <typeparam name="K1"></typeparam>
     /// <typeparam name="K2"></typeparam>
     /// <typeparam name="K3"></typeparam>
+    [Serializable]
     public class KeyValue<K1, K2, K3> : KeyValue<K1, K2> where K1:IComparable
     {
         public KeyValue()
@@ -95,6 +97,7 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K4">
     /// </typeparam>
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4> : KeyValue<K1, K2, K3> where K1:IComparable
     {
         /// <summary>
@@ -125,6 +128,7 @@ namespace Taf.Core.Utility
     /// <typeparam name="K4">
     /// </typeparam>
     /// <typeparam name="K5"></typeparam>
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5> : KeyValue<K1, K2, K3, K4> where K1:IComparable
     {
         /// <summary>
@@ -155,6 +159,7 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K5"></typeparam>
     /// <typeparam name="K6"></typeparam>
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5, K6> : KeyValue<K1, K2, K3, K4, K5> where K1:IComparable
     {
         /// <summary>
@@ -189,6 +194,7 @@ namespace Taf.Core.Utility
     /// </typeparam>
     /// <typeparam name="K7">
     /// </typeparam>
+    [Serializable]
     public class KeyValue<K1, K2, K3, K4, K5, K6, K7> : KeyValue<K1, K2, K3, K4, K5, K6> where K1:IComparable
     {
         /// <summary>
