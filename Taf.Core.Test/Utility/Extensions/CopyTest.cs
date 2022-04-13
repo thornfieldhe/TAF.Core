@@ -41,8 +41,8 @@ namespace Taf.Core.Test{
                 Assert.Equal(m1.Name3,e1.Name3);
                 m1.Age = 120;
                 Assert.NotEqual(m1.Age,e1.Age);
-                var m = e1.Copy<CopyEntity,CopyEntity2>();
-                m.User = e1.User.Copy<User2, User2>();
+                var m = e1.Clone<CopyEntity,CopyEntity2>();
+                m.User = e1.User.Clone<User2, User2>();
                 m.Ext  = new Dictionary<string, string>(m.Ext);
                 Assert.Equal(m.Age,   e1.Age);
                 Assert.Equal(m.Name3, e1.Name3);

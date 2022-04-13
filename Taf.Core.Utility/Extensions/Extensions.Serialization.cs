@@ -120,11 +120,12 @@ namespace Taf.Core.Utility{
         /// 对象内部包含的对象需要分别使用Copy方法进行克隆
         /// </summary>
         /// <param name="tIn"></param>
+        /// <param name="skipProperties"></param>
         /// <typeparam name="TIn"></typeparam>
         /// <typeparam name="TOut"></typeparam>
         /// <returns></returns>
-        public static TOut Copy<TIn, TOut>(this TIn tIn, params string[] skipProperties){
-            var skipKey = skipProperties != null ? $"_{string.Join('_', skipProperties)}" : "";
+        public static TOut Clone<TIn, TOut>(this TIn tIn, params string[] skipProperties){
+            var skipKey =  $"_{string.Join('_', skipProperties)}";
             var key     = $"trans_exp_{typeof(TIn).FullName}_{typeof(TOut).FullName}_{skipKey}";
             if(!_Dic.ContainsKey(key)){
                 var parameterExpression = Expression.Parameter(typeof(TIn), "p");
