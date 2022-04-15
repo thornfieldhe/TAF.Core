@@ -21,62 +21,62 @@ namespace Taf.Core.Utility
         /// <summary>
         /// The one minute.
         /// </summary>
-        private static readonly TimeSpan OneMinute = new TimeSpan(0, 1, 0);
+        private static readonly TimeSpan OneMinute = new(0, 1, 0);
 
         /// <summary>
         /// The two minutes.
         /// </summary>
-        private static readonly TimeSpan TwoMinutes = new TimeSpan(0, 2, 0);
+        private static readonly TimeSpan TwoMinutes = new(0, 2, 0);
 
         /// <summary>
         /// The one hour.
         /// </summary>
-        private static readonly TimeSpan OneHour = new TimeSpan(1, 0, 0);
+        private static readonly TimeSpan OneHour = new(1, 0, 0);
 
         /// <summary>
         /// The two hours.
         /// </summary>
-        private static readonly TimeSpan TwoHours = new TimeSpan(2, 0, 0);
+        private static readonly TimeSpan TwoHours = new(2, 0, 0);
 
         /// <summary>
         /// The one day.
         /// </summary>
-        private static readonly TimeSpan OneDay = new TimeSpan(1, 0, 0, 0);
+        private static readonly TimeSpan OneDay = new(1, 0, 0, 0);
 
         /// <summary>
         /// The two days.
         /// </summary>
-        private static readonly TimeSpan TwoDays = new TimeSpan(2, 0, 0, 0);
+        private static readonly TimeSpan TwoDays = new(2, 0, 0, 0);
 
         /// <summary>
         /// The one week.
         /// </summary>
-        private static readonly TimeSpan OneWeek = new TimeSpan(7, 0, 0, 0);
+        private static readonly TimeSpan OneWeek = new(7, 0, 0, 0);
 
         /// <summary>
         /// The two weeks.
         /// </summary>
-        private static readonly TimeSpan TwoWeeks = new TimeSpan(14, 0, 0, 0);
+        private static readonly TimeSpan TwoWeeks = new(14, 0, 0, 0);
 
         /// <summary>
         /// The one month.
         /// </summary>
-        private static readonly TimeSpan OneMonth = new TimeSpan(31, 0, 0, 0);
+        private static readonly TimeSpan OneMonth = new(31, 0, 0, 0);
 
         /// <summary>
         /// The two months.
         /// </summary>
-        private static readonly TimeSpan TwoMonths = new TimeSpan(62, 0, 0, 0);
+        private static readonly TimeSpan TwoMonths = new(62, 0, 0, 0);
 
         /// <summary>
         /// The one year.
         /// </summary>
-        private static readonly TimeSpan OneYear = new TimeSpan(365, 0, 0, 0);
+        private static readonly TimeSpan OneYear = new(365, 0, 0, 0);
 
         /// <summary>
         /// The two years.
         /// </summary>
-        private static readonly TimeSpan TwoYears = new TimeSpan(730, 0, 0, 0);
+        private static readonly TimeSpan TwoYears = new(730, 0, 0, 0);
 
         /// <summary>
         /// 获取两个时间间隔
@@ -114,10 +114,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsToday(this DateTimeOffset dto)
-        {
-            return dto.Date.IsToday();
-        }
+        public static bool IsToday(this DateTimeOffset dto) => dto.Date.IsToday();
 
         /// <summary>
         /// 计算指定月天数

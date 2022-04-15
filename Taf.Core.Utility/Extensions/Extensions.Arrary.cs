@@ -15,7 +15,7 @@ namespace Taf.Core.Utility
     using System.Text;
 
     /// <summary>
-    /// The extensions.
+    /// IEnumerable<T> 扩展
     /// </summary>
     public partial class Extensions
     {
@@ -28,7 +28,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <param name="action">
         /// </param>
-        public static void ForEach<T>(this IEnumerable<T> @this, Action<T> action)
+        public static void ForEach<T>(this IEnumerable<T>? @this, Action<T> action)
         {
             if (@this == null)
             {
@@ -51,7 +51,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T Random<T>(this IEnumerable<T> @this)
+        public static T? Random<T>(this IEnumerable<T>? @this)
         {
             if (@this == null)
             {
@@ -74,10 +74,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool In<T>(this T @this, ICollection<T> list)
-        {
-            return list.Contains(@this);
-        }
+        public static bool In<T>(this T @this, ICollection<T> list) => list.Contains(@this);
 
         /// <summary>
         /// 当前项是否不在列表中
@@ -91,10 +88,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool NotIn<T>(this T @this, ICollection<T> list)
-        {
-            return !list.Contains(@this);
-        }
+        public static bool NotIn<T>(this T @this, ICollection<T> list) => !list.Contains(@this);
 
         /// <summary>
         /// 列表是否为空（不为空，且包含1个以上元素）
@@ -106,10 +100,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> @this)
-        {
-            return @this == null || !@this.Any();
-        }
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T>? @this) => @this == null || !@this.Any();
 
         /// <summary>
         /// 获取列表的最小值
@@ -124,10 +115,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static T MinBy<T, TMember>(this IEnumerable<T> source, Func<T, TMember> predicate)
-        {
-            return MinBy(source, predicate, Comparer<TMember>.Default);
-        }
+        public static T MinBy<T, TMember>(this IEnumerable<T> source, Func<T, TMember> predicate) => MinBy(source, predicate, Comparer<TMember>.Default);
 
         /// <summary>
         /// 获取列表的最小值
@@ -275,9 +263,7 @@ namespace Taf.Core.Utility
         /// </param>
         public static void Swap<T>(this T[] tagetArray, int indexA, int indexB)
         {
-            var tempHolder = tagetArray[indexA];
-            tagetArray[indexA] = tagetArray[indexB];
-            tagetArray[indexB] = tempHolder;
+            (tagetArray[indexA], tagetArray[indexB]) = (tagetArray[indexB], tagetArray[indexA]);
         }
 
         /// <summary>

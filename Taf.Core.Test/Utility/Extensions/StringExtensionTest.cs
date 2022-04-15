@@ -332,7 +332,7 @@ namespace Taf.Core.Test
         /// 转换数字金额主函数（包括小数）
         /// </summary>
         [Fact]
-        public void TestConvertRMB()
+        public void TestConvertRmb()
         {
             string a = "12345678.123";
             Assert.Equal("壹仟贰佰叁拾肆万伍仟陆佰柒拾捌元壹角贰分", a.ConvertRMB());
@@ -507,6 +507,15 @@ namespace Taf.Core.Test
             var m = "</br>12345";
             var b = "</br>";
             Assert.Equal("12345", m.RemoveStartString(b));
+        }
+        
+        /// <summary>
+        /// 移除起始字符串
+        /// </summary>
+        [Fact]
+        public void TestCamelToUnderline(){
+            var a = "AvideMdikeIkjg";
+            Assert.Equal("avide_mdike_ikjg", a.ToUnderLine());
         }
     }
 }

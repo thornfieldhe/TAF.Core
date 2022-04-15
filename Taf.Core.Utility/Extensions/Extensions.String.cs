@@ -205,7 +205,25 @@ namespace Taf.Core.Utility
             return revised;
         }
 
-        #endregion
+        /// <summary>
+        /// 大驼峰转下划线
+        /// </summary>
+        /// <param name="string"></param>
+        /// <returns></returns> 
+        public static string ToUnderLine(this string @string){
+            var strItemTarget = "";               //目标字符串
+            foreach(var t in @string){
+                var temp =t.ToString();
+                if (Regex.IsMatch(temp, "[A-Z]"))
+                {
+                    temp = "_" + temp.ToLower();
+                }
+                strItemTarget += temp;
+            }
+            return strItemTarget.Trim('_');
+        }
+
+    #endregion
 
         #region 字符串操作
 
