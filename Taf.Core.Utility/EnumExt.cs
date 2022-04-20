@@ -7,21 +7,18 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Core.Utility
-{
+namespace Taf.Core.Utility{
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-
     using Utility;
 
     /// <summary>
     /// 枚举操作
     /// </summary>
-    public static class EnumExt
-    {
-        #region GetInstance(获取实例)
+    public static class EnumExt{
+    #region GetInstance(获取实例)
 
         /// <summary>
         /// 获取实例
@@ -36,20 +33,18 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T GetInstance<T>(object member)
-        {
+        public static T GetInstance<T>(object member){
             string value = member.ToStr();
-            if (string.IsNullOrWhiteSpace(value))
-            {
+            if(string.IsNullOrWhiteSpace(value)){
                 throw new ArgumentNullException("member");
             }
 
             return (T)System.Enum.Parse(Reflection.GetType<T>(), value, true);
         }
 
-        #endregion
+    #endregion
 
-        #region GetName(获取成员名)
+    #region GetName(获取成员名)
 
         /// <summary>
         /// 获取成员名
@@ -64,8 +59,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetName<T>(object member)
-        {
+        public static string GetName<T>(object member){
             return GetName(Reflection.GetType<T>(), member);
         }
 
@@ -81,34 +75,29 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetName(Type type, object member)
-        {
-            if (type == null)
-            {
+        public static string GetName(Type type, object member){
+            if(type == null){
                 return string.Empty;
             }
 
-            if (member == null)
-            {
+            if(member == null){
                 return string.Empty;
             }
 
-            if (member is string)
-            {
+            if(member is string){
                 return member.ToString();
             }
 
-            if (type.IsEnum == false)
-            {
+            if(type.IsEnum == false){
                 return string.Empty;
             }
 
             return System.Enum.GetName(type, member);
         }
 
-        #endregion
+    #endregion
 
-        #region GetValue(获取成员值)
+    #region GetValue(获取成员值)
 
         /// <summary>
         /// 获取成员值
@@ -123,8 +112,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public static int GetValue<T>(object member)
-        {
+        public static int GetValue<T>(object member){
             return GetValue(Reflection.GetType<T>(), member);
         }
 
@@ -140,20 +128,18 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public static int GetValue(Type type, object member)
-        {
+        public static int GetValue(Type type, object member){
             var value = member.ToStr();
-            if (string.IsNullOrWhiteSpace(value))
-            {
+            if(string.IsNullOrWhiteSpace(value)){
                 throw new ArgumentNullException("member");
             }
 
             return (int)System.Enum.Parse(type, member.ToString(), true);
         }
 
-        #endregion
+    #endregion
 
-        #region GetMemberDescription(获取描述)
+    #region GetMemberDescription(获取描述)
 
         /// <summary>
         /// 获取描述,使用System.ComponentModel.Description特性设置描述
@@ -167,8 +153,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetDescription<T>(object member)
-        {
+        public static string GetDescription<T>(object member){
             return Reflection.GetFieldDescription<T>(GetName<T>(member));
         }
 
@@ -184,14 +169,13 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetDescription(Type type, object member)
-        {
+        public static string GetDescription(Type type, object member){
             return Reflection.GetFiledDescription(type, GetName(type, member));
         }
 
-        #endregion
+    #endregion
 
-        #region GetItems(获取描述项集合)
+    #region GetItems(获取描述项集合)
 
         /// <summary>
         /// 获取描述项集合,文本设置为Description，值为Value
@@ -201,13 +185,11 @@ namespace Taf.Core.Utility
         /// </typeparam>
         /// <returns>
         /// </returns>
-        public static List<Item> GetItems<T>()
-        {
+        public static List<Item> GetItems<T>(){
             var enumType = Reflection.GetType<T>();
             ValidationIsEnum(enumType);
             var result = new List<Item>();
-            foreach (var field in enumType.GetFields())
-            {
+            foreach(var field in enumType.GetFields()){
                 AddItem<T>(result, field, enumType);
             }
 
@@ -226,18 +208,15 @@ namespace Taf.Core.Utility
         /// <param name="enumType">
         /// The enum Type.
         /// </param>
-        private static void AddItem<T>(ICollection<Item> result, FieldInfo field, Type enumType)
-        {
-            if (!field.FieldType.IsEnum)
-            {
+        private static void AddItem<T>(ICollection<Item> result, FieldInfo field, Type enumType){
+            if(!field.FieldType.IsEnum){
                 return;
             }
 
-            var value = GetValue<T>(field, enumType);
+            var value       = GetValue<T>(field, enumType);
             var description = Reflection.GetMemberDescription(enumType, field);
-            var sortId = GetSortId(field);
-            if (sortId == -1)
-            {
+            var sortId      = GetSortId(field);
+            if(sortId == -1){
                 sortId = value;
             }
 
@@ -259,8 +238,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        private static int GetValue<T>(FieldInfo field, Type enumType)
-        {
+        private static int GetValue<T>(FieldInfo field, Type enumType){
             var memberValue = enumType.InvokeMember(field.Name, BindingFlags.GetField, null, null, null);
             return GetValue<T>(memberValue);
         }
@@ -274,11 +252,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        private static int GetSortId(FieldInfo field)
-        {
+        private static int GetSortId(FieldInfo field){
             var attribute = field.GetCustomAttributes(typeof(OrderByAttribute), true).FirstOrDefault();
-            if (attribute == null)
-            {
+            if(attribute == null){
                 return -1;
             }
 
@@ -288,12 +264,21 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 验证是否枚举类型
         /// </summary>
-        private static void ValidationIsEnum(Type enumType)
-        {
-            if (enumType.IsEnum == false)
+        private static void ValidationIsEnum(Type enumType){
+            if(enumType.IsEnum == false)
                 throw new InvalidOperationException(String.Format("类型 {0} 不是枚举", enumType));
         }
 
-        #endregion
+    #endregion
+
+        /// <summary>
+        /// 是否是可空枚举
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static bool IsNullableEnum(this Type t){
+            var u = Nullable.GetUnderlyingType(t);
+            return u is{ IsEnum: true };
+        }
     }
 }
