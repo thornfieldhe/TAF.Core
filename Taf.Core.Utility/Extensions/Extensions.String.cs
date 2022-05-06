@@ -800,21 +800,8 @@ namespace Taf.Core.Utility{
         /// The <see cref="string"/>.
         /// </returns>
         public static string ToSingular(this string word){
-            var plural1 = new Regex("(?<keep>[^aeiou])ies$");
-            var plural2 = new Regex("(?<keep>[aeiou]y)s$");
-            var plural3 = new Regex("(?<keep>[^sxzh])es$");
-            var plural4 = new Regex("(?<keep>[^sxzhyu])s$");
-
-            if(plural1.IsMatch(word))
-                return plural1.Replace(word, "${keep}y");
-            else if(plural2.IsMatch(word))
-                return plural2.Replace(word, "${keep}");
-            else if(plural3.IsMatch(word))
-                return plural3.Replace(word, "${keep}");
-            else if(plural4.IsMatch(word))
-                return plural4.Replace(word, "${keep}");
-
-            return word;
+            var server = PluralizationService.CreateService(new CultureInfo("en")); 
+            return server.IsPlural(word)?server.Singularize(word):word;
         }
 
         /// <summary>
@@ -826,22 +813,9 @@ namespace Taf.Core.Utility{
         /// The <see cref="string"/>.
         /// </returns>
         public static string ToPlural(this string word){
-            var plural1 = new Regex("(?<keep>[^aeiou])y$");
-            var plural2 = new Regex("(?<keep>[aeiou]y)$");
-            var plural3 = new Regex("(?<keep>[sxzh])$");
-            var plural4 = new Regex("(?<keep>[^sxzhy])$");
-
-            if(plural1.IsMatch(word))
-                return plural1.Replace(word, "${keep}ies");
-            else if(plural2.IsMatch(word))
-                return plural2.Replace(word, "${keep}s");
-            else if(plural3.IsMatch(word))
-                return plural3.Replace(word, "${keep}es");
-            else if(plural4.IsMatch(word))
-                return plural4.Replace(word, "${keep}s");
-
-            return word;
-        }
+            var server = PluralizationService.CreateService(new CultureInfo("en")); 
+            return server.IsPlural(word)?word:server.Pluralize(word); 
+        } 
 
         /// <summary>
         /// The custom replace.

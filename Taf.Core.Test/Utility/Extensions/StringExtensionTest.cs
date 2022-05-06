@@ -79,8 +79,44 @@ namespace Taf.Core.Test
             Assert.Equal("ABc", "_aBc".ToCapit());
         }
 
+        /// <summary>
+        /// 测试mysql属性转大驼峰写法
+        /// </summary>
+        [Fact]
+        public void TestToProperCaseFromUnderLine(){
+            var test = "business_database_informations";
+            Assert.Equal("BusinessDatabaseInformation", test.ToProperCaseFromUnderLine());
+        }
+        
+        /// <summary>
+        /// 测试复数转单数
+        /// </summary>
+        [Fact]
+        public void TestToSingular(){
+            var word = "computers";
+            Assert.Equal("computer", word.ToSingular());
+        }
+        
+        /// <summary>
+        /// 测试单数转复数
+        /// </summary>
+        [Fact]
+        public void TestToPlural(){
+            var word = "computer";
+            Assert.Equal("computers", word.ToPlural());
+        }
+        
         #region ContainsChinese(是否包含中文)
 
+        /// <summary>
+        /// 大驼峰转下划线小写
+        /// </summary>
+        [Fact]
+        public void TestToUnderLine(){
+            var test = "BusinessDatabaseInformation";
+            Assert.Equal("business_database_information",test.ToUnderLine());
+        }
+        
         /// <summary>
         /// 测试是否包含中文
         /// </summary>
