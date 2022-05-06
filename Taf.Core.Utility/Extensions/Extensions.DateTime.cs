@@ -1044,7 +1044,7 @@ namespace Taf.Core.Utility
         /// <returns></returns>
         public static DateTime ConvertStringToDateTime(this string timeStamp){
             DateTime ConvertString(int length){
-                var dtStart = TimeZone.CurrentTimeZone.ToUniversalTime(new DateTime(1970, 1, 1,0,0,0));
+                var dtStart = new DateTime(1970, 1, 1,0,0,0);
                 var lTime   = long.Parse(timeStamp + new string('0', length));
                 var toNow   = new TimeSpan(lTime);
                 return dtStart.Add(toNow);
