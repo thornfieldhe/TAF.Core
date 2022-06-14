@@ -55,9 +55,13 @@ namespace Taf.Core.Utility.Core
         ///}
         ///</example>
         /// <returns></returns>
-        public bool Compare<TP>(Func<T, TP> sourceProperty, Func<K, TP> targetProperty) 
-        {
-            return !sourceProperty(Source).Equals(targetProperty(Target));
+        public bool Compare<TP>(Func<T, TP> sourceProperty, Func<K, TP> targetProperty){
+            var source = sourceProperty(Source);
+            if(source == null){
+                return targetProperty(Target) == null;
+            }
+
+            return !source.Equals(targetProperty(Target));
         }
 
         /// <summary>
