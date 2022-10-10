@@ -341,7 +341,8 @@ namespace Taf.Core.Test
         [Fact]
         public void GetDescription_InvalidEnum_ReturnEmpty()
         {
-            Assert.Equal("Fatal", EnumExt.GetDescription<LogType>(LogType.Fatal));
+            Assert.Equal("致命错误", EnumExt.GetDescription<LogType>(LogType.Fatal));
+            Assert.Equal("Fatal", EnumExt.GetName<LogType>(LogType.Fatal));
             Assert.Equal(DEBUG_DESCRIPTION, EnumExt.GetDescription<LogType>(DEBUG_INSTANCE));
         }
 
@@ -357,7 +358,7 @@ namespace Taf.Core.Test
         {
             var items = EnumExt.GetItems<LogType>();
             Assert.Equal(5, items.Count);
-            Assert.Equal("Fatal", items[0].Text);
+            Assert.Equal("致命错误", items[0].Text);
             Assert.Equal("1", items[0].Value);
             Assert.Equal("错误", items[3].Text);
             Assert.Equal("2", items[3].Value);

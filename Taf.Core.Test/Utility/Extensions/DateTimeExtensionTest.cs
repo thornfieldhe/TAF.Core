@@ -37,8 +37,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestConvertStringToDateTime()
         {
-            Assert.Equal(new DateTime(2022,1,1), "1640966400000".ConvertStringToDateTime());
-            Assert.Equal(new DateTime(2022,1,1), "1640966400".ConvertStringToDateTime());
+            Assert.Equal(new DateTime(2022,1,1).ToUniversalTime(), "1640966400000".ConvertStringToDateTime());
+            Assert.Equal(new DateTime(2022,1,1).ToUniversalTime(), "1640966400".ConvertStringToDateTime());
         }
 
         /// <summary>
