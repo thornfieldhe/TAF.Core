@@ -309,9 +309,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Left(this string obj, int length){
-            return obj.Substring(0, length);
-        }
+        public static string Left(this string obj, int length) => obj.Substring(0, length);
 
         /// <summary>
         /// 取右边n个字符串
@@ -323,9 +321,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Right(this string obj, int length){
-            return obj.Substring(obj.Length - length, length);
-        }
+        public static string Right(this string obj, int length) => obj.Substring(obj.Length - length, length);
 
         /// <summary>
         /// 格式化字符串，是string.Format("",xx)的变体
@@ -337,9 +333,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatWith(this string @this, params object[] args){
-            return string.Format(@this, args);
-        }
+        public static string FormatWith(this string @this, params object[] args) => string.Format(@this, args);
 
         /// <summary>
         /// 判断字符串是否相等，忽略字符情况
@@ -351,9 +345,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IgnoreCaseEqual(this string @this, string compareOperand){
-            return @this.Equals(compareOperand, StringComparison.OrdinalIgnoreCase);
-        }
+        public static bool IgnoreCaseEqual(this string @this, string compareOperand) => @this.Equals(compareOperand, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// 返回一个字符串用空格分隔如: thisIsGood =&gt; this Is Good
@@ -363,10 +355,9 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Wordify(this string @this){
+        public static string Wordify(this string @this) =>
             // if the word is all upper, just return it
-            return !Regex.IsMatch(@this, "[a-z]") ? @this : string.Join(" ", Regex.Split(@this, @"(?<!^)(?=[A-Z])"));
-        }
+            !Regex.IsMatch(@this, "[a-z]") ? @this : string.Join(" ", Regex.Split(@this, @"(?<!^)(?=[A-Z])"));
 
         /// <summary>
         /// 翻转字符串
@@ -549,7 +540,7 @@ namespace Taf.Core.Utility{
         /// <param name="endStr">结束字符串</param>
         /// <returns>中间字符串</returns>
         public static string Substring(this string source, string startStr, string endStr){
-            Regex rg = new Regex("(?<=(" + startStr + "))[.\\s\\S]*?(?=(" + endStr + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            var rg = new Regex("(?<=(" + startStr + "))[.\\s\\S]*?(?=(" + endStr + "))", RegexOptions.Multiline | RegexOptions.Singleline);
             return rg.Match(source).Value;
         }
 
@@ -565,9 +556,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsMatch(this string input, string pattern){
-            return IsMatch(input, pattern, RegexOptions.IgnoreCase);
-        }
+        public static bool IsMatch(this string input, string pattern) => IsMatch(input, pattern, RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 验证输入与模式是否匹配
@@ -584,9 +573,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsMatch(this string input, string pattern, RegexOptions options){
-            return Regex.IsMatch(input, pattern, options);
-        }
+        public static bool IsMatch(this string input, string pattern, RegexOptions options) => Regex.IsMatch(input, pattern, options);
 
         /// <summary>
         /// 替换最后一个匹配的字符串
@@ -887,11 +874,11 @@ namespace Taf.Core.Utility{
         /// <param name="numberStr"></param>
         /// <returns></returns>
         public static string NumberToChinese(this string numberStr){
-            string numStr     = "0123456789";
-            string chineseStr = "零一二三四五六七八九";
-            char[] c          = numberStr.ToCharArray();
-            for(int i = 0; i < c.Length; i++){
-                int index = numStr.IndexOf(c[i]);
+            var numStr     = "0123456789";
+            var chineseStr = "零一二三四五六七八九";
+            var c          = numberStr.ToCharArray();
+            for(var i = 0; i < c.Length; i++){
+                var index = numStr.IndexOf(c[i]);
                 if(index != -1)
                     c[i] = chineseStr.ToCharArray()[index];
             }
@@ -907,11 +894,11 @@ namespace Taf.Core.Utility{
         /// <param name="chineseStr1"></param>
         /// <returns></returns>
         public static string ChineseToNumber(this string chineseStr1){
-            string numStr     = "0123456789";
-            string chineseStr = "零一二三四五六七八九";
-            char[] c          = chineseStr1.ToCharArray();
-            for(int i = 0; i < c.Length; i++){
-                int index = chineseStr.IndexOf(c[i]);
+            var numStr     = "0123456789";
+            var chineseStr = "零一二三四五六七八九";
+            var c          = chineseStr1.ToCharArray();
+            for(var i = 0; i < c.Length; i++){
+                var index = chineseStr.IndexOf(c[i]);
                 if(index != -1)
                     c[i] = numStr.ToCharArray()[index];
             }

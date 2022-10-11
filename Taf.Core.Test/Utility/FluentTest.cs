@@ -18,7 +18,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Conditional_1_If_Excuted()
         {
-            bool result = false;
+            var result = false;
 
             Fx.If(() =>
             {
@@ -36,7 +36,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Conditional_2_Else_Excuted()
         {
-            bool result = false;
+            var result = false;
             Fx.If(() =>
             {
                 return false;
@@ -53,8 +53,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Conditional_3_ElseIf_Excuted()
         {
-            int result = 0;
-            int expected = 3;
+            var result = 0;
+            var expected = 3;
             Fx
                 .If(() => expected == 997).Then(() =>
                 {
@@ -71,8 +71,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Conditional_4_And_Evaluated()
         {
-            int result = 0;
-            int expected = 1;
+            var result = 0;
+            var expected = 1;
             Fx
                 .If(() =>
                 {
@@ -98,8 +98,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Conditional_5_OrNot_Evaluated()
         {
-            int result = 0;
-            int expected = 2;
+            var result = 0;
+            var expected = 2;
             Fx
                 .If(() =>
                 {
@@ -128,8 +128,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Conditional_6_Long_Nesting_Evaluated()
         {
-            int result = 0;
-            int expected = 1;
+            var result = 0;
+            var expected = 1;
             Fx
                 .If(() =>
                 {
@@ -167,7 +167,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Loop_1_WhileTrue()
         {
-            int result = 0;
+            var result = 0;
 
             Fx.WhileTrue(() =>
             {
@@ -180,7 +180,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Loop_2_WhileFalse()
         {
-            int result = 0;
+            var result = 0;
 
             Fx.WhileFalse(() =>
             {
@@ -193,7 +193,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Loop_3_While_Do()
         {
-            int result = 0;
+            var result = 0;
 
             Fx.While(() =>
             {
@@ -209,8 +209,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Loop_4_While_Do_Early_Break()
         {
-            int result = 0;
-            int conditionEvaluationCount = 0;
+            var result = 0;
+            var conditionEvaluationCount = 0;
             Fx.While(() =>
             {
                 ++conditionEvaluationCount;
@@ -229,8 +229,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Loop_5_While_Do_Late_Break()
         {
-            int result = 0;
-            int conditionEvaluationCount = 0;
+            var result = 0;
+            var conditionEvaluationCount = 0;
 
             Fx.While(() =>
             {
@@ -250,7 +250,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Loop_6_Do_While()
         {
-            int result = 0;
+            var result = 0;
 
             Fx.Do(() =>
             {
@@ -266,7 +266,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Try_1_Catch_NoException()
         {
-            bool exceptionOccured = false;
+            var exceptionOccured = false;
 
             Fx.Try(() =>
             {
@@ -294,7 +294,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Try_4_Catch_CatchExcuted_ByCorrectOrder()
         {
-            bool exceptionOccured = false;
+            var exceptionOccured = false;
 
             Fx.Try(() =>
             {
@@ -312,7 +312,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Try_5_SwallowIf()
         {
-            int result = 0;
+            var result = 0;
             Fx.Try(() =>
             {
                 throw new NotImplementedException();
@@ -325,7 +325,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_ForEach()
         {
-            int result = 0;
+            var result = 0;
             Fx.ForEach(new List<int>() { 1, 2, 3, 4 }, current =>
             {
                 result += current;
@@ -346,7 +346,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Switch_1_Types_NormalCase()
         {
-            int result = -1;
+            var result = -1;
 
             Fx.Switch<string>()
                .Case<int>().Execute(() =>
@@ -368,7 +368,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Switch_2_Types_Default()
         {
-            int result = -1;
+            var result = -1;
             Fx
                .Switch<short>()
                .Case<int>().Execute(() =>
@@ -390,8 +390,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Switch_3_Instances_NormalCase()
         {
-            string condition = "two";
-            int result = -1;
+            var condition = "two";
+            var result = -1;
 
             Fx.Switch(condition)
                .Case("one").Execute(() =>
@@ -413,8 +413,8 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Switch_4_Instances_Default()
         {
-            string condition = "three";
-            int result = -1;
+            var condition = "three";
+            var result = -1;
             Fx
                .Switch(condition)
                .Case("one").Execute(() =>
@@ -436,7 +436,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_RetryOnFail()
         {
-            int result = 0;
+            var result = 0;
 
             Fx.RetryOnFail(() =>
             {

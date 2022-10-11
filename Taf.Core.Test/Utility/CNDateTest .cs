@@ -17,8 +17,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestChineseCalendar()
         {
-            ChineseCalendar c       = new ChineseCalendar(new DateTime(1990, 01, 15));
-            StringBuilder   dayInfo = new StringBuilder();
+            var c       = new ChineseCalendar(new DateTime(1990, 01, 15));
+            var   dayInfo = new StringBuilder();
             dayInfo.Append("阳历：" + c.DateString                  + "\r\n");
             dayInfo.Append("农历：" + c.ChineseDateString           + "\r\n");
             dayInfo.Append("星期："                                 + c.WeekDayStr);

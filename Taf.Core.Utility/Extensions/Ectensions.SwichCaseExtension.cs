@@ -107,10 +107,8 @@ namespace Taf.Core.Utility
         /// The <see cref="SwithCase{TCase,TOther}"/>.
         /// </returns>
         public static SwithCase<TCase, TOther> Switch<TCase, TOther>(this TCase t, Action<TOther> action)
-            where TCase : IEquatable<TCase>
-        {
-            return new SwithCase<TCase, TOther>(t, action);
-        }
+            where TCase : IEquatable<TCase> =>
+            new(t, action);
 
         /// <summary>
         /// The switch.
@@ -134,14 +132,12 @@ namespace Taf.Core.Utility
         /// The <see cref="SwithCase{TCase,TOther}"/>.
         /// </returns>
         public static SwithCase<TCase, TOther> Switch<TInput, TCase, TOther>(
-            this TInput t,
+            this TInput         t,
             Func<TInput, TCase> selector,
-            Action<TOther> action) where TCase : IEquatable<TCase>
-        {
-            return new SwithCase<TCase, TOther>(selector(t), action);
-        }
+            Action<TOther>      action) where TCase : IEquatable<TCase> =>
+            new(selector(t), action);
 
-        #endregion
+    #endregion
 
         #region Case
 
@@ -166,11 +162,9 @@ namespace Taf.Core.Utility
         /// </returns>
         public static SwithCase<TCase, TOther> Case<TCase, TOther>(
             this SwithCase<TCase, TOther> sc,
-            TCase option,
-            TOther other) where TCase : IEquatable<TCase>
-        {
-            return Case(sc, option, other, true);
-        }
+            TCase                         option,
+            TOther                        other) where TCase : IEquatable<TCase> =>
+            Case(sc, option, other, true);
 
         /// <summary>
         /// The case.
@@ -224,11 +218,9 @@ namespace Taf.Core.Utility
         /// </returns>
         public static SwithCase<TCase, TOther> Case<TCase, TOther>(
             this SwithCase<TCase, TOther> sc,
-            Predicate<TCase> predict,
-            TOther other) where TCase : IEquatable<TCase>
-        {
-            return Case(sc, predict, other, true);
-        }
+            Predicate<TCase>              predict,
+            TOther                        other) where TCase : IEquatable<TCase> =>
+            Case(sc, predict, other, true);
 
         /// <summary>
         /// The case.

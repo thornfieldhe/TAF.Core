@@ -29,10 +29,7 @@ namespace Taf.Core.Utility
         /// <param name="expression">
         /// The expression.
         /// </param>
-        public RegExpressionBase(string expression)
-        {
-            this.regex = new Regex(expression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        }
+        public RegExpressionBase(string expression) => regex = new Regex(expression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 是否匹配
@@ -42,10 +39,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public bool IsMatch(string content)
-        {
-            return this.regex.IsMatch(content);
-        }
+        public bool IsMatch(string content) => regex.IsMatch(content);
 
         /// <summary>
         /// 解析表达式
@@ -62,10 +56,10 @@ namespace Taf.Core.Utility
             switch (contex.Operator)
             {
                 case RegexOperator.Matches:
-                    this.EvaluateMatch(contex);
+                    EvaluateMatch(contex);
                     break;
                 case RegexOperator.Replace:
-                    this.EvaluateReplace(contex);
+                    EvaluateReplace(contex);
                     break;
                 default:
                     throw new ArgumentException();
@@ -81,7 +75,7 @@ namespace Taf.Core.Utility
         {
             context.Matches.Clear();
             context.Groups.Clear();
-            var coll = this.regex.Matches(context.Content);
+            var coll = regex.Matches(context.Content);
             if (coll.Count == 0)
             {
                 return;
@@ -91,7 +85,7 @@ namespace Taf.Core.Utility
             foreach (Match match in coll)
             {
                 context.Matches.Add(match.Value);
-                this.GetMaxInt(match.Groups.Count, ref groupCount);
+                GetMaxInt(match.Groups.Count, ref groupCount);
             }
 
             for (var i = 0; i < groupCount; i++)
@@ -109,7 +103,7 @@ namespace Taf.Core.Utility
         /// </param>
         protected virtual void EvaluateReplace(RegexContex contex)
         {
-            contex.Content = this.regex.Replace(contex.Content, contex.Replacement);
+            contex.Content = regex.Replace(contex.Content, contex.Replacement);
         }
 
         /// <summary>

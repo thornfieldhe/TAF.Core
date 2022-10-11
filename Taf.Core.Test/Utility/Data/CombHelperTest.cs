@@ -1,5 +1,5 @@
 ﻿using System;
-using Taf.Core.Test.Utility;
+using Taf.Core.Utility;
 using Xunit;
 
 namespace Taf.Core.Test
@@ -9,9 +9,9 @@ namespace Taf.Core.Test
         [Fact]
         public void NewCombTest()
         {
-            DateTime now = DateTime.Now;
-            Guid id = Comb.NewComb();
-            DateTime time = Comb.GetDateFromComb(id);
+            var now = DateTime.Now;
+            var id = Comb.NewComb();
+            var time = Comb.GetDateFromComb(id);
             Assert.True(time.Subtract(now).TotalSeconds < 1);
         }
     }

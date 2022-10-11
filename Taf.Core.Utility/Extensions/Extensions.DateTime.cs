@@ -88,10 +88,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="TimeSpan"/>.
         /// </returns>
-        public static TimeSpan GetTimeSpan(this DateTime startTime, DateTime endTime)
-        {
-            return endTime - startTime;
-        }
+        public static TimeSpan GetTimeSpan(this DateTime startTime, DateTime endTime) => endTime - startTime;
 
         /// <summary>
         /// 判断日期是否是今日
@@ -101,10 +98,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsToday(this DateTime dt)
-        {
-            return dt.Date == DateTime.Today;
-        }
+        public static bool IsToday(this DateTime dt) => dt.Date == DateTime.Today;
 
         /// <summary>
         /// 判断dto日期是否是今日
@@ -229,10 +223,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsWeekDay(this DateTime date)
-        {
-            return !date.IsWeekend();
-        }
+        public static bool IsWeekDay(this DateTime date) => !date.IsWeekend();
 
         /// <summary>
         /// 是否是周末
@@ -242,10 +233,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsWeekend(this DateTime value)
-        {
-            return value.DayOfWeek == DayOfWeek.Sunday || value.DayOfWeek == DayOfWeek.Saturday;
-        }
+        public static bool IsWeekend(this DateTime value) => value.DayOfWeek == DayOfWeek.Sunday || value.DayOfWeek == DayOfWeek.Saturday;
 
         /// <summary>
         /// 获取X个工作日后日期
@@ -308,12 +296,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsWithin(this DateTime @this, DateTime startDate, DateTime endDate)
-        {
-            return @this > startDate && @this < endDate;
-        }
+        public static bool IsWithin(this DateTime @this, DateTime startDate, DateTime endDate) => @this > startDate && @this < endDate;
 
-        #region 获取具体时间
+    #region 获取具体时间
 
         /// <summary>
         /// 返回当日结束时间 23:59:59;
@@ -323,10 +308,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime EndOfDay(this DateTime @this)
-        {
-            return @this.Date.AddDays(1).AddSeconds(-1);
-        }
+        public static DateTime EndOfDay(this DateTime @this) => @this.Date.AddDays(1).AddSeconds(-1);
 
         /// <summary>
         /// 返回当日开始时间 00:00:00
@@ -336,10 +318,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime StartOfDay(this DateTime @this)
-        {
-            return @this.Date.Date;
-        }
+        public static DateTime StartOfDay(this DateTime @this) => @this.Date.Date;
 
         /// <summary>
         /// 明天
@@ -349,10 +328,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime NextDay(this DateTime @this)
-        {
-            return @this.StartOfDay().AddDays(1);
-        }
+        public static DateTime NextDay(this DateTime @this) => @this.StartOfDay().AddDays(1);
 
         /// <summary>
         /// 昨天
@@ -362,10 +338,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime Yesterday(this DateTime @this)
-        {
-            return @this.StartOfDay().AddDays(-1);
-        }
+        public static DateTime Yesterday(this DateTime @this) => @this.StartOfDay().AddDays(-1);
 
         /// <summary>
         /// 日期所在月第一天
@@ -375,10 +348,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime GetFirstDayOfMonth(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, 1);
-        }
+        public static DateTime GetFirstDayOfMonth(this DateTime date) => new(date.Year, date.Month, 1);
 
         /// <summary>
         /// 日期所在月第一天
@@ -409,10 +379,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime GetLastDayOfMonth(this DateTime date)
-        {
-            return new DateTime(date.Year, date.Month, GetCountDaysOfMonth(date));
-        }
+        public static DateTime GetLastDayOfMonth(this DateTime date) => new(date.Year, date.Month, GetCountDaysOfMonth(date));
 
         /// <summary>
         /// 日期所在月最后一天
@@ -443,10 +410,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime GetFirstDayOfWeek(this DateTime date)
-        {
-            return date.GetFirstDayOfWeek(null);
-        }
+        public static DateTime GetFirstDayOfWeek(this DateTime date) => date.GetFirstDayOfWeek(null);
 
         /// <summary>
         /// 获取日期所在周一日期
@@ -479,10 +443,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime GetLastDayOfWeek(this DateTime date)
-        {
-            return date.GetLastDayOfWeek(null);
-        }
+        public static DateTime GetLastDayOfWeek(this DateTime date) => date.GetLastDayOfWeek(null);
 
         /// <summary>
         /// 获取日期所在周末日期
@@ -494,10 +455,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime GetLastDayOfWeek(this DateTime date, CultureInfo cultureInfo)
-        {
-            return date.GetFirstDayOfWeek(cultureInfo).AddDays(6);
-        }
+        public static DateTime GetLastDayOfWeek(this DateTime date, CultureInfo cultureInfo) => date.GetFirstDayOfWeek(cultureInfo).AddDays(6);
 
         /// <summary>
         /// 获取工作日日期
@@ -509,10 +467,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime GetWeekday(this DateTime date, DayOfWeek weekday)
-        {
-            return date.GetWeekday(weekday, null);
-        }
+        public static DateTime GetWeekday(this DateTime date, DayOfWeek weekday) => date.GetWeekday(weekday, null);
 
         /// <summary>
         /// 获取工作日日期
@@ -580,10 +535,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime SecondsAgo(this int @this)
-        {
-            return DateTime.Now.AddSeconds(-@this);
-        }
+        public static DateTime SecondsAgo(this int @this) => DateTime.Now.AddSeconds(-@this);
 
         /// <summary>
         /// 返回几分钟前时间
@@ -593,10 +545,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime MinutesAgo(this int @this)
-        {
-            return DateTime.Now.AddMinutes(-@this);
-        }
+        public static DateTime MinutesAgo(this int @this) => DateTime.Now.AddMinutes(-@this);
 
         /// <summary>
         /// 返回几小时前时间
@@ -606,10 +555,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime HoursAgo(this int @this)
-        {
-            return DateTime.Now.AddHours(-@this);
-        }
+        public static DateTime HoursAgo(this int @this) => DateTime.Now.AddHours(-@this);
 
         /// <summary>
         /// 返回几天前时间
@@ -619,10 +565,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime DaysAgo(this int @this)
-        {
-            return DateTime.Now.AddDays(-@this);
-        }
+        public static DateTime DaysAgo(this int @this) => DateTime.Now.AddDays(-@this);
 
         /// <summary>
         /// 返回几个月前时间
@@ -632,10 +575,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime MonthsAgo(this int @this)
-        {
-            return DateTime.Now.AddMonths(-@this);
-        }
+        public static DateTime MonthsAgo(this int @this) => DateTime.Now.AddMonths(-@this);
 
         /// <summary>
         /// 返回几年前时间
@@ -645,10 +585,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime YearsAgo(this int @this)
-        {
-            return DateTime.Now.AddYears(-@this);
-        }
+        public static DateTime YearsAgo(this int @this) => DateTime.Now.AddYears(-@this);
 
         /// <summary>
         /// 返回几秒钟后时间
@@ -658,10 +595,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime SecondsFromNow(this int @this)
-        {
-            return DateTime.Now.AddSeconds(@this);
-        }
+        public static DateTime SecondsFromNow(this int @this) => DateTime.Now.AddSeconds(@this);
 
         /// <summary>
         /// 返回几分钟后时间
@@ -671,10 +605,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime MinutesFromNow(this int @this)
-        {
-            return DateTime.Now.AddMinutes(@this);
-        }
+        public static DateTime MinutesFromNow(this int @this) => DateTime.Now.AddMinutes(@this);
 
         /// <summary>
         /// 返回几小时后时间
@@ -684,10 +615,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime HoursFromNow(this int @this)
-        {
-            return DateTime.Now.AddHours(@this);
-        }
+        public static DateTime HoursFromNow(this int @this) => DateTime.Now.AddHours(@this);
 
         /// <summary>
         /// 返回几天后时间
@@ -697,10 +625,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime DaysFromNow(this int @this)
-        {
-            return DateTime.Now.AddDays(@this);
-        }
+        public static DateTime DaysFromNow(this int @this) => DateTime.Now.AddDays(@this);
 
         /// <summary>
         /// 返回几月后时间
@@ -710,10 +635,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime MonthsFromNow(this int @this)
-        {
-            return DateTime.Now.AddMonths(@this);
-        }
+        public static DateTime MonthsFromNow(this int @this) => DateTime.Now.AddMonths(@this);
 
         /// <summary>
         /// 返回几年后时间
@@ -723,10 +645,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="DateTime"/>.
         /// </returns>
-        public static DateTime YearsFromNow(this int @this)
-        {
-            return DateTime.Now.AddYears(@this);
-        }
+        public static DateTime YearsFromNow(this int @this) => DateTime.Now.AddYears(@this);
 
         /// <summary>
         /// 增加周
@@ -850,20 +769,14 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToDateTimeString(this DateTime dateTime, bool isRemoveSecond = false)
-        {
-            return dateTime.ToString(isRemoveSecond ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd HH:mm:ss");
-        }
+        public static string ToDateTimeString(this DateTime dateTime, bool isRemoveSecond = false) => dateTime.ToString(isRemoveSecond ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd HH:mm:ss");
 
         /// <summary>
         /// 获取格式化字符串，带时分秒，格式："yyyyMMddHHmmss"
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public static string ToDateTimeString(this DateTime dateTime)
-        {
-            return dateTime.ToString("yyyyMMddHHmm");
-        }
+        public static string ToDateTimeString(this DateTime dateTime) => dateTime.ToString("yyyyMMddHHmm");
 
         /// <summary>
         /// 获取格式化字符串，带时分秒，格式："yyyy-MM-dd HH:mm:ss"
@@ -877,10 +790,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToDateTimeString(this DateTime? dateTime, bool isRemoveSecond = false)
-        {
-            return dateTime == null ? string.Empty : ToDateTimeString(dateTime.Value, isRemoveSecond);
-        }
+        public static string ToDateTimeString(this DateTime? dateTime, bool isRemoveSecond = false) => dateTime == null ? string.Empty : ToDateTimeString(dateTime.Value, isRemoveSecond);
 
         /// <summary>
         /// 获取格式化字符串，不带时分秒，格式："yyyy-MM-dd"
@@ -892,10 +802,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToDateString(this DateTime dateTime, bool withOutDash = false)
-        {
-            return dateTime.ToString(withOutDash ? "yyyyMMdd" : "yyyy-MM-dd");
-        }
+        public static string ToDateString(this DateTime dateTime, bool withOutDash = false) => dateTime.ToString(withOutDash ? "yyyyMMdd" : "yyyy-MM-dd");
 
         /// <summary>
         /// 获取格式化字符串，不带时分秒，格式："yyyy-MM-dd"
@@ -906,10 +813,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToDateString(this DateTime? dateTime)
-        {
-            return dateTime == null ? string.Empty : ToDateString(dateTime.Value);
-        }
+        public static string ToDateString(this DateTime? dateTime) => dateTime == null ? string.Empty : ToDateString(dateTime.Value);
 
         /// <summary>
         /// 获取格式化字符串，不带年月日，格式："HH:mm:ss"
@@ -920,10 +824,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToTimeString(this DateTime dateTime)
-        {
-            return dateTime.ToString("HH:mm:ss");
-        }
+        public static string ToTimeString(this DateTime dateTime) => dateTime.ToString("HH:mm:ss");
 
         /// <summary>
         /// 获取格式化字符串，不带年月日，格式："HH:mm:ss"
@@ -934,10 +835,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToTimeString(this DateTime? dateTime)
-        {
-            return dateTime == null ? string.Empty : ToTimeString(dateTime.Value);
-        }
+        public static string ToTimeString(this DateTime? dateTime) => dateTime == null ? string.Empty : ToTimeString(dateTime.Value);
 
         /// <summary>
         /// 获取格式化字符串，带毫秒，格式："yyyy-MM-dd HH:mm:ss.fff"
@@ -948,10 +846,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToMillisecondString(this DateTime dateTime)
-        {
-            return dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        }
+        public static string ToMillisecondString(this DateTime dateTime) => dateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
 
         /// <summary>
         /// 获取格式化字符串，带毫秒，格式："yyyy-MM-dd HH:mm:ss.fff"
@@ -962,10 +857,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToMillisecondString(this DateTime? dateTime)
-        {
-            return dateTime == null ? string.Empty : ToMillisecondString(dateTime.Value);
-        }
+        public static string ToMillisecondString(this DateTime? dateTime) => dateTime == null ? string.Empty : ToMillisecondString(dateTime.Value);
 
         /// <summary>
         /// 获取格式化字符串，不带时分秒，格式："yyyy年MM月dd日"
@@ -976,10 +868,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToChineseDateString(this DateTime dateTime)
-        {
-            return string.Format("{0}年{1}月{2}日", dateTime.Year, dateTime.Month, dateTime.Day);
-        }
+        public static string ToChineseDateString(this DateTime dateTime) => string.Format("{0}年{1}月{2}日", dateTime.Year, dateTime.Month, dateTime.Day);
 
         /// <summary>
         /// 获取格式化字符串，不带时分秒，格式："yyyy年MM月dd日"
@@ -990,10 +879,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToChineseDateString(this DateTime? dateTime)
-        {
-            return !dateTime.HasValue ? string.Empty : ToChineseDateString(dateTime.Value);
-        }
+        public static string ToChineseDateString(this DateTime? dateTime) => !dateTime.HasValue ? string.Empty : ToChineseDateString(dateTime.Value);
 
         /// <summary>
         /// 获取格式化字符串，带时分秒，格式："yyyy年MM月dd日 HH时mm分"
@@ -1032,11 +918,8 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string ToChineseDateTimeString(this DateTime? dateTime, bool isRemoveSecond = false)
-        {
-            return dateTime == null ? string.Empty : ToChineseDateTimeString(dateTime.Value);
-        }
-        
+        public static string ToChineseDateTimeString(this DateTime? dateTime, bool isRemoveSecond = false) => dateTime == null ? string.Empty : ToChineseDateTimeString(dateTime.Value);
+
         /// <summary>
         /// 获取Java 13位时间戳转DateTime
         /// </summary>

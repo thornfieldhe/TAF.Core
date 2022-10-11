@@ -22,10 +22,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static string Description(this System.Enum instance)
-        {
-            return EnumExt.GetDescription(instance.GetType(), instance);
-        }
+        public static string Description(this System.Enum instance) => EnumExt.GetDescription(instance.GetType(), instance);
 
         /// <summary>
         /// 获取成员值
@@ -35,10 +32,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static int Value(this System.Enum instance)
-        {
-            return EnumExt.GetValue(instance.GetType(), instance);
-        }
+        public static int Value(this System.Enum instance) => EnumExt.GetValue(instance.GetType(), instance);
 
         /// <summary>
         /// 获取成员值
@@ -51,9 +45,6 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static T? Value<T>(this System.Enum instance)
-        {
-            return Value(instance).To<T>();
-        }
+        public static T? Value<T>(this System.Enum instance) => Value(instance).To<T>();
     }
 }

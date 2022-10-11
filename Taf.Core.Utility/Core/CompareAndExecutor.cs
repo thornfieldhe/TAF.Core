@@ -1,4 +1,4 @@
-namespace Taf.Core.Utility.Core
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 比较两个对象的某些属性是否一致,如果不一致则对源对象进行一系列的操作

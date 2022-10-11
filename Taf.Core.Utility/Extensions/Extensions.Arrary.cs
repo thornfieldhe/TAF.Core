@@ -162,10 +162,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static T MaxBy<T, TMember>(this IEnumerable<T> source, Func<T, TMember> predicate)
-        {
-            return MaxBy(source, predicate, Comparer<TMember>.Default);
-        }
+        public static T MaxBy<T, TMember>(this IEnumerable<T> source, Func<T, TMember> predicate) => MaxBy(source, predicate, Comparer<TMember>.Default);
 
         /// <summary>
         /// 获取列表的最大值
@@ -342,9 +339,6 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        public static IList<T> AsList<T>(this IList<T> collection)
-        {
-            return collection ?? new List<T>();
-        }
+        public static IList<T> AsList<T>(this IList<T> collection) => collection ?? new List<T>();
     }
 }

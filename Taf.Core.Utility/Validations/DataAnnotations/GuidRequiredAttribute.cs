@@ -17,11 +17,8 @@ namespace System.ComponentModel.DataAnnotations
     [AttributeUsage(AttributeTargets.Property)]
     public class GuidRequiredAttribute : DataTypeAttribute
     {
-        public GuidRequiredAttribute(string message):this()
-        {
-            this.ErrorMessage = message;
-        }
-        
+        public GuidRequiredAttribute(string message):this() => ErrorMessage = message;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GuidRequiredAttribute"/> class.
         /// </summary>
@@ -58,9 +55,6 @@ namespace System.ComponentModel.DataAnnotations
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public override bool IsValid(object value)
-        {
-            return !(value == null || Convert.ToString(value).ToGuid().IsEmpty());
-        }
+        public override bool IsValid(object value) => !(value == null || Convert.ToString(value).ToGuid().IsEmpty());
     }
 }

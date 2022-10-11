@@ -23,10 +23,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Not(this bool @this)
-        {
-            return !@this;
-        }
+        public static bool Not(this bool @this) => !@this;
 
         /// <summary>
         /// 且
@@ -38,10 +35,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool And(this bool @this, bool right)
-        {
-            return @this && right;
-        }
+        public static bool And(this bool @this, bool right) => @this && right;
 
         /// <summary>
         /// 且
@@ -53,10 +47,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool And(this bool @this, Func<bool> action)
-        {
-            return @this && action();
-        }
+        public static bool And(this bool @this, Func<bool> action) => @this && action();
 
         /// <summary>
         /// 与或（且非）
@@ -68,10 +59,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool AndNot(this bool @this, bool right)
-        {
-            return @this && !right;
-        }
+        public static bool AndNot(this bool @this, bool right) => @this && !right;
 
         /// <summary>
         ///  与或（且非）
@@ -83,10 +71,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool AndNot(this bool @this, Func<bool> action)
-        {
-            return @this && !action();
-        }
+        public static bool AndNot(this bool @this, Func<bool> action) => @this && !action();
 
         /// <summary>
         /// 或
@@ -98,10 +83,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Or(this bool @this, bool right)
-        {
-            return @this || right;
-        }
+        public static bool Or(this bool @this, bool right) => @this || right;
 
         /// <summary>
         /// 或
@@ -113,10 +95,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Or(this bool @this, Func<bool> action)
-        {
-            return @this || action();
-        }
+        public static bool Or(this bool @this, Func<bool> action) => @this || action();
 
         /// <summary>
         /// 或非
@@ -128,10 +107,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool OrNot(this bool @this, bool right)
-        {
-            return @this || !right;
-        }
+        public static bool OrNot(this bool @this, bool right) => @this || !right;
 
         /// <summary>
         /// 或非
@@ -143,10 +119,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool OrNot(this bool @this, Func<bool> action)
-        {
-            return @this || !action();
-        }
+        public static bool OrNot(this bool @this, Func<bool> action) => @this || !action();
 
         /// <summary>
         /// 亦或 
@@ -161,10 +134,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Xor(this bool @this, bool right)
-        {
-            return @this ^ right;
-        }
+        public static bool Xor(this bool @this, bool right) => @this ^ right;
 
         /// <summary>
         /// 异或，只有一个为真时为真
@@ -176,9 +146,6 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Xor(this bool @this, Func<bool> action)
-        {
-            return @this ^ action();
-        }
+        public static bool Xor(this bool @this, Func<bool> action) => @this ^ action();
     }
 }

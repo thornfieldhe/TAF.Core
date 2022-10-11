@@ -9,7 +9,7 @@
 
 namespace Taf.Core
 {
-    using Taf.Validation;
+    using Validation;
 
     /// <summary>
     /// 验证操作

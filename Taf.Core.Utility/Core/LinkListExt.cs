@@ -9,7 +9,7 @@
 
 using System.Collections.Generic;
 
-namespace Taf.Core.Utility.Core{
+namespace Taf.Core.Utility{
     using System;
 
     /// <summary>

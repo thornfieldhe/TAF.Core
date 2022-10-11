@@ -37,12 +37,10 @@ namespace Taf.Core.Utility
         /// The <see cref="IQueryable"/>.
         /// </returns>
         public static IQueryable<T> WhereIf<T>(
-            this IQueryable<T> source,
+            this IQueryable<T>        source,
             Expression<Func<T, bool>> predicate,
-            bool condition)
-        {
-            return condition ? source.Where(predicate) : source;
-        }
+            bool                      condition) =>
+            condition ? source.Where(predicate) : source;
 
         /// <summary>
         /// The where if.
@@ -62,12 +60,10 @@ namespace Taf.Core.Utility
         /// The <see cref="IQueryable"/>.
         /// </returns>
         public static IQueryable<T> WhereIf<T>(
-            this IQueryable<T> source,
+            this IQueryable<T>             source,
             Expression<Func<T, int, bool>> predicate,
-            bool condition)
-        {
-            return condition ? source.Where(predicate) : source;
-        }
+            bool                           condition) =>
+            condition ? source.Where(predicate) : source;
 
         /// <summary>
         /// The where if.
@@ -86,10 +82,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// IEnumerable<T>
         /// </returns>
-        public static IEnumerable<T> WhereIf<T>(this IEnumerable<T> source, Func<T, bool> predicate, bool condition)
-        {
-            return condition ? source.Where(predicate) : source;
-        }
+        public static IEnumerable<T> WhereIf<T>(this IEnumerable<T> source, Func<T, bool> predicate, bool condition) => condition ? source.Where(predicate) : source;
 
         /// <summary>
         /// The where if.
@@ -110,21 +103,13 @@ namespace Taf.Core.Utility
         /// </returns>
         public static IEnumerable<T> WhereIf<T>(
             this IEnumerable<T> source,
-            Func<T, int, bool> predicate,
-            bool condition)
-        {
-            return condition ? source.Where(predicate) : source;
-        }
+            Func<T, int, bool>  predicate,
+            bool                condition) =>
+            condition ? source.Where(predicate) : source;
 
-        public static bool Contains<T, V>(this IEnumerable<T> source, T value, Func<T, V> keySelector)
-        {
-            return source.Contains(value, Equality<T>.CreateComparer(keySelector));
-        }
+        public static bool Contains<T, V>(this IEnumerable<T> source, T value, Func<T, V> keySelector) => source.Contains(value, Equality<T>.CreateComparer(keySelector));
 
-        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector)
-        {
-            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector));
-        }
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector) => source.Distinct(new CommonEqualityComparer<T, V>(keySelector));
 
         /// <summary>
         /// 去除重复项
@@ -135,10 +120,7 @@ namespace Taf.Core.Utility
         /// <param name="keySelector"></param>
         /// <param name="comparer"></param>
         /// <returns></returns>
-        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector, IEqualityComparer<V> comparer)
-        {
-            return source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
-        }
+        public static IEnumerable<T> Distinct<T, V>(this IEnumerable<T> source, Func<T, V> keySelector, IEqualityComparer<V> comparer) => source.Distinct(new CommonEqualityComparer<T, V>(keySelector, comparer));
 
 
         /// <summary>

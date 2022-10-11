@@ -20,8 +20,8 @@ namespace Taf.Core.Test
         {
             var list1 = new List<TestInfo>
                                        {
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "a" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "b" },
+                                           new(){ Id = Guid.NewGuid(), Name = "a" },
+                                           new(){ Id = Guid.NewGuid(), Name = "b" },
                                        };
             var info = new TestInfo { Id = Guid.NewGuid(), Name = "a" };
             var comparer = Equality<TestInfo>.CreateComparer(m => m.Name);

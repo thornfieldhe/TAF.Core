@@ -31,10 +31,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// 继承IComparer接口的比较类
         /// </returns>
-        public static IComparer<T> CreateComparer<TV>(Func<T, TV> keySelector)
-        {
-            return new CommonComparer<TV>(keySelector);
-        }
+        public static IComparer<T> CreateComparer<TV>(Func<T, TV> keySelector) => new CommonComparer<TV>(keySelector);
 
         /// <summary>
         /// 创建指定对比委托<paramref name="keySelector"/>与结果二次比较器<paramref name="comparer"/>的实例
@@ -50,12 +47,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// IComparer{T}对象
         /// </returns>
-        public static IComparer<T> CreateComparer<TV>(Func<T, TV> keySelector, IComparer<TV> comparer)
-        {
-            return new CommonComparer<TV>(keySelector, comparer);
-        }
+        public static IComparer<T> CreateComparer<TV>(Func<T, TV> keySelector, IComparer<TV> comparer) => new CommonComparer<TV>(keySelector, comparer);
 
-        #region Nested type: CommonComparer
+    #region Nested type: CommonComparer
 
         private class CommonComparer<TV> : IComparer<T>
         {
@@ -75,12 +69,9 @@ namespace Taf.Core.Utility
 
             #region IComparer<T> Members
 
-            public int Compare(T x, T y)
-            {
-                return _comparer.Compare(_keySelector(x), _keySelector(y));
-            }
+            public int Compare(T x, T y) => _comparer.Compare(_keySelector(x), _keySelector(y));
 
-            #endregion
+        #endregion
         }
 
         #endregion

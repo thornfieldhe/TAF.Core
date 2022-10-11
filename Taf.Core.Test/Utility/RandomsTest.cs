@@ -15,7 +15,7 @@ namespace Taf.Core.Test
 {
     using System;
     
-    using Taf.Core.Utility;
+    using Utility;
 
     /// <summary>
     /// The randoms test.

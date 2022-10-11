@@ -34,12 +34,12 @@ namespace Taf.Core.Utility{
         /// The <see cref="T"/>.
         /// </returns>
         public static T GetInstance<T>(object member){
-            string value = member.ToStr();
+            var value = member.ToStr();
             if(string.IsNullOrWhiteSpace(value)){
                 throw new ArgumentNullException("member");
             }
 
-            return (T)System.Enum.Parse(Reflection.GetType<T>(), value, true);
+            return (T)Enum.Parse(Reflection.GetType<T>(), value, true);
         }
 
     #endregion
@@ -59,9 +59,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetName<T>(object member){
-            return GetName(Reflection.GetType<T>(), member);
-        }
+        public static string GetName<T>(object member) => GetName(Reflection.GetType<T>(), member);
 
         /// <summary>
         /// 获取成员名
@@ -92,7 +90,7 @@ namespace Taf.Core.Utility{
                 return string.Empty;
             }
 
-            return System.Enum.GetName(type, member);
+            return Enum.GetName(type, member);
         }
 
     #endregion
@@ -112,9 +110,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public static int GetValue<T>(object member){
-            return GetValue(Reflection.GetType<T>(), member);
-        }
+        public static int GetValue<T>(object member) => GetValue(Reflection.GetType<T>(), member);
 
         /// <summary>
         /// 获取成员值
@@ -134,7 +130,7 @@ namespace Taf.Core.Utility{
                 throw new ArgumentNullException("member");
             }
 
-            return (int)System.Enum.Parse(type, member.ToString(), true);
+            return (int)Enum.Parse(type, member.ToString(), true);
         }
 
     #endregion
@@ -153,9 +149,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetDescription<T>(object member){
-            return Reflection.GetFieldDescription<T>(GetName<T>(member));
-        }
+        public static string GetDescription<T>(object member) => Reflection.GetFieldDescription<T>(GetName<T>(member));
 
         /// <summary>
         /// 获取描述,使用System.ComponentModel.Description特性设置描述
@@ -169,9 +163,7 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetDescription(Type type, object member){
-            return Reflection.GetFiledDescription(type, GetName(type, member));
-        }
+        public static string GetDescription(Type type, object member) => Reflection.GetFiledDescription(type, GetName(type, member));
 
     #endregion
 

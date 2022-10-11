@@ -32,12 +32,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="Type"/>.
         /// </returns>
-        public static Type GetType<T>()
-        {
-            return Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
-        }
+        public static Type GetType<T>() => Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
 
-        #endregion
+    #endregion
 
         #region CreateInstance(动态创建实例)
 
@@ -77,12 +74,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T? CreateInstance<T>(Type type, params object[] parameters)
-        {
-            return Activator.CreateInstance(type, parameters).To<T>();
-        }
+        public static T? CreateInstance<T>(Type type, params object[] parameters) => Activator.CreateInstance(type, parameters).To<T>();
 
-        #endregion
+    #endregion
 
         #region GetByInterface(获取实现了接口的所有具体类型)
 
@@ -205,15 +199,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string GetMemberDescription<T>(string memberName)
-        {
-            return GetMemberDescription(GetType<T>(), memberName);
-        }
+        public static string GetMemberDescription<T>(string memberName) => GetMemberDescription(GetType<T>(), memberName);
 
-        public static string GetFieldDescription<T>(string fieldName)
-        {
-            return GetFiledDescription(GetType<T>(), fieldName);
-        }
+        public static string GetFieldDescription<T>(string fieldName) => GetFiledDescription(GetType<T>(), fieldName);
 
         /// <summary>
         /// 获取描述

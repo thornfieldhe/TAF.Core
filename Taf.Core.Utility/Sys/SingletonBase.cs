@@ -7,7 +7,7 @@
     public class SingletonBase<T> where T : new()
     {
         private static T instance = default(T);
-        private static readonly object padlock = new object();
+        private static readonly object padlock = new();
         protected SingletonBase()
         {
         }

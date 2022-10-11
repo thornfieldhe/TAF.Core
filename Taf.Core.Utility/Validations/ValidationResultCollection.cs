@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Validation
+namespace Taf.Core.Validation
 {
     using System;
     using System.Collections;
@@ -29,32 +29,17 @@ namespace Taf.Validation
         /// Initializes a new instance of the <see cref="ValidationResultCollection"/> class. 
         /// 初始化验证结果集合
         /// </summary>
-        public ValidationResultCollection()
-        {
-            results = new List<ValidationResult>();
-        }
+        public ValidationResultCollection() => results = new List<ValidationResult>();
 
         /// <summary>
         /// 是否有效
         /// </summary>
-        public bool IsValid
-        {
-            get
-            {
-                return results.Count == 0;
-            }
-        }
+        public bool IsValid => results.Count == 0;
 
         /// <summary>
         /// 验证结果个数
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return results.Count;
-            }
-        }
+        public int Count => results.Count;
 
         /// <summary>
         /// 获取迭代器
@@ -62,10 +47,7 @@ namespace Taf.Validation
         /// <returns>
         /// The <see cref="IEnumerator"/>.
         /// </returns>
-        IEnumerator<ValidationResult> IEnumerable<ValidationResult>.GetEnumerator()
-        {
-            return results.GetEnumerator();
-        }
+        IEnumerator<ValidationResult> IEnumerable<ValidationResult>.GetEnumerator() => results.GetEnumerator();
 
         /// <summary>
         /// 获取迭代器
@@ -73,10 +55,7 @@ namespace Taf.Validation
         /// <returns>
         /// The <see cref="IEnumerator"/>.
         /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return results.GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => results.GetEnumerator();
 
         /// <summary>
         /// 添加验证结果

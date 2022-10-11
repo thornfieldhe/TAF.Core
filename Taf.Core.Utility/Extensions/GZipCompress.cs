@@ -17,7 +17,7 @@ using System.Text;
 // Taf.Utilty
 // GZipCompress.cs
 
-namespace Taf.Utility{
+namespace Taf.Core.Utility{
     using System;
 
     /// <summary>

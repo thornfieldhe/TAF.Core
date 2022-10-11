@@ -1,4 +1,4 @@
-﻿namespace Taf.Core
+﻿namespace Taf.Core.Utility
 {
     using System;
     using System.Reflection;
@@ -11,8 +11,8 @@
     {
         public TearDownStepAttribute(int sequence, int times = 1)
         {
-            this.Sequence = sequence;
-            this.Times = times;
+            Sequence = sequence;
+            Times = times;
         }
 
         public MethodInfo Handler
@@ -43,7 +43,7 @@
                 throw new ArgumentException("obj");
             }
 
-            return this.Sequence - ((TearDownStepAttribute)obj).Sequence;
+            return Sequence - ((TearDownStepAttribute)obj).Sequence;
         }
     }
 }

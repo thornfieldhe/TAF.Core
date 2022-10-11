@@ -9,9 +9,9 @@
 
 namespace System.ComponentModel.DataAnnotations
 {
-    using System.Globalization;
-    using System.Linq;
-    using System.Reflection;
+    using Globalization;
+    using Linq;
+    using Reflection;
 
     /// <summary>
     /// Validates that the property has the same value as the given 'otherProperty' 
@@ -94,7 +94,7 @@ namespace System.ComponentModel.DataAnnotations
         {
             var memberNames = new[] { validationContext.MemberName };
 
-            PropertyInfo otherPropertyInfo = validationContext.ObjectType.GetProperty(OtherProperty);
+            var otherPropertyInfo = validationContext.ObjectType.GetProperty(OtherProperty);
             if (otherPropertyInfo == null)
             {
                 return
@@ -115,7 +115,7 @@ namespace System.ComponentModel.DataAnnotations
                 OtherPropertyDisplayName = displayAttribute.Name;
             }
 
-            object otherPropertyValue = otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
+            var otherPropertyValue = otherPropertyInfo.GetValue(validationContext.ObjectInstance, null);
             if (!Equals(value, otherPropertyValue))
             {
                 return new ValidationResult(FormatErrorMessage(validationContext.DisplayName), memberNames);

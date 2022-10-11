@@ -50,10 +50,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="decimal"/>.
         /// </returns>
-        public static decimal Round(this decimal d, int s)
-        {
-            return Math.Round(d, s);
-        }
+        public static decimal Round(this decimal d, int s) => Math.Round(d, s);
 
         /// <summary>
         /// 是否在范围之间
@@ -92,10 +89,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Format(this decimal number, string defaultValue = "")
-        {
-            return number == 0 ? defaultValue : string.Format("{0:0.##}", number);
-        }
+        public static string Format(this decimal number, string defaultValue = "") => number == 0 ? defaultValue : string.Format("{0:0.##}", number);
 
         /// <summary>
         /// 获取格式化字符串
@@ -109,10 +103,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Format(this decimal? number, string defaultValue = "")
-        {
-            return Format(number.SafeValue(), defaultValue);
-        }
+        public static string Format(this decimal? number, string defaultValue = "") => Format(number.SafeValue(), defaultValue);
 
         /// <summary>
         /// 获取格式化字符串, ￥xx
@@ -123,10 +114,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatRmb(this decimal number)
-        {
-            return number == 0 ? "￥0" : string.Format("￥{0:0.##}", number);
-        }
+        public static string FormatRmb(this decimal number) => number == 0 ? "￥0" : string.Format("￥{0:0.##}", number);
 
         /// <summary>
         /// 获取格式化字符串, ￥xx
@@ -137,10 +125,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatRmb(this decimal? number)
-        {
-            return FormatRmb(number.SafeValue());
-        }
+        public static string FormatRmb(this decimal? number) => FormatRmb(number.SafeValue());
 
         /// <summary>
         /// 获取格式化字符串,x.xx%
@@ -151,10 +136,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this decimal number)
-        {
-            return number == 0 ? string.Empty : string.Format("{0:0.##}%", number);
-        }
+        public static string FormatPercent(this decimal number) => number == 0 ? string.Empty : string.Format("{0:0.##}%", number);
 
         /// <summary>
         /// 获取格式化字符串,x.xx%
@@ -165,10 +147,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this decimal? number)
-        {
-            return FormatPercent(number.SafeValue());
-        }
+        public static string FormatPercent(this decimal? number) => FormatPercent(number.SafeValue());
 
         /// <summary>
         /// 移除尾随0
@@ -206,15 +185,8 @@ namespace Taf.Core.Utility
         /// <param name="v">数值</param>
         /// <param name="sd">有效位数</param>
         /// <returns></returns>
-        public static string ToScienceString(this decimal v, int sd)
-        {
-            return v.ToString("E" + sd.ToString());
-        }
+        public static string ToScienceString(this decimal v, int sd) => v.ToString("E" + sd.ToString());
 
-        public static string ToPercentString(this decimal v, int sd)
-        {
-            return v.ToString("P" + sd.ToString());
-        }
-
+        public static string ToPercentString(this decimal v, int sd) => v.ToString("P" + sd.ToString());
     }
 }

@@ -9,11 +9,11 @@
 
 using Taf.Core.Utility;
 
-namespace Taf.Validation
+namespace Taf.Core.Validation
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Taf.Core;
+    using Core;
 
     /// <summary>
     /// 验证操作

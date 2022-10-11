@@ -9,7 +9,7 @@
 
 namespace System.ComponentModel.DataAnnotations
 {
-    using System.Globalization;
+    using Globalization;
 
     /// <summary>
     /// 范围不包含边界
@@ -89,7 +89,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
             if (value == null)
             {
@@ -138,7 +138,7 @@ namespace System.ComponentModel.DataAnnotations
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
             if (value == null)
             {

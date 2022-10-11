@@ -23,10 +23,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static bool IsNull<T>(this T @this)
-        {
-            return @this == null;
-        }
+        public static bool IsNull<T>(this T @this) => @this == null;
 
         /// <summary>
         /// 是否不为空
@@ -36,10 +33,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsNotNull<T>(this T @this)
-        {
-            return @this != null;
-        }
+        public static bool IsNotNull<T>(this T @this) => @this != null;
 
         /// <summary>
         /// 检测空值,为null则抛出ArgumentNullException异常
@@ -67,10 +61,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsEmpty(this string value)
-        {
-            return string.IsNullOrWhiteSpace(value);
-        }
+        public static bool IsEmpty(this string value) => string.IsNullOrWhiteSpace(value);
 
         /// <summary>
         /// 可空GUID是否为空
@@ -81,10 +72,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsEmpty(this Guid? value)
-        {
-            return value == null || IsEmpty(value.Value);
-        }
+        public static bool IsEmpty(this Guid? value) => value == null || IsEmpty(value.Value);
 
         /// <summary>
         /// GUID是否为空
@@ -95,10 +83,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsEmpty(this Guid value)
-        {
-            return value == Guid.Empty;
-        }
+        public static bool IsEmpty(this Guid value) => value == Guid.Empty;
 
         /// <summary>
         /// 日期是否是最小值
@@ -109,10 +94,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsValid(this DateTime value)
-        {
-            return value > new DateTime(1900, 1, 1);
-        }
+        public static bool IsValid(this DateTime value) => value > new DateTime(1900, 1, 1);
 
         /// <summary>
         /// 不为空执行委托方法
@@ -213,10 +195,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="TResult"/>.
         /// </returns>
-        public static TResult WhenTrue<TResult>(this bool @this, TResult content)
-        {
-            return @this ? content : default(TResult);
-        }
+        public static TResult WhenTrue<TResult>(this bool @this, TResult content) => @this ? content : default(TResult);
 
         /// <summary>
         /// 如果结果为假，执行指定委托方法
@@ -230,10 +209,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="TResult"/>.
         /// </returns>
-        public static TResult WhenFalse<TResult>(this bool @this, Func<TResult> exp)
-        {
-            return !@this ? exp() : default(TResult);
-        }
+        public static TResult WhenFalse<TResult>(this bool @this, Func<TResult> exp) => !@this ? exp() : default(TResult);
 
         /// <summary>
         /// 如果为假，返回泛型默认值
@@ -247,10 +223,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="TResult"/>.
         /// </returns>
-        public static TResult WhenFalse<TResult>(this bool @this, TResult content)
-        {
-            return !@this ? content : default(TResult);
-        }
+        public static TResult WhenFalse<TResult>(this bool @this, TResult content) => !@this ? content : default(TResult);
 
         /// <summary>
         /// 判断是否为泛型类型
@@ -262,10 +235,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Is<T>(this T @this)
-        {
-            return @this is T;
-        }
+        public static bool Is<T>(this T @this) => @this is T;
 
         /// <summary>
         /// 对象安全转换为指定类型
@@ -277,10 +247,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T As<T>(this T @this) where T : class
-        {
-            return @this;
-        }
+        public static T As<T>(this T @this) where T : class => @this;
 
         /// <summary>
         /// 锁定对象后执行方法
@@ -319,10 +286,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool Between<T>(this T @this, T lower, T upper) where T : IComparable<T>
-        {
-            return @this.CompareTo(lower) >= 0 && @this.CompareTo(upper) < 0;
-        }
+        public static bool Between<T>(this T @this, T lower, T upper) where T : IComparable<T> => @this.CompareTo(lower) >= 0 && @this.CompareTo(upper) < 0;
 
         /// <summary>
         /// 使用lambda表达式更新对象属性.
@@ -379,10 +343,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T SafeValue<T>(this T? @this) where T : struct
-        {
-            return @this ?? default(T);
-        }
+        public static T SafeValue<T>(this T? @this) where T : struct => @this ?? default(T);
 
         /// <summary>
         /// 安全创建对象
@@ -394,10 +355,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T SafeValue<T>(this T @this) where T : class, new()
-        {
-            return new T();
-        }
+        public static T SafeValue<T>(this T @this) where T : class, new() => new();
 
         /// <summary>
         /// 通过表达式返回对象，对象如果为空则返回默认值
@@ -416,11 +374,9 @@ namespace Taf.Core.Utility
         /// The <see cref="TReturn"/>.
         /// </returns>
         public static TReturn NullOr<T, TReturn>(
-            this T @this,
+            this T           @this,
             Func<T, TReturn> exp,
-            TReturn elseValue = default(TReturn)) where T : class
-        {
-            return @this != null ? exp(@this) : elseValue;
-        }
+            TReturn          elseValue = default(TReturn)) where T : class =>
+            @this != null ? exp(@this) : elseValue;
     }
 }

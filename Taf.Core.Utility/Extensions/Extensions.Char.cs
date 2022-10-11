@@ -27,10 +27,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsCharEqual(this char firstChar, char secondChar)
-        {
-            return IsCharEqual(firstChar, secondChar, false);
-        }
+        public static bool IsCharEqual(this char firstChar, char secondChar) => IsCharEqual(firstChar, secondChar, false);
 
         /// <summary>
         /// 比较两个字符时控制大小写敏感性
@@ -71,15 +68,13 @@ namespace Taf.Core.Utility
         /// The <see cref="bool"/>.
         /// </returns>
         public static bool IsCharEqual(
-            this char firstChar, 
+            this char   firstChar, 
             CultureInfo firstCharCulture, 
-            char secondChar, 
+            char        secondChar, 
             CultureInfo secondCharCulture, 
-            bool caseSensitiveCompare = false)
-        {
-            return caseSensitiveCompare
-                       ? firstChar.Equals(secondChar)
-                       : char.ToUpper(firstChar, firstCharCulture).Equals(char.ToUpper(secondChar, secondCharCulture));
-        }
+            bool        caseSensitiveCompare = false) =>
+            caseSensitiveCompare
+                ? firstChar.Equals(secondChar)
+                : char.ToUpper(firstChar, firstCharCulture).Equals(char.ToUpper(secondChar, secondCharCulture));
     }
 }

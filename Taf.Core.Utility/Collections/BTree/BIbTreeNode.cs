@@ -36,27 +36,18 @@ namespace Taf.Core.Utility
         /// <param name="colour"></param>
         public BIbTreeNode(T data, BTreeNodeColor colour)
         {
-            this.Data = data;
-            this.Colour = colour;
+            Data = data;
+            Colour = colour;
 
-            this.Left = new IBTreeNullNode<T>();
-            this.Left.Parent = this;
-            this.Right = new IBTreeNullNode<T>();
-            this.Right.Parent = this;
-            this.Parent = new IBTreeNullNode<T>();
+            Left = new IBTreeNullNode<T>();
+            Left.Parent = this;
+            Right = new IBTreeNullNode<T>();
+            Right.Parent = this;
+            Parent = new IBTreeNullNode<T>();
         }
 
-        public virtual bool IsNull
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool IsNull => false;
 
-        public override string ToString()
-        {
-            return IsNull ? "Nil" : string.Format("{0} {1}", Data, BTreeNodeColor.Black == Colour ? "Black" : "Red");
-        }
+        public override string ToString() => IsNull ? "Nil" : string.Format("{0} {1}", Data, BTreeNodeColor.Black == Colour ? "Black" : "Red");
     }
 }

@@ -189,7 +189,7 @@ namespace Taf.Core.Test
         [Fact]
         public void GetValue_Name()
         {
-            int actual = EnumExt.GetValue<LogType>(DEBUG_NAME);
+            var actual = EnumExt.GetValue<LogType>(DEBUG_NAME);
             Assert.Equal(DEBUG_VALUE, actual);
         }
 
@@ -199,7 +199,7 @@ namespace Taf.Core.Test
         [Fact]
         public void GetValue_Value()
         {
-            int actual = EnumExt.GetValue<LogType>(DEBUG_VALUE);
+            var actual = EnumExt.GetValue<LogType>(DEBUG_VALUE);
             Assert.Equal(DEBUG_VALUE, actual);
         }
 
@@ -209,7 +209,7 @@ namespace Taf.Core.Test
         [Fact]
         public void GetValue_Instance()
         {
-            int actual = EnumExt.GetValue<LogType>(DEBUG_INSTANCE);
+            var actual = EnumExt.GetValue<LogType>(DEBUG_INSTANCE);
             Assert.Equal(DEBUG_VALUE, actual);
             Assert.Equal(DEBUG_VALUE, DEBUG_INSTANCE.Value());
             Assert.Equal(DEBUG_VALUE, DEBUG_INSTANCE.Value<int>());
@@ -222,7 +222,7 @@ namespace Taf.Core.Test
         [Fact]
         public void GetValue_Name_Nullable()
         {
-            int actual = EnumExt.GetValue<LogType?>(DEBUG_NAME);
+            var actual = EnumExt.GetValue<LogType?>(DEBUG_NAME);
             Assert.Equal(DEBUG_VALUE, actual);
         }
 
@@ -232,7 +232,7 @@ namespace Taf.Core.Test
         [Fact]
         public void GetValue_Value_Nullable()
         {
-            int actual = EnumExt.GetValue<LogType?>(DEBUG_VALUE);
+            var actual = EnumExt.GetValue<LogType?>(DEBUG_VALUE);
             Assert.Equal(DEBUG_VALUE, actual);
         }
 
@@ -242,7 +242,7 @@ namespace Taf.Core.Test
         [Fact]
         public void GetValue_Instance_Nullable()
         {
-            int actual = EnumExt.GetValue<LogType?>(DEBUG_INSTANCE);
+            var actual = EnumExt.GetValue<LogType?>(DEBUG_INSTANCE);
             Assert.Equal(DEBUG_VALUE, actual);
         }
 

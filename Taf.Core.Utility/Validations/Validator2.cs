@@ -7,13 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Validation
+namespace Taf.Core.Validation
 {
     using System.ComponentModel.DataAnnotations;
     using System.Reflection;
 
-    using Taf.Core;
-    using Taf.Core.Utility;
+    using Core;
+    using Utility;
 
     /// <summary>
     /// 验证操作
@@ -34,10 +34,7 @@ namespace Taf.Validation
         /// Initializes a new instance of the <see cref="Validator2"/> class. 
         /// 初始化验证操作
         /// </summary>
-        public Validator2()
-        {
-            _result = new ValidationResultCollection();
-        }
+        public Validator2() => _result = new ValidationResultCollection();
 
         /// <summary>
         /// 验证
@@ -146,9 +143,6 @@ namespace Taf.Validation
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        private string GetErrorMessage(ValidationAttribute attribute)
-        {
-            return !string.IsNullOrEmpty(attribute.ErrorMessage) ? attribute.ErrorMessage : string.Empty;
-        }
+        private string GetErrorMessage(ValidationAttribute attribute) => !string.IsNullOrEmpty(attribute.ErrorMessage) ? attribute.ErrorMessage : string.Empty;
     }
 }

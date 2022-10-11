@@ -1,9 +1,9 @@
-﻿namespace Taf.Core
+﻿namespace Taf.Core.Utility
 {
     using System;
     using System.Collections.Generic;
 
-    using Taf.Core.Utility;
+    using Utility;
 
     /// <summary>
     /// </summary>
@@ -15,19 +15,13 @@
         /// 装配
         /// </summary>
         /// <returns></returns>
-        public T BuildUp()
-        {
-            return Build<BuildStepAttribute>();
-        }
+        public T BuildUp() => Build<BuildStepAttribute>();
 
         /// <summary>
         /// 卸载
         /// </summary>
         /// <returns></returns>
-        public virtual T TearDown()
-        {
-            return Build<TearDownStepAttribute>();
-        }
+        public virtual T TearDown() => Build<TearDownStepAttribute>();
 
 
         private static T Build<K>() where K : Attribute, IBuildStep

@@ -1,4 +1,4 @@
-﻿namespace Taf.Core
+﻿namespace Taf.Core.Utility
 {
     using System;
 
@@ -47,26 +47,24 @@
         /// <param name="id"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Guid? SetContent<T>(T local, string modelVersion, Guid? id)
-        {
-//            if (local == null)
-//            {
-//                if (id.HasValue)
-//                {
-//                    Ioc.Create<SerializationContentAccessor>().Delete(id.Value);
-//                }
-//
-//                return null;
-//            }
-//
-//            if (!id.HasValue)
-//            {
-//                id = Guid.NewGuid();
-//            }
-//
-//            Ioc.Create<SerializationContentAccessor>().Write(id.Value, local, modelVersion);
-            return id;
-        }
+        public static Guid? SetContent<T>(T local, string modelVersion, Guid? id) =>
+            //            if (local == null)
+            //            {
+            //                if (id.HasValue)
+            //                {
+            //                    Ioc.Create<SerializationContentAccessor>().Delete(id.Value);
+            //                }
+            //
+            //                return null;
+            //            }
+            //
+            //            if (!id.HasValue)
+            //            {
+            //                id = Guid.NewGuid();
+            //            }
+            //
+            //            Ioc.Create<SerializationContentAccessor>().Write(id.Value, local, modelVersion);
+            id;
 
         /// <summary>
         /// 写入对象的序列化内容

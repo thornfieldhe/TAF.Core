@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Taf.Core.Utility.Io
+namespace Taf.Core.Utility
 {
     using System;
 
@@ -56,10 +56,7 @@ namespace Taf.Core.Utility.Io
         /// <summary>
         /// 
         /// </summary>
-        protected BaseItemsLoader()
-        {
-            Items = new List<TK>();
-        }
+        protected BaseItemsLoader() => Items = new List<TK>();
 
         protected virtual List<TK> GetData()
         {

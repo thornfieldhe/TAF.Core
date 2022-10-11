@@ -7,12 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Taf.Core.Utility;
 using Xunit;
 
 namespace Taf.Core.Test.Business
 {
 
-    using Taf.Core;
+    using Core;
 
     /// <summary>
     /// CorTest 的摘要说明
@@ -97,10 +98,7 @@ namespace Taf.Core.Test.Business
             request.Price *= 0.6;
         }
 
-        public override bool AllowProcess(Request request)
-        {
-            return "Internal" == request.Contex;
-        }
+        public override bool AllowProcess(Request request) => "Internal" == request.Contex;
     }
 
     public class MailHandler : BaseCoRHandler<Request>
@@ -110,10 +108,7 @@ namespace Taf.Core.Test.Business
             request.Price *= 1.3;
         }
 
-        public override bool AllowProcess(Request request)
-        {
-            return request.Contex == "Mail";
-        }
+        public override bool AllowProcess(Request request) => request.Contex == "Mail";
     }
 
     public class DiscountHandler : BaseCoRHandler<Request>
@@ -123,10 +118,7 @@ namespace Taf.Core.Test.Business
             request.Price *= 0.9;
         }
 
-        public override bool AllowProcess(Request request)
-        {
-            return request.Contex == "Discount";
-        }
+        public override bool AllowProcess(Request request) => request.Contex == "Discount";
     }
 
     public class RegularHandler : BaseCoRHandler<Request>
@@ -136,10 +128,7 @@ namespace Taf.Core.Test.Business
             request.Price *= 5;
         }
 
-        public override bool AllowProcess(Request request)
-        {
-            return request.Contex.StartsWith("M");
-        }
+        public override bool AllowProcess(Request request) => request.Contex.StartsWith("M");
     }
 
     public class Regular2Handler : BaseCoRHandler<Request>
@@ -149,10 +138,7 @@ namespace Taf.Core.Test.Business
             request.Price *= 10;
         }
 
-        public override bool AllowProcess(Request request)
-        {
-            return request.Contex.Contains("Ma");
-        }
+        public override bool AllowProcess(Request request) => request.Contex.Contains("Ma");
     }
 
     public class Request 
@@ -168,8 +154,8 @@ namespace Taf.Core.Test.Business
 
         public Request(double price, string type)
         {
-            this.Price = price;
-            this.Contex = type;
+            Price = price;
+            Contex = type;
         }
     }
 }

@@ -28,10 +28,8 @@ namespace Taf.Core.Utility
         /// The content.
         /// </param>
         public RegexContex(string content)
-            : this(content, RegexOperator.Matches)
-        {
-            this.Content = content;
-        }
+            : this(content, RegexOperator.Matches) =>
+            Content = content;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RegexContex"/> class. 
@@ -44,10 +42,10 @@ namespace Taf.Core.Utility
         /// </param>
         public RegexContex(string content, RegexOperator operater)
         {
-            this.Content = content;
-            this.Operator = operater;
-            this.Matches = new List<string>();
-            this.Groups = new Dictionary<int, List<string>>();
+            Content = content;
+            Operator = operater;
+            Matches = new List<string>();
+            Groups = new Dictionary<int, List<string>>();
         }
 
         /// <summary>

@@ -111,7 +111,7 @@ namespace Taf.Core.Utility{
             }
         }
 
-        private static Dictionary<string, object> _Dic = new Dictionary<string, object>();
+        private static Dictionary<string, object> _Dic = new();
 
         /// <summary>
         /// 将源对象所有属性赋值给目标对象,【仅仅支持系统基本类型，不支持对象】
@@ -167,8 +167,8 @@ namespace Taf.Core.Utility{
         /// The <see cref="string"/>.
         /// </returns>
         public static string XmlSerializer<T>(this T obj){
-            MemoryStream  stream = new MemoryStream();
-            XmlSerializer xml    = new XmlSerializer(typeof(T));
+            var  stream = new MemoryStream();
+            var xml    = new XmlSerializer(typeof(T));
             try{
                 // 序列化对象
                 xml.Serialize(stream, obj);
@@ -177,8 +177,8 @@ namespace Taf.Core.Utility{
             }
 
             stream.Position = 0;
-            StreamReader sr  = new StreamReader(stream);
-            string       str = sr.ReadToEnd();
+            var sr  = new StreamReader(stream);
+            var       str = sr.ReadToEnd();
             sr.Dispose();
             stream.Dispose();
             return str;
@@ -197,8 +197,8 @@ namespace Taf.Core.Utility{
         public static T XmlDeserializeFromString<T>(this string xml){
             try{
                 if(xml != null){
-                    using(StringReader sr = new StringReader(xml)){
-                        XmlSerializer xmldes = new XmlSerializer(typeof(T));
+                    using(var sr = new StringReader(xml)){
+                        var xmldes = new XmlSerializer(typeof(T));
                         return (T) xmldes.Deserialize(sr);
                     }
                 }

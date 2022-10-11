@@ -23,7 +23,7 @@ namespace Taf.Core.Utility
         /// <returns> 转化后的指定类型的对象，转化失败引发异常。 </returns>
         public static T CastTo<T>(this object value)
         {
-            object result = CastTo(value, typeof(T));
+            var result = CastTo(value, typeof(T));
             return (T)result;
         }
 
@@ -58,7 +58,7 @@ namespace Taf.Core.Utility
         /// <returns> 是否介于 </returns>
         public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = false, bool rightEqual = false) where T : IComparable
         {
-            bool flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
+            var flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
             return flag && (rightEqual ? value.CompareTo(end) <= 0 : value.CompareTo(end) < 0);
         }
 
@@ -68,10 +68,7 @@ namespace Taf.Core.Utility
         /// <typeparam name="T">动态类型</typeparam>
         /// <param name="value">动态类型对象</param>
         /// <returns>JSON字符串</returns>
-        public static string ToJsonString<T>(this T value)
-        {
-            return JsonConvert.SerializeObject(value);
-        }
+        public static string ToJsonString<T>(this T value) => JsonConvert.SerializeObject(value);
 
         /// <summary>
         /// 将对象[主要是匿名对象]转换为dynamic
@@ -79,8 +76,8 @@ namespace Taf.Core.Utility
         public static dynamic ToDynamic(this object value)
         {
             IDictionary<string, object> expando = new ExpandoObject();
-            Type type = value.GetType();
-            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(type);
+            var type = value.GetType();
+            var properties = TypeDescriptor.GetProperties(type);
             foreach (PropertyDescriptor property in properties)
             {
                 var val = property.GetValue(value);

@@ -9,8 +9,8 @@
 
 namespace System.ComponentModel.DataAnnotations
 {
-    using System.Globalization;
-    using System.Text.RegularExpressions;
+    using Globalization;
+    using Text.RegularExpressions;
 
 
     using Taf.Core.Utility;

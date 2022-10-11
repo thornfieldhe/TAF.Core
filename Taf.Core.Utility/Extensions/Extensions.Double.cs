@@ -52,10 +52,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="double"/>.
         /// </returns>
-        public static double Round(this double d, int s)
-        {
-            return Math.Round(d, s);
-        }
+        public static double Round(this double d, int s) => Math.Round(d, s);
 
         /// <summary>
         /// 是否在范围之间
@@ -94,10 +91,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Format(this double number, string defaultValue = "")
-        {
-            return number == 0 ? defaultValue : string.Format("{0:0.##}", number);
-        }
+        public static string Format(this double number, string defaultValue = "") => number == 0 ? defaultValue : string.Format("{0:0.##}", number);
 
         /// <summary>
         /// 获取格式化字符串
@@ -111,10 +105,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string Format(this double? number, string defaultValue = "")
-        {
-            return Format(number.SafeValue(), defaultValue);
-        }
+        public static string Format(this double? number, string defaultValue = "") => Format(number.SafeValue(), defaultValue);
 
         /// <summary>
         /// 获取格式化字符串,x.xx%
@@ -125,10 +116,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this double number)
-        {
-            return number == 0 ? string.Empty : string.Format("{0:0.##}%", number);
-        }
+        public static string FormatPercent(this double number) => number == 0 ? string.Empty : string.Format("{0:0.##}%", number);
 
         /// <summary>
         /// 获取格式化字符串,带%
@@ -139,11 +127,8 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this double? number)
-        {
-            return FormatPercent(number.SafeValue());
-        }
-        
+        public static string FormatPercent(this double? number) => FormatPercent(number.SafeValue());
+
         /// <summary>
         /// 转换成科学计数法
         /// </summary>
@@ -177,20 +162,14 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static double Sqr(this double self)
-        {
-            return self * self;
-        }
+        public static double Sqr(this double self) => self * self;
 
         /// <summary>
         /// 求对数
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static double Ln(this double self)
-        {
-            return Math.Log(self, Math.E);
-        }
+        public static double Ln(this double self) => Math.Log(self, Math.E);
 
         private const double PrecisionDiff = 0.0000000001D;
         public static bool EqualsEx(this double self, double dest, double diffPre = PrecisionDiff)
@@ -199,12 +178,9 @@ namespace Taf.Core.Utility
             return diff < diffPre;
         }
 
-        public static double Magnitude(this double input)
-        {
-            return Math.Log10(Math.Abs(input));
-        }
+        public static double Magnitude(this double input) => Math.Log10(Math.Abs(input));
 
-        
+
         /// <summary>
         /// 得到三维数组中某个子二维数组
         /// </summary>
@@ -234,9 +210,9 @@ namespace Taf.Core.Utility
             {
                 case ArrayDirection.Z:
                     var valuesXY = new double[array.GetLength(0), array.GetLength(1)];
-                    for (int x = 0; x < array.GetLength(0); x++)
+                    for (var x = 0; x < array.GetLength(0); x++)
                     {
-                        for (int y = 0; y < array.GetLength(1); y++)
+                        for (var y = 0; y < array.GetLength(1); y++)
                         {
                             valuesXY[x, y] = array[x, y, retainIndex];
                         }
@@ -244,9 +220,9 @@ namespace Taf.Core.Utility
                     return valuesXY;
                 case ArrayDirection.X:
                     var valuesYZ = new double[array.GetLength(1), array.GetLength(2)];
-                    for (int y = 0; y < array.GetLength(1); y++)
+                    for (var y = 0; y < array.GetLength(1); y++)
                     {
-                        for (int z = 0; z < array.GetLength(2); z++)
+                        for (var z = 0; z < array.GetLength(2); z++)
                         {
                             valuesYZ[y, z] = array[retainIndex, y, z];
                         }
@@ -254,9 +230,9 @@ namespace Taf.Core.Utility
                     return valuesYZ;
                 case ArrayDirection.Y:
                     var valuesXZ = new double[array.GetLength(0), array.GetLength(2)];
-                    for (int x = 0; x < array.GetLength(0); x++)
+                    for (var x = 0; x < array.GetLength(0); x++)
                     {
-                        for (int z = 0; z < array.GetLength(2); z++)
+                        for (var z = 0; z < array.GetLength(2); z++)
                         {
                             valuesXZ[x, z] = array[x, retainIndex, z];
                         }
@@ -289,14 +265,14 @@ namespace Taf.Core.Utility
             {
                 case ArrayDirection.X:
                     var valuesY = new double[array.GetLength(1)];
-                    for (int y = 0; y < array.GetLength(1); y++)
+                    for (var y = 0; y < array.GetLength(1); y++)
                     {
                         valuesY[y] = array[retainIndex, y];
                     }
                     return valuesY;
                 case ArrayDirection.Y:
                     var valuesX = new double[array.GetLength(0)];
-                    for (int x = 0; x < array.GetLength(0); x++)
+                    for (var x = 0; x < array.GetLength(0); x++)
                     {
                         valuesX[x] = array[x, retainIndex];
                     }
@@ -334,14 +310,14 @@ namespace Taf.Core.Utility
             if ((int)d1 == (int)d2)
                 throw new ArgumentException("参数不能相同");
 
-            double[,] retval = new double[array.GetLength((int)d1), array.GetLength((int)d2)];
-            int arrayDirection = (int)d1 + (int)d2;
+            var retval = new double[array.GetLength((int)d1), array.GetLength((int)d2)];
+            var arrayDirection = (int)d1 + (int)d2;
             switch (arrayDirection)
             {
                 case 1:
-                    for (int x = 0; x < array.GetLength(0); x++)
-                        for (int y = 0; y < array.GetLength(1); y++)
-                            for (int z = 0; z < array.GetLength(2); z++)
+                    for (var x = 0; x < array.GetLength(0); x++)
+                        for (var y = 0; y < array.GetLength(1); y++)
+                            for (var z = 0; z < array.GetLength(2); z++)
                             {
                                 if (d1 == ArrayDirection.X && d2 == ArrayDirection.Y)
                                     retval[x, y] += array[x, y, z];
@@ -350,9 +326,9 @@ namespace Taf.Core.Utility
                             }
                     break;
                 case 2:
-                    for (int x = 0; x < array.GetLength(0); x++)
-                        for (int z = 0; z < array.GetLength(2); z++)
-                            for (int y = 0; y < array.GetLength(1); y++)
+                    for (var x = 0; x < array.GetLength(0); x++)
+                        for (var z = 0; z < array.GetLength(2); z++)
+                            for (var y = 0; y < array.GetLength(1); y++)
                             {
                                 if (d1 == ArrayDirection.X && d2 == ArrayDirection.Z)
                                     retval[x, z] += array[x, y, z];
@@ -361,9 +337,9 @@ namespace Taf.Core.Utility
                             }
                     break;
                 case 3:
-                    for (int y = 0; y < array.GetLength(1); y++)
-                        for (int z = 0; z < array.GetLength(2); z++)
-                            for (int x = 0; x < array.GetLength(0); x++)
+                    for (var y = 0; y < array.GetLength(1); y++)
+                        for (var z = 0; z < array.GetLength(2); z++)
+                            for (var x = 0; x < array.GetLength(0); x++)
                             {
                                 if (d1 == ArrayDirection.Y && d2 == ArrayDirection.Z)
                                     retval[y, z] += array[x, y, z];
@@ -381,10 +357,7 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
-        public static double Sum(this double[,,] array)
-        {
-            return array.Sum(ArrayDirection.X, ArrayDirection.Y).Sum();
-        }
+        public static double Sum(this double[,,] array) => array.Sum(ArrayDirection.X, ArrayDirection.Y).Sum();
 
         /// <summary>
         /// 对二维数组根据某个维度进行求和
@@ -405,14 +378,14 @@ namespace Taf.Core.Utility
         public static double[] Sum(this double[,] array, ArrayDirection d)
         {
             var count1 = array.GetLength((int)d);
-            double[] retval = new double[count1];
+            var retval = new double[count1];
             if (d == ArrayDirection.X)
             {
-                for (int x = 0; x < count1; x++)
+                for (var x = 0; x < count1; x++)
                 {
                     var count2 = array.GetLength(1);
                     var subValues = new double[count2];
-                    for (int y = 0; y < count2; y++)
+                    for (var y = 0; y < count2; y++)
                     {
                         subValues[y] = array[x, y];
                     }
@@ -421,11 +394,11 @@ namespace Taf.Core.Utility
             }
             else if (d == ArrayDirection.Y)
             {
-                for (int y = 0; y < count1; y++)
+                for (var y = 0; y < count1; y++)
                 {
                     var count2 = array.GetLength(0);
                     var subValues = new double[count2];
-                    for (int x = 0; x < count2; x++)
+                    for (var x = 0; x < count2; x++)
                     {
                         subValues[x] = array[x, y];
                     }
@@ -446,10 +419,7 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
-        public static double Sum(this double[,] array)
-        {
-            return array.Sum(ArrayDirection.X).Sum();
-        }
+        public static double Sum(this double[,] array) => array.Sum(ArrayDirection.X).Sum();
 
         /// <summary>
         /// 一维数组中的所有数都除以同一个数 arraA/valueB
@@ -462,8 +432,8 @@ namespace Taf.Core.Utility
             if (valueB == 0)
                 valueB = 1; //throw new ArgumentException("除数不能为零");
 
-            double[] retval = new double[arrayA.Length];
-            for (int x = 0; x < arrayA.Length; x++)
+            var retval = new double[arrayA.Length];
+            for (var x = 0; x < arrayA.Length; x++)
             {
                 retval[x] = arrayA[x] / valueB;
             }
@@ -480,9 +450,9 @@ namespace Taf.Core.Utility
             if (valueB == 0)
                 valueB = 1; //throw new ArgumentException("除数不能为零");
 
-            double[,] retval = new double[arrayA.GetLength(0), arrayA.GetLength(1)];
-            for (int x = 0; x < arrayA.GetLength(0); x++)
-                for (int y = 0; y < arrayA.GetLength(1); y++)
+            var retval = new double[arrayA.GetLength(0), arrayA.GetLength(1)];
+            for (var x = 0; x < arrayA.GetLength(0); x++)
+                for (var y = 0; y < arrayA.GetLength(1); y++)
                 {
                     retval[x, y] = arrayA[x, y] / valueB;
                 }
@@ -502,14 +472,14 @@ namespace Taf.Core.Utility
             if (arrayA.GetLength((int)d) != arrayB.Length)
                 throw new ArgumentException("数组维度不一致");
 
-            double[,] retval = new double[arrayA.GetLength(0), arrayA.GetLength(1)];
+            var retval = new double[arrayA.GetLength(0), arrayA.GetLength(1)];
             if (d == ArrayDirection.X)
             {
-                for (int x = 0; x < arrayA.GetLength(0); x++)
+                for (var x = 0; x < arrayA.GetLength(0); x++)
                 {
                     if (arrayB[x] != 0)
                     {
-                        for (int y = 0; y < arrayA.GetLength(1); y++)
+                        for (var y = 0; y < arrayA.GetLength(1); y++)
                         {
                             retval[x, y] = arrayA[x, y] / arrayB[x];
                         }
@@ -518,11 +488,11 @@ namespace Taf.Core.Utility
             }
             else if (d == ArrayDirection.Y)
             {
-                for (int y = 0; y < arrayA.GetLength(1); y++)
+                for (var y = 0; y < arrayA.GetLength(1); y++)
                 {
                     if (arrayB[y] != 0)
                     {
-                        for (int x = 0; x < arrayA.GetLength(0); x++)
+                        for (var x = 0; x < arrayA.GetLength(0); x++)
                         {
                             retval[x, y] = arrayA[x, y] / arrayB[y];
                         }
@@ -543,10 +513,10 @@ namespace Taf.Core.Utility
             if (valueB == 0)
                 valueB = 1; //throw new ArgumentException("除数不能为零");
 
-            double[,,] retval = new double[arrayA.GetLength(0), arrayA.GetLength(1), arrayA.GetLength(2)];
-            for (int x = 0; x < arrayA.GetLength(0); x++)
-                for (int y = 0; y < arrayA.GetLength(1); y++)
-                    for (int z = 0; z < arrayA.GetLength(2); z++)
+            var retval = new double[arrayA.GetLength(0), arrayA.GetLength(1), arrayA.GetLength(2)];
+            for (var x = 0; x < arrayA.GetLength(0); x++)
+                for (var y = 0; y < arrayA.GetLength(1); y++)
+                    for (var z = 0; z < arrayA.GetLength(2); z++)
                     {
                         retval[x, y, z] = arrayA[x, y, z] / valueB;
                     }
@@ -566,15 +536,15 @@ namespace Taf.Core.Utility
             if (arrayA.GetLength((int)d) != arrayB.Length)
                 throw new ArgumentException("数组维度不一致");
 
-            double[,,] retval = new double[arrayA.GetLength(0), arrayA.GetLength(1), arrayA.GetLength(2)];
+            var retval = new double[arrayA.GetLength(0), arrayA.GetLength(1), arrayA.GetLength(2)];
             if (d == ArrayDirection.X)
             {
-                for (int x = 0; x < arrayA.GetLength(0); x++)
+                for (var x = 0; x < arrayA.GetLength(0); x++)
                 {
                     if (arrayB[x] != 0)
                     {
-                        for (int y = 0; y < arrayA.GetLength(1); y++)
-                            for (int z = 0; z < arrayA.GetLength(2); z++)
+                        for (var y = 0; y < arrayA.GetLength(1); y++)
+                            for (var z = 0; z < arrayA.GetLength(2); z++)
                             {
                                 retval[x, y, z] = arrayA[x, y, z] / arrayB[x];
                             }
@@ -583,12 +553,12 @@ namespace Taf.Core.Utility
             }
             else if (d == ArrayDirection.Y)
             {
-                for (int y = 0; y < arrayA.GetLength(1); y++)
+                for (var y = 0; y < arrayA.GetLength(1); y++)
                 {
                     if (arrayB[y] != 0)
                     {
-                        for (int x = 0; x < arrayA.GetLength(0); x++)
-                            for (int z = 0; z < arrayA.GetLength(2); z++)
+                        for (var x = 0; x < arrayA.GetLength(0); x++)
+                            for (var z = 0; z < arrayA.GetLength(2); z++)
                             {
                                 retval[x, y, z] = arrayA[x, y, z] / arrayB[y];
                             }
@@ -597,12 +567,12 @@ namespace Taf.Core.Utility
             }
             else if (d == ArrayDirection.Z)
             {
-                for (int z = 0; z < arrayA.GetLength(2); z++)
+                for (var z = 0; z < arrayA.GetLength(2); z++)
                 {
                     if (arrayB[z] != 0)
                     {
-                        for (int x = 0; x < arrayA.GetLength(0); x++)
-                            for (int y = 0; y < arrayA.GetLength(1); y++)
+                        for (var x = 0; x < arrayA.GetLength(0); x++)
+                            for (var y = 0; y < arrayA.GetLength(1); y++)
                             {
                                 retval[x, y, z] = arrayA[x, y, z] / arrayB[z];
                             }

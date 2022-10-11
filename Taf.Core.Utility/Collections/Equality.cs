@@ -32,10 +32,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static IEqualityComparer<T> CreateComparer<TV>(Func<T, TV> keySelector)
-        {
-            return new CommonEqualityComparer<TV>(keySelector);
-        }
+        public static IEqualityComparer<T> CreateComparer<TV>(Func<T, TV> keySelector) => new CommonEqualityComparer<TV>(keySelector);
 
         /// <summary>
         /// 创建指定对比委托<paramref name="keySelector"/>与结果二次比较器<paramref name="comparer"/>的实例
@@ -48,12 +45,9 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static IEqualityComparer<T> CreateComparer<TV>(Func<T, TV> keySelector, IEqualityComparer<TV> comparer)
-        {
-            return new CommonEqualityComparer<TV>(keySelector, comparer);
-        }
+        public static IEqualityComparer<T> CreateComparer<TV>(Func<T, TV> keySelector, IEqualityComparer<TV> comparer) => new CommonEqualityComparer<TV>(keySelector, comparer);
 
-        #endregion
+    #endregion
 
         #region Nested type: CommonEqualityComparer
 
@@ -75,17 +69,11 @@ namespace Taf.Core.Utility
 
             #region IEqualityComparer<T> Members
 
-            public bool Equals(T x, T y)
-            {
-                return _comparer.Equals(_keySelector(x), _keySelector(y));
-            }
+            public bool Equals(T x, T y) => _comparer.Equals(_keySelector(x), _keySelector(y));
 
-            public int GetHashCode(T obj)
-            {
-                return _comparer.GetHashCode(_keySelector(obj));
-            }
+            public int GetHashCode(T obj) => _comparer.GetHashCode(_keySelector(obj));
 
-            #endregion
+        #endregion
         }
 
         #endregion

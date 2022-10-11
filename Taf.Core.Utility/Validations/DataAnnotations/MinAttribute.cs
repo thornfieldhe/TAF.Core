@@ -9,7 +9,7 @@
 
 namespace System.ComponentModel.DataAnnotations
 {
-    using System.Globalization;
+    using Globalization;
 
     /// <summary>
     /// 最小值
@@ -29,10 +29,8 @@ namespace System.ComponentModel.DataAnnotations
         /// The min.
         /// </param>
         public MinAttribute(int min)
-            : base("min")
-        {
+            : base("min") =>
             Min = min;
-        }
 
         public MinAttribute() : this(0)
         {
@@ -45,10 +43,8 @@ namespace System.ComponentModel.DataAnnotations
         /// The min.
         /// </param>
         public MinAttribute(double min)
-            : base("min")
-        {
+            : base("min") =>
             Min = min;
-        }
 
         /// <summary>
         /// The format error message.
@@ -107,10 +103,8 @@ namespace System.ComponentModel.DataAnnotations
         /// The min.
         /// </param>
         public Min2Attribute(int min)
-            : base(min)
-        {
+            : base(min) =>
             Min = min;
-        }
 
         public Min2Attribute() : this(0)
         {

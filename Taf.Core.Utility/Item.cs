@@ -83,9 +83,6 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public int CompareTo(Item other)
-        {
-            return string.Compare(Text, other.Text, StringComparison.CurrentCulture);
-        }
+        public int CompareTo(Item other) => string.Compare(Text, other.Text, StringComparison.CurrentCulture);
     }
 }

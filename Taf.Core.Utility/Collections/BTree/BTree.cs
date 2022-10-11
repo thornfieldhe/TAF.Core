@@ -31,24 +31,15 @@ namespace Taf.Core.Utility
             
         }
 
-        public BTree(IBTreeNode<T> rootNode)
-        {
-            _Root = rootNode;
-        }
+        public BTree(IBTreeNode<T> rootNode) => _Root = rootNode;
 
         /// <summary>
         /// 获取根节点
         /// </summary>
         public IBTreeNode<T> Root
         {
-            get
-            {
-                return _Root;
-            }
-            private set
-            {
-                _Root = value;
-            }
+            get => _Root;
+            private set => _Root = value;
         }
 
         /// <summary>
@@ -84,7 +75,7 @@ namespace Taf.Core.Utility
         /// <returns></returns>
         public IBTreeNode<T> GetUncle(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> grandparent = GetGrandParent(targetNode);
+            var grandparent = GetGrandParent(targetNode);
 
             if(!grandparent.IsNull && !targetNode.Parent.IsNull)
             {
@@ -157,7 +148,7 @@ namespace Taf.Core.Utility
         private void LocateNewNodePosition(IBTreeNode<T> newNode)
         {
             IBTreeNode<T> parent = new IBTreeNullNode<T>();
-            IBTreeNode<T> comparedNode = _Root; //从根节点开始查找
+            var comparedNode = _Root; //从根节点开始查找
 
             while(!comparedNode.IsNull)
             {
@@ -191,7 +182,7 @@ namespace Taf.Core.Utility
 
         private void LeftRotate(IBTreeNode<T> node)
         {
-            IBTreeNode<T> right = node.Right;
+            var right = node.Right;
 
             //x的右节点不能为空
             if (!right.IsNull)
@@ -237,7 +228,7 @@ namespace Taf.Core.Utility
         /// <param name="node"></param>
         private void RightRotate(IBTreeNode<T> node)
         {
-            IBTreeNode<T> left = node.Left;
+            var left = node.Left;
 
             if (!left.IsNull)
             {
@@ -280,8 +271,8 @@ namespace Taf.Core.Utility
 
         public bool Find(T key, out IBTreeNode<T> item)
         {
-            bool isFound = false;
-            IBTreeNode<T> temp = _Root;
+            var isFound = false;
+            var temp = _Root;
             item = null;
 
             while (!isFound)
@@ -367,8 +358,8 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void InsertCase3(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> uncle = GetUncle(targetNode);
-            IBTreeNode<T> grandParent = GetGrandParent(targetNode);
+            var uncle = GetUncle(targetNode);
+            var grandParent = GetGrandParent(targetNode);
 
             if(!uncle.IsNull && BTreeNodeColor.Red == uncle.Colour)
             {
@@ -395,7 +386,7 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void InsertCase4(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> grandParent = GetGrandParent(targetNode);
+            var grandParent = GetGrandParent(targetNode);
             
             if(targetNode == targetNode.Parent.Right &&
                 targetNode.Parent == grandParent.Left)
@@ -427,7 +418,7 @@ namespace Taf.Core.Utility
         private void InsertCase5(IBTreeNode<T> targetNode)
         {
             targetNode.Parent.Colour = BTreeNodeColor.Black;
-            IBTreeNode<T> grandParent = GetGrandParent(targetNode);
+            var grandParent = GetGrandParent(targetNode);
 
             grandParent.Colour = BTreeNodeColor.Red;
 
@@ -443,7 +434,7 @@ namespace Taf.Core.Utility
 
         public IBTreeNode<T> Insert(T item)
         {
-            IBTreeNode<T> newNode = CreateNode(item);
+            var newNode = CreateNode(item);
             //如果没有根节点，新节点设置成根节点
             if (_Root.IsNull)
             {
@@ -558,7 +549,7 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void DeleteCase2(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> sibling = GetSibling(targetNode);
+            var sibling = GetSibling(targetNode);
 
             if(BTreeNodeColor.Red == sibling.Colour)
             {
@@ -586,7 +577,7 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void DeleteCase3(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> sibling = GetSibling(targetNode);
+            var sibling = GetSibling(targetNode);
 
             if (BTreeNodeColor.Black == targetNode.Parent.Colour &&
                 BTreeNodeColor.Black == sibling.Colour &&
@@ -613,7 +604,7 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void DeleteCase4(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> sibling = GetSibling(targetNode);
+            var sibling = GetSibling(targetNode);
 
             if(BTreeNodeColor.Red == targetNode.Parent.Colour &&
                 BTreeNodeColor.Black == sibling.Colour &&
@@ -642,7 +633,7 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void DeleteCase5(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> sibling = GetSibling(targetNode);
+            var sibling = GetSibling(targetNode);
 
             if(BTreeNodeColor.Black == sibling.Colour)
             {
@@ -684,7 +675,7 @@ namespace Taf.Core.Utility
         /// </remarks>
         private void DeleteCase6(IBTreeNode<T> targetNode)
         {
-            IBTreeNode<T> sibling = GetSibling(targetNode);
+            var sibling = GetSibling(targetNode);
 
             sibling.Colour = targetNode.Parent.Colour;
             targetNode.Parent.Colour = BTreeNodeColor.Black;
@@ -703,9 +694,9 @@ namespace Taf.Core.Utility
 
         private bool DeleteChild(IBTreeNode<T> node, T data)
         {
-            bool retValue = false;
+            var retValue = false;
 
-            int compareResult = node.Data.CompareTo(data);
+            var compareResult = node.Data.CompareTo(data);
 
             switch(compareResult)
             {
@@ -728,7 +719,7 @@ namespace Taf.Core.Utility
                         return true;
                     }
                     
-                    IBTreeNode<T> largestNode = GetLargestNode(node.Left);
+                    var largestNode = GetLargestNode(node.Left);
                     SwapNodeValue(node, largestNode);
                     DeleteOneChild(largestNode);
                     return true;
@@ -739,7 +730,7 @@ namespace Taf.Core.Utility
 
         private void SwapNodeValue(IBTreeNode<T> node, IBTreeNode<T> smallestNode)
         {
-            T midValue = default(T);
+            var midValue = default(T);
 
             midValue = node.Data;
             node.Data = smallestNode.Data;
@@ -750,7 +741,7 @@ namespace Taf.Core.Utility
 
         private void DeleteOneChild(IBTreeNode<T> node)
         {
-            IBTreeNode<T> childNode = node.Left.IsNull ? node.Right : node.Left;
+            var childNode = node.Left.IsNull ? node.Right : node.Left;
 
             if (node.Parent.IsNull && node.Left.IsNull && node.Right.IsNull)
             {
@@ -823,20 +814,20 @@ namespace Taf.Core.Utility
             if (dlrList.Count != ldrList.Count)
                 throw new ArgumentException(string.Format("前序序列的数量{0}与中序序列的数量{1}不一致", dlrList.Count, ldrList.Count));
 
-            Stack<IBTreeNode<T>> buildStack = new Stack<IBTreeNode<T>>();
+            var buildStack = new Stack<IBTreeNode<T>>();
 
-            int dlrIndex = 0;  //指向先序遍历向量
-            int ldrIndex = 0;  //指向中序遍历向量
+            var dlrIndex = 0;  //指向先序遍历向量
+            var ldrIndex = 0;  //指向中序遍历向量
 
-            int flag = 0;  //flag = 0指向左子树，当flag = 1指向右子树
+            var flag = 0;  //flag = 0指向左子树，当flag = 1指向右子树
 
-            IBTreeNode<T> root = bTree.CreateNode(dlrList[dlrIndex].Data);
+            var root = bTree.CreateNode(dlrList[dlrIndex].Data);
             root.Colour = dlrList[dlrIndex].Colour;
 
             buildStack.Push(root);
 
             bTree.Root = root;
-            IBTreeNode<T> tempNode = root;
+            var tempNode = root;
 
             dlrIndex++;
 

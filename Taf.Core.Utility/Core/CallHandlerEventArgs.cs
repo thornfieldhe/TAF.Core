@@ -1,4 +1,4 @@
-﻿namespace Taf.Core
+﻿namespace Taf.Core.Utility
 {
     using System;
 
@@ -19,8 +19,8 @@
 
         public CallHandlerEventArgs(BaseCoRHandler<T> handler, T request)
         {
-            this.Handler = handler;
-            this.Request = request;
+            Handler = handler;
+            Request = request;
         }
     }
 }

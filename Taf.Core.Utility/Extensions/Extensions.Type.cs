@@ -17,7 +17,7 @@ namespace Taf.Core.Utility
     using System.Reflection;
     using System.Threading.Tasks;
 
-    using Test.Utility;
+    using Utility;
 
     /// <summary>
     /// The extensions.
@@ -34,10 +34,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// 是返回True，不是返回False 
         /// </returns>
-        public static bool IsNullableType(this Type type)
-        {
-            return ((type != null) && type.IsGenericType) && (type.GetGenericTypeDefinition() == typeof(Nullable<>));
-        }
+        public static bool IsNullableType(this Type type) => ((type != null) && type.IsGenericType) && (type.GetGenericTypeDefinition() == typeof(Nullable<>));
 
         /// <summary>
         /// 由类型的Nullable类型返回实际类型
@@ -92,7 +89,7 @@ namespace Taf.Core.Utility
         /// </returns>
         public static string ToDescription(this Type type, bool inherit = false)
         {
-            DescriptionAttribute desc = type.GetAttribute<DescriptionAttribute>(inherit);
+            var desc = type.GetAttribute<DescriptionAttribute>(inherit);
             return desc == null ? type.FullName : desc.Description;
         }
 
@@ -146,13 +143,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// 是否存在
         /// </returns>
-        public static bool HasAttribute<T>(this MemberInfo memberInfo, bool inherit = false) where T : Attribute
-        {
-            return memberInfo.IsDefined(typeof(T), inherit);
+        public static bool HasAttribute<T>(this MemberInfo memberInfo, bool inherit = false) where T : Attribute => memberInfo.IsDefined(typeof(T), inherit);
 
-            // return memberInfo.GetCustomAttributes(typeof(T), inherit).Any(m => (m as T) != null);
-        }
-
+        // return memberInfo.GetCustomAttributes(typeof(T), inherit).Any(m => (m as T) != null);
         /// <summary>
         /// 从类型成员获取指定Attribute特性
         /// </summary>
@@ -189,10 +182,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// 返回所有指定Attribute特性的数组
         /// </returns>
-        public static T[] GetAttributes<T>(this MemberInfo memberInfo, bool inherit = false) where T : Attribute
-        {
-            return memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
-        }
+        public static T[] GetAttributes<T>(this MemberInfo memberInfo, bool inherit = false) where T : Attribute => memberInfo.GetCustomAttributes(typeof(T), inherit).Cast<T>().ToArray();
 
         /// <summary>
         /// 判断类型是否为集合类型
@@ -269,11 +259,9 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool IsAsync(this MethodInfo method)
-        {
-            return method.ReturnType == typeof(Task)
-                   || method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
-        }
+        public static bool IsAsync(this MethodInfo method) =>
+            method.ReturnType == typeof(Task)
+         || method.ReturnType.IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>);
 
         /// <summary>
         /// 返回当前类型是否是指定基类的派生类

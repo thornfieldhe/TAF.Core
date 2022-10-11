@@ -24,10 +24,7 @@ namespace Taf.Core.Utility
         /// <param name="sortId">
         /// 排序号
         /// </param>
-        public OrderByAttribute(int sortId)
-        {
-            this.SortId = sortId;
-        }
+        public OrderByAttribute(int sortId) => SortId = sortId;
 
         /// <summary>
         /// 排序号

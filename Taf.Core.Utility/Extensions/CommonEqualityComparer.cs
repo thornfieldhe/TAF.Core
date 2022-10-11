@@ -15,8 +15,8 @@
         /// <param name="comparer"></param>
         public CommonEqualityComparer(Func<T, V> keySelector, IEqualityComparer<V> comparer)
         {
-            this._keySelector = keySelector;
-            this._comparer = comparer;
+            _keySelector = keySelector;
+            _comparer = comparer;
         }
 
         /// <summary>

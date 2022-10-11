@@ -38,10 +38,10 @@ namespace Taf.Core.Utility
         {
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                var xmlSerializer = new XmlSerializer(typeof(T));
 
                 path = path.Replace('\\', '/');
-                string dir = string.Empty;
+                var dir = string.Empty;
                 if (path.LastIndexOf('/') != -1)
                 {
                     dir = path.Substring(0, path.LastIndexOf('/'));
@@ -52,7 +52,7 @@ namespace Taf.Core.Utility
                     Directory.CreateDirectory(dir);
                 }
 
-                FileStream stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+                var stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
                 xmlSerializer.Serialize(stream, obj);
                 stream.Close();
             }
@@ -76,17 +76,17 @@ namespace Taf.Core.Utility
         /// </returns>
         public static T XMLDeserialize<T>(string path)
         {
-            T t = default(T);
+            var t = default(T);
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                var xmlSerializer = new XmlSerializer(typeof(T));
                 if (!File.Exists(path))
                 {
                     return default(T);
                 }
 
-                FileStream stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                object obj = xmlSerializer.Deserialize(stream);
+                var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
+                var obj = xmlSerializer.Deserialize(stream);
                 t = (T)obj;
                 stream.Close();
             }
@@ -110,7 +110,7 @@ namespace Taf.Core.Utility
             try
             {
                 path = path.Replace('\\', '/');
-                string dir = string.Empty;
+                var dir = string.Empty;
                 if (path.LastIndexOf('/') != -1)
                 {
                     dir = path.Substring(0, path.LastIndexOf('/'));
@@ -120,10 +120,10 @@ namespace Taf.Core.Utility
                     Directory.CreateDirectory(dir);
                 }
 
-                using (FileStream stream = File.Open(path, System.IO.FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+                using (var stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
-                    string json = JsonConvert.SerializeObject(obj);
-                    byte[] bytes = UTF8Encoding.UTF8.GetBytes(json);
+                    var json = JsonConvert.SerializeObject(obj);
+                    var bytes = Encoding.UTF8.GetBytes(json);
                     stream.Write(bytes, 0, bytes.Length);
                     stream.Close();
                 }
@@ -144,16 +144,16 @@ namespace Taf.Core.Utility
         /// <returns></returns>
         public static T JsonDeSerialize<T>(string path)
         {
-            T t = default(T);
+            var t = default(T);
             try
             {
                 if (File.Exists(path))
                 {
-                    using (FileStream stream = File.Open(path, System.IO.FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
+                    using (var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
                     {
-                        byte[] bytes = new byte[stream.Length];
+                        var bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
-                        string json = UTF8Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                        var json = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
                         t = JsonConvert.DeserializeObject<T>(json);
                         stream.Close();
                     }

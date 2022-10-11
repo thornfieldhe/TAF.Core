@@ -20,16 +20,14 @@ namespace Taf.Core.Utility{
         public Node Right{ get; set; }
 
         public void DisplayNode(){
-            System.Console.WriteLine(Data);
+            Console.WriteLine(Data);
         }
     }
 
     public class BinarySearchTree{
         public Node Root{ get; set; }
 
-        public BinarySearchTree(){
-            Root = null;
-        }
+        public BinarySearchTree() => Root = null;
 
         public void Insert(int i){
             var newNode = new Node{Data = i};

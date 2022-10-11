@@ -14,25 +14,13 @@ namespace Taf.Core.Utility
             
         }
 
-        public bool IsNull
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool IsNull => true;
 
-        public BTreeNodeColor Color
-        {
-            get { return BTreeNodeColor.Black; }
-        }
+        public BTreeNodeColor Color => BTreeNodeColor.Black;
 
         public BTreeNodeColor Colour
         {
-            get
-            {
-                return BTreeNodeColor.Black;
-            }
+            get => BTreeNodeColor.Black;
             set
             {
                 
@@ -41,22 +29,13 @@ namespace Taf.Core.Utility
 
         public IBTreeNode<T> Parent
         {
-            get
-            {
-                return _Parent;
-            }
-            set
-            {
-                _Parent = value;
-            }
+            get => _Parent;
+            set => _Parent = value;
         }
 
         public IBTreeNode<T> Left
         {
-            get
-            {
-                return null;
-            }
+            get => null;
             set
             {
                 
@@ -65,10 +44,7 @@ namespace Taf.Core.Utility
 
         public IBTreeNode<T> Right
         {
-            get
-            {
-                return null;
-            }
+            get => null;
             set
             {
                 
@@ -77,10 +53,7 @@ namespace Taf.Core.Utility
 
         public T Data
         {
-            get
-            {
-                return default(T);
-            }
+            get => default(T);
             set
             {
                 

@@ -117,20 +117,14 @@ namespace Taf.Core.Utility
         /// 生成随机常用汉字
         /// </summary>
         /// <param name="maxLength">最大长度</param>
-        public static string GenerateChinese(int maxLength)
-        {
-            return GetRandomCode(maxLength, Const.SimplifiedChinese);
-        }
+        public static string GenerateChinese(int maxLength) => GetRandomCode(maxLength, Const.SimplifiedChinese);
 
 
         /// <summary>
         /// 生成随机字母，不出现汉字和数字
         /// </summary>
         /// <param name="maxLength">最大长度</param>
-        public static string GenerateLetters(int maxLength)
-        {
-            return GetRandomCode(maxLength, Const.Letters);
-        }
+        public static string GenerateLetters(int maxLength) => GetRandomCode(maxLength, Const.Letters);
 
 
         /// <summary>
@@ -167,7 +161,7 @@ namespace Taf.Core.Utility
         public static T GenerateEnum<T>()
         {
             var list = EnumExt.GetItems<T>();
-            int index = GetRandomInt(0, list.Count);
+            var index = GetRandomInt(0, list.Count);
             return EnumExt.GetInstance<T>(list[index].Value);
         }
 
@@ -309,7 +303,7 @@ namespace Taf.Core.Utility
         {
             var length = GetRandomInt(1, maxLength);
             var result = new StringBuilder();
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 await Task.Run(() =>
                 {

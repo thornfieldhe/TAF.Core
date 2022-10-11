@@ -24,11 +24,11 @@ namespace Taf.Core.Utility
         public static ulong X2H(string value, int fromRadix)
         {
             value = value.Trim();
-            string baseChar = BaseChar.Substring(0, fromRadix);
+            var baseChar = BaseChar.Substring(0, fromRadix);
             ulong result = 0;
-            for (int i = 0; i < value.Length; i++)
+            for (var i = 0; i < value.Length; i++)
             {
-                char @char = value[i];
+                var @char = value[i];
                 if (!baseChar.Contains(@char))
                 {
                     throw new ArgumentException(string.Format(Resources.AnyRadixConvert_CharacterIsNotValid, @char, fromRadix));
@@ -50,11 +50,11 @@ namespace Taf.Core.Utility
             {
                 return "0";
             }
-            string baseChar = BaseChar.Substring(0, toRadix);
-            string result = string.Empty;
+            var baseChar = BaseChar.Substring(0, toRadix);
+            var result = string.Empty;
             while (value > 0)
             {
-                int index = (int)(value % (ulong)baseChar.Length);
+                var index = (int)(value % (ulong)baseChar.Length);
                 result = baseChar[index] + result;
                 value = value / (ulong)baseChar.Length;
             }
@@ -70,7 +70,7 @@ namespace Taf.Core.Utility
         /// <returns></returns>
         public static string X2X(string value, int fromRadix, int toRadix)
         {
-            ulong num = X2H(value, fromRadix);
+            var num = X2H(value, fromRadix);
             return H2X(num, toRadix);
         }
 
@@ -81,7 +81,7 @@ namespace Taf.Core.Utility
         /// <returns>16进制数的字符串</returns>
         public static string _10To16(int value)
         {
-            string str = X2X(value.ToString(CultureInfo.InvariantCulture), 10, 16);
+            var str = X2X(value.ToString(CultureInfo.InvariantCulture), 10, 16);
             return str.IsNullOrEmpty() ? "0" : str[0] == '0' ? str : '0' + str;
         }
 

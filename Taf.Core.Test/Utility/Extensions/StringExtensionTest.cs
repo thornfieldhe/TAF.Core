@@ -11,7 +11,6 @@ using Taf.Core.Utility;
 using Xunit;
 using System;
 using System.Collections.Generic;
-using Taf.Utility;
 
 namespace Taf.Core.Test
 {
@@ -52,7 +51,7 @@ namespace Taf.Core.Test
         public void TestFirstUpper()
         {
             const string text = "aBc";
-            string actual = text.ToCapit();
+            var actual = text.ToCapit();
             Assert.Equal("ABc", actual);
         }
 
@@ -129,7 +128,7 @@ namespace Taf.Core.Test
         } 
         
         /// <summary>
-        /// 测试是否包含中文
+        /// 测试字符串压缩,解压
         /// </summary>
         [Fact]
         public void TestCompressString()
@@ -244,7 +243,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestStrIsNotNullAction()
         {
-            string a = string.Empty;
+            var a = string.Empty;
             a.IfIsNullOrEmpty(() => a = "111");
             a.IfIsNotNullOrEmpty(r => a = "222");
             Assert.Equal("222", a);
@@ -256,7 +255,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestGetLengthOfChars()
         {
-            string a = "qwerty";
+            var a = "qwerty";
 
             Assert.Equal("qw", a.Left(2));
             Assert.Equal("ty", a.Right(2));
@@ -268,7 +267,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestFormateString()
         {
-            string a = "a{0}{1}";
+            var a = "a{0}{1}";
             Assert.Equal("abc", a.FormatWith("b", "c"));
         }
 
@@ -278,7 +277,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestStringEquale()
         {
-            string a = "abc";
+            var a = "abc";
             Assert.True(a.IgnoreCaseEqual("Abc"));
         }
 
@@ -288,7 +287,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestWordify()
         {
-            string a = "aGoodPeople";
+            var a = "aGoodPeople";
             Assert.Equal("a Good People", a.Wordify());
         }
 
@@ -298,7 +297,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestReverse()
         {
-            string a = "abcde";
+            var a = "abcde";
             Assert.Equal("edcba", a.Reverse());
         }
 
@@ -308,7 +307,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestIsInArryString()
         {
-            string a = "A";
+            var a = "A";
             Assert.True(a.IsInArryString("A,B,C,D,E", ','));
         }
 
@@ -318,7 +317,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestReplaceLast()
         {
-            string a = "ABASDAS";
+            var a = "ABASDAS";
             Assert.Equal("ABASDMS", a.ReplaceLast("A", "M"));
         }
 
@@ -328,7 +327,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestReplaceFirst()
         {
-            string a = "ABASDAS";
+            var a = "ABASDAS";
             Assert.Equal("MBASDAS", a.ReplaceFirst("A", "M"));
         }
 
@@ -338,7 +337,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestCountOccurences()
         {
-            string a = "ABASDAS";
+            var a = "ABASDAS";
             Assert.Equal(3, a.CountOccurences("A"));
         }
 
@@ -348,10 +347,10 @@ namespace Taf.Core.Test
         [Fact]
         public void TestFindSubstringAsString()
         {
-            string a = "ABASDAS";
+            var a = "ABASDAS";
             Assert.Equal(2, a.FindSubstringAsString("A.").Count);
             Assert.Equal(3, a.FindSubstringAsString("A.", false).Count); // AS子串出现了2次
-            string b = "21_22/21";
+            var b = "21_22/21";
             Assert.Equal(2, b.FindSubstringAsSInt(@"\d\d").Count);
             Assert.Equal(3, b.FindSubstringAsSInt(@"\d{2}", false).Count); // 2*子串出现了2次
         }
@@ -362,7 +361,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestReplaceReg()
         {
-            string b = "21_22/21";
+            var b = "21_22/21";
             Assert.Equal("2x_2x/2x", b.ReplaceReg(@"(\d)(\d)", "x", 2));
         }
 
@@ -372,9 +371,9 @@ namespace Taf.Core.Test
         [Fact]
         public void TestCut()
         {
-            string a = "12345678";
+            var a = "12345678";
             Assert.Equal("12345", a.Cut(5));
-            string b = "中国1234中国";
+            var b = "中国1234中国";
             Assert.Equal("中国1", b.Cut(5));
         }
 
@@ -384,7 +383,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestConvertRmb()
         {
-            string a = "12345678.123";
+            var a = "12345678.123";
             Assert.Equal("壹仟贰佰叁拾肆万伍仟陆佰柒拾捌元壹角贰分", a.ConvertRMB());
         }
 
@@ -394,7 +393,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestIsMatch()
         {
-            string pattern = @"^\d.*";
+            var pattern = @"^\d.*";
             Assert.False("abc".IsMatch(pattern));
             Assert.True("123".IsMatch(pattern));
         }
@@ -493,8 +492,8 @@ namespace Taf.Core.Test
                             "83B0233C-A24F-49FD-8083-1337209EBC9A,EAB523C6-2FE7-47BE-89D5-C6D440C3033A".ToLower(),
                 (new List<Guid>
                      {
-                         new Guid("83B0233C-A24F-49FD-8083-1337209EBC9A"),
-                         new Guid("EAB523C6-2FE7-47BE-89D5-C6D440C3033A")
+                         new("83B0233C-A24F-49FD-8083-1337209EBC9A"),
+                         new("EAB523C6-2FE7-47BE-89D5-C6D440C3033A")
                      }).Splice(string.Empty));
         }
 
@@ -508,8 +507,8 @@ namespace Taf.Core.Test
                             "'83B0233C-A24F-49FD-8083-1337209EBC9A','EAB523C6-2FE7-47BE-89D5-C6D440C3033A'".ToLower(),
                 (new List<Guid>
                      {
-                         new Guid("83B0233C-A24F-49FD-8083-1337209EBC9A"),
-                         new Guid("EAB523C6-2FE7-47BE-89D5-C6D440C3033A")
+                         new("83B0233C-A24F-49FD-8083-1337209EBC9A"),
+                         new("EAB523C6-2FE7-47BE-89D5-C6D440C3033A")
                      }).Splice("'"));
         }
 
@@ -522,7 +521,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestNumberToChinese()
         {
-            string num = "5875246";
+            var num = "5875246";
             Assert.Equal("五八七五二四六",num.NumberToChinese());
         }
 
@@ -533,7 +532,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestChineseToNumber()
         {
-            string num = "五八七五二四六";
+            var num = "五八七五二四六";
             Assert.Equal("5875246",num.ChineseToNumber());
         }
 

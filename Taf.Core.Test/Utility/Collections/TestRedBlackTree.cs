@@ -39,7 +39,7 @@ namespace Taf.Core.Test{
             watch.Start();
             var max = testlist.Max();
             Trace.TraceInformation(max.ToString());
-            System.Console.WriteLine($"max is:{max}");
+            Console.WriteLine($"max is:{max}");
             watch.Stop();
             var time1 = watch.ElapsedMilliseconds;
             watch.Restart();
@@ -50,7 +50,7 @@ namespace Taf.Core.Test{
             Assert.True(time1 > time2);
             watch.Restart();
             max = list2.Last();
-            System.Console.WriteLine(max);
+            Console.WriteLine(max);
             watch.Stop();
             var time3 = watch.ElapsedMilliseconds;
             Assert.True(time1 > time3);

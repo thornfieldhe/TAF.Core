@@ -40,7 +40,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Foreach()
         {
-            List<string> data = new List<string> { "A", "B", "C", "D" };
+            var data = new List<string> { "A", "B", "C", "D" };
             var count = 0;
             data.ForEach(item =>
             {

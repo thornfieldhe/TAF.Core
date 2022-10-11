@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Validation
+namespace Taf.Core.Validation
 {
     using System.ComponentModel.DataAnnotations;
 
-    using Taf.Core;
+    using Core;
 
     /// <summary>
     /// 空白验证规则，只需要传入需要返回的错误信息
@@ -21,7 +21,7 @@ namespace Taf.Validation
         /// <summary>
         /// The error message.
         /// </summary>
-        private readonly string errorMessage;
+        private readonly string _errorMessage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmptyErrorValidateionRule"/> class.
@@ -29,10 +29,7 @@ namespace Taf.Validation
         /// <param name="errorMessage">
         /// The error message.
         /// </param>
-        public EmptyErrorValidateionRule(string errorMessage)
-        {
-            this.errorMessage = errorMessage;
-        }
+        public EmptyErrorValidateionRule(string errorMessage) => _errorMessage = errorMessage;
 
         /// <summary>
         /// The validate.
@@ -40,9 +37,6 @@ namespace Taf.Validation
         /// <returns>
         /// The <see cref="ValidationResult"/>.
         /// </returns>
-        public ValidationResult Validate()
-        {
-            return new ValidationResult(errorMessage);
-        }
+        public ValidationResult Validate() => new(_errorMessage);
     }
 }

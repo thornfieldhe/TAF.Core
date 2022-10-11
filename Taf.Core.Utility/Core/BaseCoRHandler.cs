@@ -1,4 +1,4 @@
-﻿namespace Taf.Core
+﻿namespace Taf.Core.Utility
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     {
         protected BaseCoRHandler()
         {
-            if (this.Successors == null)
+            if (Successors == null)
             {
                 Successors = new List<BaseCoRHandler<Request>>();
             }
@@ -46,7 +46,7 @@
 
             if (Successors != null)
             {
-                foreach (BaseCoRHandler<Request> successor in Successors)
+                foreach (var successor in Successors)
                 {
                     successor.HandleRequest(request);
                 }
@@ -59,7 +59,7 @@
         /// <param name="argus"></param>
         public virtual void OnBreak(CallHandlerEventArgs<Request> argus)
         {
-            this.Break?.Invoke(this, argus);
+            Break?.Invoke(this, argus);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@
         /// <param name="success"></param>
         public void AddSuccessor(BaseCoRHandler<Request> success)
         {
-            if (this.Successors == null)
+            if (Successors == null)
             {
                 Successors = new List<BaseCoRHandler<Request>>();
             }
@@ -84,9 +84,9 @@
             yield return this;
             if((Successors       == null)
             || (Successors.Count <= 0)) yield break;
-            foreach (BaseCoRHandler<Request> child in Successors)
+            foreach (var child in Successors)
             {
-                foreach (BaseCoRHandler<Request> item in child.Enumerate())
+                foreach (var item in child.Enumerate())
                     yield return item;
             }
         }

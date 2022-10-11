@@ -210,10 +210,7 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年闰哪个月 1-12 , 没闰传回 0
         /// </summary>
-        private static int LeapMonth(int y)
-        {
-            return (int)(lunarInfo[y - 1900] & 0xf);
-        }
+        private static int LeapMonth(int y) => (int)(lunarInfo[y - 1900] & 0xf);
 
         /// <summary>
         /// 传回农历y年m月的总天数
@@ -229,18 +226,12 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年的生肖
         /// </summary>
-        private static String AnimalsYear(int y)
-        {
-            return Animals[(y - 4) % 12];
-        }
+        private static String AnimalsYear(int y) => Animals[(y - 4) % 12];
 
         /// <summary>
         /// 传入月日的offset 传回干支,0=甲子
         /// </summary>
-        private static String Cyclicalm(int num)
-        {
-            return (Gan[num % 10] + Zhi[num % 12]);
-        }
+        private static String Cyclicalm(int num) => (Gan[num % 10] + Zhi[num % 12]);
 
         /// <summary>
         /// 传入offset 传回干支, 0=甲子
@@ -477,11 +468,9 @@ namespace Taf.Core.Utility
             return offDate;
         }
 
-        static string FormatDate(int m, int d)
-        {
-            return string.Format("{0:00}{1:00}", m, d);
-        }
-        #endregion
+        static string FormatDate(int m, int d) => string.Format("{0:00}{1:00}", m, d);
+
+    #endregion
 
         #region 公有方法
         /// <summary>
@@ -642,15 +631,15 @@ namespace Taf.Core.Utility
 
         #region 基础数据
         #region 基本常量
-        private const int MinYear = 1900;
-        private const int MaxYear = 2050;
-        private static DateTime MinDay = new DateTime(1900, 1, 30);
-        private static DateTime MaxDay = new DateTime(2049, 12, 31);
-        private const int GanZhiStartYear = 1864; //干支计算起始年
-        private static DateTime GanZhiStartDay = new DateTime(1899, 12, 22);//起始日
-        private const string HzNum = "零一二三四五六七八九";
-        private const int AnimalStartYear = 1900; //1900年为鼠年
-        private static DateTime ChineseConstellationReferDay = new DateTime(2007, 9, 13);//28星宿参考值,本日为角
+        private const  int      MinYear                      = 1900;
+        private const  int      MaxYear                      = 2050;
+        private static DateTime MinDay                       = new(1900, 1, 30);
+        private static DateTime MaxDay                       = new(2049, 12, 31);
+        private const  int      GanZhiStartYear              = 1864;              //干支计算起始年
+        private static DateTime GanZhiStartDay               = new(1899, 12, 22); //起始日
+        private const  string   HzNum                        = "零一二三四五六七八九";
+        private const  int      AnimalStartYear              = 1900;             //1900年为鼠年
+        private static DateTime ChineseConstellationReferDay = new(2007, 9, 13); //28星宿参考值,本日为角
         #endregion
 
         #region 阴历数据
@@ -736,86 +725,86 @@ namespace Taf.Core.Utility
 
         #region 按公历计算的节日
         private static SolarHolidayStruct[] sHolidayInfo = new SolarHolidayStruct[]{
-            new SolarHolidayStruct(1, 1, 1, "元旦"),
-            new SolarHolidayStruct(2, 2, 0, "世界湿地日"),
-            new SolarHolidayStruct(2, 10, 0, "国际气象节"),
-            new SolarHolidayStruct(2, 14, 0, "情人节"),
-            new SolarHolidayStruct(3, 1, 0, "国际海豹日"),
-            new SolarHolidayStruct(3, 5, 0, "学雷锋纪念日"),
-            new SolarHolidayStruct(3, 8, 0, "妇女节"),
-            new SolarHolidayStruct(3, 12, 0, "植树节 孙中山逝世纪念日"),
-            new SolarHolidayStruct(3, 14, 0, "国际警察日"),
-            new SolarHolidayStruct(3, 15, 0, "消费者权益日"),
-            new SolarHolidayStruct(3, 17, 0, "中国国医节 国际航海日"),
-            new SolarHolidayStruct(3, 21, 0, "世界森林日 消除种族歧视国际日 世界儿歌日"),
-            new SolarHolidayStruct(3, 22, 0, "世界水日"),
-            new SolarHolidayStruct(3, 24, 0, "世界防治结核病日"),
-            new SolarHolidayStruct(4, 1, 0, "愚人节"),
-            new SolarHolidayStruct(4, 7, 0, "世界卫生日"),
-            new SolarHolidayStruct(4, 22, 0, "世界地球日"),
-            new SolarHolidayStruct(5, 1, 1, "劳动节"),
-            new SolarHolidayStruct(5, 2, 1, "劳动节假日"),
-            new SolarHolidayStruct(5, 3, 1, "劳动节假日"),
-            new SolarHolidayStruct(5, 4, 0, "青年节"),
-            new SolarHolidayStruct(5, 8, 0, "世界红十字日"),
-            new SolarHolidayStruct(5, 12, 0, "国际护士节"),
-            new SolarHolidayStruct(5, 31, 0, "世界无烟日"),
-            new SolarHolidayStruct(6, 1, 0, "国际儿童节"),
-            new SolarHolidayStruct(6, 5, 0, "世界环境保护日"),
-            new SolarHolidayStruct(6, 26, 0, "国际禁毒日"),
-            new SolarHolidayStruct(7, 1, 0, "建党节 香港回归纪念 世界建筑日"),
-            new SolarHolidayStruct(7, 11, 0, "世界人口日"),
-            new SolarHolidayStruct(8, 1, 0, "建军节"),
-            new SolarHolidayStruct(8, 8, 0, "中国男子节 父亲节"),
-            new SolarHolidayStruct(8, 15, 0, "抗日战争胜利纪念"),
-            new SolarHolidayStruct(9, 9, 0, "毛主席逝世纪念"),
-            new SolarHolidayStruct(9, 10, 0, "教师节"),
-            new SolarHolidayStruct(9, 18, 0, "九·一八事变纪念日"),
-            new SolarHolidayStruct(9, 20, 0, "国际爱牙日"),
-            new SolarHolidayStruct(9, 27, 0, "世界旅游日"),
-            new SolarHolidayStruct(9, 28, 0, "孔子诞辰"),
-            new SolarHolidayStruct(10, 1, 1, "国庆节 国际音乐日"),
-            new SolarHolidayStruct(10, 2, 1, "国庆节假日"),
-            new SolarHolidayStruct(10, 3, 1, "国庆节假日"),
-            new SolarHolidayStruct(10, 6, 0, "老人节"),
-            new SolarHolidayStruct(10, 24, 0, "联合国日"),
-            new SolarHolidayStruct(11, 10, 0, "世界青年节"),
-            new SolarHolidayStruct(11, 12, 0, "孙中山诞辰纪念"),
-            new SolarHolidayStruct(12, 1, 0, "世界艾滋病日"),
-            new SolarHolidayStruct(12, 3, 0, "世界残疾人日"),
-            new SolarHolidayStruct(12, 20, 0, "澳门回归纪念"),
-            new SolarHolidayStruct(12, 24, 0, "平安夜"),
-            new SolarHolidayStruct(12, 25, 0, "圣诞节"),
-            new SolarHolidayStruct(12, 26, 0, "毛主席诞辰纪念")
+            new(1, 1, 1, "元旦"),
+            new(2, 2, 0, "世界湿地日"),
+            new(2, 10, 0, "国际气象节"),
+            new(2, 14, 0, "情人节"),
+            new(3, 1, 0, "国际海豹日"),
+            new(3, 5, 0, "学雷锋纪念日"),
+            new(3, 8, 0, "妇女节"),
+            new(3, 12, 0, "植树节 孙中山逝世纪念日"),
+            new(3, 14, 0, "国际警察日"),
+            new(3, 15, 0, "消费者权益日"),
+            new(3, 17, 0, "中国国医节 国际航海日"),
+            new(3, 21, 0, "世界森林日 消除种族歧视国际日 世界儿歌日"),
+            new(3, 22, 0, "世界水日"),
+            new(3, 24, 0, "世界防治结核病日"),
+            new(4, 1, 0, "愚人节"),
+            new(4, 7, 0, "世界卫生日"),
+            new(4, 22, 0, "世界地球日"),
+            new(5, 1, 1, "劳动节"),
+            new(5, 2, 1, "劳动节假日"),
+            new(5, 3, 1, "劳动节假日"),
+            new(5, 4, 0, "青年节"),
+            new(5, 8, 0, "世界红十字日"),
+            new(5, 12, 0, "国际护士节"),
+            new(5, 31, 0, "世界无烟日"),
+            new(6, 1, 0, "国际儿童节"),
+            new(6, 5, 0, "世界环境保护日"),
+            new(6, 26, 0, "国际禁毒日"),
+            new(7, 1, 0, "建党节 香港回归纪念 世界建筑日"),
+            new(7, 11, 0, "世界人口日"),
+            new(8, 1, 0, "建军节"),
+            new(8, 8, 0, "中国男子节 父亲节"),
+            new(8, 15, 0, "抗日战争胜利纪念"),
+            new(9, 9, 0, "毛主席逝世纪念"),
+            new(9, 10, 0, "教师节"),
+            new(9, 18, 0, "九·一八事变纪念日"),
+            new(9, 20, 0, "国际爱牙日"),
+            new(9, 27, 0, "世界旅游日"),
+            new(9, 28, 0, "孔子诞辰"),
+            new(10, 1, 1, "国庆节 国际音乐日"),
+            new(10, 2, 1, "国庆节假日"),
+            new(10, 3, 1, "国庆节假日"),
+            new(10, 6, 0, "老人节"),
+            new(10, 24, 0, "联合国日"),
+            new(11, 10, 0, "世界青年节"),
+            new(11, 12, 0, "孙中山诞辰纪念"),
+            new(12, 1, 0, "世界艾滋病日"),
+            new(12, 3, 0, "世界残疾人日"),
+            new(12, 20, 0, "澳门回归纪念"),
+            new(12, 24, 0, "平安夜"),
+            new(12, 25, 0, "圣诞节"),
+            new(12, 26, 0, "毛主席诞辰纪念")
            };
         #endregion
 
         #region 按农历计算的节日
         private static LunarHolidayStruct[] lHolidayInfo = new LunarHolidayStruct[]{
-            new LunarHolidayStruct(1, 1, 1, "春节"),
-            new LunarHolidayStruct(1, 15, 0, "元宵节"),
-            new LunarHolidayStruct(5, 5, 0, "端午节"),
-            new LunarHolidayStruct(7, 7, 0, "七夕情人节"),
-            new LunarHolidayStruct(7, 15, 0, "中元节 盂兰盆节"),
-            new LunarHolidayStruct(8, 15, 0, "中秋节"),
-            new LunarHolidayStruct(9, 9, 0, "重阳节"),
-            new LunarHolidayStruct(12, 8, 0, "腊八节"),
-            new LunarHolidayStruct(12, 23, 0, "北方小年(扫房)"),
-            new LunarHolidayStruct(12, 24, 0, "南方小年(掸尘)"),
+            new(1, 1, 1, "春节"),
+            new(1, 15, 0, "元宵节"),
+            new(5, 5, 0, "端午节"),
+            new(7, 7, 0, "七夕情人节"),
+            new(7, 15, 0, "中元节 盂兰盆节"),
+            new(8, 15, 0, "中秋节"),
+            new(9, 9, 0, "重阳节"),
+            new(12, 8, 0, "腊八节"),
+            new(12, 23, 0, "北方小年(扫房)"),
+            new(12, 24, 0, "南方小年(掸尘)"),
             //new LunarHolidayStruct(12, 30, 0, "除夕")  //注意除夕需要其它方法进行计算
         };
         #endregion
 
         #region 按某月第几个星期几
         private static WeekHolidayStruct[] wHolidayInfo = new WeekHolidayStruct[]{
-            new WeekHolidayStruct(5, 2, 1, "母亲节"),
-            new WeekHolidayStruct(5, 3, 1, "全国助残日"),
-            new WeekHolidayStruct(6, 3, 1, "父亲节"),
-            new WeekHolidayStruct(9, 3, 3, "国际和平日"),
-            new WeekHolidayStruct(9, 4, 1, "国际聋人节"),
-            new WeekHolidayStruct(10, 1, 2, "国际住房日"),
-            new WeekHolidayStruct(10, 1, 4, "国际减轻自然灾害日"),
-            new WeekHolidayStruct(11, 4, 5, "感恩节")
+            new(5, 2, 1, "母亲节"),
+            new(5, 3, 1, "全国助残日"),
+            new(6, 3, 1, "父亲节"),
+            new(9, 3, 3, "国际和平日"),
+            new(9, 4, 1, "国际聋人节"),
+            new(10, 1, 2, "国际住房日"),
+            new(10, 1, 4, "国际减轻自然灾害日"),
+            new(11, 4, 5, "感恩节")
         };
         #endregion
         #endregion
@@ -842,7 +831,7 @@ namespace Taf.Core.Utility
             temp = 0;
 
             //计算两天的基本差距
-            var ts = _date - ChineseCalendar.MinDay;
+            var ts = _date - MinDay;
             offset = ts.Days;
 
             for (i = MinYear; i <= MaxYear; i++)
@@ -930,11 +919,11 @@ namespace Taf.Core.Utility
             leap = GetChineseLeapMonth(cy);
             if (leap != 0)
             {
-                this._cIsLeapYear = true;
+                _cIsLeapYear = true;
             }
             else
             {
-                this._cIsLeapYear = false;
+                _cIsLeapYear = false;
             }
 
             if (cm != leap)
@@ -993,7 +982,7 @@ namespace Taf.Core.Utility
                 else
                 {
                     //如果需要计算的是闰月，则应首先加上与闰月对应的普通月的天数
-                    if (this._cIsLeapMonth == true)         //计算月为闰月
+                    if (_cIsLeapMonth == true)         //计算月为闰月
                     {
                         Temp = GetChineseMonthDays(cy, cm); //计算非闰月天数
                         offset = offset + Temp;
@@ -1033,11 +1022,9 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历 y年闰哪个月 1-12 , 没闰传回 0
         /// </summary>
-        private int GetChineseLeapMonth(int year)
-        {
-            return LunarDateArray[year - MinYear] & 0xF;
-        }
-        #endregion
+        private int GetChineseLeapMonth(int year) => LunarDateArray[year - MinYear] & 0xF;
+
+    #endregion
 
         #region GetChineseLeapMonthDays
         /// <summary>
@@ -1105,7 +1092,7 @@ namespace Taf.Core.Utility
             //zhiHour = zhiStr[offset].ToString();
 
             //计算天干
-            var ts = this._date - GanZhiStartDay;
+            var ts = _date - GanZhiStartDay;
             var i  = ts.Days % 60;
 
             //ganStr[i % 10] 为日的天干,(n*2-1) %10得出地支对应,n从1开始
@@ -1292,11 +1279,11 @@ namespace Taf.Core.Utility
             get
             {
                 var tempStr = "";
-                if (this._cIsLeapMonth == false) //闰月不计算节日
+                if (_cIsLeapMonth == false) //闰月不计算节日
                 {
                     foreach (var lh in lHolidayInfo)
                     {
-                        if ((lh.Month == this._cMonth) && (lh.Day == this._cDay))
+                        if ((lh.Month == _cMonth) && (lh.Day == _cDay))
                         {
 
                             tempStr = lh.HolidayName;
@@ -1306,10 +1293,10 @@ namespace Taf.Core.Utility
                     }
 
                     //对除夕进行特别处理
-                    if (this._cMonth == 12)
+                    if (_cMonth == 12)
                     {
-                        var i = GetChineseMonthDays(this._cYear, 12); //计算当年农历12月的总天数
-                        if (this._cDay == i) //如果为最后一天
+                        var i = GetChineseMonthDays(_cYear, 12); //计算当年农历12月的总天数
+                        if (_cDay == i) //如果为最后一天
                         {
                             tempStr = "除夕";
                         }
@@ -1373,14 +1360,8 @@ namespace Taf.Core.Utility
         /// </summary>
         public DateTime Date
         {
-            get
-            {
-                return _date;
-            }
-            set
-            {
-                _date = value;
-            }
+            get => _date;
+            set => _date = value;
         }
         #endregion
 
@@ -1388,14 +1369,9 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 取星期几
         /// </summary>
-        public DayOfWeek WeekDay
-        {
-            get
-            {
-                return _date.DayOfWeek;
-            }
-        }
-        #endregion
+        public DayOfWeek WeekDay => _date.DayOfWeek;
+
+    #endregion
 
         #region WeekDayStr
         /// <summary>
@@ -1430,27 +1406,17 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 公历日期中文表示法 如一九九七年七月一日
         /// </summary>
-        public string DateString
-        {
-            get
-            {
-                return "公元" + this._date.ToLongDateString();
-            }
-        }
-        #endregion
+        public string DateString => "公元" + _date.ToLongDateString();
+
+    #endregion
 
         #region IsLeapYear
         /// <summary>
         /// 当前是否公历闰年
         /// </summary>
-        public bool IsLeapYear
-        {
-            get
-            {
-                return DateTime.IsLeapYear(this._date.Year);
-            }
-        }
-        #endregion
+        public bool IsLeapYear => DateTime.IsLeapYear(_date.Year);
+
+    #endregion
 
         #region ChineseConstellation
         /// <summary>
@@ -1463,7 +1429,7 @@ namespace Taf.Core.Utility
                 var offset = 0;
                 var modStarDay = 0;
 
-                var ts = this._date - ChineseConstellationReferDay;
+                var ts = _date - ChineseConstellationReferDay;
                 offset = ts.Days;
                 modStarDay = offset % 28;
                 return (modStarDay >= 0 ? _chineseConstellationName[modStarDay] : _chineseConstellationName[27 + modStarDay]);
@@ -1475,14 +1441,9 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 时辰
         /// </summary>
-        public string ChineseHour
-        {
-            get
-            {
-                return GetChineseHour(_datetime);
-            }
-        }
-        #endregion
+        public string ChineseHour => GetChineseHour(_datetime);
+
+    #endregion
 
         #endregion
 
@@ -1491,40 +1452,25 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 是否闰月
         /// </summary>
-        public bool IsChineseLeapMonth
-        {
-            get
-            {
-                return this._cIsLeapMonth;
-            }
-        }
-        #endregion
+        public bool IsChineseLeapMonth => _cIsLeapMonth;
+
+    #endregion
 
         #region IsChineseLeapYear
         /// <summary>
         /// 当年是否有闰月
         /// </summary>
-        public bool IsChineseLeapYear
-        {
-            get
-            {
-                return this._cIsLeapYear;
-            }
-        }
-        #endregion
+        public bool IsChineseLeapYear => _cIsLeapYear;
+
+    #endregion
 
         #region ChineseDay
         /// <summary>
         /// 农历日
         /// </summary>
-        public int ChineseDay
-        {
-            get
-            {
-                return this._cDay;
-            }
-        }
-        #endregion
+        public int ChineseDay => _cDay;
+
+    #endregion
 
         #region ChineseDayString
         /// <summary>
@@ -1534,7 +1480,7 @@ namespace Taf.Core.Utility
         {
             get
             {
-                switch (this._cDay)
+                switch (_cDay)
                 {
                     case 0:
                         return "";
@@ -1556,40 +1502,25 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 农历的月份
         /// </summary>
-        public int ChineseMonth
-        {
-            get
-            {
-                return this._cMonth;
-            }
-        }
-        #endregion
+        public int ChineseMonth => _cMonth;
+
+    #endregion
 
         #region ChineseMonthString
         /// <summary>
         /// 农历月份字符串
         /// </summary>
-        public string ChineseMonthString
-        {
-            get
-            {
-                return _monthString[this._cMonth];
-            }
-        }
-        #endregion
+        public string ChineseMonthString => _monthString[_cMonth];
+
+    #endregion
 
         #region ChineseYear
         /// <summary>
         /// 取农历年份
         /// </summary>
-        public int ChineseYear
-        {
-            get
-            {
-                return this._cYear;
-            }
-        }
-        #endregion
+        public int ChineseYear => _cYear;
+
+    #endregion
 
         #region ChineseYearString
         /// <summary>
@@ -1600,7 +1531,7 @@ namespace Taf.Core.Utility
             get
             {
                 var tempStr = "";
-                var num = this._cYear.ToString();
+                var num = _cYear.ToString();
                 for (var i = 0; i < 4; i++)
                 {
                     tempStr += ConvertNumToChineseNum(num[i]);
@@ -1618,7 +1549,7 @@ namespace Taf.Core.Utility
         {
             get
             {
-                if (this._cIsLeapMonth == true)
+                if (_cIsLeapMonth == true)
                 {
                     return "农历" + ChineseYearString + "闰" + ChineseMonthString + ChineseDayString;
                 }
@@ -1652,7 +1583,7 @@ namespace Taf.Core.Utility
                 int y;
                 var tempStr = "";
 
-                y = this._date.Year;
+                y = _date.Year;
 
                 for (var i = 1; i <= 24; i++)
                 {
@@ -1680,7 +1611,7 @@ namespace Taf.Core.Utility
                 int y;
                 var tempStr = "";
 
-                y = this._date.Year;
+                y = _date.Year;
 
                 for (var i = 24; i >= 1; i--)
                 {
@@ -1711,7 +1642,7 @@ namespace Taf.Core.Utility
                 int y;
                 var tempStr = "";
 
-                y = this._date.Year;
+                y = _date.Year;
 
                 for (var i = 1; i <= 24; i++)
                 {
@@ -1847,7 +1778,7 @@ namespace Taf.Core.Utility
             get
             {
                 string tempStr;
-                var i = (this._cYear - GanZhiStartYear) % 60; //计算干支
+                var i = (_cYear - GanZhiStartYear) % 60; //计算干支
                 tempStr = ganStr[i % 10].ToString() + zhiStr[i % 12].ToString() + "年";
                 return tempStr;
             }
@@ -1865,20 +1796,20 @@ namespace Taf.Core.Utility
                 //每个月的地支总是固定的,而且总是从寅月开始
                 int zhiIndex;
                 string zhi;
-                if (this._cMonth > 10)
+                if (_cMonth > 10)
                 {
-                    zhiIndex = this._cMonth - 10;
+                    zhiIndex = _cMonth - 10;
                 }
                 else
                 {
-                    zhiIndex = this._cMonth + 2;
+                    zhiIndex = _cMonth + 2;
                 }
                 zhi = zhiStr[zhiIndex - 1].ToString();
 
                 //根据当年的干支年的干来计算月干的第一个
                 var ganIndex = 1;
                 string gan;
-                var i = (this._cYear - GanZhiStartYear) % 60; //计算干支
+                var i = (_cYear - GanZhiStartYear) % 60; //计算干支
                 switch (i % 10)
                 {
                     #region ...
@@ -1914,7 +1845,7 @@ namespace Taf.Core.Utility
                         break;
                         #endregion
                 }
-                gan = ganStr[(ganIndex + this._cMonth - 2) % 10].ToString();
+                gan = ganStr[(ganIndex + _cMonth - 2) % 10].ToString();
 
                 return gan + zhi + "月";
             }
@@ -1930,7 +1861,7 @@ namespace Taf.Core.Utility
             get
             {
                 int i, offset;
-                var ts = this._date - GanZhiStartDay;
+                var ts = _date - GanZhiStartDay;
                 offset = ts.Days;
                 i = offset % 60;
                 return ganStr[i % 10].ToString() + zhiStr[i % 12].ToString() + "日";
@@ -1942,14 +1873,9 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 取当前日期的干支表示法如 甲子年乙丑月丙庚日
         /// </summary>
-        public string GanZhiDateString
-        {
-            get
-            {
-                return GanZhiYearString + GanZhiMonthString + GanZhiDayString;
-            }
-        }
-        #endregion
+        public string GanZhiDateString => GanZhiYearString + GanZhiMonthString + GanZhiDayString;
+
+    #endregion
         #endregion
         #endregion
     }

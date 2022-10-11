@@ -34,8 +34,8 @@ namespace Taf.Core.Utility
         /// <param name="item2"></param>
         public KeyValue(K1 item1, K2 item2)
         {
-            this.Key = item1;
-            this.Value = item2;
+            Key = item1;
+            Value = item2;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Taf.Core.Utility
                 return -1;
             }
 
-            return this.Key.CompareTo(compare.Key);
+            return Key.CompareTo(compare.Key);
         }
     }
 
@@ -78,7 +78,8 @@ namespace Taf.Core.Utility
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3)
-            : base(item1, item2) { this.Item3 = item3; }
+            : base(item1, item2) =>
+            Item3 = item3;
 
         public K3 Item3
         {
@@ -108,7 +109,8 @@ namespace Taf.Core.Utility
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3, K4 item4)
-            : base(item1, item2, item3) { this.Item4 = item4; }
+            : base(item1, item2, item3) =>
+            Item4 = item4;
 
         public K4 Item4
         {
@@ -138,7 +140,8 @@ namespace Taf.Core.Utility
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3, K4 item4, K5 item5)
-            : base(item1, item2, item3, item4) { this.Item5 = item5; }
+            : base(item1, item2, item3, item4) =>
+            Item5 = item5;
 
         public K5 Item5
         {
@@ -169,7 +172,8 @@ namespace Taf.Core.Utility
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3, K4 item4, K5 item5, K6 item6)
-            : base(item1, item2, item3, item4, item5) { this.Item6 = item6; }
+            : base(item1, item2, item3, item4, item5) =>
+            Item6 = item6;
 
         public K6 Item6
         {
@@ -204,7 +208,8 @@ namespace Taf.Core.Utility
         }
 
         public KeyValue(K1 item1, K2 item2, K3 item3, K4 item4, K5 item5, K6 item6, K7 item7)
-            : base(item1, item2, item3, item4, item5, item6) { this.Item7 = item7; }
+            : base(item1, item2, item3, item4, item5, item6) =>
+            Item7 = item7;
 
         public K7 Item7
         {

@@ -4,287 +4,243 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Taf.Core.Utility
-{
+namespace Taf.Core.Utility{
     /// <summary>
     /// Fx is the main class for Fluentx and its a shortened name for Fluentx, Fx also is equivelant for the mathematical representation of F(x) :)
     /// </summary>
-    public sealed class Fx : IFluentInterface, IAction, ITriableAction, IConditionBuilder, IConditionalAction, IEarlyLoopBuilder, ILoopAction, ILateLoopBuilder, IEarlyLoop, ILateLoop, ISwitchBuilder, ISwitchCaseBuilder, ISwitchTypeBuilder, ISwitchTypeCaseBuilder
-    {
-        private Fx()
-        {
+    public sealed class Fx : IFluentInterface, IAction, ITriableAction, IConditionBuilder, IConditionalAction, IEarlyLoopBuilder, ILoopAction, ILateLoopBuilder, IEarlyLoop
+                           , ILateLoop, ISwitchBuilder, ISwitchCaseBuilder, ISwitchTypeBuilder, ISwitchTypeCaseBuilder{
+        private Fx(){
             //Not to be initialized from the out side.
         }
 
-        #region Internal Definitions
-        private Func<bool> ConditionValue
-        {
-            get; set;
-        }
+    #region Internal Definitions
 
-        private bool StopConditionEvaluation
-        {
-            get; set;
-        }
+        private Func<bool> ConditionValue{ get; set; }
+
+        private bool StopConditionEvaluation{ get; set; }
+
         /// <summary>
         /// Used for a single default action
         /// </summary>
-        private Action Action
-        {
-            get; set;
-        }
+        private Action Action{ get; set; }
 
-        private IEnumerable InternalList
-        {
-            get; set;
-        }
+        private IEnumerable InternalList{ get; set; }
 
-        private Func<bool> LoopStoperConditionalAction
-        {
-            get; set;
-        }
+        private Func<bool> LoopStoperConditionalAction{ get; set; }
 
-        private bool LoopStoperCondition
-        {
-            get; set;
-        }
+        private bool LoopStoperCondition{ get; set; }
 
-        private enum LoopStopers
-        {
+        private enum LoopStopers{
             Break, Continue
         }
-        private LoopStopers LoopStoper
-        {
-            get; set;
-        }
 
-        private enum LoopStoperLocations
-        {
+        private LoopStopers LoopStoper{ get; set; }
+
+        private enum LoopStoperLocations{
             BeginingOfTheLoop, EndOfTheLoop
         }
-        private LoopStoperLocations LoopStoperLocation
-        {
-            get; set;
-        }
 
-        private object SwitchMainOperand
-        {
-            get; set;
-        }
+        private LoopStoperLocations LoopStoperLocation{ get; set; }
 
-        private List<CaseInfo> SwitchCases
-        {
-            get; set;
-        }
+        private object SwitchMainOperand{ get; set; }
 
+        private List<CaseInfo> SwitchCases{ get; set; }
 
-
-
-        #endregion
+    #endregion
 
         /// <summary>
         /// Performs a while control as long the action is evaluating to true.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction WhileTrue(Func<bool> action)
-        {
-            Fx instance = new Fx();
+        public static IAction WhileTrue(Func<bool> action){
+            var instance = new Fx();
 
-            bool loop = true;
-            while (loop)
-            {
+            var loop = true;
+            while(loop){
                 loop = action();
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a while control as long the action is evaluating to false.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction WhileFalse(Func<bool> action)
-        {
-            Fx instance = new Fx();
+        public static IAction WhileFalse(Func<bool> action){
+            var instance = new Fx();
 
-            bool loop = false;
-            while (!loop)
-            {
+            var loop = false;
+            while(!loop){
                 loop = action();
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a while control as long the action is evaluating to true for a maximum of <paramref name="maxLoops"/>
         /// </summary>
         /// <param name="action"></param>
         /// <param name="maxLoops"></param>
         /// <returns></returns>
-        public static IAction WhileTrueFor(Func<bool> action, ushort maxLoops)
-        {
-            Fx instance = new Fx();
+        public static IAction WhileTrueFor(Func<bool> action, ushort maxLoops){
+            var instance = new Fx();
 
-            int loops = 0;
-            bool loop = true;
-            while (loop && loops < maxLoops)
-            {
+            var loops = 0;
+            var loop  = true;
+            while(loop && loops < maxLoops){
                 ++loops;
                 loop = action();
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a while control as long the action is evaluating to false for a maximum of <paramref name="maxLoops"/>
         /// </summary>
         /// <param name="action"></param>
         /// <param name="maxLoops"></param>
         /// <returns></returns>
-        public static IAction WhileFalseFor(Func<bool> action, ushort maxLoops)
-        {
-            Fx instance = new Fx();
+        public static IAction WhileFalseFor(Func<bool> action, ushort maxLoops){
+            var instance = new Fx();
 
-            int loops = 0;
+            var loops = 0;
 
-            bool loop = false;
-            while (!loop && loops < maxLoops)
-            {
+            var loop = false;
+            while(!loop
+               && loops < maxLoops){
                 ++loops;
                 loop = action();
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a while control using the evaluation condition for the specified action.
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction While(Func<bool> condition, Action action)
-        {
-            Fx instance = new Fx();
+        public static IAction While(Func<bool> condition, Action action){
+            var instance = new Fx();
 
-            while (condition())
-            {
+            while(condition()){
                 action();
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a while control using specified condition for the specified action.
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction While(bool condition, Action action)
-        {
-            Fx instance = new Fx();
+        public static IAction While(bool condition, Action action){
+            var instance = new Fx();
 
-            while (condition)
-            {
+            while(condition){
                 action();
             }
+
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of a while statement using the specified condition, this requires the call to Do eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IEarlyLoopBuilder While(Func<bool> condition)
-        {
-            Fx instance = new Fx();
+        public static IEarlyLoopBuilder While(Func<bool> condition){
+            var instance = new Fx();
             instance.ConditionValue = condition;
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of a Do-While statement using the specified condition, this requires the call to While eventually.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static ILateLoopBuilder Do(Action action)
-        {
-            Fx instance = new Fx();
+        public static ILateLoopBuilder Do(Action action){
+            var instance = new Fx();
             instance.Action = action;
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of IF statement, requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IConditionBuilder If(Func<bool> condition)
-        {
-            Fx instance = new Fx();
+        public static IConditionBuilder If(Func<bool> condition){
+            var instance = new Fx();
             instance.ConditionValue = condition;
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of IF statement, requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IConditionBuilder If(bool condition)
-        {
-            Fx instance = new Fx();
-            instance.ConditionValue = () =>
-            {
-                return condition;
-            };
+        public static IConditionBuilder If(bool condition){
+            var instance = new Fx();
+            instance.ConditionValue = () => { return condition; };
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of IF statement (alternative for IF), requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IConditionBuilder When(Func<bool> condition)
-        {
-            Fx instance = new Fx();
+        public static IConditionBuilder When(Func<bool> condition){
+            var instance = new Fx();
             instance.ConditionValue = condition;
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of IF statement (alternative for IF), requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IConditionBuilder When(bool condition)
-        {
-            Fx instance = new Fx();
-            instance.ConditionValue = () =>
-            {
-                return condition;
-            };
+        public static IConditionBuilder When(bool condition){
+            var instance = new Fx();
+            instance.ConditionValue = () => { return condition; };
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of IF NOT statement, requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IConditionBuilder IfNot(Func<bool> condition)
-        {
-            Fx instance = new Fx();
-            instance.ConditionValue = () =>
-            {
-                return !condition();
-            };
+        public static IConditionBuilder IfNot(Func<bool> condition){
+            var instance = new Fx();
+            instance.ConditionValue = () => { return !condition(); };
             return instance;
         }
+
         /// <summary>
         /// Prepare for the excution of IF NOT statement, requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public static IConditionBuilder IfNot(bool condition)
-        {
-            Fx instance = new Fx();
-            instance.ConditionValue = () =>
-            {
-                return !condition;
-            };
+        public static IConditionBuilder IfNot(bool condition){
+            var instance = new Fx();
+            instance.ConditionValue = () => { return !condition; };
             return instance;
         }
+
         /// <summary>
         /// Performs a foreach loop on the specified list by excuting action for each item in the Enumerable providing the current index of the item.
         /// </summary>
@@ -292,17 +248,17 @@ namespace Taf.Core.Utility
         /// <param name="list"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction ForEach<T>(IEnumerable<T> list, Action<T, int> action)
-        {
-            Fx instance = new Fx();
-            int index = 0;
-            foreach (var item in list)
-            {
+        public static IAction ForEach<T>(IEnumerable<T> list, Action<T, int> action){
+            var instance = new Fx();
+            var index    = 0;
+            foreach(var item in list){
                 action(item, index);
                 index += 1;
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a foreach loop on the specified list by excuting action for each item in the Enumerable
         /// </summary>
@@ -310,24 +266,23 @@ namespace Taf.Core.Utility
         /// <param name="list"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction ForEach<T>(IEnumerable<T> list, Action<T> action)
-        {
-            Fx instance = new Fx();
-            foreach (var item in list)
-            {
+        public static IAction ForEach<T>(IEnumerable<T> list, Action<T> action){
+            var instance = new Fx();
+            foreach(var item in list){
                 action(item);
             }
+
             return instance;
         }
+
         /// <summary>
         /// Prepares for the execution of a foreach statement, this requires the call to Do eventually.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static IEarlyLoopBuilder ForEach<T>(IEnumerable<T> list)
-        {
-            Fx instance = new Fx();
+        public static IEarlyLoopBuilder ForEach<T>(IEnumerable<T> list){
+            var instance = new Fx();
             instance.InternalList = list;
             return instance;
         }
@@ -339,17 +294,17 @@ namespace Taf.Core.Utility
         /// <param name="list"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction ForEvery<T>(IEnumerable<T> list, Action<T, int> action)
-        {
-            Fx instance = new Fx();
-            int index = 0;
-            foreach (var item in list)
-            {
+        public static IAction ForEvery<T>(IEnumerable<T> list, Action<T, int> action){
+            var instance = new Fx();
+            var index    = 0;
+            foreach(var item in list){
                 action(item, index);
                 index += 1;
             }
+
             return instance;
         }
+
         /// <summary>
         /// Performs a foreach loop on the specified list by excuting action for each item in the Enumerable
         /// </summary>
@@ -357,38 +312,38 @@ namespace Taf.Core.Utility
         /// <param name="list"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction ForEvery<T>(IEnumerable<T> list, Action<T> action)
-        {
-            Fx instance = new Fx();
-            foreach (var item in list)
-            {
+        public static IAction ForEvery<T>(IEnumerable<T> list, Action<T> action){
+            var instance = new Fx();
+            foreach(var item in list){
                 action(item);
             }
+
             return instance;
         }
+
         /// <summary>
         /// (Synonym to ForEach) Prepares for the execution of a foreach statement, this requires the call to Do eventually.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <returns></returns>
-        public static IEarlyLoopBuilder ForEvery<T>(IEnumerable<T> list)
-        {
-            Fx instance = new Fx();
+        public static IEarlyLoopBuilder ForEvery<T>(IEnumerable<T> list){
+            var instance = new Fx();
             instance.InternalList = list;
             return instance;
         }
+
         /// <summary>
         /// Prepares for the excution of a Try/Catch action, this requires the call to one of the following actions eventually: Catch, Swallow, SwalloIf.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static ITriableAction Try(Action action)
-        {
-            Fx instance = new Fx();
+        public static ITriableAction Try(Action action){
+            var instance = new Fx();
             instance.Action = action;
             return instance;
         }
+
         /// <summary>
         /// Performs a using statement for disposable objects by executing action.
         /// </summary>
@@ -396,347 +351,341 @@ namespace Taf.Core.Utility
         /// <param name="obj"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static IAction Using<T>(T obj, Action<T> action) where T : IDisposable
-        {
-            Fx instance = new Fx();
-            using (obj)
-            {
+        public static IAction Using<T>(T obj, Action<T> action) where T : IDisposable{
+            var instance = new Fx();
+            using(obj){
                 action(obj);
             }
+
             return instance;
         }
+
         /// <summary>
         /// Prepares for a switch statement over the specified mainOperand, this requires the call to Default eventually.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="mainOperand"></param>
         /// <returns></returns>
-        public static ISwitchBuilder Switch<T>(T mainOperand)
-        {
-            Fx instance = new Fx();
-            instance.SwitchCases = new List<CaseInfo>();
+        public static ISwitchBuilder Switch<T>(T mainOperand){
+            var instance = new Fx();
+            instance.SwitchCases       = new List<CaseInfo>();
             instance.SwitchMainOperand = mainOperand;
             return instance;
         }
+
         /// <summary>
         /// Prepares for a switch statement over the specified type, this requires the call to Default eventually.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static ISwitchTypeBuilder Switch(Type type)
-        {
-            Fx instance = new Fx();
-            instance.SwitchCases = new List<CaseInfo>();
+        public static ISwitchTypeBuilder Switch(Type type){
+            var instance = new Fx();
+            instance.SwitchCases       = new List<CaseInfo>();
             instance.SwitchMainOperand = type;
             return instance;
         }
+
         /// <summary>
         /// Prepares for a switch statement over the specified type T, this requires the call to Default eventually.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static ISwitchTypeBuilder Switch<T>()
-        {
-            Fx instance = new Fx();
-            instance.SwitchCases = new List<CaseInfo>();
+        public static ISwitchTypeBuilder Switch<T>(){
+            var instance = new Fx();
+            instance.SwitchCases       = new List<CaseInfo>();
             instance.SwitchMainOperand = typeof(T);
             return instance;
         }
+
         /// <summary>
         /// Performs an action, if the action failed (returned false) it re-attempts to do the action again for <paramref name="attempts"/>, and waits for <paramref name="attemptSleepInMilliSeconds"/> between each attempt.
         /// </summary>
         /// <param name="action"></param>
         /// <param name="attempts"></param>
         /// <param name="attemptSleepInMilliSeconds"></param>
-        public static void RetryOnFail(Func<bool> action, ushort attempts = 3, ushort attemptSleepInMilliSeconds = 1000)
-        {
-            int counter = 0;
+        public static void RetryOnFail(Func<bool> action, ushort attempts = 3, ushort attemptSleepInMilliSeconds = 1000){
+            var counter   = 0;
             var isSuccess = false;
-            do
-            {
+            do{
                 counter++;
                 isSuccess = action();
-                if (!isSuccess)
+                if(!isSuccess)
                     Thread.Sleep(attemptSleepInMilliSeconds);
-            }
-            while (!isSuccess && counter < attempts);
+            } while(!isSuccess
+                 && counter < attempts);
         }
+
         /// <summary>
         /// Tries to parse specified string to Int32, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static int ToInt32(string strValue, int defaultValue = default(int))
-        {
+        public static int ToInt32(string strValue, int defaultValue = default(int)){
             Int32 x;
-            if (Int32.TryParse(strValue, out x))
+            if(Int32.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to UInt32, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static uint ToUInt32(string strValue, uint defaultValue = default(uint))
-        {
+        public static uint ToUInt32(string strValue, uint defaultValue = default(uint)){
             UInt32 x;
-            if (UInt32.TryParse(strValue, out x))
+            if(UInt32.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to Int32, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static int ToInt(string strValue, int defaultValue = default(int))
-        {
+        public static int ToInt(string strValue, int defaultValue = default(int)){
             Int32 x;
-            if (Int32.TryParse(strValue, out x))
+            if(Int32.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to UInt32, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static uint ToUInt(string strValue, uint defaultValue = default(uint))
-        {
+        public static uint ToUInt(string strValue, uint defaultValue = default(uint)){
             UInt32 x;
-            if (UInt32.TryParse(strValue, out x))
+            if(UInt32.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to Int32, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static long ToLong(string strValue, long defaultValue = default(long))
-        {
+        public static long ToLong(string strValue, long defaultValue = default(long)){
             long x;
-            if (long.TryParse(strValue, out x))
+            if(long.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to UInt32, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static ulong ToULong(string strValue, ulong defaultValue = default(ulong))
-        {
+        public static ulong ToULong(string strValue, ulong defaultValue = default(ulong)){
             ulong x;
-            if (ulong.TryParse(strValue, out x))
+            if(ulong.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to Int16, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static short ToInt16(string strValue, short defaultValue = default(short))
-        {
+        public static short ToInt16(string strValue, short defaultValue = default(short)){
             Int16 x;
-            if (Int16.TryParse(strValue, out x))
+            if(Int16.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to UInt16, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static ushort ToUInt16(string strValue, ushort defaultValue = default(ushort))
-        {
+        public static ushort ToUInt16(string strValue, ushort defaultValue = default(ushort)){
             UInt16 x;
-            if (UInt16.TryParse(strValue, out x))
+            if(UInt16.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to Int64, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static long ToInt64(string strValue, long defaultValue = default(long))
-        {
+        public static long ToInt64(string strValue, long defaultValue = default(long)){
             Int64 x;
-            if (Int64.TryParse(strValue, out x))
+            if(Int64.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to UInt64, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static ulong ToUInt64(string strValue, ulong defaultValue = default(ulong))
-        {
+        public static ulong ToUInt64(string strValue, ulong defaultValue = default(ulong)){
             UInt64 x;
-            if (UInt64.TryParse(strValue, out x))
+            if(UInt64.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to double, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static double ToDouble(string strValue, double defaultValue = default(double))
-        {
+        public static double ToDouble(string strValue, double defaultValue = default(double)){
             double x;
-            if (Double.TryParse(strValue, out x))
+            if(Double.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to float, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static float ToFloat(string strValue, float defaultValue = default(float))
-        {
+        public static float ToFloat(string strValue, float defaultValue = default(float)){
             float x;
-            if (Single.TryParse(strValue, out x))
+            if(Single.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to decimal, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static decimal ToDecimal(string strValue, decimal defaultValue = default(decimal))
-        {
+        public static decimal ToDecimal(string strValue, decimal defaultValue = default(decimal)){
             decimal x;
-            if (Decimal.TryParse(strValue, out x))
+            if(Decimal.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to byte, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static byte ToByte(string strValue, byte defaultValue = default(byte))
-        {
+        public static byte ToByte(string strValue, byte defaultValue = default(byte)){
             byte x;
-            if (Byte.TryParse(strValue, out x))
+            if(Byte.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to sbyte, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static sbyte ToSByte(string strValue, sbyte defaultValue = default(sbyte))
-        {
+        public static sbyte ToSByte(string strValue, sbyte defaultValue = default(sbyte)){
             sbyte x;
-            if (SByte.TryParse(strValue, out x))
+            if(SByte.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to bool, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static bool ToBool(string strValue, bool defaultValue = default(bool))
-        {
+        public static bool ToBool(string strValue, bool defaultValue = default(bool)){
             bool x;
-            if (bool.TryParse(strValue, out x))
+            if(bool.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to DateTime, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static DateTime ToDateTime(string strValue, DateTime defaultValue = default(DateTime))
-        {
+        public static DateTime ToDateTime(string strValue, DateTime defaultValue = default(DateTime)){
             DateTime x;
-            if (DateTime.TryParse(strValue, out x))
+            if(DateTime.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// Tries to parse specified string to Guid, if it fails it returns the default value specified.
         /// </summary>
         /// <param name="strValue"></param>
         /// <param name="defaultValue"></param>
         /// <returns></returns>
-        public static Guid ToGuid(string strValue, Guid defaultValue = default(Guid))
-        {
+        public static Guid ToGuid(string strValue, Guid defaultValue = default(Guid)){
             Guid x;
-            if (Guid.TryParse(strValue, out x))
+            if(Guid.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static bool Is(Func<bool> action)
-        {
-            try
-            {
+        public static bool Is(Func<bool> action){
+            try{
                 return action();
-            }
-            catch
-            {
+            } catch{
                 return false;
             }
         }
+
         /// <summary>
         /// Performs a lock operation (using a private object) on the specified action.
         /// </summary>
         /// <param name="action"></param>
-        public static void Lock(Action action)
-        {
-            object @this = new object();
-            lock (@this)
-            {
+        public static void Lock(Action action){
+            var @this = new object();
+            lock(@this){
                 action();
             }
         }
+
         /// <summary>
         /// Performs a lock operation (using a private object) on the specified action and return the operation return value;
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static T Lock<T>(Func<T> action)
-        {
-            object @this = new object();
-            lock (@this)
-            {
+        public static T Lock<T>(Func<T> action){
+            var @this = new object();
+            lock(@this){
                 return action();
             }
         }
+
         /// <summary>
         /// Performs a lock operation (using a private object) on the specified action and return @this;
         /// </summary>
@@ -744,338 +693,290 @@ namespace Taf.Core.Utility
         /// <param name="this"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static T Lock<T>(T @this, Action<T> action)
-        {
-            object lockObject = new object();
-            lock (lockObject)
-            {
+        public static T Lock<T>(T @this, Action<T> action){
+            var lockObject = new object();
+            lock(lockObject){
                 action(@this);
             }
+
             return @this;
         }
+
         /// <summary>
         /// Performs the else part of the if statement its chained to.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        IAction IConditionalAction.Else(Action action)
-        {
-            if (!ConditionValue() && !StopConditionEvaluation)
-            {
+        IAction IConditionalAction.Else(Action action){
+            if(!ConditionValue()
+            && !StopConditionEvaluation){
                 StopConditionEvaluation = true;
                 action();
             }
+
             return this;
         }
+
         /// <summary>
         /// Prepares for the extra ElseIf condition, this requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionalAction.ElseIf(Func<bool> condition)
-        {
+        IConditionBuilder IConditionalAction.ElseIf(Func<bool> condition){
             ConditionValue = condition;
             return this;
         }
+
         /// <summary>
         /// Prepares for the extra ElseIf condition, this requires the call to Then eventually.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionalAction.ElseIf(bool condition)
-        {
-            ConditionValue = () =>
-            {
-                return condition;
-            };
+        IConditionBuilder IConditionalAction.ElseIf(bool condition){
+            ConditionValue = () => { return condition; };
             return this;
         }
+
         /// <summary>
         /// Performs the action for the previous conditional control statment (If, ElseIf).
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        IConditionalAction IConditionBuilder.Then(Action action)
-        {
-            if (ConditionValue() && !StopConditionEvaluation)
-            {
+        IConditionalAction IConditionBuilder.Then(Action action){
+            if(ConditionValue()
+            && !StopConditionEvaluation){
                 StopConditionEvaluation = true;
                 action();
             }
+
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using AND.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.And(Func<bool> condition)
-        {
+        IConditionBuilder IConditionBuilder.And(Func<bool> condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation && condition();
-            };
+            ConditionValue = () => { return previousEvaluation && condition(); };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using AND.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.And(bool condition)
-        {
+        IConditionBuilder IConditionBuilder.And(bool condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation && condition;
-            };
+            ConditionValue = () => { return previousEvaluation && condition; };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using AND NOT.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.AndNot(Func<bool> condition)
-        {
+        IConditionBuilder IConditionBuilder.AndNot(Func<bool> condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation && !condition();
-            };
+            ConditionValue = () => { return previousEvaluation && !condition(); };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using AND NOT.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.AndNot(bool condition)
-        {
+        IConditionBuilder IConditionBuilder.AndNot(bool condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation && !condition;
-            };
+            ConditionValue = () => { return previousEvaluation && !condition; };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using OR.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.Or(Func<bool> condition)
-        {
+        IConditionBuilder IConditionBuilder.Or(Func<bool> condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation || condition();
-            };
+            ConditionValue = () => { return previousEvaluation || condition(); };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using OR.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.Or(bool condition)
-        {
+        IConditionBuilder IConditionBuilder.Or(bool condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation || condition;
-            };
+            ConditionValue = () => { return previousEvaluation || condition; };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using OR NOT.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.OrNot(Func<bool> condition)
-        {
+        IConditionBuilder IConditionBuilder.OrNot(Func<bool> condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation || !condition();
-            };
+            ConditionValue = () => { return previousEvaluation || !condition(); };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using OR NOT.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.OrNot(bool condition)
-        {
+        IConditionBuilder IConditionBuilder.OrNot(bool condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation || !condition;
-            };
+            ConditionValue = () => { return previousEvaluation || !condition; };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using XOR.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.Xor(Func<bool> condition)
-        {
+        IConditionBuilder IConditionBuilder.Xor(Func<bool> condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation ^ condition();
-            };
+            ConditionValue = () => { return previousEvaluation ^ condition(); };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using XOR.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.Xor(bool condition)
-        {
+        IConditionBuilder IConditionBuilder.Xor(bool condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return previousEvaluation ^ condition;
-            };
+            ConditionValue = () => { return previousEvaluation ^ condition; };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using XNOR.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.Xnor(Func<bool> condition)
-        {
+        IConditionBuilder IConditionBuilder.Xnor(Func<bool> condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return !(previousEvaluation ^ condition());
-            };
+            ConditionValue = () => { return !(previousEvaluation ^ condition()); };
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition with the previously chained condition using XNOR.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IConditionBuilder IConditionBuilder.Xnor(bool condition)
-        {
+        IConditionBuilder IConditionBuilder.Xnor(bool condition){
             var previousEvaluation = ConditionValue();
-            ConditionValue = () =>
-            {
-                return !(previousEvaluation ^ condition);
-            };
+            ConditionValue = () => { return !(previousEvaluation ^ condition); };
             return this;
         }
+
         /// <summary>
         /// Performs the specified action after evaluating the previous looping statement.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        ILoopAction IEarlyLoopBuilder.Do(Action action)
-        {
-            while (ConditionValue())
-            {
+        ILoopAction IEarlyLoopBuilder.Do(Action action){
+            while(ConditionValue()){
                 action();
             }
+
             return this;
         }
+
         /// <summary>
         /// Performs the while statement using the specified condition statement after evaluating the previous Do statement.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        ILoopAction ILateLoopBuilder.While(Func<bool> condition)
-        {
-            do
-            {
+        ILoopAction ILateLoopBuilder.While(Func<bool> condition){
+            do{
                 Action();
-            }
-            while (condition());
+            } while(condition());
+
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to break the looping statment lately (before the end of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IEarlyLoop IEarlyLoopBuilder.LateBreakOn(Func<bool> condition)
-        {
+        IEarlyLoop IEarlyLoopBuilder.LateBreakOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            LoopStoper = LoopStopers.Break;
+            LoopStoperLocation          = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper                  = LoopStopers.Break;
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to break the looping statment early (at the begining of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IEarlyLoop IEarlyLoopBuilder.EarlyBreakOn(Func<bool> condition)
-        {
+        IEarlyLoop IEarlyLoopBuilder.EarlyBreakOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            LoopStoper = LoopStopers.Break;
+            LoopStoperLocation          = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper                  = LoopStopers.Break;
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to continue the looping statment lately (before the end of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IEarlyLoop IEarlyLoopBuilder.LateContinueOn(Func<bool> condition)
-        {
+        IEarlyLoop IEarlyLoopBuilder.LateContinueOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            LoopStoper = LoopStopers.Continue;
+            LoopStoperLocation          = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper                  = LoopStopers.Continue;
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to continue the looping statment early (at the begining of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        IEarlyLoop IEarlyLoopBuilder.EarlyContinueOn(Func<bool> condition)
-        {
+        IEarlyLoop IEarlyLoopBuilder.EarlyContinueOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            LoopStoper = LoopStopers.Continue;
+            LoopStoperLocation          = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper                  = LoopStopers.Continue;
             return this;
         }
+
         /// <summary>
         /// Performs the Do statement after evaluating the previous looping statement.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        ILoopAction IEarlyLoop.Do(Action action)
-        {
-            while (ConditionValue())
-            {
-                if (LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop)
-                {
-                    if (LoopStoperConditionalAction != null)
-                    {
-                        if (LoopStoperConditionalAction())
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+        ILoopAction IEarlyLoop.Do(Action action){
+            while(ConditionValue()){
+                if(LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop){
+                    if(LoopStoperConditionalAction != null){
+                        if(LoopStoperConditionalAction()){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
 
                             continue;
                         }
-                    }
-                    else
-                    {
-                        if (LoopStoperCondition)
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+                    } else{
+                        if(LoopStoperCondition){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
 
@@ -1083,111 +984,96 @@ namespace Taf.Core.Utility
                         }
                     }
                 }
+
                 action();
 
-                if (LoopStoperLocation == LoopStoperLocations.EndOfTheLoop)
-                {
-                    if (LoopStoperConditionalAction != null)
-                    {
-                        if (LoopStoperConditionalAction())
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+                if(LoopStoperLocation == LoopStoperLocations.EndOfTheLoop){
+                    if(LoopStoperConditionalAction != null){
+                        if(LoopStoperConditionalAction()){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
                         }
-                    }
-                    else
-                    {
-                        if (LoopStoperCondition)
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+                    } else{
+                        if(LoopStoperCondition){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
                         }
                     }
                 }
             }
+
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to break the looping statment lately (before the end of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        ILateLoop ILateLoopBuilder.LateBreakOn(Func<bool> condition)
-        {
+        ILateLoop ILateLoopBuilder.LateBreakOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            LoopStoper = LoopStopers.Break;
+            LoopStoperLocation          = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper                  = LoopStopers.Break;
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to break the looping statment early (at the begining of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        ILateLoop ILateLoopBuilder.EarlyBreakOn(Func<bool> condition)
-        {
+        ILateLoop ILateLoopBuilder.EarlyBreakOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            LoopStoper = LoopStopers.Break;
+            LoopStoperLocation          = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper                  = LoopStopers.Break;
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to continue the looping statment lately (before the end of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        ILateLoop ILateLoopBuilder.LateContinueOn(Func<bool> condition)
-        {
+        ILateLoop ILateLoopBuilder.LateContinueOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.EndOfTheLoop;
-            LoopStoper = LoopStopers.Continue;
+            LoopStoperLocation          = LoopStoperLocations.EndOfTheLoop;
+            LoopStoper                  = LoopStopers.Continue;
             return this;
         }
+
         /// <summary>
         /// Evaluates the specified condition to be used to continue the looping statment early (at the begining of the loop).
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        ILateLoop ILateLoopBuilder.EarlyContinueOn(Func<bool> condition)
-        {
+        ILateLoop ILateLoopBuilder.EarlyContinueOn(Func<bool> condition){
             LoopStoperConditionalAction = condition;
-            LoopStoperLocation = LoopStoperLocations.BeginingOfTheLoop;
-            LoopStoper = LoopStopers.Continue;
+            LoopStoperLocation          = LoopStoperLocations.BeginingOfTheLoop;
+            LoopStoper                  = LoopStopers.Continue;
             return this;
         }
+
         /// <summary>
         /// Performs the while statement using the specifed condition after it has evaluated the previous chained Do statement.
         /// </summary>
         /// <param name="condition"></param>
         /// <returns></returns>
-        ILoopAction ILateLoop.While(Func<bool> condition)
-        {
-            do
-            {
-                if (LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop)
-                {
-                    if (LoopStoperConditionalAction != null)
-                    {
-                        if (LoopStoperConditionalAction())
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+        ILoopAction ILateLoop.While(Func<bool> condition){
+            do{
+                if(LoopStoperLocation == LoopStoperLocations.BeginingOfTheLoop){
+                    if(LoopStoperConditionalAction != null){
+                        if(LoopStoperConditionalAction()){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
 
                             continue;
                         }
-                    }
-                    else
-                    {
-                        if (LoopStoperCondition)
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+                    } else{
+                        if(LoopStoperCondition){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
 
@@ -1195,80 +1081,68 @@ namespace Taf.Core.Utility
                         }
                     }
                 }
+
                 Action();
 
-                if (LoopStoperLocation == LoopStoperLocations.EndOfTheLoop)
-                {
-                    if (LoopStoperConditionalAction != null)
-                    {
-                        if (LoopStoperConditionalAction())
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+                if(LoopStoperLocation == LoopStoperLocations.EndOfTheLoop){
+                    if(LoopStoperConditionalAction != null){
+                        if(LoopStoperConditionalAction()){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
                         }
-                    }
-                    else
-                    {
-                        if (LoopStoperCondition)
-                        {
-                            if (LoopStoper == LoopStopers.Break)
-                            {
+                    } else{
+                        if(LoopStoperCondition){
+                            if(LoopStoper == LoopStopers.Break){
                                 break;
                             }
                         }
                     }
                 }
-            }
-            while (condition());
+            } while(condition());
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and swallow any exception that might occur.
         /// </summary>
         /// <returns></returns>
-        IAction ITriableAction.Swallow()
-        {
-            try
-            {
+        IAction ITriableAction.Swallow(){
+            try{
                 Action();
-            }
-            catch
-            {
-            }
+            } catch{ }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and swallow only the specified Exception(s).
         /// </summary>
         /// <typeparam name="Exception1"></typeparam>
         /// <returns></returns>
-        IAction ITriableAction.SwallowIf<Exception1>()
-        {
-            try
-            {
+        IAction ITriableAction.SwallowIf<Exception1>(){
+            try{
                 Action();
-            }
-            catch (Exception1) { }
+            } catch(Exception1){ }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and swallow only the specified Exception(s).
         /// </summary>
         /// <typeparam name="Exception1"></typeparam>
         /// <typeparam name="Exception2"></typeparam>
         /// <returns></returns>
-        IAction ITriableAction.SwallowIf<Exception1, Exception2>()
-        {
-            try
-            {
+        IAction ITriableAction.SwallowIf<Exception1, Exception2>(){
+            try{
                 Action();
-            }
-            catch (Exception1) { }
-            catch (Exception2) { }
+            } catch(Exception1){ } catch(Exception2){ }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and swallow only the specified Exception(s).
         /// </summary>
@@ -1276,17 +1150,14 @@ namespace Taf.Core.Utility
         /// <typeparam name="Exception2"></typeparam>
         /// <typeparam name="Exception3"></typeparam>
         /// <returns></returns>
-        IAction ITriableAction.SwallowIf<Exception1, Exception2, Exception3>()
-        {
-            try
-            {
+        IAction ITriableAction.SwallowIf<Exception1, Exception2, Exception3>(){
+            try{
                 Action();
-            }
-            catch (Exception1) { }
-            catch (Exception2) { }
-            catch (Exception3) { }
+            } catch(Exception1){ } catch(Exception2){ } catch(Exception3){ }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and swallow only the specified Exception(s).
         /// </summary>
@@ -1295,53 +1166,45 @@ namespace Taf.Core.Utility
         /// <typeparam name="Exception3"></typeparam>
         /// <typeparam name="Exception4"></typeparam>
         /// <returns></returns>
-        IAction ITriableAction.SwallowIf<Exception1, Exception2, Exception3, Exception4>()
-        {
-            try
-            {
+        IAction ITriableAction.SwallowIf<Exception1, Exception2, Exception3, Exception4>(){
+            try{
                 Action();
-            }
-            catch (Exception1) { }
-            catch (Exception2) { }
-            catch (Exception3) { }
-            catch (Exception4) { }
+            } catch(Exception1){ } catch(Exception2){ } catch(Exception3){ } catch(Exception4){ }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and catches any exception and performs the specified action for the catch.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        IAction ITriableAction.Catch(Action<Exception> action)
-        {
-            try
-            {
+        IAction ITriableAction.Catch(Action<Exception> action){
+            try{
                 Action();
-            }
-            catch (Exception exception)
-            {
+            } catch(Exception exception){
                 action(exception);
             }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and catches the specified exception(s) and performs the specified action for each catch.
         /// </summary>
         /// <typeparam name="Exception1"></typeparam>
         /// <param name="action1"></param>
         /// <returns></returns>
-        IAction ITriableAction.Catch<Exception1>(Action<Exception1> action1)
-        {
-            try
-            {
+        IAction ITriableAction.Catch<Exception1>(Action<Exception1> action1){
+            try{
                 Action();
-            }
-            catch (Exception1 exception)
-            {
+            } catch(Exception1 exception){
                 action1(exception);
             }
+
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained Try action and catches the specified exception(s) and performs the specified action for each catch.
         /// </summary>
@@ -1350,50 +1213,45 @@ namespace Taf.Core.Utility
         /// <param name="action1"></param>
         /// <param name="action2"></param>
         /// <returns></returns>
-        IAction ITriableAction.Catch<Exception1, Exception2>(Action<Exception1> action1, Action<Exception2> action2)
-        {
-            try
-            {
+        IAction ITriableAction.Catch<Exception1, Exception2>(Action<Exception1> action1, Action<Exception2> action2){
+            try{
                 Action();
-            }
-            catch (Exception1 exception)
-            {
+            } catch(Exception1 exception){
                 action1(exception);
-            }
-            catch (Exception2 exception)
-            {
+            } catch(Exception2 exception){
                 action2(exception);
             }
+
             return this;
         }
+
         /// <summary>
         /// Prepares a Case statement for the previously chained Switch statement, this requires the usage of Execute after it.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="compareOperand"></param>
         /// <returns></returns>
-        ISwitchCaseBuilder ISwitchBuilder.Case<T>(T compareOperand)
-        {
+        ISwitchCaseBuilder ISwitchBuilder.Case<T>(T compareOperand){
             SwitchCases.Add(new CaseInfo(compareOperand, null));
             return this;
         }
+
         /// <summary>
         /// Prepares a Case statement for the previously chained Switch statement, this requires the usage of Execute after it.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        ISwitchTypeCaseBuilder ISwitchTypeBuilder.Case<T>()
-        {
+        ISwitchTypeCaseBuilder ISwitchTypeBuilder.Case<T>(){
             SwitchCases.Add(new CaseInfo(typeof(T), null));
             return this;
         }
+
         /// <summary>
         /// Prepares for the execution of the specified action in case its chained Case has been evaluated.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        ISwitchBuilder ISwitchCaseBuilder.Execute(Action action)
-        {
+        ISwitchBuilder ISwitchCaseBuilder.Execute(Action action){
             SwitchCases.Last().Action = action;
             return this;
         }
@@ -1403,91 +1261,77 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        ISwitchTypeBuilder ISwitchTypeCaseBuilder.Execute(Action action)
-        {
+        ISwitchTypeBuilder ISwitchTypeCaseBuilder.Execute(Action action){
             SwitchCases.Last().Action = action;
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained switch statement along with its chained cases.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        IAction ISwitchBuilder.Default(Action action)
-        {
-            bool excuteDefault = true;
-            foreach (var switchCase in SwitchCases)
-            {
-                if (Equals(SwitchMainOperand, switchCase.Operand))
-                {
+        IAction ISwitchBuilder.Default(Action action){
+            var excuteDefault = true;
+            foreach(var switchCase in SwitchCases){
+                if(Equals(SwitchMainOperand, switchCase.Operand)){
                     switchCase.Action();
                     excuteDefault = false;
                     break;
                 }
             }
-            if (excuteDefault)
+
+            if(excuteDefault)
                 action();
             return this;
         }
+
         /// <summary>
         /// Performs the previously chained switch statement along with its chained cases.
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        IAction ISwitchTypeBuilder.Default(Action action)
-        {
-            bool executeDefault = true;
-            foreach (var switchCase in SwitchCases)
-            {
-                if (Equals(SwitchMainOperand, switchCase.Operand))
-                {
+        IAction ISwitchTypeBuilder.Default(Action action){
+            var executeDefault = true;
+            foreach(var switchCase in SwitchCases){
+                if(Equals(SwitchMainOperand, switchCase.Operand)){
                     switchCase.Action();
                     executeDefault = false;
                     break;
                 }
             }
-            if (executeDefault)
+
+            if(executeDefault)
                 action();
             return this;
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="trueAction"></param>
         /// <param name="falseAction"></param>
-        public static void TernaryOperator(bool condition, Action trueAction, Action falseAction)
-        {
-            if (condition)
-            {
+        public static void TernaryOperator(bool condition, Action trueAction, Action falseAction){
+            if(condition){
                 trueAction();
-            }
-            else
-            {
+            } else{
                 falseAction();
             }
         }
+
         /// <summary>
         /// Private class to hold information about switch case statement.
         /// </summary>
-        private class CaseInfo
-        {
-            public object Operand
-            {
-                get; set;
-            }
+        private class CaseInfo{
+            public object Operand{ get; set; }
 
-            public Action Action
-            {
-                get; set;
-            }
+            public Action Action{ get; set; }
 
-            public CaseInfo(object operand, Action action, bool isDefault = false)
-            {
+            public CaseInfo(object operand, Action action, bool isDefault = false){
                 Operand = operand;
-                Action = action;
+                Action  = action;
             }
         }
     }
-
 }

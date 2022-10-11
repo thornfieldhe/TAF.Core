@@ -129,7 +129,7 @@ namespace Taf.Core.Test
         [Fact]
         public void Test_Lock()
         {
-            string value = "Fluentx";
+            var value = "Fluentx";
             value.Lock(x => { });
         }
     }

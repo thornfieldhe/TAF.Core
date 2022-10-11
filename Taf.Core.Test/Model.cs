@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Taf.Core.Utility;
-using Taf.Validation;
+using Taf.Core.Validation;
 
 namespace Taf.Test{
     using System;
@@ -16,7 +16,7 @@ namespace Taf.Test{
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Linq.Expressions;
-    using Taf.Core;
+    using Core;
 
     /// <summary>
     /// 最大长度验证规则
@@ -34,9 +34,7 @@ namespace Taf.Test{
         /// <param name="text">
         /// 客户
         /// </param>
-        public ContainsHXHValidationRule(string text){
-            this.txt = text;
-        }
+        public ContainsHXHValidationRule(string text) => txt = text;
 
         /// <summary>
         /// 验证
@@ -69,9 +67,7 @@ namespace Taf.Test{
         /// <param name="text">
         /// 客户
         /// </param>
-        public MinLengthValidationRule(string text){
-            this.txt = text;
-        }
+        public MinLengthValidationRule(string text) => txt = text;
 
         /// <summary>
         /// 验证
@@ -80,8 +76,8 @@ namespace Taf.Test{
         /// The <see cref="ValidationResult"/>.
         /// </returns>
         public ValidationResult Validate(){
-            if(this.txt.IsNull()
-            || (this.txt.Length < 2)){
+            if(txt.IsNull()
+            || (txt.Length < 2)){
                 return new ValidationResult("姓名长度不能小于2");
             }
 
@@ -147,9 +143,7 @@ namespace Taf.Test{
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public int CompareTo(User other){
-            return string.Compare(Name, other.Name, StringComparison.Ordinal);
-        }
+        public int CompareTo(User other) => string.Compare(Name, other.Name, StringComparison.Ordinal);
 
         /// <summary>
         /// Gets or sets the name.
@@ -200,17 +194,13 @@ namespace Taf.Test{
     public class IcoTestModel1 : IModel{
         public string Name{ get; set; }
 
-        public IcoTestModel1(){
-            this.Name = "Model1";
-        }
+        public IcoTestModel1() => Name = "Model1";
     }
 
     public class IcoTestModel2 : IModel{
         public string Name{ get; set; }
 
-        public IcoTestModel2(){
-            this.Name = "Model2";
-        }
+        public IcoTestModel2() => Name = "Model2";
     }
 
     public interface IModel{

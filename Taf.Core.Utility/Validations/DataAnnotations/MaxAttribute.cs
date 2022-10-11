@@ -9,7 +9,7 @@
 
 namespace System.ComponentModel.DataAnnotations
 {
-    using System.Globalization;
+    using Globalization;
 
     /// <summary>
     /// 最大值
@@ -29,10 +29,8 @@ namespace System.ComponentModel.DataAnnotations
         /// The max.
         /// </param>
         public MaxAttribute(int max)
-            : base("max")
-        {
+            : base("max") =>
             Max = max;
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MaxAttribute"/> class.
@@ -41,10 +39,8 @@ namespace System.ComponentModel.DataAnnotations
         /// The max.
         /// </param>
         public MaxAttribute(double max)
-            : base("max")
-        {
+            : base("max") =>
             Max = max;
-        }
 
         /// <summary>
         /// The format error message.
@@ -97,20 +93,14 @@ namespace System.ComponentModel.DataAnnotations
         /// 最大值包含边界
         /// </summary>
         /// <param name="max"></param>
-        public Max2Attribute(int max) : base(max)
-        {
-            Max = max;
-        }
+        public Max2Attribute(int max) : base(max) => Max = max;
 
         /// <summary>
         /// 最大值包含边界
         /// </summary>
         /// <param name="max"></param>
-        public Max2Attribute(double max) : base(max)
-        {
-            Max = max;
-        }
-        
+        public Max2Attribute(double max) : base(max) => Max = max;
+
         /// <summary>
         /// The format error message.
         /// </summary>

@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Taf.Core.Utility.Core;
+using Taf.Core.Utility;
 using Xunit;
 
 namespace Taf.Core.Test.Business

@@ -49,10 +49,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static string Format(this int number, string defaultValue = "")
-        {
-            return number == 0 ? defaultValue : number.ToString();
-        }
+        public static string Format(this int number, string defaultValue = "") => number == 0 ? defaultValue : number.ToString();
 
         /// <summary>
         /// 获取格式化字符串
@@ -65,9 +62,6 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static string Format(this int? number, string defaultValue = "")
-        {
-            return Format(number.SafeValue(), defaultValue);
-        }
+        public static string Format(this int? number, string defaultValue = "") => Format(number.SafeValue(), defaultValue);
     }
 }

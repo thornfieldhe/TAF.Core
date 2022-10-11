@@ -27,9 +27,8 @@ namespace Taf.Core.Utility{
         /// <typeparam name="R"></typeparam>
         /// <returns></returns>
         public static IOrderedEnumerable<T> OrderBy<T, R>(this IEnumerable<T> source, Func<T, R> keySelector
-                                                        , R[]                 sources) where R : IComparable<R>{
-            return source.OrderBy(keySelector, new DefaultOrderComparer<R>(sources));
-        }
+                                                        , R[]                 sources) where R : IComparable<R> =>
+            source.OrderBy(keySelector, new DefaultOrderComparer<R>(sources));
     }
 
     /// <summary>
@@ -46,9 +45,8 @@ namespace Taf.Core.Utility{
         /// <typeparam name="R"></typeparam>
         /// <returns></returns>
         public static IOrderedEnumerable<T> ThenBy<T, R>(this IOrderedEnumerable<T> source, Func<T, R> keySelector
-                                                        , R[]                 sources) where R : IComparable<R>{
-            return source.ThenBy(keySelector, new DefaultOrderComparer<R>(sources));
-        }
+                                                        , R[]                       sources) where R : IComparable<R> =>
+            source.ThenBy(keySelector, new DefaultOrderComparer<R>(sources));
     }
 
 
@@ -66,8 +64,8 @@ namespace Taf.Core.Utility{
         public DefaultOrderComparer(R[] types) => _types = types;
 
         public int Compare(R x, R y){
-            int index1 = _types.FindIndex(r => r.Equals(x));
-            int index2 = _types.FindIndex(r => r.Equals(y));
+            var index1 = _types.FindIndex(r => r.Equals(x));
+            var index2 = _types.FindIndex(r => r.Equals(y));
             if(index1 < 0){
                 if(index2 < 0)
                     return x.CompareTo(y);

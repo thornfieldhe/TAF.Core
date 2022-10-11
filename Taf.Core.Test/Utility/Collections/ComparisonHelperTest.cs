@@ -20,15 +20,15 @@ namespace Taf.Core.Test
         {
             var list1 = new List<TestInfo>
                                        {
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "m" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "b" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "a" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "w" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "o" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "p" },
+                                           new(){ Id = Guid.NewGuid(), Name = "m" },
+                                           new(){ Id = Guid.NewGuid(), Name = "b" },
+                                           new(){ Id = Guid.NewGuid(), Name = "a" },
+                                           new(){ Id = Guid.NewGuid(), Name = "w" },
+                                           new(){ Id = Guid.NewGuid(), Name = "o" },
+                                           new(){ Id = Guid.NewGuid(), Name = "p" },
                                        };
 
-            var comparer = Taf.Core.Utility.Comparison<TestInfo>.CreateComparer(m => m.Name);
+            var comparer = Utility.Comparison<TestInfo>.CreateComparer(m => m.Name);
             list1.Sort(comparer);
             Assert.Equal( "a",list1[0].Name);
         }
@@ -41,12 +41,12 @@ namespace Taf.Core.Test
         {
             var list1 = new List<TestInfo>
                                        {
-                                           new TestInfo { Id = new Guid("EDF61577-C9AA-46DE-8F1A-EAED37D5298F"), Name = "m" },
-                                           new TestInfo { Id = new Guid("EDF61577-C9AA-46DE-8F1A-EAED37D5298F"), Name = "b" },
-                                           new TestInfo { Id = new Guid("EDF61577-C9AA-46DE-8F1A-EAED37D5298F"), Name = "a" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "w" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "A" },
-                                           new TestInfo { Id = Guid.NewGuid(), Name = "a" },
+                                           new(){ Id = new Guid("EDF61577-C9AA-46DE-8F1A-EAED37D5298F"), Name = "m" },
+                                           new(){ Id = new Guid("EDF61577-C9AA-46DE-8F1A-EAED37D5298F"), Name = "b" },
+                                           new(){ Id = new Guid("EDF61577-C9AA-46DE-8F1A-EAED37D5298F"), Name = "a" },
+                                           new(){ Id = Guid.NewGuid(), Name                                   = "w" },
+                                           new(){ Id = Guid.NewGuid(), Name                                   = "A" },
+                                           new(){ Id = Guid.NewGuid(), Name                                   = "a" },
                                        };
 
             var count = list1.Distinct(r => r.Name).Count();
@@ -66,8 +66,8 @@ namespace Taf.Core.Test
             var sortedName = new string[] {"H", "F", "B","A","C"};
             var students = new List<TempData>()
             {
-                new TempData() {Name = "A"}, new TempData() {Name = "B"}, new TempData() {Name = "C"}
-              , new TempData() {Name = "F"}, new TempData() {Name = "H"}
+                new() {Name = "A"}, new() {Name = "B"}, new() {Name = "C"}
+              , new() {Name = "F"}, new() {Name = "H"}
             };
 
             students.Sort(new CompareWithDefaultSortedArray<TempData,string>(sortedName,x=>x.Name));
@@ -84,8 +84,8 @@ namespace Taf.Core.Test
             var sortedName = new string[] {"H", "F", "B","A","C"};
             var students = new List<TempData>()
             {
-                new TempData() {Name = "A"}, new TempData() {Name = "B"}, new TempData() {Name = "C"}
-              , new TempData() {Name = "F"}, new TempData() {Name = "H"}
+                new() {Name = "A"}, new() {Name = "B"}, new() {Name = "C"}
+              , new() {Name = "F"}, new() {Name = "H"}
             };
 
             students=students.OrderBy(x=>x.Name,sortedName).ToList();
@@ -103,8 +103,8 @@ namespace Taf.Core.Test
             var sortedName = new string[] {"A", "H", "C","F","B"};
             var students = new List<TempData>()
             {
-                new TempData() {Name = "A",Age = 10}, new TempData() {Name = "B",Age = 14}, new TempData() {Name = "C",Age = 10}
-              , new TempData() {Name = "F",Age = 10}, new TempData() {Name = "H",Age = 14}
+                new() {Name = "A",Age = 10}, new() {Name = "B",Age = 14}, new() {Name = "C",Age = 10}
+              , new() {Name = "F",Age = 10}, new() {Name = "H",Age = 14}
             };
 
             students=students.OrderBy(x=>x.Age).ThenBy(x=>x.Name,sortedName).ToList();
@@ -122,11 +122,11 @@ namespace Taf.Core.Test
             var sortedInt = new [] {4, 8, 3,7,9};
             var students = new List<KeyValue<int,string>>()
             {
-                new KeyValue<int,string>() {Value = "A",Key = 1}
-              , new KeyValue<int,string>() {Value = "B",Key = 2}
-              , new KeyValue<int,string>() {Value = "C",Key = 3}
-              , new KeyValue<int,string>() {Value = "F",Key = 4}
-              , new KeyValue<int,string>() {Value = "H",Key = 5}
+                new() {Value = "A",Key = 1}
+              , new() {Value = "B",Key = 2}
+              , new() {Value = "C",Key = 3}
+              , new() {Value = "F",Key = 4}
+              , new() {Value = "H",Key = 5}
             };
 
             students.Sort(new CompareWithDefaultSortedArray<KeyValue<int,string>,string>(sortedString, x=>x.Value));
@@ -150,7 +150,7 @@ namespace Taf.Core.Test
                 {
                     return -1;
                 }
-                return this.Name.CompareTo(compare.Name);
+                return Name.CompareTo(compare.Name);
             }
         }
     }
