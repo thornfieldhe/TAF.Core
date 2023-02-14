@@ -32,7 +32,7 @@ namespace Taf.Core.Utility
         }
 
         /// <summary>
-        /// GUID不为空则执行 
+        /// GUID不为Guid.Empty则执行 
         /// </summary>
         /// <param name="source">
         /// </param>
@@ -47,7 +47,7 @@ namespace Taf.Core.Utility
         }
 
         /// <summary>
-        /// GUID为空则执行 
+        /// GUID为Guid.Empty则执行 
         /// </summary>
         /// <param name="source">
         /// </param>
