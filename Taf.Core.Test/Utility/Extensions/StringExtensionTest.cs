@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Taf.Test;
+
 namespace Taf.Core.Test
 {
 
@@ -560,6 +562,18 @@ namespace Taf.Core.Test
         public void TestCamelToUnderline(){
             var a = "AvideMdikeIkjg";
             Assert.Equal("avide_mdike_ikjg", a.ToUnderLine());
+        }
+        
+        
+        /// <summary>
+        /// ToString并去首尾空格
+        /// </summary>
+        [Fact]
+        public void Test_ToString_Trim(){
+            var a = new User();
+            Assert.Equal(string.Empty, a.Name.ToStringAndTrim());
+            var b = "  xxx  ";
+            Assert.Equal("xxx", b.ToStringAndTrim()); 
         }
     }
 }

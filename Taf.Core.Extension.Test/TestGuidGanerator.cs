@@ -1,6 +1,6 @@
 namespace Taf.Core.Extension.Test;
 
-public class UnitTest1{
+public class GuidTest{
     [Fact]
     public void Test_Guid_Ganerator(){
        GuidGanerator.Instance.NextGuid();

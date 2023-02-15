@@ -143,6 +143,8 @@ namespace Taf.Test{
         /// Gets or sets the name.
         /// </summary>
         public string Name{ get; set; }
+
+        public override string ToString() => Name;
     }
 
     /// <summary>

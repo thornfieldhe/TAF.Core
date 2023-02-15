@@ -531,6 +531,12 @@ public partial class Extensions{
         return @this;
     }
 
+    /// <summary>
+    /// ToString并且去掉空格
+    /// </summary>
+    /// <param name="v">v为空时,不抛错,并返回空字符</param>
+    /// <returns></returns>
+    public static string ToStringAndTrim(this object v) => v == null ? string.Empty : v.ToString().Trim();
 
     /// <summary>
     /// 生成短链码

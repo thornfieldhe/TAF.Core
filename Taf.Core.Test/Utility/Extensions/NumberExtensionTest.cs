@@ -44,8 +44,8 @@ public class NumberExtensionTest{
     /// </summary>
     [Fact]
     public void TestFormatPercent(){
-        Assert.Equal("12%", (0.12M).FormatPercent()); 
-        Assert.Equal("12.13%", (0.1213M).FormatPercent(2)); 
+        Assert.Equal("12.00%", (0.12M).FormatPercent()); 
+        Assert.Equal("12.1%", (0.1213M).FormatPercent(1)); 
     }
     
     /// <summary>
@@ -55,6 +55,21 @@ public class NumberExtensionTest{
     public void TestFormatScience(){
         Assert.Equal("12.13%", 0.1213M.FormatPercent()); 
         Assert.Equal("12.1%", 0.1213M.FormatPercent(1)); 
-        Assert.Equal("1.213E-001", 0.1213D.FormatScience()); 
+        
+        Assert.Equal("0.12", 0.12.FormatScience());  
+        Assert.Equal("1.213", 1.213.FormatScience());  
+        Assert.Equal("1.21", 1.21.FormatScience());  
+        Assert.Equal("1.214", 1.2135.FormatScience());  
+        Assert.Equal("0.121", 0.1213.FormatScience());  
+        Assert.Equal("0.121", 0.121.FormatScience());  
+        Assert.Equal("0.012", 0.01213.FormatScience());  
+        Assert.Equal("0.001", 0.001213.FormatScience());  
+        Assert.Equal("1.213E-004", 0.0001213.FormatScience());
+        Assert.Equal("12.13", 12.13.FormatScience()); 
+        Assert.Equal("12.135", 12.135.FormatScience()); 
+        Assert.Equal("121.35", 121.35.FormatScience()); 
+        Assert.Equal("1213.5", 1213.5.FormatScience()); 
+        Assert.Equal("1.214E+005", 121350D.FormatScience()); 
+
     }
 }
