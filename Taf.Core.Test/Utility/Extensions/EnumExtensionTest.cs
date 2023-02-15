@@ -7,14 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Taf.Core.Utility;
 using Taf.Test;
-using Xunit;
 
 namespace Taf.Core.Test
 {
-    using System;
-
     /// <summary>
     /// 测试枚举
     /// </summary>

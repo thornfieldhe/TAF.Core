@@ -9,7 +9,8 @@
 
 using System.Collections.Generic;
 
-namespace Taf.Core.Utility{
+namespace Taf.Core.Utility
+{
     using System;
 
   /// 红黑树定义：

@@ -7,11 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Taf.Core.Utility;
-using Xunit;
-using System;
-using System.Collections.Generic;
-
 namespace Taf.Core.Test
 {
     /// <summary>

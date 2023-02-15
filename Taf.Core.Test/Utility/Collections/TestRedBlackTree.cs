@@ -7,15 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Taf.Core.Utility;
-using Xunit;
 
 namespace Taf.Core.Test{
-    using System;
-
     /// <summary>
     /// 红黑树测试
     /// </summary>

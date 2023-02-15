@@ -1,11 +1,7 @@
-﻿using Taf.Core.Utility;
-
-namespace Taf.Core.Utility
+﻿namespace Taf.Core.Utility
 {
     using System;
     using System.Globalization;
-    using System.Linq;
-
     using Utility;
 
     /// <summary>

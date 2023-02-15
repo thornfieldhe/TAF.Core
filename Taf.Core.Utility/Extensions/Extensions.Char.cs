@@ -9,7 +9,6 @@
 
 namespace Taf.Core.Utility
 {
-    using System;
     using System.Globalization;
 
     /// <summary>

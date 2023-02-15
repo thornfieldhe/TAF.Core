@@ -55,7 +55,7 @@ namespace System.ComponentModel.DataAnnotations
         {
             if (ErrorMessage == null && ErrorMessageResourceName == null)
             {
-                ErrorMessage = "属性 {0}应小于属性{1}";
+                ErrorMessage = "属性 {0} 应小于属性{1}";
             }
 
             return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, Max);

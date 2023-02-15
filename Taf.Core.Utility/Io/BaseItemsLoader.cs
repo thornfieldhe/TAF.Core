@@ -9,12 +9,9 @@
 
 using System.Collections.Generic;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace Taf.Core.Utility
 {
-    using System;
-
     /// <summary>
     /// 从目录中加载数据到单例
     /// </summary>

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Taf.Test;
 using Xunit;
-using System;
-using System.Linq;
-using Taf.Core.Utility;
 
 namespace Taf.Core.Test
 {

@@ -1,11 +1,7 @@
-﻿using Taf.Core.Utility;
-using Xunit;
+﻿using System.Text;
 
 namespace Taf.Core.Test
 {
-    using System;
-    using System.Text;
-
     /// <summary>
     /// 测试中国日历
     /// </summary>

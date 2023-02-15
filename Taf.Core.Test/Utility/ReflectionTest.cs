@@ -1,10 +1,5 @@
-﻿using Taf.Core.Utility;
-using Xunit;
-
-namespace Taf.Core.Test
+﻿namespace Taf.Core.Test
 {
-    using System;
-
     /// <summary>
     /// DescriptionTest 的摘要说明
     /// </summary>

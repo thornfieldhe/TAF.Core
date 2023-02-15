@@ -10,7 +10,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.Serialization;
 
 namespace Taf.Core.Utility{
     using System;
@@ -26,92 +25,8 @@ namespace Taf.Core.Utility{
         /// <summary>
         /// The default formatter type.
         /// </summary>
-        private const FormatterType DefaultFormatterType = FormatterType.Binary;
 
-        /// <summary>
-        /// 把对象序列化转换为字符串
-        /// </summary>
-        /// <param name="graph">
-        /// </param>
-        /// <param name="formatterType">
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string SerializeObjectToString(this object graph, FormatterType formatterType){
-            using(var memoryStream = new MemoryStream()){
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(memoryStream, graph);
-                var arrGraph = memoryStream.ToArray();
-                return Convert.ToBase64String(arrGraph);
-            }
-        }
-
-        /// <summary>
-        /// 把对象序列化转换为字符串
-        /// </summary>
-        /// <param name="graph">
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string SerializeObjectToString(this object graph) => SerializeObjectToString(graph, DefaultFormatterType);
-
-        /// <summary>
-        /// 把已序列化为字符串类型的对象反序列化为指定的类型
-        /// </summary>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <param name="graph">
-        /// </param>
-        /// <param name="formatterType">
-        /// </param>
-        /// <returns>
-        /// The <see cref="T"/>.
-        /// </returns>
-        public static T DeserializeStringToObject<T>(this string graph, FormatterType formatterType){
-            var arrGraph = Convert.FromBase64String(graph);
-            using(var memoryStream = new MemoryStream(arrGraph)){
-                var formatter = new BinaryFormatter();
-                return (T) formatter.Deserialize(memoryStream);
-            }
-        }
-
-        /// <summary>
-        /// 把已序列化为字符串类型的对象反序列化为指定的类型
-        /// </summary>
-        /// <param name="graph">
-        /// The graph.
-        /// </param>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <returns>
-        /// The <see cref="T"/>.
-        /// </returns>
-        public static T DeserializeStringToObject<T>(this string graph) => DeserializeStringToObject<T>(graph, DefaultFormatterType);
-
-        /// <summary>
-        /// 深度克隆
-        /// </summary>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <param name="t">
-        /// </param>
-        /// <returns>
-        /// The <see cref="T"/>.
-        /// </returns>
-        public static T DeepCopy<T>(this T t){
-            using(var stream = new MemoryStream()){
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(stream, t);
-                stream.Seek(0, SeekOrigin.Begin);
-                var copy = (T) formatter.Deserialize(stream);
-                stream.Close();
-                return copy;
-            }
-        }
-
-        private static Dictionary<string, object> _Dic = new();
+        private static readonly Dictionary<string, object> _dic = new();
 
         /// <summary>
         /// 将源对象所有属性赋值给目标对象,【仅仅支持系统基本类型，不支持对象】
@@ -127,7 +42,7 @@ namespace Taf.Core.Utility{
         public static TOut Clone<TIn, TOut>(this TIn tIn, params string[] skipProperties){
             var skipKey =  $"_{string.Join('_', skipProperties)}";
             var key     = $"trans_exp_{typeof(TIn).FullName}_{typeof(TOut).FullName}_{skipKey}";
-            if(!_Dic.ContainsKey(key)){
+            if(!_dic.ContainsKey(key)){
                 var parameterExpression = Expression.Parameter(typeof(TIn), "p");
                 var memberBindingList   = new List<MemberBinding>();
 
@@ -147,10 +62,10 @@ namespace Taf.Core.Utility{
                                                      , new ParameterExpression[]{parameterExpression});
                 var func = lambda.Compile();
 
-                _Dic[key] = func;
+                _dic[key] = func;
             }
 
-            return ((Func<TIn, TOut>) _Dic[key])(tIn);
+            return ((Func<TIn, TOut>) _dic[key])(tIn);
         }
 
         #region Xml序列化
@@ -236,20 +151,5 @@ namespace Taf.Core.Utility{
         public static string SerializeToString<T>(T t) => JsonConvert.SerializeObject(t);
 
     #endregion
-    }
-
-    /// <summary>
-    /// The formatter type.
-    /// </summary>
-    public enum FormatterType{
-        /// <summary>
-        /// The soap.
-        /// </summary>
-        Soap,
-
-        /// <summary>
-        /// The binary.
-        /// </summary>
-        Binary
     }
 }

@@ -136,18 +136,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this decimal number) => number == 0 ? string.Empty : string.Format("{0:0.##}%", number);
-
-        /// <summary>
-        /// 获取格式化字符串,x.xx%
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatPercent(this decimal? number) => FormatPercent(number.SafeValue());
+        public static string FormatPercent(this decimal? number,int sd=0) => FormatPercent(number.SafeValue(),sd);
 
         /// <summary>
         /// 移除尾随0
@@ -185,8 +174,8 @@ namespace Taf.Core.Utility
         /// <param name="v">数值</param>
         /// <param name="sd">有效位数</param>
         /// <returns></returns>
-        public static string ToScienceString(this decimal v, int sd) => v.ToString("E" + sd.ToString());
+        public static string FormatScience(this decimal v, int sd=3) => v.ToString("E" + sd.ToString());
 
-        public static string ToPercentString(this decimal v, int sd) => v.ToString("P" + sd.ToString());
+        public static string FormatPercent(this decimal v, int sd =2) => v.ToString("P" + sd.ToString());
     }
 }

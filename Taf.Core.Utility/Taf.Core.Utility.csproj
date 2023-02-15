@@ -13,12 +13,12 @@
     <FileVersion>5.0.13</FileVersion>
     <Version>1.0.7</Version>
     <PackageVersion>5.0.13</PackageVersion>
-    <LangVersion>10</LangVersion>
+    <LangVersion>default</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>thornfield.he.snk</AssemblyOriginatorKeyFile>
     <PublicSign>true</PublicSign>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

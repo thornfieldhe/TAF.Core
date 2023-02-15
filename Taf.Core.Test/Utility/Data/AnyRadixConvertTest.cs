@@ -1,8 +1,4 @@
-﻿using System;
-using Taf.Core.Utility;
-using Xunit;
-
-namespace Taf.Core.Test
+﻿namespace Taf.Core.Test
 {
 
     /// <summary>

@@ -12,8 +12,6 @@ using Xunit;
 
 namespace Taf.Core.Test.Business
 {
-    using System;
-
     /// <summary>
     /// Summary
     /// </summary>
@@ -24,8 +22,8 @@ namespace Taf.Core.Test.Business
         {
             var hander1=new ExcutorA();
             var hander2=new ExcutorB();
-            var request=new ComparisonObject<People,People>(new People(){Age = 10,Name = "aa"}
-               ,new People() {Age = 10,Name = "bb"});
+            var request =new ComparisonObject<People,People>(new People(){Age = 10,Name = "aa"}
+               ,new People() {Age                                             = 10,Name = "bb"});
             request.AddExecutor(hander1);
             request.AddExecutor(hander2);
             request.Excute();

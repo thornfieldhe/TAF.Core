@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Taf.Core.Utility;
+﻿using System.Collections.Generic;
 using Taf.Test;
 using Xunit;
 

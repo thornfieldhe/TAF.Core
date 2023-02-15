@@ -127,7 +127,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this double? number) => FormatPercent(number.SafeValue());
+        public static string FormatPercent(this double? number,int sd=2) => FormatPercent(number.SafeValue(),sd);
 
         /// <summary>
         /// 转换成科学计数法
@@ -135,25 +135,13 @@ namespace Taf.Core.Utility
         /// <param name="v"></param>
         /// <param name="sd"></param>
         /// <returns></returns>
-        public static string ToScienceString(this double v, int sd)
+        public static string FormatScience(this double v, int sd=3)
         {
             if (v == 0)
                 return "0";
             return v.ToString("E" + sd.ToString());
         }
 
-        /// <summary>
-        /// 转换成百分比
-        /// </summary>
-        /// <param name="v"></param>
-        /// <param name="sd"></param>
-        /// <returns></returns>
-        public static string ToPercentString(this double v, int sd = 2)
-        {
-            if (v == 0)
-                return "0%";
-            return v.ToString("P" + sd.ToString());
-        }
 
         #region Math
         

@@ -11,7 +11,6 @@ namespace System.ComponentModel.DataAnnotations
 {
     using Globalization;
     using Linq;
-    using Reflection;
 
     /// <summary>
     /// Validates that the property has the same value as the given 'otherProperty' 

@@ -8,15 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
-using Taf.Core.Utility;
-using Xunit;
 
 namespace Taf.Core.Test
 {
-    using System;
-    
-    using Utility;
-
     /// <summary>
     /// The randoms test.
     /// </summary>

@@ -12,9 +12,6 @@ using Xunit;
 
 namespace Taf.Core.Test.Business
 {
-
-    using Core;
-
     /// <summary>
     /// CorTest 的摘要说明
     /// </summary>
