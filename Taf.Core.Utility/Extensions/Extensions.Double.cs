@@ -134,7 +134,6 @@ namespace Taf.Core.Utility{
         /// <returns></returns>
         public static string FormatScience(this double v, int sd = 3){
             if(v == 0) return "0";
-            
             var result = v.ToString();
             if(result.Contains("E")){
                 var index      = result.IndexOf('.');
