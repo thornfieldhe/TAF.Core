@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Taf.Core.Utility
-{
+namespace Taf.Core.Utility{
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -11,9 +10,17 @@ namespace Taf.Core.Utility
     /// <summary>
     /// The extensions.
     /// </summary>
-    public partial class Extensions
-    {
-        #region 公共方法
+    public partial class Extensions{
+    #region 公共方法
+
+        /// <summary>
+        /// Used to simplify and beautify casting an object to a type. 
+        /// </summary>
+        /// <typeparam name="T">Type to be casted</typeparam>
+        /// <param name="obj">Object to cast</param>
+        /// <returns>Casted object</returns>
+        public static T As<T>(this object obj)
+            where T : class => (T)obj;
 
         /// <summary>
         /// 把对象类型转化为指定类型
@@ -21,8 +28,7 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"> 动态类型 </typeparam>
         /// <param name="value"> 要转化的源对象 </param>
         /// <returns> 转化后的指定类型的对象，转化失败引发异常。 </returns>
-        public static T CastTo<T>(this object value)
-        {
+        public static T CastTo<T>(this object value){
             var result = CastTo(value, typeof(T));
             return (T)result;
         }
@@ -34,14 +40,10 @@ namespace Taf.Core.Utility
         /// <param name="value"> 要转化的源对象 </param>
         /// <param name="defaultValue"> 转化失败返回的指定默认值 </param>
         /// <returns> 转化后的指定类型对象，转化失败时返回指定的默认值 </returns>
-        public static T CastTo<T>(this object value, T defaultValue)
-        {
-            try
-            {
+        public static T CastTo<T>(this object value, T defaultValue){
+            try{
                 return CastTo<T>(value);
-            }
-            catch (Exception)
-            {
+            } catch(Exception){
                 return defaultValue;
             }
         }
@@ -56,8 +58,9 @@ namespace Taf.Core.Utility
         /// <param name="leftEqual"> 是否可等于上限（默认等于） </param>
         /// <param name="rightEqual"> 是否可等于下限（默认等于） </param>
         /// <returns> 是否介于 </returns>
-        public static bool IsBetween<T>(this IComparable<T> value, T start, T end, bool leftEqual = false, bool rightEqual = false) where T : IComparable
-        {
+        public static bool IsBetween<T>(
+            this IComparable<T> value, T start, T end, bool leftEqual = false, bool rightEqual = false)
+            where T : IComparable{
             var flag = leftEqual ? value.CompareTo(start) >= 0 : value.CompareTo(start) > 0;
             return flag && (rightEqual ? value.CompareTo(end) <= 0 : value.CompareTo(end) < 0);
         }
@@ -73,27 +76,24 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 将对象[主要是匿名对象]转换为dynamic
         /// </summary>
-        public static dynamic ToDynamic(this object value)
-        {
-            IDictionary<string, object> expando = new ExpandoObject();
-            var type = value.GetType();
-            var properties = TypeDescriptor.GetProperties(type);
-            foreach (PropertyDescriptor property in properties)
-            {
+        public static dynamic ToDynamic(this object value){
+            IDictionary<string, object> expando    = new ExpandoObject();
+            var                         type       = value.GetType();
+            var                         properties = TypeDescriptor.GetProperties(type);
+            foreach(PropertyDescriptor property in properties){
                 var val = property.GetValue(value);
-                if (property.PropertyType.FullName.StartsWith("<>f__AnonymousType"))
-                {
+                if(property.PropertyType.FullName.StartsWith("<>f__AnonymousType")){
                     dynamic dval = val.ToDynamic();
                     expando.Add(property.Name, dval);
-                }
-                else
-                {
+                } else{
                     expando.Add(property.Name, val);
                 }
             }
+
             return expando as ExpandoObject;
         }
-        #endregion
+
+    #endregion
 
         /// <summary>
         /// 把对象类型转换为指定类型
@@ -101,24 +101,23 @@ namespace Taf.Core.Utility
         /// <param name="value"></param>
         /// <param name="conversionType"></param>
         /// <returns></returns>
-        private static object CastTo(this object value, Type conversionType)
-        {
-            if (value == null)
-            {
+        private static object CastTo(this object value, Type conversionType){
+            if(value == null){
                 return null;
             }
-            if (conversionType.IsNullableType())
-            {
+
+            if(conversionType.IsNullableType()){
                 conversionType = conversionType.GetUnNullableType();
             }
-            if (conversionType.IsEnum)
-            {
+
+            if(conversionType.IsEnum){
                 return Enum.Parse(conversionType, value.ToString());
             }
-            if (conversionType == typeof(Guid))
-            {
+
+            if(conversionType == typeof(Guid)){
                 return Guid.Parse(value.ToString());
             }
+
             return Convert.ChangeType(value, conversionType);
         }
     }

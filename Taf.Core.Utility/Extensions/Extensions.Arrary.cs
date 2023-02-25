@@ -236,9 +236,7 @@ namespace Taf.Core.Utility
             {
                 for (var counter = 0; counter < (tagetArray.Length / 2); counter++)
                 {
-                    var tempHolder = tagetArray[counter];
-                    tagetArray[counter] = tagetArray[tagetArray.Length - counter - 1];
-                    tagetArray[tagetArray.Length - counter - 1] = tempHolder;
+                    (tagetArray[counter], tagetArray[tagetArray.Length - counter - 1]) = (tagetArray[tagetArray.Length - counter - 1], tagetArray[counter]);
                 }
             }
             else

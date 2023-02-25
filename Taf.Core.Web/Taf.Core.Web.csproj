@@ -6,4 +6,14 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Taf.Core.Extension\Taf.Core.Extension.csproj" />
+      <ProjectReference Include="..\Taf.Core.Utility\Taf.Core.Utility.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+      <PackageReference Include="UAParser" Version="3.1.47" />
+    </ItemGroup>
+
 </Project>

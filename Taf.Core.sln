@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taf.Core.Extension.Test", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taf.Core.Web", "Taf.Core.Web\Taf.Core.Web.csproj", "{47CF23FA-746F-4CC7-8BD6-ABB673AC8D94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taf.Core.Web.Test", "Taf.Core.Web.Test\Taf.Core.Web.Test.csproj", "{151409E4-A152-429E-B7C8-7C3E30B03718}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{47CF23FA-746F-4CC7-8BD6-ABB673AC8D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47CF23FA-746F-4CC7-8BD6-ABB673AC8D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47CF23FA-746F-4CC7-8BD6-ABB673AC8D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151409E4-A152-429E-B7C8-7C3E30B03718}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151409E4-A152-429E-B7C8-7C3E30B03718}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151409E4-A152-429E-B7C8-7C3E30B03718}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151409E4-A152-429E-B7C8-7C3E30B03718}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{D0E26CCB-E84F-4B3B-B2A6-F5A0809BECD1} = {1072A25F-7493-4D77-833A-B0AFAD1FDCD1}
 		{93435353-4AF9-4B79-BBA5-EDFF99B77C9C} = {6DA0CF27-4E85-4E2C-8D0E-8A1BBC5E3A7D}
 		{47CF23FA-746F-4CC7-8BD6-ABB673AC8D94} = {1072A25F-7493-4D77-833A-B0AFAD1FDCD1}
+		{151409E4-A152-429E-B7C8-7C3E30B03718} = {6DA0CF27-4E85-4E2C-8D0E-8A1BBC5E3A7D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B55A075-5080-453A-90BD-53CE7034EF35}

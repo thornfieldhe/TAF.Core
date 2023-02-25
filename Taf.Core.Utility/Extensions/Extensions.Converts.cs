@@ -130,7 +130,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="int"/>.
         /// </returns>
-        public static int ToInt(this string @this, int defaultValue = default(int)) => int.TryParse(@this, out var x) ? x : defaultValue;
+        public static int ToInt(this string @this, int defaultValue = default) => int.TryParse(@this, out var x) ? x : defaultValue;
 
         /// <summary>
         /// 转换为可空int

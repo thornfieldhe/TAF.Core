@@ -24,18 +24,15 @@ using System;
 /// <summary>
 /// Guid生成器
 /// </summary>
-public class GuidGanerator : SingletonBase<GuidGanerator>{
-    private readonly ConcurrentQueue<Guid> _queue = new ();
-
-    public GuidGanerator(){
-        Ganerate();
-    }
+public static  class GuidGanerator {
+    private static readonly ConcurrentQueue<Guid> _queue  = new ();
+    
 
     /// <summary>
     /// 生成500条Guid
     /// </summary>
     /// <param name="count"></param>
-    public void Ganerate(int count = 500){
+    public static void Ganerate(int count = 500){
         NewId.SetProcessIdProvider(new CurrentProcessIdProvider());
         for(var i = 0; i < count; i++){
             _queue.Enqueue(NewId.NextGuid());
@@ -47,7 +44,7 @@ public class GuidGanerator : SingletonBase<GuidGanerator>{
     /// 如果队列条数为0,则生成500条Guid到队列
     /// </summary>
     /// <returns></returns>
-    public Guid NextGuid(){
+    public static Guid NextGuid(){
         Fx.If(_queue.Count == 0).Then(() => Ganerate());
         if(_queue.TryDequeue(out var tmp)){
             tmp = NewId.NextGuid();
@@ -65,14 +62,14 @@ public class GuidGanerator : SingletonBase<GuidGanerator>{
     /// </remarks>
     /// <param name="count"></param>
     /// <returns></returns>
-    public IEnumerable<Guid> NextGuid(int count){
+    public static IEnumerable<Guid> NextGuid(int count){
         if(_queue.Count <= count){
             Ganerate(count);
         }
         return YieldReturnGuid(count);
     }
 
-    private IEnumerable<Guid> YieldReturnGuid(int count){
+    private static IEnumerable<Guid> YieldReturnGuid(int count){
         for(var i = 0; i < count; i++){
             if(_queue.TryDequeue(out var tmp)){
                 yield return tmp;
@@ -83,6 +80,6 @@ public class GuidGanerator : SingletonBase<GuidGanerator>{
     }
     
     
-    public int Count => _queue.Count;
+    public static int Count => _queue.Count;
 }
 
