@@ -22,7 +22,7 @@ using System;
 /// <summary>
 /// 登录后用户信息
 /// </summary>
-public class LoginInfo : ILoginInfo{
+public class LoginInfo : ILoginInfo,ITransientDependency{
     private readonly IHttpContextAccessor _httpContextAccessor;
     public LoginInfo(IHttpContextAccessor httpContextAccessor) => _httpContextAccessor = httpContextAccessor;
 
@@ -71,7 +71,7 @@ public class LoginInfo : ILoginInfo{
             var traceId = _httpContextAccessor.HttpContext.Request.Headers
                                                .SingleOrDefault(r => r.Key.ToLower() == "traceid").Value
                                                .FirstOrDefault();
-            return !string.IsNullOrWhiteSpace(traceId) ? traceId : Guid.NewGuid().ToString("N");
+            return !string.IsNullOrWhiteSpace(traceId) ? traceId : Randoms.GetRandomCode(3);
         }
     }
 

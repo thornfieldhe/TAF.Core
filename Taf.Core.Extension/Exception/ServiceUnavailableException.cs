@@ -7,11 +7,19 @@ namespace Taf.Core.Extension;
 /// <summary>
 /// 远程服务不可用异常,返回503
 /// </summary>
-public class ServiceUnavailableException:System.Exception{
+public class ServiceUnavailableException : System.Exception{
+    public string Url{ get;  }
+
+    /// <summary>
+    /// 用于标记异常发生位置,便于查找
+    /// </summary> 
+    public Guid ErrorCode{ get; }
+
+
+    public ServiceUnavailableException(string message, string url, Guid errorCode, Exception? innerException=null ) : base(
+        message, innerException){
+        Url = url;
+        ErrorCode=errorCode;
+    }
     
-    public string Url{ get; set; }
-
-    public ServiceUnavailableException(string? message, string url) : base(message) => Url = url;
-
-    public ServiceUnavailableException(string? message, Exception? innerException, string url) : base(message, innerException) => Url = url;
 }
