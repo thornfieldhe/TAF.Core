@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
@@ -12,7 +11,7 @@ using Taf.Core.Utility;
 namespace Taf.Core.Web;
 
 /// <summary>
-/// 
+/// 远程调用接口封装 
 /// </summary>
 public class HttpClientService : IHttpClientService, ITransientDependency{
     private readonly IHttpClientFactory         _httpClientFactory;

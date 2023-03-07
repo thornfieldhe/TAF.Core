@@ -7,13 +7,8 @@ namespace Taf.Core.Extension;
 /// <summary>
 /// This interface is implemented by entities which wanted to store deletion information (who and when deleted).
 /// </summary>
-public interface IDeletionAudited :  ISoftDelete
+public interface IDeletionAudited :  IHasDeletionTime
 {
     /// <summary>Which user deleted this entity?</summary>
     long? DeleterUserId{ get; set; }
-    
-    /// <summary>
-    /// Deletion time of this entity.
-    /// </summary>
-    DateTime? DeletionTime{ get; set; }
 }

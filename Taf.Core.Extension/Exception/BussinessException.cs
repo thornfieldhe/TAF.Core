@@ -24,7 +24,6 @@ using System;
 public class BussinessException : Exception,IHasErrorCode{
     public BussinessException(string message, Guid errorCode,string details =null) : base(message){
         Details   = details;
-        ErrorId   = $"ERR_{Randoms.GetRandomCode(6, "1234567890")}";
         ErrorCode = errorCode;
     }
     
@@ -37,9 +36,4 @@ public class BussinessException : Exception,IHasErrorCode{
     /// Additional information about the exception.
     /// </summary>
     public string Details{ get; }
-    
-    /// <summary>
-    /// 生成唯一异常Id,用于日志追溯 
-    /// </summary>
-    public string ErrorId{ get; }
 }

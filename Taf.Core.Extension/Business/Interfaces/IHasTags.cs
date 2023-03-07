@@ -46,7 +46,7 @@ public interface IHasTags{
                                     , ex.Message);
       }
 
-      return et;
+      return et??new List<string>();
    }
 
    

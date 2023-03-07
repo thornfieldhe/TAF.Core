@@ -36,12 +36,12 @@ namespace System.ComponentModel.DataAnnotations
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected string Pattern{ get; }
+        private string Pattern{ get; }
 
         /// <summary>
         /// Gets the pattern.
         /// </summary>
-        protected  string ProperityName{ get; }
+        private string ProperityName{ get; }
 
         /// <summary>
         /// 格式化错误消息

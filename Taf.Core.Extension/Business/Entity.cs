@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using SqlSugar;
 using System.Collections.Generic;
 using System.Reflection;
 using Taf.Core.Utility;
@@ -18,6 +19,15 @@ using Taf.Core.Utility;
 namespace Taf.Core.Extension;
 
 using System;
+
+/// <summary>
+/// Entity只允许数据库对象继承
+/// Dto对象请使用Engity
+/// </summary>
+[Serializable]
+public abstract class DbEntity : Entity, IEntity{
+}
+
 
 /// <summary>
 /// A shortcut of <see cref="Entity{TPrimaryKey}"/> for most used primary key type (<see cref="int"/>).
@@ -37,11 +47,12 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>{
     /// <summary>
     /// Unique identifier for this entity.
     /// </summary>
+    [SugarColumn(CreateTableFieldSort = -1)]
     public virtual TPrimaryKey Id{ get; set; }
 
 
     /// <inheritdoc/>
-    public override bool Equals(object obj){
+    public override bool Equals(object? obj){
         if(obj == null
         || !(obj is Entity<TPrimaryKey>)){
             return false;
@@ -58,8 +69,8 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>{
         //Must have a IS-A relation of types or must be same type
         var typeOfThis  = GetType();
         var typeOfOther = other.GetType();
-        if(!typeOfThis.GetTypeInfo().IsAssignableFrom(typeOfOther)
-        && !typeOfOther.GetTypeInfo().IsAssignableFrom(typeOfThis)){
+        if(!IntrospectionExtensions.GetTypeInfo(typeOfThis).IsAssignableFrom(typeOfOther)
+        && !IntrospectionExtensions.GetTypeInfo(typeOfOther).IsAssignableFrom(typeOfThis)){
             return false;
         }
 
@@ -69,7 +80,7 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>{
             return false;
         }
 
-        return Id.Equals(other.Id);
+        return   Id==null?false:Id.Equals(other.Id);
     }
 
     /// <inheritdoc/>

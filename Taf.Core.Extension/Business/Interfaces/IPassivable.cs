@@ -2,6 +2,8 @@
 // Taf.Core.Net.Utility
 // IPassivable.cs
 
+using System.Data.SqlTypes;
+
 namespace Taf.Core.Extension;
 
 /// <summary>

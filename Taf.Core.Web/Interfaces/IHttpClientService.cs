@@ -1,4 +1,4 @@
-﻿﻿ namespace Taf.Core.Web
+﻿ namespace Taf.Core.Web
 {
     public interface IHttpClientService 
     {

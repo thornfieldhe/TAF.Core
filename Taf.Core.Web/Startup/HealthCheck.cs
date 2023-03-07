@@ -22,20 +22,20 @@ namespace Taf.Core.Web
           /// <summary>
           /// 
           /// </summary>
-          /// <param name="applicationBuilder"></param>
+          /// <param name="application"></param>
           /// <returns></returns>
-          public static IApplicationBuilder UseHealthCheck(this IApplicationBuilder applicationBuilder) => UseHealthCheck(applicationBuilder, new PathString("/health"));
+          public static WebApplication UseHealthCheck(this WebApplication application) => UseHealthCheck(application, new PathString("/health"));
 
           /// <summary>
           /// 
           /// </summary>
-          /// <param name="applicationBuilder"></param>
+          /// <param name="webApplication"></param>
           /// <param name="path"></param>
           /// <returns></returns>
-          private static IApplicationBuilder UseHealthCheck(this IApplicationBuilder applicationBuilder, PathString path)
+          private static WebApplication UseHealthCheck(this WebApplication webApplication, PathString path)
           {
-              applicationBuilder.Map(path, builder => builder.Use(
-                                         (context, next) => {
+              webApplication.MapGet(path, 
+                                         (context) => {
                                              var host = System
                                                        .Net.Dns.GetHostEntry(System.Net.Dns.GetHostName()).AddressList
                                                        .FirstOrDefault(
@@ -44,8 +44,8 @@ namespace Taf.Core.Web
                                                       ?.ToString();
                                              context.Response.StatusCode = 200;
                                              return context.Response.WriteAsync($"{host}:healthy");
-                                         }));
-              return applicationBuilder;
+                                         });
+              return webApplication;
           }
       }
 }
