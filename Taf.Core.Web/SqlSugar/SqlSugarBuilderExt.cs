@@ -101,27 +101,4 @@ public static class SqlSugarBuilderExt{
         db.QueryFilter.AddTableFilter<ISoftDelete>(it => it.IsDeleted == false);
     }
 
-    /// <summary>
-    /// 初始化数据库
-    /// </summary>
-    /// <param name="assemblyFiles"></param>
-    public static void InitDatabase(string connection, params string[] assemblyFiles){
-        var db = new SqlSugarClient(new ConnectionConfig{
-            ConnectionString          = connection
-          , DbType                    = DbType.MySql //必填   
-          , IsAutoCloseConnection     = true
-          , ConfigureExternalServices = SqlSugarConfigure.GetDefaultConfig()
-        });
-
-        db.DbMaintenance.CreateDatabase();
-        var types = new List<Type>();
-        foreach(var assemblyFile in assemblyFiles){
-            types.AddRange(Assembly
-                          .LoadFrom(assemblyFile)
-                          .GetTypes().Where(s => typeof(DbEntity).IsAssignableFrom(s)));
-        }
-
-        db.CodeFirst.SetStringDefaultLength(200).InitTables(types.ToArray());
-        Trace.TraceInformation("init database complited !");
-    }
 }

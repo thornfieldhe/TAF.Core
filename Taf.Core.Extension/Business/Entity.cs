@@ -83,6 +83,8 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>{
         return   Id==null?false:Id.Equals(other.Id);
     }
 
+    public string ConcurrencyStamp{ get; set; }
+    
     /// <inheritdoc/>
     public override int GetHashCode(){
         if(Id == null){
@@ -102,12 +104,10 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>{
     }
 
     /// <inheritdoc/>
-    public static bool operator !=(Entity<TPrimaryKey> left, Entity<TPrimaryKey> right){
-        return !(left == right);
-    }
+    public static bool operator !=(Entity<TPrimaryKey> left, Entity<TPrimaryKey> right) => !(left == right);
 
     /// <inheritdoc/>
-    public override string ToString(){
-        return $"[{GetType().Name} {Id}]";
-    }
+    public override string ToString() => $"[{GetType().Name} {Id}]";
+
+
 }

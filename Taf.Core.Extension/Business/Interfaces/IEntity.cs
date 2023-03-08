@@ -4,7 +4,7 @@
 
 namespace Taf.Core.Extension;
 
-public interface IEntity<TPrimaryKey>{
+public interface IEntity<TPrimaryKey>:IHasConcurrencyStamp{
     /// <summary>Unique identifier for this entity.</summary>
     TPrimaryKey Id{ get; set; }
 }

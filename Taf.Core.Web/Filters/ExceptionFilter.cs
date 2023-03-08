@@ -76,6 +76,12 @@ public class ExceptionFilter : IExceptionFilter{
                 result = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
                 _logger.LogError(message, nullException);
                 break;
+            case EntityNotFoundException entityNotFoundException:
+                message =
+                    $"{new string('-', 30)}\n[系统异常]:{errorCode},{entityNotFoundException.Message},对象类型:{entityNotFoundException.Type.Name},Path:{entityNotFoundException.ErrorCode}";
+                result = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
+                _logger.LogError(message, entityNotFoundException);
+                break;
             case ValidationException validationException:
                 var files = string.Join(',', validationException.ValidationErrors);
                 message =

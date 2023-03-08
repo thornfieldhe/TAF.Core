@@ -11,6 +11,7 @@ using Coding4Fun.PluralizationServices;
 using SqlSugar;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using Taf.Core.Utility;
@@ -70,6 +71,33 @@ public static class SqlSugarConfigure{
                 entity.IsDisabledUpdateAll = true;
             }
         };
+
+
+    /// <summary>
+    /// 初始化数据库
+    /// </summary>
+    /// <param name="assemblyFiles"></param>
+    public static void InitDatabase(string connection, params string[] assemblyFiles){
+        var db = new SqlSugarClient(new ConnectionConfig{
+            ConnectionString          = connection
+          , DbType                    = DbType.MySql //必填   
+          , IsAutoCloseConnection     = true
+          , ConfigureExternalServices = GetDefaultConfig()
+        });
+
+        db.DbMaintenance.CreateDatabase();
+        var types = new List<Type>();
+        foreach(var assemblyFile in assemblyFiles){
+            types.AddRange(Assembly
+                          .LoadFrom(assemblyFile)
+                          .GetTypes().Where(s => typeof(DbEntity).IsAssignableFrom(s)));
+        }
+
+        db.CodeFirst.SetStringDefaultLength(200).InitTables(types.ToArray());
+        var diffString = db.CodeFirst.GetDifferenceTables(types.ToArray()).ToDiffString();
+        System.Console.WriteLine(diffString);
+        Trace.TraceInformation("init database complited !");
+    }
 
     /// <summary>
     /// 为默认数据结构设置数据库属性

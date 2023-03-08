@@ -72,7 +72,7 @@ public partial class Extensions{
     }
 
     /// <summary>
-    /// 获取最后一个属性
+    /// 获取字符串数组里最后一个Item
     /// </summary>
     /// <param name="propertyName">
     /// 属性名，范例，A.B.C,返回"C"
