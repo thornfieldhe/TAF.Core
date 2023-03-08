@@ -28,13 +28,13 @@ namespace Taf.Core.Test
         public void TestPinYin()
         {
             string pinyin = null;
-            Assert.Equal(string.Empty, pinyin.GetChineseSpell());
+            Assert.Equal(string.Empty, pinyin.As<IStringChinese>().GetChineseSpell());
             pinyin = string.Empty;
-            Assert.Equal(string.Empty, pinyin.GetChineseSpell());
-            Assert.Equal("ZG", "中国".GetChineseSpell());
+            Assert.Equal(string.Empty, pinyin.As<IStringChinese>().GetChineseSpell());
+            Assert.Equal("ZG", "中国".As<IStringChinese>().GetChineseSpell());
 //            Assert.Equal("ZhongGuo", "中国".ConvertCh());
-            Assert.Equal("A1BCB2", "a1宝藏b2".GetChineseSpell());
-            Assert.Equal("TT", "饕餮".GetChineseSpell());
+            Assert.Equal("A1BCB2", "a1宝藏b2".As<IStringChinese>().GetChineseSpell());
+            Assert.Equal("TT", "饕餮".As<IStringChinese>().GetChineseSpell());
         }
 
         #endregion
@@ -48,7 +48,7 @@ namespace Taf.Core.Test
         public void TestFirstUpper()
         {
             const string text = "aBc";
-            var actual = text.ToCapit();
+            var actual = text.As<IStringFormat>().ToCapit();
             Assert.Equal("ABc", actual);
         }
 
@@ -62,7 +62,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToCamel()
         {
-            Assert.Equal("aBc", "ABc".ToCamel());
+            Assert.Equal("aBc", "ABc".As<IStringFormat>().ToCamel());
         }
 
         #endregion
@@ -73,7 +73,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToCapit()
         {
-            Assert.Equal("ABc", "_aBc".ToCapit());
+            Assert.Equal("ABc", "_aBc".As<IStringFormat>().ToCapit());
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToProperCaseFromUnderLine(){
             var test = "business_database_informations";
-            Assert.Equal("BusinessDatabaseInformation", test.ToProperCaseFromUnderLine());
+            Assert.Equal("BusinessDatabaseInformation", test.As<IStringFormat>().ToProperCaseFromUnderLine());
         }
         
         /// <summary>
@@ -91,7 +91,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToSingular(){
             var word = "computers";
-            Assert.Equal("computer", word.ToSingular());
+            Assert.Equal("computer", word.As<IStringReg>().ToSingular());
         }
         
         /// <summary>
@@ -100,7 +100,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToPlural(){
             var word = "computer";
-            Assert.Equal("computers", word.ToPlural());
+            Assert.Equal("computers", word.As<IStringReg>().ToPlural());
         }
         
         #region ContainsChinese(是否包含中文)
@@ -111,7 +111,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToUnderLine(){
             var test = "BusinessDatabaseInformation";
-            Assert.Equal("business_database_information",test.ToUnderLine());
+            Assert.Equal("business_database_information",test.As<IStringFormat>().ToUnderLine());
         }
         
         /// <summary>
@@ -120,8 +120,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestContainsChinese()
         {
-            Assert.True("a中1文b".ContainsChinese());
-            Assert.False("a1b".ContainsChinese());
+            Assert.True("a中1文b".As<IStringExt>().ContainsChinese());
+            Assert.False("a1b".As<IStringExt>().ContainsChinese());
         } 
         
         /// <summary>
@@ -147,17 +147,17 @@ namespace Taf.Core.Test
         [Fact]
         public void TestContainsNumber()
         {
-            Assert.True("a中1文b".ContainsNumber());
-            Assert.True("a中2文b".ContainsNumber());
-            Assert.True("a中3文b".ContainsNumber());
-            Assert.True("a中4文b".ContainsNumber());
-            Assert.True("a中5文b".ContainsNumber());
-            Assert.True("a中6文b".ContainsNumber());
-            Assert.True("a中7文b".ContainsNumber());
-            Assert.True("a中8文b".ContainsNumber());
-            Assert.True("a中9文b".ContainsNumber());
-            Assert.True("a中0文b".ContainsNumber());
-            Assert.False("ab".ContainsNumber());
+            Assert.True("a中2文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中1文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中3文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中4文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中5文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中6文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中7文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中8文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中9文b".As<IStringExt>().ContainsNumber());
+            Assert.True("a中0文b".As<IStringExt>().ContainsNumber());
+            Assert.False("ab".As<IStringExt>().ContainsNumber());
         }
 
         #endregion
@@ -170,8 +170,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestDistinct()
         {
-            Assert.Equal("5", "55555".Distinct());
-            Assert.Equal("45", "45454545".Distinct());
+            Assert.Equal("5", "55555".As<IStringExt>().Distinct());
+            Assert.Equal("45", "45454545".As<IStringExt>().Distinct());
         }
 
         #endregion
@@ -185,13 +185,13 @@ namespace Taf.Core.Test
         public void TestTruncate()
         {
             string a = null;
-            Assert.Equal(string.Empty, a.Truncate(4));
+            Assert.Equal(string.Empty, a.As<IStringExt>().Truncate(4));
             a = string.Empty;
-            Assert.Equal(string.Empty, a.Truncate(4));
-            Assert.Equal("abcd", "abcdef".Truncate(4));
-            Assert.Equal("abcd..", "abcdef".Truncate(4, 2));
-            Assert.Equal("abcd--", "abcdef".Truncate(4, 2, "-"));
-            Assert.Equal("ab", "ab".Truncate(4));
+            Assert.Equal(string.Empty, a.As<IStringExt>().Truncate(4));
+            Assert.Equal("abcd", "abcdef".As<IStringExt>().Truncate(4));
+            Assert.Equal("abcd..", "abcdef".As<IStringExt>().Truncate(4, 2));
+            Assert.Equal("abcd--", "abcdef".As<IStringExt>().Truncate(4, 2, "-"));
+            Assert.Equal("ab", "ab".As<IStringExt>().Truncate(4));
         }
 
         #endregion
@@ -205,11 +205,11 @@ namespace Taf.Core.Test
         public void TestGetLastProperty()
         {
             string a = null;
-            Assert.Equal(string.Empty, a.GetLastProperty());
-            Assert.Equal(string.Empty, string.Empty.GetLastProperty());
-            Assert.Equal("A", "A".GetLastProperty());
-            Assert.Equal("B", "A.B".GetLastProperty());
-            Assert.Equal("C", "A.B.C".GetLastProperty());
+            Assert.Equal(string.Empty, a.As<IStringExt>().GetLastProperty());
+            Assert.Equal(string.Empty, string.Empty.As<IStringExt>().GetLastProperty());
+            Assert.Equal("A", "A".As<IStringExt>().GetLastProperty());
+            Assert.Equal("B", "A.B".As<IStringExt>().GetLastProperty());
+            Assert.Equal("C", "A.B.C".As<IStringExt>().GetLastProperty());
         }
 
         #endregion
@@ -220,9 +220,9 @@ namespace Taf.Core.Test
         [Fact]
         public void TestConvertBase()
         {
-            Assert.Equal("00010101", "21".ConvertBase(10, 2));
-            Assert.Equal("25", "21".ConvertBase(10, 8));
-            Assert.Equal("15", "21".ConvertBase(10, 16));
+            Assert.Equal("00010101", "21".As<IStringExt>().ConvertBase(10, 2));
+            Assert.Equal("25", "21".As<IStringExt>().ConvertBase(10, 8));
+            Assert.Equal("15", "21".As<IStringExt>().ConvertBase(10, 16));
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestStrLength()
         {
-            Assert.Equal(5, "21中r".StrLength());
+            Assert.Equal(5, "21中r".As<IStringExt>().StrLength());
         }
 
         /// <summary>
@@ -241,8 +241,8 @@ namespace Taf.Core.Test
         public void TestStrIsNotNullAction()
         {
             var a = string.Empty;
-            a.IfIsNullOrEmpty(() => a = "111");
-            a.IfIsNotNullOrEmpty(r => a = "222");
+            a.As<IStringExt>().IfIsNullOrEmpty(() => a   = "111");
+            a.As<IStringExt>().IfIsNotNullOrEmpty(r => a = "222");
             Assert.Equal("222", a);
         }
 
@@ -254,8 +254,8 @@ namespace Taf.Core.Test
         {
             var a = "qwerty";
 
-            Assert.Equal("qw", a.Left(2));
-            Assert.Equal("ty", a.Right(2));
+            Assert.Equal("qw", a.As<IStringExt>().Left(2));
+            Assert.Equal("ty", a.As<IStringExt>().Right(2));
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Taf.Core.Test
         public void TestFormateString()
         {
             var a = "a{0}{1}";
-            Assert.Equal("abc", a.FormatWith("b", "c"));
+            Assert.Equal("abc", a.As<IStringExt>().FormatWith("b", "c"));
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Taf.Core.Test
         public void TestStringEquale()
         {
             var a = "abc";
-            Assert.True(a.IgnoreCaseEqual("Abc"));
+            Assert.True(a.As<IStringExt>().IgnoreCaseEqual("Abc"));
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Taf.Core.Test
         public void TestWordify()
         {
             var a = "aGoodPeople";
-            Assert.Equal("a Good People", a.Wordify());
+            Assert.Equal("a Good People", a.As<IStringExt>().Wordify());
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Taf.Core.Test
         public void TestReverse()
         {
             var a = "abcde";
-            Assert.Equal("edcba", a.Reverse());
+            Assert.Equal("edcba", a.As<IStringExt>().Reverse());
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Taf.Core.Test
         public void TestIsInArryString()
         {
             var a = "A";
-            Assert.True(a.IsInArryString("A,B,C,D,E", ','));
+            Assert.True(a.As<IStringExt>().IsInArryString("A,B,C,D,E", ','));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Taf.Core.Test
         public void TestReplaceLast()
         {
             var a = "ABASDAS";
-            Assert.Equal("ABASDMS", a.ReplaceLast("A", "M"));
+            Assert.Equal("ABASDMS", a.As<IStringReg>().ReplaceLast("A", "M"));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Taf.Core.Test
         public void TestReplaceFirst()
         {
             var a = "ABASDAS";
-            Assert.Equal("MBASDAS", a.ReplaceFirst("A", "M"));
+            Assert.Equal("MBASDAS", a.As<IStringReg>().ReplaceFirst("A", "M"));
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Taf.Core.Test
         public void TestCountOccurences()
         {
             var a = "ABASDAS";
-            Assert.Equal(3, a.CountOccurences("A"));
+            Assert.Equal(3, a.As<IStringReg>().CountOccurences("A"));
         }
 
         /// <summary>
@@ -345,11 +345,12 @@ namespace Taf.Core.Test
         public void TestFindSubstringAsString()
         {
             var a = "ABASDAS";
-            Assert.Equal(2, a.FindSubstringAsString("A.").Count);
-            Assert.Equal(3, a.FindSubstringAsString("A.", false).Count); // AS子串出现了2次
+            Assert.Equal(2, a.As<IStringReg>().FindSubstringAsString("A.").Count);
+            Assert.Equal(3, a.As<IStringReg>().FindSubstringAsString("A.", false).Count); // AS子串出现了2次
             var b = "21_22/21";
-            Assert.Equal(2, b.FindSubstringAsSInt(@"\d\d").Count);
-            Assert.Equal(3, b.FindSubstringAsSInt(@"\d{2}", false).Count); // 2*子串出现了2次
+            Assert.Equal(2, b.As<IStringReg>().FindSubstringAsSInt(@"\d\d").Count);
+            Assert.Equal(22, b.As<IStringReg>().FindSubstringAsSInt(@"\d\d")[1]);
+            Assert.Equal(3, b.As<IStringReg>().FindSubstringAsSInt(@"\d{2}", false).Count); // 2*子串出现了3次
         }
 
         /// <summary>
@@ -359,7 +360,7 @@ namespace Taf.Core.Test
         public void TestReplaceReg()
         {
             var b = "21_22/21";
-            Assert.Equal("2x_2x/2x", b.ReplaceReg(@"(\d)(\d)", "x", 2));
+            Assert.Equal("2x_2x/2x", b.As<IStringReg>().ReplaceReg(@"(\d)(\d)", "x", 2));
         }
 
         /// <summary>
@@ -381,7 +382,7 @@ namespace Taf.Core.Test
         public void TestConvertRmb()
         {
             var a = "12345678.123";
-            Assert.Equal("壹仟贰佰叁拾肆万伍仟陆佰柒拾捌元壹角贰分", a.ConvertRMB());
+            Assert.Equal("壹仟贰佰叁拾肆万伍仟陆佰柒拾捌元壹角贰分", a.As<IStringChinese>().ConvertRMB());
         }
 
         /// <summary>
@@ -391,8 +392,8 @@ namespace Taf.Core.Test
         public void TestIsMatch()
         {
             var pattern = @"^\d.*";
-            Assert.False("abc".IsMatch(pattern));
-            Assert.True("123".IsMatch(pattern));
+            Assert.False("abc".As<IStringReg>().IsMatch(pattern));
+            Assert.True("123".As<IStringReg>().IsMatch(pattern));
         }
 
         #region Splice(拼接集合元素)
@@ -475,8 +476,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestSplitToList()
         {
-            Assert.Equal("2", "1,2,".SplitToList(',')[1]);
-            Assert.Equal(2, "1,2,".SplitToList(',').Count);
+            Assert.Equal("2", "1,2,".As<IStringExt>().SplitToList(',')[1]);
+            Assert.Equal(2, "1,2,".As<IStringExt>().SplitToList(',').Count);
         }
 
         /// <summary>
@@ -519,7 +520,7 @@ namespace Taf.Core.Test
         public void TestNumberToChinese()
         {
             var num = "5875246";
-            Assert.Equal("五八七五二四六",num.NumberToChinese());
+            Assert.Equal("五八七五二四六",num.As<IStringChinese>().NumberToChinese());
         }
 
 
@@ -530,7 +531,7 @@ namespace Taf.Core.Test
         public void TestChineseToNumber()
         {
             var num = "五八七五二四六";
-            Assert.Equal("5875246",num.ChineseToNumber());
+            Assert.Equal("5875246",num.As<IStringChinese>().ChineseToNumber());
         }
 
         /// <summary>
@@ -541,7 +542,7 @@ namespace Taf.Core.Test
         {
             var m = "12345</br>";
             var b = "</br>";
-            Assert.Equal("12345", m.RemoveLastString(b));
+            Assert.Equal("12345", m.As<IStringExt>().RemoveLastString(b));
         }
 
         /// <summary>
@@ -552,7 +553,7 @@ namespace Taf.Core.Test
         {
             var m = "</br>12345";
             var b = "</br>";
-            Assert.Equal("12345", m.RemoveStartString(b));
+            Assert.Equal("12345", m.As<IStringExt>().RemoveStartString(b));
         }
         
         /// <summary>
@@ -561,7 +562,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestCamelToUnderline(){
             var a = "AvideMdikeIkjg";
-            Assert.Equal("avide_mdike_ikjg", a.ToUnderLine());
+            Assert.Equal("avide_mdike_ikjg", a.As<IStringFormat>().ToUnderLine());
         }
         
         

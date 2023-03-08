@@ -237,17 +237,17 @@ namespace Taf.Core.Utility
         /// </returns>
         public static bool Is<T>(this T @this) => @this is T;
 
-        /// <summary>
-        /// 对象安全转换为指定类型
-        /// </summary>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <param name="this">
-        /// </param>
-        /// <returns>
-        /// The <see cref="T"/>.
-        /// </returns>
-        public static T As<T>(this T @this) where T : class => @this;
+        // /// <summary>
+        // /// 对象安全转换为指定类型
+        // /// </summary>
+        // /// <typeparam name="T">
+        // /// </typeparam>
+        // /// <param name="this">
+        // /// </param>
+        // /// <returns>
+        // /// The <see cref="T"/>.
+        // /// </returns>
+        // public static T As<T>(this T @this) where T : class => @this;
 
         /// <summary>
         /// 锁定对象后执行方法

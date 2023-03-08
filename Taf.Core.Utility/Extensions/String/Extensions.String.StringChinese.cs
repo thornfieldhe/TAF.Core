@@ -1,926 +1,113 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Extensions.String.cs" company="">
+// <copyright file="Extensions_String_StringChinese.cs" company="" author="何翔华">
 //   
 // </copyright>
 // <summary>
-//   字符串操作辅助类
+//   $Summary$
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Coding4Fun.PluralizationServices;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+// 何翔华
+// Taf.Core.Utility
+// Extensions.String.StringChinese.cs
 
 namespace Taf.Core.Utility;
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 /// <summary>
-/// 字符串操作辅助类
+/// 中文字符扩展
 /// </summary>
-public partial class Extensions{
+public interface IStringChinese : IExtension<string>{ }
+
+/// <summary>
+/// $Summary$
+/// </summary>
+public static class StringChinese{
     /// <summary>
-    /// 实现各进制数间的转换。ConvertBase("15",10,16)表示将十进制数15转换为16进制的数。
+    /// 获得一个字符串的汉语拼音码
     /// </summary>
-    /// <param name="value">
-    /// 要转换的值,即原值
-    /// </param>
-    /// <param name="from">
-    /// 原值的进制,只能是2,8,10,16四个值。
-    /// </param>
-    /// <param name="to">
-    /// 要转换到的目标进制，只能是2,8,10,16四个值。
+    /// <param name="strText">
+    /// 字符串
     /// </param>
     /// <returns>
-    /// The <see cref="string"/>.
+    /// 汉语拼音码,该字符串只包含大写的英文字母
     /// </returns>
-    public static string ConvertBase(this string value, int from, int to){
-        try{
-            var intValue = Convert.ToInt32(value, @from);  // 先转成10进制
-            var result   = Convert.ToString(intValue, to); // 再转成目标进制
-            if(to != 2){
-                return result;
-            }
-
-            var resultLength = result.Length; // 获取二进制的长度
-            switch(resultLength){
-                case 7:
-                    result = "0" + result;
-                    break;
-                case 6:
-                    result = "00" + result;
-                    break;
-                case 5:
-                    result = "000" + result;
-                    break;
-                case 4:
-                    result = "0000" + result;
-                    break;
-                case 3:
-                    result = "00000" + result;
-                    break;
-            }
-
-            return result;
-        } catch{
-            return "0";
-        }
-    }
-
-    /// <summary>
-    /// 获取字符串数组里最后一个Item
-    /// </summary>
-    /// <param name="propertyName">
-    /// 属性名，范例，A.B.C,返回"C"
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string GetLastProperty(this string propertyName){
-        if(string.IsNullOrWhiteSpace(propertyName)){
+    public static string GetChineseSpell(this IStringChinese strText){
+        var s = strText.GetValue();
+        if(string.IsNullOrEmpty(s)){
             return string.Empty;
         }
 
-        var lastIndex = propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1;
-        return propertyName.Substring(lastIndex);
-    }
-
-#region 字符串格式化
-
-    /// <summary>
-    /// 移除_并首字母小写的Camel样式
-    /// </summary>
-    /// <param name="name">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToCamel(this string name){
-        var clone = name.TrimStart('_');
-        clone = RemoveSpaces(ToProperCase(clone));
-        return string.Format("{0}{1}", char.ToLower(clone[0]), clone.Substring(1, clone.Length - 1));
-    }
-
-    /// <summary>
-    /// 移除_并首字母大写的Pascal样式
-    /// </summary>
-    /// <param name="name">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToCapit(this string name){
-        var clone = name.TrimStart('_');
-        return RemoveSpaces(ToProperCase(clone));
-    }
-
-    /// <summary>
-    /// 移除最后的字符
-    /// </summary>
-    /// <param name="source">
-    /// </param>
-    /// <param name="separator"></param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string RemoveFinalChar(this string source, char separator){
-        if(source.EndsWith(separator.ToString(), StringComparison.Ordinal)
-        && source.Length > 1){
-            source = source.Substring(0, source.Length - 1);
-        }
-
-        return source;
-    }
-
-    /// <summary>
-    /// 移除最后的逗号
-    /// </summary>
-    /// <param name="source">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string RemoveFinalComma(this string source){
-        if(source.Trim().Length <= 0){
-            return source;
-        }
-
-        var c = source.LastIndexOf(",", StringComparison.Ordinal);
-        if(c > 0){
-            source = source.Substring(0, source.Length - (source.Length - c));
-        }
-
-        return source;
-    }
-
-    /// <summary>
-    /// 移除字符中的空格
-    /// </summary>
-    /// <param name="source">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string RemoveSpaces(this string source){
-        source = source.Trim();
-        source = source.Replace(" ", string.Empty);
-        return source;
-    }
-
-    /// <summary>
-    /// 字符串首字母大写
-    /// </summary>
-    /// <param name="source">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToProperCase(this string source){
-        var revised = string.Empty;
-        if(source.Length <= 0){
-            return revised;
-        }
-
-        var firstLetter = source.Substring(0, 1).ToUpper(new CultureInfo("en-US"));
-        revised = firstLetter + source.Substring(1, source.Length - 1);
-        return revised;
-    }
-
-    /// <summary>
-    /// 大驼峰转下划线
-    /// </summary>
-    /// <param name="string"></param>
-    /// <returns></returns> 
-    public static string ToUnderLine(this string @string){
-        var strItemTarget = ""; //目标字符串
-        foreach(var t in @string){
-            var temp = t.ToString();
-            if(Regex.IsMatch(temp, "[A-Z]")){
-                temp = "_" + temp.ToLower();
-            }
-
-            strItemTarget += temp;
-        }
-
-        return strItemTarget.Trim('_');
-    }
-
-    /// <summary>
-    /// mysql数据库表名转换成C#大驼峰命名
-    /// </summary>
-    /// <example>database_informations  =>DatabaseInformation</example>
-    /// <param name="string"></param>
-    /// <returns></returns>
-    public static string ToProperCaseFromUnderLine(this string @string){
-        var arrary = @string.Split("_");
-        var server = PluralizationService.CreateService(new CultureInfo("en"));
-        for(var i = 0; i < arrary.Length; i++){
-            if(i == arrary.Length - 1){
-                if(server.IsPlural(arrary[i])){
-                    arrary[i] = server.Singularize(arrary[i]);
+        var myStr = new StringBuilder();
+        foreach(var vChar in s){
+            // 若是字母则直接输出
+            if((vChar >= 'a' && vChar <= 'z')
+            || (vChar >= 'A' && vChar <= 'Z')){
+                myStr.Append(char.ToUpper(vChar));
+            } else if(vChar >= '0'
+                   && vChar <= '9'){
+                myStr.Append(vChar);
+            } else if(vChar >= 19968
+                   && vChar <= 40869){
+                // 若字符Unicode编码在编码范围则 查汉字列表进行转换输出
+                var c = vChar;
+                foreach(var strList in strChineseCharList.Where(strList => strList.IndexOf(c) > 0)){
+                    myStr.Append(strList[0]);
+                    break;
                 }
             }
-
-            arrary[i] = arrary[i].ToProperCase();
         }
 
-        return string.Join("", arrary);
+        return myStr.ToString();
     }
 
-#endregion
-
-#region 字符串操作
-
     /// <summary>
-    /// 将字符串移除最后一个分隔符并转换为列表
+    /// 转换数字金额主函数（包括小数）
     /// </summary>
     /// <param name="source">
-    /// </param>
-    /// <param name="separator">
-    /// </param>
-    /// <returns>
-    /// The <see cref="List{T}"/>.
-    /// </returns>
-    public static List<string> SplitToList(this string source, char separator = ','){
-        source = source.RemoveFinalChar(separator);
-        return source.Split(separator).ToList();
-    }
-
-    /// <summary>
-    /// 得到字符串长度，一个汉字长度为2
-    /// </summary>
-    /// <param name="inputString">
-    /// 参数字符串
+    /// 数字字符串
     /// </param>
     /// <returns>
-    /// The <see cref="int"/>.
+    /// 转换成中文大写后的字符串或者出错信息提示字符串
     /// </returns>
-    public static int StrLength(this string inputString){
-        var ascii   = new ASCIIEncoding();
-        var tempLen = 0;
-        var s       = ascii.GetBytes(inputString);
-        for(var i = 0; i < s.Length; i++){
-            if(s[i] == 63){
-                tempLen += 2;
-            } else{
-                tempLen += 1;
-            }
+    public static string ConvertRMB(this IStringChinese source){
+        var str = source.GetValue();
+        if(!IsPositveDecimal(str)){
+            return "输入的不是正数字！";
         }
 
-        return tempLen;
-    }
-
-    /// <summary>
-    /// 如果字符串不为空则执行 
-    /// </summary>
-    /// <param name="source">
-    /// </param>
-    /// <param name="action">
-    /// </param>
-    public static void IfIsNotNullOrEmpty(this string source, Action<string> action){
-        if(!string.IsNullOrWhiteSpace(source)){
-            action(source);
-        }
-    }
-
-    /// <summary>
-    /// 如果字符串为空则执行 
-    /// </summary>
-    /// <param name="source">
-    /// </param>
-    /// <param name="action">
-    /// </param>
-    public static void IfIsNullOrEmpty(this string source, Action action){
-        if(string.IsNullOrWhiteSpace(source)){
-            action();
-        }
-    }
-
-    /// <summary>
-    /// 取左边n个字符串
-    /// </summary>
-    /// <param name="obj">
-    /// </param>
-    /// <param name="length">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Left(this string obj, int length) => obj.Substring(0, length);
-
-    /// <summary>
-    /// 取右边n个字符串
-    /// </summary>
-    /// <param name="obj">
-    /// </param>
-    /// <param name="length">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Right(this string obj, int length) => obj.Substring(obj.Length - length, length);
-
-    /// <summary>
-    /// 格式化字符串，是string.Format("",xx)的变体
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <param name="args">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string FormatWith(this string @this, params object[] args) => string.Format(@this, args);
-
-    /// <summary>
-    /// 判断字符串是否相等，忽略字符情况
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <param name="compareOperand">
-    /// </param>
-    /// <returns>
-    /// The <see cref="bool"/>.
-    /// </returns>
-    public static bool IgnoreCaseEqual(this string @this, string compareOperand) =>
-        @this.Equals(compareOperand, StringComparison.OrdinalIgnoreCase);
-
-    /// <summary>
-    /// 返回一个字符串用空格分隔如: thisIsGood =&gt; this Is Good
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Wordify(this string @this) =>
-        // if the word is all upper, just return it
-        !Regex.IsMatch(@this, "[a-z]") ? @this : string.Join(" ", Regex.Split(@this, @"(?<!^)(?=[A-Z])"));
-
-    /// <summary>
-    /// 翻转字符串
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Reverse(this string @this){
-        if(@this        == null
-        || @this.Length < 2){
-            return @this;
+        if(double.Parse(str) > 999999999999.99){
+            return "数字太大，无法换算，请输入一万亿元以下的金额";
         }
 
-        var length    = @this.Length;
-        var loop      = (length >> 1) + 1;
-        var charArray = new char[length];
-        for(var i = 0; i < loop; i++){
-            var j = length - i - 1;
-            charArray[i] = @this[j];
-            charArray[j] = @this[i];
+        var ch = new char[1];
+        ch[0] = '.';                                            // 小数点
+        string[] splitstr = null;                               // 定义按小数点分割后的字符串数组
+        splitstr = str.Replace(",", string.Empty).Split(ch[0]); // 按小数点分割字符串
+        if(splitstr.Length == 1
+        || splitstr[1].Equals("00")){
+            // 只有整数部分
+            return ConvertData(splitstr[0]) + "元整";
         }
 
-        return new string(charArray);
+        string rstr;
+        rstr =  ConvertData(splitstr[0]) + "元"; // 转换整数部分
+        rstr += ConvertXiaoShu(splitstr[1]);    // 转换小数部分
+        return rstr;
     }
-
-    /// <summary>
-    /// 去除重复
-    /// </summary>
-    /// <param name="value">
-    /// 值，范例1："5555",返回"5",范例2："4545",返回"45"
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Distinct(this string value){
-        var array = value.ToCharArray();
-        return new string(array.Distinct().ToArray());
-    }
-
-    /// <summary>
-    /// 截断字符串
-    /// </summary>
-    /// <param name="text">
-    /// 文本
-    /// </param>
-    /// <param name="length">
-    /// 返回长度
-    /// </param>
-    /// <param name="endCharCount">
-    /// 添加结束符号的个数，默认0，不添加
-    /// </param>
-    /// <param name="endChar">
-    /// 结束符号，默认为省略号
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Truncate(this string text, int length, int endCharCount = 0, string endChar = "."){
-        if(string.IsNullOrWhiteSpace(text)){
-            return string.Empty;
-        }
-
-        if(text.Length < length){
-            return text;
-        }
-
-        return text.Substring(0, length) + GetEndString(endCharCount, endChar);
-    }
-
-    /// <summary>
-    /// 是否包含中文
-    /// </summary>
-    /// <param name="text">
-    /// 文本
-    /// </param>
-    /// <returns>
-    /// The <see cref="bool"/>.
-    /// </returns>
-    public static bool ContainsChinese(this string text){
-        const string pattern = "[\u4e00-\u9fa5]+";
-        return Regex.IsMatch(text, pattern);
-    }
-
-    /// <summary>
-    /// 是否包含数字
-    /// </summary>
-    /// <param name="text">
-    /// 文本
-    /// </param>
-    /// <returns>
-    /// The <see cref="bool"/>.
-    /// </returns>
-    public static bool ContainsNumber(this string text){
-        const string pattern = "[0-9]+";
-        return Regex.IsMatch(text, pattern);
-    }
-
-    /// <summary>
-    /// 指定字符串是否在集合中
-    /// </summary>
-    /// <param name="str">
-    /// 字符串("C")
-    /// </param>
-    /// <param name="stringList">
-    /// 字符串("A,B,C,D,E")
-    /// </param>
-    /// <param name="separator">
-    /// 分隔符
-    /// </param>
-    /// <returns>
-    /// The <see cref="bool"/>.
-    /// </returns>
-    public static bool IsInArryString(this string str, string stringList, char separator){
-        var list = stringList.Split(separator);
-        return list.Any(t => t.Equals(str));
-    }
-
-    /// <summary>
-    /// 重复字符串输出
-    /// </summary>
-    /// <param name="this">
-    /// The this.
-    /// </param>
-    /// <param name="times">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string Repeat(this string @this, int times){
-        var repeat = @this;
-        for(var i = 0; i < times; i++){
-            @this += repeat;
-        }
-
-        return @this;
-    }
-
-    /// <summary>
-    /// 移除末尾字符串
-    /// </summary>
-    /// <param name="this"></param>
-    /// <param name="targetStr"></param>
-    /// <returns></returns>
-    public static string RemoveLastString(this string @this, string targetStr){
-        var repeat = @this;
-        if(repeat.EndsWith(targetStr)
-        && @this.Length > 1){
-            @this = repeat.Substring(0, repeat.Length - targetStr.Length);
-        }
-
-        return @this;
-    }
-
-    /// <summary>
-    /// 移除起始字符串
-    /// </summary>
-    /// <param name="this"></param>
-    /// <param name="targetStr"></param>
-    /// <returns></returns>
-    public static string RemoveStartString(this string @this, string targetStr){
-        var repeat = @this;
-        if(repeat.StartsWith(targetStr)
-        && repeat.Length > 1){
-            @this = repeat.Substring(targetStr.Length, repeat.Length - targetStr.Length);
-        }
-
-        return @this;
-    }
-
-    /// <summary>
-    /// ToString并且去掉空格
-    /// </summary>
-    /// <param name="v">v为空时,不抛错,并返回空字符</param>
-    /// <returns></returns>
-    public static string ToStringAndTrim(this object v) => v == null ? string.Empty : v.ToString().Trim();
-
-    /// <summary>
-    /// 生成短链码
-    /// </summary>
-    /// <param name="longStr"></param>
-    /// <returns></returns>
-    public static string GetShortCode(this string longStr){
-        //生成逻辑:
-        //1.将长链字符串 + 时间戳,进行32位的Md5加密(降低短链码重复的概率);
-        //2.将32位的Md5值,分为4组,每组都和16进制的3fffffff进行位与运算.
-        //3.每组数据又和16进制0000003D进行6次位运算.
-        //4.将6次位运算获得的索引,去chars中匹配一个字符,最终得到一组短链码.
-        //5.总共生成4组短链码,随机返回一组即可.
-        var chars = new[]{
-            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v"
-          , "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H"
-          , "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-        };
-        var ticks  = DateTime.Now.Ticks;
-        var hex    = Encrypt.Md5By16(longStr + ticks);
-        var resUrl = new string[4];
-        for(int i = 0; i < 4; i++){
-            var sTempSubString = hex.Substring(i * 8, 8);
-            var lHexLong       = 0x3FFFFFFF & Convert.ToInt64(sTempSubString, 16);
-            var outChars       = "";
-            for(int j = 0; j < 6; j++){
-                var index = 0x0000003D & lHexLong;
-                outChars += chars[(int)index];
-                lHexLong =  lHexLong >> 5;
-            }
-
-            resUrl[i] = outChars;
-        }
-
-        var rd = new Random();
-        return resUrl[rd.Next(0, 4)];
-    }
-
-#region 正则
-
-    /// <summary>
-    /// 截取字符串中开始和结束字符串中间的字符串
-    /// </summary>
-    /// <param name="source">源字符串</param>
-    /// <param name="startStr">开始字符串</param>
-    /// <param name="endStr">结束字符串</param>
-    /// <returns>中间字符串</returns>
-    public static string Substring(this string source, string startStr, string endStr){
-        var rg = new Regex("(?<=(" + startStr + "))[.\\s\\S]*?(?=(" + endStr + "))"
-                         , RegexOptions.Multiline | RegexOptions.Singleline);
-        return rg.Match(source).Value;
-    }
-
-    /// <summary>
-    /// 验证输入与模式是否匹配
-    /// </summary>
-    /// <param name="input">
-    /// 输入字符串
-    /// </param>
-    /// <param name="pattern">
-    /// 模式字符串
-    /// </param>
-    /// <returns>
-    /// The <see cref="bool"/>.
-    /// </returns>
-    public static bool IsMatch(this string input, string pattern) => IsMatch(input, pattern, RegexOptions.IgnoreCase);
-
-    /// <summary>
-    /// 验证输入与模式是否匹配
-    /// </summary>
-    /// <param name="input">
-    /// 输入的字符串
-    /// </param>
-    /// <param name="pattern">
-    /// 模式字符串
-    /// </param>
-    /// <param name="options">
-    /// 筛选条件,比如是否忽略大小写
-    /// </param>
-    /// <returns>
-    /// The <see cref="bool"/>.
-    /// </returns>
-    public static bool IsMatch(this string input, string pattern, RegexOptions options) =>
-        Regex.IsMatch(input, pattern, options);
-
-    /// <summary>
-    /// 替换最后一个匹配的字符串
-    /// in this instance are replaced with another specified string.  
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <param name="oldValue">
-    /// </param>
-    /// <param name="newValue">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ReplaceLast(this string @this, string oldValue, string newValue){
-        var index = @this.LastIndexOf(oldValue);
-        if(index > -1){
-            var newString = @this.Remove(index, oldValue.Length).Insert(index, newValue);
-            return newString;
-        }
-
-        return @this;
-    }
-
-    /// <summary>
-    /// 子字符串出现次数
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <param name="match">
-    /// </param>
-    /// <returns>
-    /// The <see cref="int"/>.
-    /// </returns>
-    public static int CountOccurences(this string @this, string match){
-        if(!match.IsNullOrEmpty()){
-            var count = (@this.Length - @this.Replace(match, string.Empty).Length) / match.Length;
-            return count;
-        }
-
-        return 0;
-    }
-
-    /// <summary>
-    /// 替换第一个匹配的字符串
-    /// </summary>
-    /// <param name="this">
-    /// </param>
-    /// <param name="oldValue">
-    /// </param>
-    /// <param name="newValue">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ReplaceFirst(this string @this, string oldValue, string newValue){
-        var index = @this.IndexOf(oldValue);
-        if(index > -1){
-            var newString = @this.Remove(index, oldValue.Length).Insert(index, newValue);
-            return newString;
-        }
-
-        return @this;
-    }
-
-    /// <summary>
-    /// 查询字符串匹配的子串
-    /// </summary>
-    /// <param name="strText">
-    /// 目标字符串
-    /// </param>
-    /// <param name="matchPattern">
-    /// 匹配文本
-    /// </param>
-    /// <param name="findAllUnique">
-    /// 是否返回不重复的匹配
-    /// </param>
-    /// <returns>
-    /// The <see cref="List{T}"/>.
-    /// </returns>
-    public static List<string> FindSubstringAsString(
-        this string strText,
-        string      matchPattern,
-        bool        findAllUnique = true){
-        var matchArry = FindSubstring(strText, matchPattern, findAllUnique);
-        var retArry   = from match in matchArry select match.Value;
-        return retArry.ToList();
-    }
-
-    /// <summary>
-    /// 查询字符串匹配的子串
-    /// </summary>
-    /// <param name="strText">
-    /// 目标字符串
-    /// </param>
-    /// <param name="matchPattern">
-    /// 匹配文本
-    /// </param>
-    /// <param name="groupId">
-    /// 分组Id
-    /// </param>
-    /// <param name="findAllUnique">
-    /// 是否返回不重复的匹配
-    /// </param>
-    /// <returns>
-    /// The <see cref="List{T}"/>.
-    /// </returns>
-    public static List<string> FindSubstringAsString(
-        this string strText,
-        string      matchPattern,
-        int         groupId,
-        bool        findAllUnique){
-        var matchArry = FindSubstring(strText, matchPattern, findAllUnique);
-        var retArry   = from match in matchArry select match.Groups[groupId].Value;
-        return retArry.ToList();
-    }
-
-    /// <summary>
-    /// 查询字符串匹配的数字
-    /// </summary>
-    /// <param name="strText">
-    /// 目标字符串
-    /// </param>
-    /// <param name="matchPattern">
-    /// 匹配文本
-    /// </param>
-    /// <param name="findAllUnique">
-    /// 是否返回不重复的匹配
-    /// </param>
-    /// <returns>
-    /// The <see cref="List{T}"/>.
-    /// </returns>
-    public static List<int> FindSubstringAsSInt(this string strText, string matchPattern, bool findAllUnique = true){
-        var matchArry = FindSubstring(strText, matchPattern, findAllUnique);
-        var retArry   = from match in matchArry select int.Parse(match.Value);
-        return retArry.ToList();
-    }
-
-    /// <summary>
-    /// 查询字符串匹配的小数
-    /// </summary>
-    /// <param name="strText">
-    /// 目标字符串
-    /// </param>
-    /// <param name="matchPattern">
-    /// 匹配文本
-    /// </param>
-    /// <param name="findAllUnique">
-    /// 是否返回不重复的匹配
-    /// </param>
-    /// <returns>
-    /// The <see cref="List{T}"/>.
-    /// </returns>
-    public static List<double> FindSubstringAsDouble(this string strText, string matchPattern, bool findAllUnique){
-        var matchArry = FindSubstring(strText, matchPattern, findAllUnique);
-        var retArry   = from match in matchArry select double.Parse(match.Value);
-        return retArry.ToList();
-    }
-
-    /// <summary>
-    /// 查询字符串匹配的Decimal
-    /// </summary>
-    /// <param name="strText">
-    /// 目标字符串
-    /// </param>
-    /// <param name="matchPattern">
-    /// 匹配文本
-    /// </param>
-    /// <param name="findAllUnique">
-    /// 是否返回不重复的匹配
-    /// </param>
-    /// <returns>
-    /// The <see cref="List{T}"/>.
-    /// </returns>
-    public static List<decimal> FindSubstringAsDecimal(this string strText, string matchPattern, bool findAllUnique){
-        var matchArry = FindSubstring(strText, matchPattern, findAllUnique);
-        var retArry   = from match in matchArry select decimal.Parse(match.Value);
-        return retArry.ToList();
-    }
-
-    /// <summary>
-    /// 正则表达式替换分组内内容
-    /// </summary>
-    /// <param name="strText">
-    /// 字符串源
-    /// </param>
-    /// <param name="pattern">
-    /// 匹配正则式
-    /// </param>
-    /// <param name="target">
-    /// 替换后内容
-    /// </param>
-    /// <param name="groupId">
-    /// 分组Id
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ReplaceReg(this string strText, string pattern, string target, int groupId){
-        var myEvaluator = new MatchEvaluator(match => CustomReplace(match, groupId, target));
-        var reg         = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-        return reg.Replace(strText, myEvaluator);
-    }
-
-    /// <summary>
-    /// 单词变成单数形式
-    /// </summary>
-    /// <param name="word">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToSingular(this string word){
-        var server = PluralizationService.CreateService(new CultureInfo("en"));
-        return server.IsPlural(word) ? server.Singularize(word) : word;
-    }
-
-    /// <summary>
-    /// 单词变成复数形式
-    /// </summary>
-    /// <param name="word">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToPlural(this string word){
-        var server = PluralizationService.CreateService(new CultureInfo("en"));
-        return server.IsPlural(word) ? word : server.Pluralize(word);
-    }
-
-    /// <summary>
-    /// The custom replace.
-    /// </summary>
-    /// <param name="m">
-    /// The m.
-    /// </param>
-    /// <param name="groupId">
-    /// The group id.
-    /// </param>
-    /// <param name="target">
-    /// The target.
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    private static string CustomReplace(Match m, int groupId, string target){
-        var index  = m.Groups[groupId].Index;
-        var length = m.Groups[groupId].Length;
-        return m.Value.Substring(m.Index - m.Index, index - m.Index)
-             + target
-             + m.Value.Substring(index + length - m.Index, m.Index + m.Length - (index + length));
-    }
-
-    /// <summary>
-    /// 查询字符串匹配的子串
-    /// </summary>
-    /// <param name="strText">
-    /// 目标字符串
-    /// </param>
-    /// <param name="matchPattern">
-    /// 匹配文本
-    /// </param>
-    /// <param name="findAllUnique">
-    /// 是否返回不重复的匹配
-    /// </param>
-    /// <returns>
-    /// The <see cref="IEnumerable"/>.
-    /// </returns>
-    private static IEnumerable<Match> FindSubstring(string strText, string matchPattern, bool findAllUnique){
-        var     uniqueMatches = new SortedList();
-        Match[] retArry       = null;
-        var     re            = new Regex(matchPattern, RegexOptions.Multiline);
-        var     theMatches    = re.Matches(strText);
-        if(findAllUnique){
-            for(var counter = 0; counter < theMatches.Count; counter++){
-                if(!uniqueMatches.ContainsKey(theMatches[counter].Value)){
-                    uniqueMatches.Add(theMatches[counter].Value, theMatches[counter]);
-                }
-            }
-
-            retArry = new Match[uniqueMatches.Count];
-            uniqueMatches.Values.CopyTo(retArry, 0);
-        } else{
-            retArry = new Match[theMatches.Count];
-            theMatches.CopyTo(retArry, 0);
-        }
-
-        return retArry;
-    }
-
-#endregion
-
-#region 中文操作
 
     /// <summary>
     /// 数字转中文字符串
     /// </summary>
-    /// <param name="numberStr"></param>
+    /// <param name="source"></param>
     /// <returns></returns>
-    public static string NumberToChinese(this string numberStr){
+    public static string NumberToChinese(this IStringChinese source){
+        var numberStr  = source.GetValue(); 
         var numStr     = "0123456789";
         var chineseStr = "零一二三四五六七八九";
         var c          = numberStr.ToCharArray();
@@ -938,12 +125,13 @@ public partial class Extensions{
     /// <summary>
     /// 中文字符串转数字
     /// </summary>
-    /// <param name="chineseStr1"></param>
+    /// <param name="source"></param>
     /// <returns></returns>
-    public static string ChineseToNumber(this string chineseStr1){
-        var numStr     = "0123456789";
-        var chineseStr = "零一二三四五六七八九";
-        var c          = chineseStr1.ToCharArray();
+    public static string ChineseToNumber(this IStringChinese source){
+        var chineseStr1 = source.GetValue();
+        var numStr      = "0123456789";
+        var chineseStr  = "零一二三四五六七八九";
+        var c           = chineseStr1.ToCharArray();
         for(var i = 0; i < c.Length; i++){
             var index = chineseStr.IndexOf(c[i]);
             if(index != -1)
@@ -1005,81 +193,57 @@ public partial class Extensions{
         return result;
     }
 
+#region 私有方法
+
     /// <summary>
-    /// 转换数字金额主函数（包括小数）
+    /// 将一位数字转换成中文大写数字
     /// </summary>
     /// <param name="str">
     /// 数字字符串
     /// </param>
     /// <returns>
-    /// 转换成中文大写后的字符串或者出错信息提示字符串
+    /// 转换后的字符串
     /// </returns>
-    public static string ConvertRMB(this string str){
-        if(!IsPositveDecimal(str)){
-            return "输入的不是正数字！";
+    private static string ConvertChinese(string str){
+        // "零壹贰叁肆伍陆柒捌玖拾佰仟万亿元整角分"
+        var cstr = string.Empty;
+        switch(str){
+            case "0":
+                cstr = "零";
+                break;
+            case "1":
+                cstr = "壹";
+                break;
+            case "2":
+                cstr = "贰";
+                break;
+            case "3":
+                cstr = "叁";
+                break;
+            case "4":
+                cstr = "肆";
+                break;
+            case "5":
+                cstr = "伍";
+                break;
+            case "6":
+                cstr = "陆";
+                break;
+            case "7":
+                cstr = "柒";
+                break;
+            case "8":
+                cstr = "捌";
+                break;
+            case "9":
+                cstr = "玖";
+                break;
         }
 
-        if(double.Parse(str) > 999999999999.99){
-            return "数字太大，无法换算，请输入一万亿元以下的金额";
-        }
-
-        var ch = new char[1];
-        ch[0] = '.';                                            // 小数点
-        string[] splitstr = null;                               // 定义按小数点分割后的字符串数组
-        splitstr = str.Replace(",", string.Empty).Split(ch[0]); // 按小数点分割字符串
-        if(splitstr.Length == 1
-        || splitstr[1].Equals("00")){
-            // 只有整数部分
-            return ConvertData(splitstr[0]) + "元整";
-        }
-
-        string rstr;
-        rstr =  ConvertData(splitstr[0]) + "元"; // 转换整数部分
-        rstr += ConvertXiaoShu(splitstr[1]);    // 转换小数部分
-        return rstr;
+        return cstr;
     }
 
-#endregion
-
-#region 拼音
-
-    /// <summary>
-    /// 获得一个字符串的汉语拼音码
-    /// </summary>
-    /// <param name="strText">
-    /// 字符串
-    /// </param>
-    /// <returns>
-    /// 汉语拼音码,该字符串只包含大写的英文字母
-    /// </returns>
-    public static string GetChineseSpell(this string strText){
-        if(string.IsNullOrEmpty(strText)){
-            return string.Empty;
-        }
-
-        var myStr = new StringBuilder();
-        foreach(var vChar in strText){
-            // 若是字母则直接输出
-            if((vChar >= 'a' && vChar <= 'z')
-            || (vChar >= 'A' && vChar <= 'Z')){
-                myStr.Append(char.ToUpper(vChar));
-            } else if(vChar >= '0'
-                   && vChar <= '9'){
-                myStr.Append(vChar);
-            } else if(vChar >= 19968
-                   && vChar <= 40869){
-                // 若字符Unicode编码在编码范围则 查汉字列表进行转换输出
-                var c = vChar;
-                foreach(var strList in strChineseCharList.Where(strList => strList.IndexOf(c) > 0)){
-                    myStr.Append(strList[0]);
-                    break;
-                }
-            }
-        }
-
-        return myStr.ToString();
-    }
-
+    ///
     //        /// <summary>
     //        /// 汉字转换成全拼的拼音
     //        /// </summary>
@@ -1176,33 +340,6 @@ public partial class Extensions{
     //            return pystr; // 返回获取到的汉字拼音
     //        }
 
-#endregion
-
-#endregion
-
-#region 私有方法
-
-    /// <summary>
-    /// 获取结束字符串
-    /// </summary>
-    /// <param name="endCharCount">
-    /// The end Char Count.
-    /// </param>
-    /// <param name="endChar">
-    /// The end Char.
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    private static string GetEndString(int endCharCount, string endChar){
-        var result = new StringBuilder();
-        for(var i = 0; i < endCharCount; i++){
-            result.Append(endChar);
-        }
-
-        return result.ToString();
-    }
-
     /// <summary>
     /// 判断是否是正数字字符串
     /// </summary>
@@ -1224,6 +361,7 @@ public partial class Extensions{
 
         return false;
     }
+
 
     /// <summary>
     /// 转换数字（整数）
@@ -1287,6 +425,7 @@ public partial class Extensions{
 
         return rstr;
     }
+
 
     /// <summary>
     /// 转换数字（小数部分）
@@ -1421,54 +560,6 @@ public partial class Extensions{
         rstring =  rstring.Replace("零拾", "零");
         rstring =  rstring.Replace("零零", "零");
         return rstring;
-    }
-
-    /// <summary>
-    /// 将一位数字转换成中文大写数字
-    /// </summary>
-    /// <param name="str">
-    /// 数字字符串
-    /// </param>
-    /// <returns>
-    /// 转换后的字符串
-    /// </returns>
-    private static string ConvertChinese(string str){
-        // "零壹贰叁肆伍陆柒捌玖拾佰仟万亿元整角分"
-        var cstr = string.Empty;
-        switch(str){
-            case "0":
-                cstr = "零";
-                break;
-            case "1":
-                cstr = "壹";
-                break;
-            case "2":
-                cstr = "贰";
-                break;
-            case "3":
-                cstr = "叁";
-                break;
-            case "4":
-                cstr = "肆";
-                break;
-            case "5":
-                cstr = "伍";
-                break;
-            case "6":
-                cstr = "陆";
-                break;
-            case "7":
-                cstr = "柒";
-                break;
-            case "8":
-                cstr = "捌";
-                break;
-            case "9":
-                cstr = "玖";
-                break;
-        }
-
-        return cstr;
     }
 
     /// <summary>

@@ -25,13 +25,13 @@ public interface IExtension<V>{
 }
 
 public static class ExtensionGroup{
-    private static Dictionary<Type, Type> cache = new Dictionary<Type, Type>();
+    private static Dictionary<Type, Type> cache = new ();
 
     public static T As<T>(this string v) where T : IExtension<string> => As<T, string>(v);
 
     public static T As<T, V>(this V v) where T : IExtension<V>{
         Type t;
-        var  valueType = typeof(V);
+        var  valueType = typeof(T);
         if(cache.ContainsKey(valueType)){
             t = cache[valueType];
         } else{

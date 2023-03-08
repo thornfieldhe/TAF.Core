@@ -9,10 +9,12 @@ using System.Text.RegularExpressions;
 
 namespace Taf.Core.Utility;
 
+/// <summary>
+/// 字符串格式化
+/// </summary>
 public interface IStringFormat : IExtension<string>{ }
 
 public static class StringFormat{
- 
     /// <summary>
     /// 移除_并首字母小写的Camel样式
     /// </summary>
@@ -24,7 +26,7 @@ public static class StringFormat{
     public static string ToCamel(this IStringFormat name){
         var clone = name.GetValue().TrimStart('_');
         clone = RemoveSpaces(ToProperCase(clone));
-        return string.Format("{0}{1}", char.ToLower(clone[0]), clone.Substring(1, clone.Length - 1));
+        return $"{char.ToLower(clone[0])}{clone.Substring(1, clone.Length - 1)}";
     }
 
     /// <summary>
@@ -89,9 +91,9 @@ public static class StringFormat{
     /// <returns>
     /// The <see cref="string"/>.
     /// </returns>
-    public static string RemoveSpaces(this IStringFormat source) => source.GetValue().RemoveSpaces();
+    public static string RemoveSpaces(this IStringFormat source) => ToProperCase(source.GetValue());
 
-    private static string RemoveSpaces( string source){
+    private static string RemoveSpaces(string source){
         var s = source.Trim();
         return s.Replace(" ", string.Empty);
     }
@@ -114,7 +116,7 @@ public static class StringFormat{
     /// <returns>
     /// The <see cref="string"/>.
     /// </returns>
-    private static string ToProperCase( string source){
+    private static string ToProperCase(string source){
         var revised = string.Empty;
         if(source.Length <= 0){
             return revised;
@@ -130,9 +132,10 @@ public static class StringFormat{
     /// </summary>
     /// <param name="string"></param>
     /// <returns></returns> 
-    public static string ToUnderLine(this IStringFormat @string){
+    public static string ToUnderLine(this IStringFormat source){
         var strItemTarget = ""; //目标字符串
-        foreach(var t in @string.GetValue()){
+        var s             = source.GetValue();
+        foreach(var t in s){
             var temp = t.ToString();
             if(Regex.IsMatch(temp, "[A-Z]")){
                 temp = "_" + temp.ToLower();
@@ -160,10 +163,9 @@ public static class StringFormat{
                 }
             }
 
-            arrary[i] = arrary[i].ToProperCase();
+            arrary[i] = ToProperCase(arrary[i]);
         }
 
         return string.Join("", arrary);
     }
-    
 }

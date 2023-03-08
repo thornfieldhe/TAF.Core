@@ -48,16 +48,16 @@ public static class SqlSugarConfigure{
                 if(!string.IsNullOrEmpty(p.DbColumnName)
                 && p.DbColumnName[0] >= 'A'
                 && p.DbColumnName[0] <= 'Z'){
-                    p.DbColumnName = c.Name.ToUnderLine();
+                    p.DbColumnName = c.Name.As<IStringFormat>().ToUnderLine();
                 }
 
                 if(c.Name.EndsWith("Id")
                 && c.Name != "Id"){
                     //约定所有以Id结尾的属性为索引属性
                     if(p.IndexGroupNameList == null){
-                        p.IndexGroupNameList = new[]{ c.Name.ToUnderLine() };
+                        p.IndexGroupNameList = new[]{ c.Name.As<IStringFormat>().ToUnderLine() };
                     } else{
-                        p.IndexGroupNameList = p.IndexGroupNameList.Union(new[]{ c.Name.ToUnderLine() }).ToArray();
+                        p.IndexGroupNameList = p.IndexGroupNameList.Union(new[]{ c.Name.As<IStringFormat>().ToUnderLine() }).ToArray();
                     }
                 }
             }
@@ -65,7 +65,7 @@ public static class SqlSugarConfigure{
                 if(string.IsNullOrEmpty(entity.DbTableName)){
                     //未定义表名的对象,使用规则生成表名
                     entity.DbTableName =
-                        $"business_{PluralizationService.CreateService(new CultureInfo("en")).Pluralize(type.Name).ToUnderLine()}";
+                        $"business_{PluralizationService.CreateService(new CultureInfo("en")).Pluralize(type.Name).As<IStringFormat>().ToUnderLine()}";
                 }
 
                 entity.IsDisabledUpdateAll = true;
