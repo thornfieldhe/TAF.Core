@@ -9,50 +9,6 @@
     public partial class Extensions
     {
         /// <summary>
-        /// 尝试将键和值添加到字典中：如果不存在，才添加；存在，不添加也不抛导常
-        /// </summary>
-        /// <param name="dict">
-        /// The dict.
-        /// </param>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        /// <returns>
-        /// 返回更新后Dictionary列表
-        /// </returns>
-        public static Dictionary<TKey, TValue> TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value) where TKey : notnull{
-            if (dict.ContainsKey(key) == false)
-            {
-                dict.Add(key, value);
-            }
-
-            return dict;
-        }
-
-        /// <summary>
-        /// 将键和值添加或替换到字典中：如果不存在，则添加；存在，则替换
-        /// </summary>
-        /// <param name="dict">
-        /// The dict.
-        /// </param>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        /// <returns>
-        /// 返回更新后Dictionary列表
-        /// </returns>
-        public static Dictionary<TKey, TValue> AddOrReplace<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value) where TKey : notnull{
-            dict[key] = value;
-            return dict;
-        }
-
-        /// <summary>
         /// 向字典中批量添加键值对
         /// 没有考虑线程安全的问题
         /// </summary>

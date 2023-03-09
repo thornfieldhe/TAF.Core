@@ -27,9 +27,12 @@ public interface IExtension<V>{
 public static class ExtensionGroup{
     private static Dictionary<Type, Type> cache = new ();
 
-    public static T As<T>(this string v) where T : IExtension<string> => As<T, string>(v);
+    public static T As<T>(this string   v) where T : IExtension<string>   => As<T, string>(v);
+    public static T As<T>(this double   v) where T : IExtension<double>   => As<T, double>(v);
+    public static T As<T>(this decimal  v) where T : IExtension<decimal>  => As<T, decimal>(v);
+    public static T As<T>(this DateTime v) where T : IExtension<DateTime> => As<T, DateTime>(v);
 
-    public static T As<T, V>(this V v) where T : IExtension<V>{
+    private static T As<T, V>(this V v) where T : IExtension<V>{
         Type t;
         var  valueType = typeof(T);
         if(cache.ContainsKey(valueType)){

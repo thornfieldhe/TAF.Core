@@ -297,9 +297,10 @@ namespace Taf.Core.Utility
         /// </param>
         /// <param name="action">
         /// </param>
-        public static void Set<T>(this T @this, Action<T> action)
+        public static T Set<T>(this T @this, Action<T> action)
         {
             action(@this);
+            return @this;
         }
 
         /// <summary>
@@ -320,7 +321,7 @@ namespace Taf.Core.Utility
         {
             if (@this == null)
             {
-                return default(TResult);
+                return default;
             }
 
             try
@@ -329,7 +330,7 @@ namespace Taf.Core.Utility
             }
             catch
             {
-                return default(TResult);
+                return default;
             }
         }
 
@@ -355,7 +356,7 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="T"/>.
         /// </returns>
-        public static T SafeValue<T>(this T @this) where T : class, new() => new();
+        public static T SafeValue<T>(this T @this) where T : class, new() => @this ?? new T(); 
 
         /// <summary>
         /// 通过表达式返回对象，对象如果为空则返回默认值
@@ -373,10 +374,10 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="TReturn"/>.
         /// </returns>
-        public static TReturn NullOr<T, TReturn>(
-            this T           @this,
-            Func<T, TReturn> exp,
-            TReturn          elseValue = default(TReturn)) where T : class =>
-            @this != null ? exp(@this) : elseValue;
+        public static T NullOr<T>(
+            this T      @this,
+            T exp)  =>
+            @this != null ? @this : exp;
+        
     }
 }

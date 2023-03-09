@@ -22,9 +22,9 @@ namespace Taf.Core.Test
         public void TestToDateTimeString()
         {
             var date = "2012-01-02 11:11:11";
-            Assert.Equal("201201021111", date.ToDate().ToDateTimeString());
-            Assert.Equal("2012-01-02 11:11", date.ToDate().ToDateTimeString(true));
-            Assert.Equal("2012-01-02 11:11:11", date.ToDate().ToDateTimeString(false));
+            Assert.Equal("201201021111", date.ToDate().As<IDateTimeFormat>().ToDateTimeString());
+            Assert.Equal("2012-01-02 11:11", date.ToDate().As<IDateTimeFormat>().ToDateTimeString(true));
+            Assert.Equal("2012-01-02 11:11:11", date.ToDate().As<IDateTimeFormat>().ToDateTimeString(false));
         }
         
         /// <summary>
@@ -44,7 +44,7 @@ namespace Taf.Core.Test
         public void TestToDateString()
         {
             var date = "2012-01-02";
-            Assert.Equal(date, date.ToDate().ToDateString());
+            Assert.Equal(date, date.ToDate().As<IDateTimeFormat>().ToDateString());
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Taf.Core.Test
         public void TestToTimeString()
         {
             var date = "2012-01-02 11:11:11";
-            Assert.Equal("11:11:11", date.ToDate().ToTimeString());
+            Assert.Equal("11:11:11", date.ToDate().As<IDateTimeFormat>().ToTimeString());
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Taf.Core.Test
         public void TestToMillisecondString()
         {
             var date = "2012-01-02 11:11:11.123";
-            Assert.Equal(date, date.ToDate().ToMillisecondString());
+            Assert.Equal(date, date.ToDate().As<IDateTimeFormat>().ToMillisecondString());
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Taf.Core.Test
         public void TestToChineseDateString()
         {
             var date = "2012-01-02";
-            Assert.Equal("2012年1月2日", date.ToDate().ToChineseDateString());
+            Assert.Equal("2012年1月2日", date.ToDate().As<IDateTimeFormat>().ToChineseDateString());
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Taf.Core.Test
         public void TestToChineseDateTimeString()
         {
             var date = "2012-01-02 11:11:11";
-            Assert.Equal("2012年1月2日 11时11分11秒", date.ToDate().ToChineseDateTimeString());
+            Assert.Equal("2012年1月2日 11时11分11秒", date.ToDate().As<IDateTimeFormat>().ToChineseDateTimeString());
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Taf.Core.Test
         {
             var timeSpan = new DateTime(2015, 1, 1).GetTimeSpan(new DateTime(2015, 1, 2));
 
-            Assert.Equal(timeSpan.Days, 1);
+            Assert.Equal(1, timeSpan.Days);
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Taf.Core.Test
         [Fact]
         public void TestGetCountDaysOfMonth()
         {
-            var days = new DateTime(2015, 1, 1).GetCountDaysOfMonth();
+            var days = new DateTime(2015, 1, 1).As<IDateOfMonth>().GetCountDaysOfMonth();
 
-            Assert.Equal(days, 31);
+            Assert.Equal(31, days);
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestWeekOfYear()
         {
-            var weeks = new DateTime(2015, 1, 6).WeekOfYear();
-            Assert.Equal(weeks, 2);
+            var weeks = new DateTime(2015, 1, 6).As<IDateOfWeek>().WeekOfYear();
+            Assert.Equal(2, weeks);
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace Taf.Core.Test
         [Fact]
         public void TestGetQuarter()
         {
-            var month = new DateTime(2015, 6, 6).GetQuarter();
-            Assert.Equal(month, 2);
+            var month = new DateTime(2015, 6, 6).As<IDateOfMonth>().GetQuarter();
+            Assert.Equal(2, month);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestIsWeekend()
         {
-            var isWeekend = new DateTime(2015, 6, 6).IsWeekend();
+            var isWeekend = new DateTime(2015, 6, 6).As<IDateOfWeek>().IsWeekend();
             Assert.True(isWeekend);
         }
 
@@ -155,7 +155,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToAgo()
         {
-            var toAgo = new DateTime(2025, 6, 6).ToAgo();
+            var toAgo = new DateTime(2025, 6, 6).As<IDateTimeFormat>().ToAgo();
             Assert.Equal("未来", toAgo);
         }
 
@@ -165,9 +165,9 @@ namespace Taf.Core.Test
         [Fact]
         public void TestAddWeekend()
         {
-            var dt1 = new DateTime(2018, 6, 17).AddWeekend(10);
+            var dt1 = new DateTime(2018, 6, 17).As<IDateOfWeek>().AddWeekend(10);
             Assert.Equal(new DateTime(2018,6,29), dt1);
-            var dt2 = new DateTime(2018, 6, 17).AddWeekend(-10);
+            var dt2 = new DateTime(2018, 6, 17).As<IDateOfWeek>().AddWeekend(-10);
             Assert.Equal(new DateTime(2018,6,4), dt2);
         }
 
@@ -188,15 +188,15 @@ namespace Taf.Core.Test
             var date8 = new DateTime(2015, 2, 1);
             var date9 = new DateTime(2015, 1, 29);
 
-            Assert.Equal(date1, date.StartOfDay());
-            Assert.Equal(date2, date.EndOfDay());
-            Assert.Equal(date3, date.NextDay());
-            Assert.Equal(date4, date.Yesterday());
-            Assert.Equal(date5, date.GetFirstDayOfMonth());
-            Assert.Equal(date6, date.GetLastDayOfMonth());
-            Assert.Equal(date7, date.GetFirstDayOfWeek());
-            Assert.Equal(date8, date.GetLastDayOfWeek());
-            Assert.Equal(date9, date.GetWeekday(DayOfWeek.Thursday));
+            Assert.Equal(date1, date.As<IDateOfDay>().StartOfDay());
+            Assert.Equal(date2, date.As<IDateOfDay>().EndOfDay());
+            Assert.Equal(date3, date.As<IDateOfDay>().NextDay());
+            Assert.Equal(date4, date.As<IDateOfDay>().Yesterday());
+            Assert.Equal(date5, date.As<IDateOfMonth>().GetFirstDayOfMonth());
+            Assert.Equal(date6, date.As<IDateOfMonth>().GetLastDayOfMonth());
+            Assert.Equal(date7, date.As<IDateOfWeek>().GetFirstDayOfWeek());
+            Assert.Equal(date8, date.As<IDateOfWeek>().GetLastDayOfWeek());
+            Assert.Equal(date9, date.As<IDateOfWeek>().GetWeekday(DayOfWeek.Thursday));
         }
     }
 }

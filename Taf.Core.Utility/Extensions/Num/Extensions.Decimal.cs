@@ -78,67 +78,6 @@ namespace Taf.Core.Utility
         }
 
         /// <summary>
-        /// 获取格式化字符串：x.xx
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <param name="defaultValue">
-        /// 空值显示的默认文本
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string Format(this decimal number, string defaultValue = "") => number == 0 ? defaultValue : string.Format("{0:0.##}", number);
-
-        /// <summary>
-        /// 获取格式化字符串
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <param name="defaultValue">
-        /// 空值显示的默认文本
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string Format(this decimal? number, string defaultValue = "") => Format(number.SafeValue(), defaultValue);
-
-        /// <summary>
-        /// 获取格式化字符串, ￥xx
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatRmb(this decimal number) => number == 0 ? "￥0" : string.Format("￥{0:0.##}", number);
-
-        /// <summary>
-        /// 获取格式化字符串, ￥xx
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatRmb(this decimal? number) => FormatRmb(number.SafeValue());
-
-        /// <summary>
-        /// 获取格式化字符串,x.xx%
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatPercent(this decimal? number,int sd=0) => FormatPercent(number.SafeValue(),sd);
-
-        /// <summary>
         /// 移除尾随0
         /// </summary>
         /// <param name="value">
@@ -167,15 +106,6 @@ namespace Taf.Core.Utility
 
             return result;
         }
-        
-        /// <summary>
-        /// 把Decimal表示为科学计数法的字符串
-        /// </summary>
-        /// <param name="v">数值</param>
-        /// <param name="sd">有效位数</param>
-        /// <returns></returns>
-        public static string FormatScience(this decimal v, int sd=3) => v.ToString("E" + sd.ToString());
-
-        public static string FormatPercent(this decimal v, int sd =2) => v.ToString("P" + sd.ToString());
+   
     }
 }

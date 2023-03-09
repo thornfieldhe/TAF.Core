@@ -553,7 +553,7 @@ namespace Taf.Core.Utility{
         /// <returns></returns>
         public static double ToDouble(string strValue, double defaultValue = default(double)){
             double x;
-            if(Double.TryParse(strValue, out x))
+            if(double.TryParse(strValue, out x))
                 return x;
             return defaultValue;
         }

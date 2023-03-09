@@ -20,28 +20,6 @@ namespace Taf.Core.Utility
     public partial class Extensions
     {
         /// <summary>
-        /// 遍历执行
-        /// </summary>
-        /// <typeparam name="T">
-        /// </typeparam>
-        /// <param name="this">
-        /// </param>
-        /// <param name="action">
-        /// </param>
-        public static void ForEach<T>(this IEnumerable<T>? @this, Action<T> action)
-        {
-            if (@this == null)
-            {
-                return;
-            }
-
-            foreach (var item in @this)
-            {
-                action(item);
-            }
-        }
-
-        /// <summary>
         /// 随机取出列表中的一项
         /// </summary>
         /// <typeparam name="T">

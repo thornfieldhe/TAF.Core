@@ -23,10 +23,11 @@ public class ObjectExtensionTest{
     /// </summary>
     [Fact]
     public void TestSet(){
-        User user = null;
+        User user = new User();
         user.SafeValue().Set(u => u.Name = "xxx");
-        user = null;
-        Assert.Equal(user.NullOr(u => u.Name), null);
+        Assert.Equal("xxx", user.Name.NullOr( "abc"));
+        user.Name=null;
+        Assert.Equal("abc", user.Name.NullOr( "abc"));
     } 
     
     /// <summary>

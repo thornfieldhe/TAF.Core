@@ -73,126 +73,17 @@ namespace Taf.Core.Utility{
             return obj > min && obj < max;
         }
 
-        /// <summary>
-        /// 获取格式化字符串x.xx
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <param name="defaultValue">
-        /// 空值显示的默认文本
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string Format(this double number, string defaultValue = "") =>
-            number == 0 ? defaultValue : string.Format("{0:0.##}", number);
-
-        /// <summary>
-        /// 获取格式化字符串
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <param name="defaultValue">
-        /// 空值显示的默认文本
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string Format(this double? number, string defaultValue = "") =>
-            Format(number.SafeValue(), defaultValue);
-
-        /// <summary>
-        /// 获取格式化字符串,x.xx%
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatPercent(this double number) =>
-            number == 0 ? string.Empty : string.Format("{0:0.##}%", number);
-
-        /// <summary>
-        /// 获取格式化字符串,带%
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatPercent(this double? number, int sd = 2) => FormatPercent(number.SafeValue(), sd);
-
-        /// <summary>
-        /// 转换成科学计数法
-        /// </summary>
-        /// <param name="v"></param>
-        /// <param name="sd"></param>
-        /// <returns></returns>
-        public static string FormatScience(this double v, int sd = 3){
-            if(v == 0) return "0";
-            var result = v.ToString();
-            if(result.Contains("E")){
-                var index      = result.IndexOf('.');
-                var indexE     = result.IndexOf("E", StringComparison.Ordinal);
-                var replaceStr = result.Substring(index + 1, indexE - index - 1);
-                if(replaceStr.Length > sd){
-                    var firstStr = result.Substring(0, index + 1);
-                    var lastStr  = result.Substring(indexE);
-                    var delStr   = replaceStr.Substring(0, sd);
-                    if(double.TryParse(firstStr + delStr + lastStr, out v)){
-                        result = v.ToString();
-                    }
-                }
-            } else if(result.Contains(".")){
-                var index = result.IndexOf('.');
-                if(index <= 1 && v     < 1){
-                    //是小于1的数字
-                    if(v < Math.Pow(10, -sd)){
-                        result = v.ToString("E" + sd);
-                        var resultG = result.Split("E-");
-                        result = resultG[0] + "E-" + resultG[1].PadLeft(sd,'0');
-                    } else if(result.Substring(index + 1).Length > sd){
-                        result = Math.Round(v, sd).ToString();
-                    }
-                } else if(result.Substring(0, index).Length > sd+1){
-                    result = v.ToString("E" + sd);
-                    var resultG = result.Split("E+");
-                    result = resultG[0] + "E+" + resultG[1].PadLeft(sd,'0');
-                } else if(result.Substring(index + 1).Length > sd){
-                    result = Math.Round(v, sd).ToString();
-                }
-            } else if(result.Length > sd+1){
-                result = v.ToString("E" + sd);
-                var resultG = result.Split("E+");
-                result = resultG[0] + "E+" + resultG[1].PadLeft(sd,'0');
-            }
-
-            return result;
-        }
-
-
     #region Math
-
-        /// <summary>
-        /// 求平方
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static double Sqr(this double self) => self * self;
-
-        /// <summary>
-        /// 求对数
-        /// </summary>
-        /// <param name="self"></param>
-        /// <returns></returns>
-        public static double Ln(this double self) => Math.Log(self, Math.E);
 
         private const double PrecisionDiff = 0.0000000001D;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="dest"></param>
+        /// <param name="diffPre">允许误差范围小数位</param>
+        /// <returns>如果 diff=2,则比较的两个数在0.01两位小数上一致则一致,否则0.0000000001D一致</returns>
         public static bool EqualsEx(this double self, double dest, double diffPre = PrecisionDiff){
             var diff = Math.Abs(self - dest);
             return diff < diffPre;

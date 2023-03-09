@@ -336,21 +336,16 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IList<Tuple<string, string>> GetMembers<T>()
-        {
-            var result = new List<Tuple<string, string>>();
-            var type = typeof(T);
+        public static IList<Tuple<string, string>> GetMembers<T>(){
+            var result  = new List<Tuple<string, string>>();
+            var type    = typeof(T);
             var members = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             members.IfNotNull(
-                              r =>
-                              {
-                                  r.ForEach(
-                                            i =>
-                                            {
-                                                result.Add(new Tuple<string, string>(i.Name, i.PropertyType.Name));
-
-                                            });
-                              });
+                r => {
+                    foreach(var i in r){
+                        result.Add(new Tuple<string, string>(i.Name, i.PropertyType.Name));
+                    }
+                });
             return result;
         }
 
