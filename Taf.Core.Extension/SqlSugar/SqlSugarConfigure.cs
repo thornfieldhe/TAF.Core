@@ -28,7 +28,7 @@ using System;
 /// sqlsugar config 
 /// </summary>
 public static class SqlSugarConfigure{
-    public static ConfigureExternalServices GetDefaultConfig() =>
+    public static ConfigureExternalServices GetDefaultConfig(bool isDisabledUpdateAll=false) =>
         new(){
             EntityService = (c, p) => {
                 if(c.PropertyType.IsGenericType
@@ -68,7 +68,7 @@ public static class SqlSugarConfigure{
                         $"business_{PluralizationService.CreateService(new CultureInfo("en")).Pluralize(type.Name).As<IStringFormat>().ToUnderLine()}";
                 }
 
-                entity.IsDisabledUpdateAll = true;
+                entity.IsDisabledUpdateAll = isDisabledUpdateAll;
             }
         };
 
@@ -94,6 +94,7 @@ public static class SqlSugarConfigure{
         }
 
         db.CodeFirst.SetStringDefaultLength(200).InitTables(types.ToArray());
+        
         var diffString = db.CodeFirst.GetDifferenceTables(types.ToArray()).ToDiffString();
         System.Console.WriteLine(diffString);
         Trace.TraceInformation("init database complited !");

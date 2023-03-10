@@ -8,6 +8,8 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Serilog;
+using Serilog.Exceptions;
+using Serilog.Extensions;
 using System.Collections.Generic;
 
 // 何翔华
@@ -36,6 +38,7 @@ public class LogingBuilderExt{
                     .MinimumLevel.Information()
                  #endif
                     .Enrich.FromLogContext()
+                    .Enrich.WithExceptionDetails()
                     .WriteTo.Console(outputTemplate: outputTemplate)
                  #if !DEBUG
                     .WriteTo.File("logs/app.log"

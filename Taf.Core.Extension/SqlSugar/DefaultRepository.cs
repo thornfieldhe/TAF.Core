@@ -26,8 +26,11 @@ public interface IRepository<T> where T : DbEntity, new(){
     Task<TR> FindAsync<TR>(Guid id);
 
     Task<List<TR>> GetAllListAsync<TR>(Expression<Func<T, bool>>     whereExpression);
-    Task<TR>       FirstOrDefaultAsync<TR>(Expression<Func<T, bool>> whereExpression);
-    Task<int>      CountAsync(Expression<Func<T, bool>>              whereExpression);
+
+    ISugarQueryable<T> GetAllAsQueryable<T>(Expression<Func<T, bool>>    whereExpression);
+    
+    Task<TR>           FirstOrDefaultAsync<TR>(Expression<Func<T, bool>> whereExpression);
+    Task<int>          CountAsync(Expression<Func<T, bool>>              whereExpression);
 
     Task<bool> InsertAsync(T                            item);
     Task<bool> UpdateAsync(T                            item);
@@ -71,6 +74,9 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
 
     public virtual async Task<List<TR>> GetAllListAsync<TR>(Expression<Func<T, bool>> whereExpression) =>
         (await Db.Queryable<T>().Where(whereExpression).ToListAsync()).Select(r => Mapper.Map<TR>(r)).ToList();
+
+    public virtual  ISugarQueryable<T> GetAllAsQueryable<T>(Expression<Func<T, bool>> whereExpression) =>
+        Db.Queryable<T>().Where(whereExpression);
 
     /// <summary>
     /// 使用Map映射Dto对象
