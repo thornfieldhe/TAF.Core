@@ -37,8 +37,8 @@ public static class LocalConfigurationBuilderExt{
         return builder;
     }
     
-    public static void AddLocalConfiguration(this ConfigureWebHostBuilder builder)=>
-        builder.ConfigureAppConfiguration((contex, configBuilder)=> {
+    public static void AddLocalConfiguration(this ConfigureWebHostBuilder host) =>
+        host.ConfigureAppConfiguration((contex, configBuilder)=> {
             configBuilder.AddLocalConfiguration(contex.HostingEnvironment.EnvironmentName, true); //注入本地配置
         });
 }

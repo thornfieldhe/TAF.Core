@@ -20,7 +20,7 @@ using Taf.Core.Extension;
 // Taf.Core.Web
 // SqlSugarBuilderExt.cs
 
-namespace Taf.Core.Web.SqlSugar;
+namespace Taf.Core.Web;
 
 using System;
 
@@ -38,11 +38,17 @@ public static class SqlSugarBuilderExt{
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <param name="dbName"></param>
-    public static void UseSqlsugarForMySQL(this WebApplicationBuilder app, string dbName = "MainConnection"){
+    public static void AddMySql<DbContex>(
+        this WebApplicationBuilder builder
+      , Type[]                     entityTypes
+      , List<IDataSeedContributor> contributors
+      , string                     dbName              = "MainConnection"
+      , bool                       isDisabledUpdateAll = true) where DbContex : TafDbContext, new(){
+        var connection = builder.Configuration.GetConnectionString(dbName);
         var sqlSugar = new SqlSugarScope(
             new ConnectionConfig(){
                 DbType                    = DbType.MySql
-              , ConnectionString          = app.Configuration.GetConnectionString(dbName)
+              , ConnectionString          = connection
               , IsAutoCloseConnection     = true
               , ConfigureExternalServices = SqlSugarConfigure.GetDefaultConfig()
             }
@@ -93,12 +99,26 @@ public static class SqlSugarBuilderExt{
                 };
             });
 
-        app.Services.AddSingleton<ISqlSugarClient>(sqlSugar);
+        ISugarUnitOfWork<DbContex> context = new SugarUnitOfWork<DbContex>(sqlSugar);
+
+        builder.Services.AddSingleton<ISugarUnitOfWork<DbContex>>(context);
+        Seed(context.CreateContext(),contributors);
+        SqlSugarConfigure.InitDatabase(connection, isDisabledUpdateAll, entityTypes);
         Log.Information("sqlSugar init Complited !");
     }
 
     private static void BindQueryFilter(ISqlSugarClient db){
         db.QueryFilter.AddTableFilter<ISoftDelete>(it => it.IsDeleted == false);
     }
+    
+    private static void Seed( TafDbContext dbContext, List<IDataSeedContributor> contributors){
+        var keys =  dbContext.DataSeedContributors.GetAllAsQueryable(s => true).Select(r => r.Key).ToArray();
+        foreach(var contributor in contributors){
+            if(!keys.Contains(contributor.Key)){
+                contributor.Seed(dbContext);
+            }
+        }
 
+        dbContext.Commit(); //使用事务一定要记得写提交
+    }
 }

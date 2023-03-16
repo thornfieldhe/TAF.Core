@@ -1,47 +1,13 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DefaultRepository.cs" company="" author="何翔华">
-//   
-// </copyright>
-// <summary>
-//   
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿// 何翔华
+// Taf.Core.Extension
+// Repository.cs
 
-using Mapster;
 using MapsterMapper;
 using SqlSugar;
-using System.Data.Common;
 using System.Linq.Expressions;
 using Taf.Core.Utility;
 
-// 何翔华
-// Taf.Core.Net.Utility
-// DefaultRepository.cs
-
 namespace Taf.Core.Extension;
-
-public interface IRepository<T> where T : DbEntity, new(){
-    ISqlSugarClient GetDbContex();
-
-    Task<TR> FindAsync<TR>(Guid id);
-
-    Task<List<TR>> GetAllListAsync<TR>(Expression<Func<T, bool>>     whereExpression);
-
-    ISugarQueryable<T> GetAllAsQueryable<T>(Expression<Func<T, bool>>    whereExpression);
-    
-    Task<TR>           FirstOrDefaultAsync<TR>(Expression<Func<T, bool>> whereExpression);
-    Task<int>          CountAsync(Expression<Func<T, bool>>              whereExpression);
-
-    Task<bool> InsertAsync(T                            item);
-    Task<bool> UpdateAsync(T                            item);
-    Task<bool> SaveAsync<TR>(TR                         item) where TR : IDto;
-    Task<bool> DeleteAsync(T                            item);
-    Task<bool> DeleteAsync(Guid                         id);
-    Task       DeleteAllAsync(Expression<Func<T, bool>> whereExpression);
-
-
-    Task<PagedResultDto<TR>> Page<TR>(PagedAndSortedResultRequestDto query, Expression<Func<T, bool>> whereExpression);
-}
 
 /// <summary>
 ///基础仓储 
@@ -75,7 +41,7 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
     public virtual async Task<List<TR>> GetAllListAsync<TR>(Expression<Func<T, bool>> whereExpression) =>
         (await Db.Queryable<T>().Where(whereExpression).ToListAsync()).Select(r => Mapper.Map<TR>(r)).ToList();
 
-    public virtual  ISugarQueryable<T> GetAllAsQueryable<T>(Expression<Func<T, bool>> whereExpression) =>
+    public virtual ISugarQueryable<T> GetAllAsQueryable(Expression<Func<T, bool>> whereExpression) =>
         Db.Queryable<T>().Where(whereExpression);
 
     /// <summary>
@@ -169,21 +135,4 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
     public async Task<bool> DeleteAsync(T item) => await DeleteAsync(item.Id);
 
 #endregion
-}
-
-public static class SqlSugarRepositoryExtend{
-    public static async Task<bool> ExcuteDeleteAsync<T>(this IDeleteable<T> deleteable) where T : DbEntity, new(){
-        var result = 0;
-        if(typeof(T) is ISoftDelete){
-            result = await deleteable.IsLogic()
-                                     .ExecuteCommandAsync(nameof(ISoftDelete.IsDeleted), DateTime.UtcNow
-                                                        , nameof(ISoftDelete.DeletionTime));
-        } else{
-            result = await deleteable.ExecuteCommandAsync();
-        }
-
-        return result > 0;
-    }
-    
-   
 }

@@ -23,7 +23,7 @@ namespace Taf.Core.Web;
 /// 种子生产接口
 /// </summary>
 public interface IDataSeedContributor{
-    Task SeedAsync();
+    void Seed(TafDbContext dbContext);
+
+    string Key{ get; }
 }
-
-

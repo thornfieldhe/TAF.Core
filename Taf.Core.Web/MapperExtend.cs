@@ -29,7 +29,7 @@ public static class MapperExtend{
     /// </summary>
     /// <param name="services"></param>
     /// <param name="addMap"></param>
-    public static void AddMap(this IServiceCollection services, Action<TypeAdapterConfig> addMap){
+    public static void AddEntityMap(this IServiceCollection services, Action<TypeAdapterConfig> addMap){
         var config = new TypeAdapterConfig();
         addMap.IfNotNull((s) => s(config));
         services.AddSingleton(config);

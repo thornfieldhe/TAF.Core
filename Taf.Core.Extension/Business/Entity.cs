@@ -34,7 +34,10 @@ public abstract class DbEntity : Entity, IEntity{
 /// </summary>
 [Serializable]
 public abstract class Entity : Entity<Guid>, IEntity{
-    protected Entity() => Id = GuidGanerator.NextGuid();
+    protected Entity(){
+        Id               = GuidGanerator.NextGuid();
+        ConcurrencyStamp = Randoms.GetRandomCode(6);
+    }
 }
 
 /// <summary>

@@ -8,25 +8,11 @@ using Taf.Core.Extension;
 namespace Taf.Core.Web;
 
 public abstract class DefaultDataSeedContributor : IDataSeedContributor{
-    private readonly   ILogger         _logger;
-    protected readonly ISqlSugarClient _sqlSugarClient;
+    public             string Key => GetType().Name;
+    protected abstract void   Excute();
 
-    protected DefaultDataSeedContributor(ILogger logger, ISqlSugarClient sqlSugarClient){
-        _logger         = logger;
-        _sqlSugarClient = sqlSugarClient;
-    }
-
-    private string _key => GetType().Name;
-
-    protected abstract void Excute();
-
-    public async Task SeedAsync(){
-        try{
-            if(!await _sqlSugarClient.Queryable<DataSeedContributor>().AnyAsync(r => r.Key == _key.Trim().ToLower())){
-                Excute();
-                _sqlSugarClient.Insertable<DataSeedContributor>(new DataSeedContributor{ Key = _key })
-                               .ExecuteCommandAsync();
-            }
-        } catch(Exception e){ }
+    public void Seed(TafDbContext dbContext){
+        Excute();
+        dbContext.DataSeedContributors.Insert(new DataSeedContributor{ Key = Key });
     }
 }

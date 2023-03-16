@@ -77,26 +77,20 @@ public static class SqlSugarConfigure{
     /// 初始化数据库
     /// </summary>
     /// <param name="assemblyFiles"></param>
-    public static void InitDatabase(string connection, params string[] assemblyFiles){
+    public static void InitDatabase(string connection,bool isDisabledUpdateAll=true,params Type[] types){
         var db = new SqlSugarClient(new ConnectionConfig{
             ConnectionString          = connection
           , DbType                    = DbType.MySql //必填   
           , IsAutoCloseConnection     = true
-          , ConfigureExternalServices = GetDefaultConfig()
+          , ConfigureExternalServices = GetDefaultConfig(isDisabledUpdateAll)
         });
 
-        db.DbMaintenance.CreateDatabase();
-        var types = new List<Type>();
-        foreach(var assemblyFile in assemblyFiles){
-            types.AddRange(Assembly
-                          .LoadFrom(assemblyFile)
-                          .GetTypes().Where(s => typeof(DbEntity).IsAssignableFrom(s)));
-        }
-
         db.CodeFirst.SetStringDefaultLength(200).InitTables(types.ToArray());
-        
-        var diffString = db.CodeFirst.GetDifferenceTables(types.ToArray()).ToDiffString();
-        System.Console.WriteLine(diffString);
+        db.DbMaintenance.CreateDatabase();
+            var diffString = db.CodeFirst.GetDifferenceTables(types.ToArray()).ToDiffString();
+            System.Console.WriteLine(diffString);
+
+       
         Trace.TraceInformation("init database complited !");
     }
 

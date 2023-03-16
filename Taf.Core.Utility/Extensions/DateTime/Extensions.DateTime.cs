@@ -83,5 +83,16 @@ namespace Taf.Core.Utility{
 
             throw new NotSupportedException("不支持该字符串格式转成时间");
         }
+        
+        /// <summary>
+        /// 将c# DateTime时间格式转换为Unix时间戳格式  
+        /// </summary>
+        /// <returns></returns>
+        public static string ConvertDateTimeToInt(this DateTime time)
+        {
+            var startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0, 0));
+            var t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位    
+            return t.ToString();
+        }
     }
 }
