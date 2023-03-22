@@ -12,5 +12,11 @@ public static class ConfigurationKey{
     /// 是否启用加密保存
     /// </summary>
     public static string IsEncrypted => "IsEncrypted";
+    
+
+    /// <summary>
+    /// Dapr远程配置
+    /// </summary>
+    public static string DaprConfigKeys => "DaprConfigKeys";
 
 }

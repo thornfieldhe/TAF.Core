@@ -24,7 +24,7 @@ namespace Taf.Core.Web
           /// </summary>
           /// <param name="application"></param>
           /// <returns></returns>
-          public static WebApplication UseHealthCheck(this WebApplication application) => UseHealthCheck(application, new PathString("/health"));
+          public static WebApplication UseHealthCheck(this WebApplication application,string serviceName) => UseHealthCheck(application,serviceName, new PathString("/health"));
 
           /// <summary>
           /// 
@@ -32,7 +32,7 @@ namespace Taf.Core.Web
           /// <param name="webApplication"></param>
           /// <param name="path"></param>
           /// <returns></returns>
-          private static WebApplication UseHealthCheck(this WebApplication webApplication, PathString path)
+          private static WebApplication UseHealthCheck(this WebApplication webApplication,string serviceName, PathString path)
           {
               webApplication.MapGet(path, 
                                          (context) => {
@@ -43,7 +43,8 @@ namespace Taf.Core.Web
                                                                     == System.Net.Sockets.AddressFamily.InterNetwork)
                                                       ?.ToString();
                                              context.Response.StatusCode = 200;
-                                             return context.Response.WriteAsync($"{host}:healthy");
+                                             context.Response.Headers.Add("Content-Type","text/ plain;charset=utf-8");
+                                             return context.Response.WriteAsync($"[{serviceName}]{host}:healthy");
                                          });
               return webApplication;
           }
