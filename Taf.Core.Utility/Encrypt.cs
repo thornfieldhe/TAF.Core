@@ -54,7 +54,7 @@ namespace Taf.Core.Utility{
         public static string DesEncrypt(string strText){
             byte[] iv ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
-            var byKey          = Encoding.UTF8.GetBytes(EncrKey);
+            var byKey          = Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8));
             var des            = new DESCryptoServiceProvider();
             var inputByteArray = Encoding.UTF8.GetBytes(strText);
             var ms             = new MemoryStream();

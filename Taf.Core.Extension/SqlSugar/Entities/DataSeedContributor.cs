@@ -21,6 +21,7 @@ using System;
 /// <summary>
 /// 数据库初始种子 
 /// </summary>
+[SugarTable("sys_dataSeedContributors", IsCreateTableFiledSort =true)]
 public class DataSeedContributor : DbEntity{
     public DataSeedContributor(){ }
 

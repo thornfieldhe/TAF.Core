@@ -16,20 +16,20 @@ using System.Collections.Generic;
 // Taf.Core.Web
 // LogingBuilderExr.cs
 
-namespace Taf.Core.Web.Loging;
+namespace Taf.Core.Web;
 
 using System;
 
 /// <summary>
 /// $Summary$
 /// </summary>
-public class LogingBuilderExt{
+public static class LogingBuilderExt{
    
     /// <summary>
     /// 添加日志配置,需要在SqlSugar之前注入
     /// </summary>
     /// <param name="host"></param>
-    public static void UseLogger(IHostBuilder host){
+    public static void AddLogger(this WebApplicationBuilder host){
         const string outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
         Log.Logger = new LoggerConfiguration()
                  #if DEBUG
@@ -46,6 +46,6 @@ public class LogingBuilderExt{
                             , outputTemplate: outputTemplate)
                  #endif
                     .CreateLogger();
-        host.UseSerilog(Log.Logger);
+        host.Logging.AddSerilog(Log.Logger);
     } 
 }

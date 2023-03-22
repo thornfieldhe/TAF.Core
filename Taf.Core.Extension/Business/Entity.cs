@@ -33,10 +33,9 @@ public abstract class DbEntity : Entity, IEntity{
 /// A shortcut of <see cref="Entity{TPrimaryKey}"/> for most used primary key type (<see cref="int"/>).
 /// </summary>
 [Serializable]
-public abstract class Entity : Entity<Guid>, IEntity{
+public  class Entity : Entity<Guid>, IEntity{
     protected Entity(){
         Id               = GuidGanerator.NextGuid();
-        ConcurrencyStamp = Randoms.GetRandomCode(6);
     }
 }
 
@@ -50,7 +49,7 @@ public abstract class Entity<TPrimaryKey> : IEntity<TPrimaryKey>{
     /// <summary>
     /// Unique identifier for this entity.
     /// </summary>
-    [SugarColumn(CreateTableFieldSort = -1)]
+    [SugarColumn(IsPrimaryKey = true,CreateTableFieldSort = -1)]
     public virtual TPrimaryKey Id{ get; set; }
 
 

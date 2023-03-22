@@ -18,7 +18,7 @@ using System.Linq.Expressions;
 
 namespace Taf.Core.Extension;
 
-public interface IRepository<T> where T : DbEntity, new(){
+public interface IRepository<T> where T : DbEntity{
     ISqlSugarClient GetDbContex();
 
     Task<TR> FindAsync<TR>(Guid id);

@@ -88,7 +88,7 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
 
 #region insert
 
-    public virtual async Task<bool> InsertAsync(T item) => await Db.Insertable<T>(item).ExecuteCommandAsync() == 1;
+    public virtual async Task<bool> InsertAsync(T item) => await Db.Insertable(item).ExecuteCommandAsync()==1;
 
 #endregion
 
@@ -96,9 +96,9 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
 
     public virtual async Task<bool> UpdateAsync(T item){
         var concurrencyStamp = item.ConcurrencyStamp;
-        return (await Db.Updateable<T>(item).Where(i => i.Id == item.Id && i.ConcurrencyStamp == concurrencyStamp)
-                        .ExecuteCommandAsync())
-            == 1;
+        return await Db.Updateable(item)
+                        .Where(i => i.Id == item.Id && i.ConcurrencyStamp == concurrencyStamp)
+                        .ExecuteCommandAsync()==1;
     }
 
 #endregion

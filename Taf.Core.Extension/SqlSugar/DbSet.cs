@@ -3,6 +3,7 @@
 // DbSet.cs
 
 using MapsterMapper;
+using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System.Linq.Expressions;
 using Taf.Core.Utility;
@@ -16,9 +17,9 @@ namespace Taf.Core.Extension;
 public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(){
     protected readonly IMapper Mapper;
 
-    public DbSet(IMapper mapper) => Mapper = mapper;
 
-    public DbSet(){ }
+
+    public DbSet() => Mapper = ServiceLocator.Instance.ServiceProvider.GetService<IMapper>();
 
 #region query
 
@@ -68,7 +69,7 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
         RefAsync<int> total = 0;
         var orderByFileName =
             Context.EntityMaintenance.GetDbColumnName<T>(string.IsNullOrWhiteSpace(query.Sorting)
-                                                             ? "CreationTime"
+                                                             ? "Id"
                                                              : query.Sorting);
         var isAsc = false;
         query.Asc.HasValue.IfTrue(() => isAsc = query.Asc.Value);
@@ -87,7 +88,7 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
 
 #region insert
 
-    public virtual async Task<bool> InsertAsync(T item) => await Context.Insertable<T>(item).ExecuteCommandAsync() == 1;
+    public virtual async Task<bool> InsertAsync(T item) => await Context.Insertable<T>(item).ExecuteCommandAsync()==1;
 
 #endregion
 
@@ -95,9 +96,8 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
 
     public virtual async Task<bool> UpdateAsync(T item){
         var concurrencyStamp = item.ConcurrencyStamp;
-        return (await Context.Updateable<T>(item).Where(i => i.Id == item.Id && i.ConcurrencyStamp == concurrencyStamp)
-                             .ExecuteCommandAsync())
-            == 1;
+        return await Context.Updateable<T>(item).Where(i => i.Id == item.Id && i.ConcurrencyStamp == concurrencyStamp)
+                             .ExecuteCommandAsync()==1;
     }
 
 #endregion

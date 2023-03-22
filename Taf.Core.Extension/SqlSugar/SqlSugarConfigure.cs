@@ -76,8 +76,9 @@ public static class SqlSugarConfigure{
     /// <summary>
     /// 初始化数据库
     /// </summary>
+    /// <param name="isDisabledUpdateAll">是否允许更新表结构</param>
     /// <param name="assemblyFiles"></param>
-    public static void InitDatabase(string connection,bool isDisabledUpdateAll=true,params Type[] types){
+    public static void InitDatabase(string connection, List<Type> types, bool isDisabledUpdateAll =false){
         var db = new SqlSugarClient(new ConnectionConfig{
             ConnectionString          = connection
           , DbType                    = DbType.MySql //必填   

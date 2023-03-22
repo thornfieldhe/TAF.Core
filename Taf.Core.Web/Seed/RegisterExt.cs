@@ -21,7 +21,7 @@ public static class RegisterExt{
                 if(typeof(DbEntity).IsAssignableFrom(type)
                 && !type.IsAbstract){
                     DbEntityTypes.Add(type); //数据库对象
-                } else if(typeof(IDataSeedContributor).IsAssignableFrom(type)){
+                } else if(typeof(IDataSeedContributor).IsAssignableFrom(type) && !type.IsAbstract){
                     DataSeedContributors.Add(System.Activator.CreateInstance(type) as IDataSeedContributor); // 种子对象
                 }
             }

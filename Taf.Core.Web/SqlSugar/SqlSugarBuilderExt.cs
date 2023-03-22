@@ -15,6 +15,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
 using Taf.Core.Extension;
+using Taf.Core.Utility;
 
 // 何翔华
 // Taf.Core.Web
@@ -28,7 +29,6 @@ using System;
 /// 添加默认启动配置
 /// </summary>
 public static class SqlSugarBuilderExt{
-    private static List<Type>                    entityTypes;
     private static List<TableFilterItem<object>> QueryFilters = new(); //默认数据库过滤器
     private static object                        _locker      = new(); //锁
 
@@ -40,10 +40,9 @@ public static class SqlSugarBuilderExt{
     /// <param name="dbName"></param>
     public static void AddMySql<DbContex>(
         this WebApplicationBuilder builder
-      , Type[]                     entityTypes
-      , List<IDataSeedContributor> contributors
-      , string                     dbName              = "MainConnection"
-      , bool                       isDisabledUpdateAll = true) where DbContex : TafDbContext, new(){
+      , List<Type>                 dbEntitTypes
+      , string                     dbName = "MainConnection"
+      ) where DbContex : TafDbContext, new(){
         var connection = builder.Configuration.GetConnectionString(dbName);
         var sqlSugar = new SqlSugarScope(
             new ConnectionConfig(){
@@ -66,18 +65,27 @@ public static class SqlSugarBuilderExt{
                     //inset生效
                     if(entityInfo.PropertyName  == "CreationTime"
                     && entityInfo.OperationType == DataFilterType.InsertByObject){
-                        entityInfo.SetValue(DateTime.Now); //修改CreateTime字段
+                        entityInfo.SetValue(DateTime.UtcNow); //修改CreateTime字段
                     }
 
                     //update生效        
                     if(entityInfo.PropertyName  == "LastModificationTime"
                     && entityInfo.OperationType == DataFilterType.UpdateByObject){
-                        entityInfo.SetValue(DateTime.Now); //修改UpdateTime字段
+                        entityInfo.SetValue(DateTime.UtcNow); //修改UpdateTime字段
                     }
 
-                    //insert,update生效        
+                    //insert,update,delete生效        
                     if(entityInfo.PropertyName == "ConcurrencyStamp"){
                         entityInfo.SetValue(GuidGanerator.NextGuid().ToString("N")); //修改时间戳字段
+                    }
+                    //delete生效        
+                    if(entityInfo.PropertyName  == "IsDeleted" 
+                    &&  entityInfo.OperationType==DataFilterType.DeleteByObject){
+                        entityInfo.SetValue(true); //修改IsDeleted字段
+                    }    
+                    if(entityInfo.PropertyName  == "DeletionTime" 
+                    &&  entityInfo.OperationType==DataFilterType.DeleteByObject){
+                        entityInfo.SetValue(DateTime.UtcNow); //修改DeletionTime字段
                     }
                 };
 
@@ -100,25 +108,19 @@ public static class SqlSugarBuilderExt{
             });
 
         ISugarUnitOfWork<DbContex> context = new SugarUnitOfWork<DbContex>(sqlSugar);
-
         builder.Services.AddSingleton<ISugarUnitOfWork<DbContex>>(context);
-        Seed(context.CreateContext(),contributors);
-        SqlSugarConfigure.InitDatabase(connection, isDisabledUpdateAll, entityTypes);
+        builder.Services.AddSingleton<ISqlSugarClient>(sqlSugar);
+        
+        var defaultEntityTypes = typeof(IRepository<DbEntity>).AssemblyQualifiedName;
+        foreach(var entityType in dbEntitTypes){
+            var typeName = defaultEntityTypes.ToStr().As<IStringReg>().ReplaceReg(@"\[\[.*?\]\]", $"[[{entityType.AssemblyQualifiedName}]]", 0);
+            builder.Services.AddTransient(Type.GetType(typeName)
+                                        , Type.GetType(typeName.Replace("IRepository", "Repository")));
+        }
         Log.Information("sqlSugar init Complited !");
     }
 
     private static void BindQueryFilter(ISqlSugarClient db){
         db.QueryFilter.AddTableFilter<ISoftDelete>(it => it.IsDeleted == false);
-    }
-    
-    private static void Seed( TafDbContext dbContext, List<IDataSeedContributor> contributors){
-        var keys =  dbContext.DataSeedContributors.GetAllAsQueryable(s => true).Select(r => r.Key).ToArray();
-        foreach(var contributor in contributors){
-            if(!keys.Contains(contributor.Key)){
-                contributor.Seed(dbContext);
-            }
-        }
-
-        dbContext.Commit(); //使用事务一定要记得写提交
     }
 }

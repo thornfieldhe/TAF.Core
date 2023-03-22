@@ -16,9 +16,9 @@ public static class SqlSugarRepositoryExtend{
     /// <returns></returns>
     public static async Task<bool> ExcuteDeleteAsync<T>(this IDeleteable<T> deleteable) where T : DbEntity, new(){
         var result = 0;
-        if(typeof(T) is ISoftDelete){
+        if(typeof(ISoftDelete).IsAssignableFrom(typeof(T))){
             result = await deleteable.IsLogic()
-                                     .ExecuteCommandAsync(nameof(ISoftDelete.IsDeleted), DateTime.UtcNow
+                                     .ExecuteCommandAsync(nameof(ISoftDelete.IsDeleted), true
                                                         , nameof(ISoftDelete.DeletionTime));
         } else{
             result = await deleteable.ExecuteCommandAsync();
