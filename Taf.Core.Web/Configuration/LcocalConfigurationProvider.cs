@@ -7,12 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Dapr.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
-using System.Text;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -40,6 +38,7 @@ public class LcocalConfigurationProvider : JsonConfigurationProvider{
             }
         }
     }
+    
 
     public override void Set(string key, string? value){
         if(IsEncrypted()){
@@ -49,42 +48,12 @@ public class LcocalConfigurationProvider : JsonConfigurationProvider{
         }
     }
 
-    private bool IsEncrypted() =>
-        Data.TryGetValue(ConfigurationKey.IsEncrypted, out var encryptedValue)
-     && bool.TryParse(encryptedValue, out var isEncrypted);
-}
-
-public class DaprConfigurationProvider : JsonConfigurationProvider{
-    private DaprClient _daprClient;
-
-    public DaprConfigurationProvider(JsonConfigurationSource source, DaprClient daprClient) : base(source) =>
-        _daprClient = daprClient;
-
-    public override void Load(){
-        base.Load();
-        if(IsEncrypted()){
-           
+    private bool IsEncrypted(){
+        if(Data.TryGetValue(ConfigurationKey.IsEncrypted, out var encryptedValue)
+        && bool.TryParse(encryptedValue, out var isEncrypted)){
+            return isEncrypted;
         }
 
-        var sb = new StringBuilder();
-        foreach (var d in Data)
-        {
-            if(d.As<IStringReg>().IsMatch(ConfigurationKey.DaprConfigKeys +@"}\d{1,}$")){
-                sb.Append($"&keys={d.Value}");
-            }
-        }
-
-        var parameters = sb.ToStr();
-        Fx.If(!string.IsNullOrWhiteSpace(parameters))
-          .Then(() => {
-               var dic = _daprClient.InvokeMethodAsync<Dictionary<string, string>>(
-                   HttpMethod.Get,
-                   "Configuration",
-                   "getConfigs").Result;
-           });
+        return false;
     }
-
-    private bool IsEncrypted() =>
-        Data.TryGetValue(ConfigurationKey.IsEncrypted, out var encryptedValue)
-     && bool.TryParse(encryptedValue, out var isEncrypted);
 }

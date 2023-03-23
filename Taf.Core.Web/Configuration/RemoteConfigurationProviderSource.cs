@@ -1,4 +1,7 @@
-using Microsoft.Extensions.Configuration;
+// 何翔华
+// Taf.Core.Web
+// DaprConfigurationProviderSource.cs
+
 using Microsoft.Extensions.Configuration.Json;
 
 namespace Taf.Core.Web;
@@ -6,7 +9,7 @@ namespace Taf.Core.Web;
 /// <summary>
 /// 
 /// </summary>
-public class LocalConfigurationSource : JsonConfigurationSource{
+public class RemoteConfigurationProviderSource : JsonConfigurationSource{
     /// <summary>
     /// Builds the <see cref="JsonConfigurationProvider"/> for this source.
     /// </summary>
@@ -14,6 +17,6 @@ public class LocalConfigurationSource : JsonConfigurationSource{
     /// <returns>A <see cref="JsonConfigurationProvider"/></returns>
     public override IConfigurationProvider Build(IConfigurationBuilder builder){
         EnsureDefaults(builder);
-        return new LcocalConfigurationProvider(this);
+        return new RemoteConfigurationProvider(this);
     }
 }

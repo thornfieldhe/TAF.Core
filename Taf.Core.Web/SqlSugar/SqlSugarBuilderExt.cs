@@ -55,10 +55,11 @@ public static class SqlSugarBuilderExt{
                 BindQueryFilter(db);
                 //单例参数配置，所有上下文生效
                 db.Aop.OnLogExecuting = (sql, pars) => {
-                    Log.Debug(new string('-', 100));  //输出sql
-                    Log.Debug("[Debug] Sql: " + sql); //输出sql
-                    Log.Debug("[Debug] Parameters:"
+                    Log.Debug(new string('#', 100));  //输出sql
+                    Log.Debug("[Debug]   Sql: " + sql); //输出sql
+                    Log.Debug("[Debug]   Parameters:"
                             + string.Join("      ", pars.Select(r => $"{r.ParameterName}:{r.Value}"))); //输出sql
+                    Log.Debug(new string('#', 100));                                                    //输出sql
                 };
 
                 db.Aop.DataExecuting = (oldValue, entityInfo) => {
@@ -99,9 +100,10 @@ public static class SqlSugarBuilderExt{
                         //方法名
                         var firstMethodName = db.Ado.SqlStackTrace.FirstMethodName;
                         //db.Ado.SqlStackTrace.MyStackTraceList[1].xxx 获取上层方法的信息
-
+                        Log.Debug(new string('#', 100)); //输出sql
                         Log.Information(
-                            $"[Warn] SQL :语句执行时间超时:堆栈信息:fileName:{fileName},rowNum:{fileLine},methord:{firstMethodName}");
+                            $"[Warn]   SQL :语句执行时间超时:堆栈信息:fileName:{fileName},rowNum:{fileLine},methord:{firstMethodName}");
+                        Log.Debug(new string('#', 100)); //输出sql
                     }
                     //相当于EF的 PrintToMiniProfiler
                 };

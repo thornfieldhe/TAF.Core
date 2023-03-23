@@ -15,8 +15,13 @@ public static class ConfigurationKey{
     
 
     /// <summary>
-    /// Dapr远程配置
+    /// Dapr远程配置:AppId
     /// </summary>
-    public static string DaprConfigKeys => "DaprConfigKeys";
+    public static string RemoteConfigAddress => "RemoteConfigAddress:Path";
+
+    /// <summary>
+    /// Dapr远程配置:MethodName
+    /// </summary>
+    public static string RemoteConfigKeys => "RemoteConfigAddress:Keys";
 
 }
