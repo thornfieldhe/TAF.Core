@@ -16,6 +16,8 @@ public class RemoteConfigurationProvider : JsonConfigurationProvider{
     public RemoteConfigurationProvider(RemoteConfigurationSource source) : base(source){
         if(Source.ReloadOnChange
         && Source.FileProvider != null){
+            //打印日志
+
             ChangeToken.OnChange(
                 () => RemoteConfigurationChangeToken.Watch(),
                 () => {
