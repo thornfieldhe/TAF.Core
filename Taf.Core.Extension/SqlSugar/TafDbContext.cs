@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using SqlSugar;
-using System.Collections.Generic;
 
 // 何翔华
 // Taf.Core.Extension
@@ -20,8 +19,6 @@ namespace Taf.Core.Extension;
 /// 基类DbContext
 /// </summary>
 public class TafDbContext : SugarUnitOfWork{
-    public TafDbContext(){ }
-    
     public DbSet<DataSeedContributor> DataSeedContributors{ get; set; }
     
 } 

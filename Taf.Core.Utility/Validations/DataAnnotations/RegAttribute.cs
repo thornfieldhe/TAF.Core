@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Taf.Core.Utility;
+
 namespace System.ComponentModel.DataAnnotations
 {
-    using Taf.Core.Utility;
-
     /// <summary>
     /// 手机号验证
     /// </summary>

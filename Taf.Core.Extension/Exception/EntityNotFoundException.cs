@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+
 
 // 何翔华
 // Taf.Core.Extension
@@ -15,12 +15,10 @@ using System.Collections.Generic;
 
 namespace Taf.Core.Extension;
 
-using System;
-
 /// <summary>
 /// 对象不存在异常,返回404
 /// </summary>
-public class EntityNotFoundException : System.Exception{
+public class EntityNotFoundException : Exception{
     public string Details{ get; set; }
     /// <summary>
     /// 用于标记异常发生位置,便于查找

@@ -7,14 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+using System.Text.RegularExpressions;
+using Taf.Core.Utility;
+
 namespace System.ComponentModel.DataAnnotations
 {
-    using Globalization;
-    using Text.RegularExpressions;
-
-
-    using Taf.Core.Utility;
-
     /// <summary>
     /// The base reg validate attribute.
     /// </summary>

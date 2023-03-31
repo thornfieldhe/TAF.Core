@@ -9,7 +9,6 @@
 
 using Coding4Fun.PluralizationServices;
 using SqlSugar;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
@@ -21,8 +20,6 @@ using Taf.Core.Utility;
 // SqlSugarConfigureExternalService.cs
 
 namespace Taf.Core.Extension;
-
-using System;
 
 /// <summary>
 /// sqlsugar config 
@@ -48,11 +45,10 @@ public static class SqlSugarConfigure{
                 if(!string.IsNullOrEmpty(p.DbColumnName)
                 && p.DbColumnName[0] >= 'A'
                 && p.DbColumnName[0] <= 'Z'){
-                    p.DbColumnName = c.Name.As<IStringFormat>().ToUnderLine();
+                    p.DbColumnName = c.Name.As<IStringFormat>().ToUnderLine();//转小写下划线格式
                 }
 
-                if(c.Name.EndsWith("Id")
-                && c.Name != "Id"){
+                if((c.Name.EndsWith("Id") && c.Name != "Id")|| c.Name.EndsWith("Key")){
                     //约定所有以Id结尾的属性为索引属性
                     if(p.IndexGroupNameList == null){
                         p.IndexGroupNameList = new[]{ c.Name.As<IStringFormat>().ToUnderLine() };
@@ -62,13 +58,16 @@ public static class SqlSugarConfigure{
                 }
             }
           , EntityNameService = (type, entity) => {
-                if(string.IsNullOrEmpty(entity.DbTableName)){
+                if(string.IsNullOrEmpty(entity.DbTableName)
+                || (entity.DbTableName[0] >= 'A'
+                 && entity.DbTableName[0] <= 'Z')){
                     //未定义表名的对象,使用规则生成表名
                     entity.DbTableName =
                         $"business_{PluralizationService.CreateService(new CultureInfo("en")).Pluralize(type.Name).As<IStringFormat>().ToUnderLine()}";
                 }
 
-                entity.IsDisabledUpdateAll = isDisabledUpdateAll;
+                entity.IsDisabledUpdateAll    = isDisabledUpdateAll;
+                entity.IsCreateTableFiledSort = true;
             }
         };
 
@@ -85,11 +84,11 @@ public static class SqlSugarConfigure{
           , IsAutoCloseConnection     = true
           , ConfigureExternalServices = GetDefaultConfig(isDisabledUpdateAll)
         });
-
-        db.CodeFirst.SetStringDefaultLength(200).InitTables(types.ToArray());
         db.DbMaintenance.CreateDatabase();
-            var diffString = db.CodeFirst.GetDifferenceTables(types.ToArray()).ToDiffString();
-            System.Console.WriteLine(diffString);
+        db.CodeFirst.SetStringDefaultLength(255).InitTables(types.ToArray());
+
+        var diffString = db.CodeFirst.GetDifferenceTables(types.ToArray()).ToDiffString();
+        Console.WriteLine(diffString);
 
        
         Trace.TraceInformation("init database complited !");

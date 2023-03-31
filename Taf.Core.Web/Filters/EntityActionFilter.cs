@@ -4,7 +4,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
+using Taf.Core.Extension;
+using Taf.Core.Utility;
 
 namespace Taf.Core.Web;
 
@@ -19,18 +20,20 @@ public class EntityActionFilter : IActionFilter{
     }
 
     public void OnActionExecuted(ActionExecutedContext context){
+        if (!context.HttpContext.Request.Headers.TryGetValue("traceId",out var traceId)){
+            traceId = Randoms.GetRandomCode(6,"0123456789abcdefghijklmnopqrstuvwxyz");
+        }
         if(context.Result is JsonResult json){
-            context.Result = new JsonResult(new R(Data: json.Value));
+            context.Result = new JsonResult(new R(Data: json.Value,TraceId:traceId));
         } else if(context.Result is ObjectResult obj){
-            context.Result = new JsonResult(new R(Data:obj.Value));
+            context.Result = new JsonResult(new R(Data:obj.Value,TraceId:traceId));
         } else if(context.Result is EmptyResult emputy){
             context.Result = new JsonResult(new R());
         } else if(context.Result is ContentResult content){
-            context.Result = new JsonResult(new R<string>(Data: content.Content));
+            context.Result = new JsonResult(new R<string>(Data: content.Content,TraceId:traceId));
         }  else if(context.Result is NoContentResult noContent){
-            context.Result = new JsonResult(new R());
-        }else{
-              //todos: 后续补充  
+            context.Result = new JsonResult(new R(TraceId:traceId));
         }
+        //todos: 后续补充  
     }
 }

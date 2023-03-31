@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using SqlSugar;
-using System.Collections.Generic;
 
 // 何翔华
 // Taf.Core.Extension
@@ -16,15 +15,11 @@ using System.Collections.Generic;
 
 namespace Taf.Core.Extension;
 
-using System;
-
 /// <summary>
 /// 数据库初始种子 
 /// </summary>
-[SugarTable("sys_dataSeedContributors", IsCreateTableFiledSort =true)]
+[SugarTable("sys_data_seed_contributors")]
 public class DataSeedContributor : DbEntity{
-    public DataSeedContributor(){ }
-
     [SugarColumn( ColumnDataType = "nvarchar(50)")]
     public string Key{ get; set; }
 }

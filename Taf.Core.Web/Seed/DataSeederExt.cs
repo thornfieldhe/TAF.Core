@@ -3,9 +3,7 @@
 // DataSeeder.cs
 
 using SqlSugar;
-using System.Reflection;
 using Taf.Core.Extension;
-using Taf.Core.Utility;
 
 namespace Taf.Core.Web;
 

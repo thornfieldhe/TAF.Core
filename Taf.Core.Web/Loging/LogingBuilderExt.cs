@@ -9,16 +9,12 @@
 
 using Serilog;
 using Serilog.Exceptions;
-using Serilog.Extensions;
-using System.Collections.Generic;
 
 // 何翔华
 // Taf.Core.Web
 // LogingBuilderExr.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// $Summary$

@@ -7,12 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Core.Utility{
-    using System;
-    using System.IO;
-    using System.Security.Cryptography;
-    using System.Text;
+using System;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
+namespace Taf.Core.Utility{
     /// <summary>
     /// The encrypt.
     /// </summary>

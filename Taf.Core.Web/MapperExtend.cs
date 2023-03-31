@@ -9,7 +9,6 @@
 
 using Mapster;
 using MapsterMapper;
-using System.Collections.Generic;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -17,8 +16,6 @@ using Taf.Core.Utility;
 // MapperExtend.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// 对象映射注入
@@ -29,10 +26,10 @@ public static class MapperExtend{
     /// </summary>
     /// <param name="services"></param>
     /// <param name="addMap"></param>
-    public static void AddEntityMap(this IServiceCollection services, Action<TypeAdapterConfig> addMap){
+    public static void AddEntityMap(this WebApplicationBuilder builder, Action<TypeAdapterConfig> addMap){
         var config = new TypeAdapterConfig();
-        addMap.IfNotNull((s) => s(config));
-        services.AddSingleton(config);
-        services.AddSingleton<IMapper, ServiceMapper>();
+        addMap.IfNotNull(s => s(config));
+        builder.Services.AddSingleton(config);
+        builder.Services.AddSingleton<IMapper, ServiceMapper>();
     }
 }

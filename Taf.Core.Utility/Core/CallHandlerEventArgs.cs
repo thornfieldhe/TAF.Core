@@ -1,7 +1,7 @@
-﻿namespace Taf.Core.Utility
-{
-    using System;
+﻿using System;
 
+namespace Taf.Core.Utility
+{
     /// <summary>
     /// 职责链响应断点的事件参数
     /// </summary>

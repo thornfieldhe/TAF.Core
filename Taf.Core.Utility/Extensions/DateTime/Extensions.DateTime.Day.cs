@@ -7,15 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 
 // 何翔华
 // Taf.Core.Utility
 // Extensions.DateTime.Day.cs
 
 namespace Taf.Core.Utility;
-
-using System;
 
 /// <summary>
 /// 日相关函数

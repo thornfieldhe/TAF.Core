@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+using System.Linq;
+
 namespace System.ComponentModel.DataAnnotations
 {
-    using Globalization;
-    using Linq;
-
     /// <summary>
     /// Validates that the property has the same value as the given 'otherProperty' 
     /// </summary>

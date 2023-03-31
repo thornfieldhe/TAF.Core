@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Authentication;
 using System.Text;
-using System.Net.Http;
 using Taf.Core.Extension;
 using Taf.Core.Utility;
 
@@ -13,7 +11,7 @@ namespace Taf.Core.Web;
 /// <summary>
 /// 远程调用接口封装 
 /// </summary>
-public class HttpClientService : IHttpClientService, ITransientDependency{
+public class HttpClientService : IHttpClientService, ISingletonDependency{
     private readonly IHttpClientFactory         _httpClientFactory;
     private readonly ILogger<HttpClientService> _logger;
     private readonly ILoginInfo                 _loginInfo;
@@ -58,20 +56,26 @@ public class HttpClientService : IHttpClientService, ITransientDependency{
         }
 
         if(response.StatusCode == HttpStatusCode.InternalServerError){
-            throw new ServiceUnavailableException($"remote internal exception:{response.ReasonPhrase}[{response.RequestMessage}]", url,new Guid("1A881AB1-82F8-41E7-8AC4-62FF810AE636"));
+            throw new ServiceUnavailableException(
+                $"remote internal exception:{response.ReasonPhrase}[{response.RequestMessage}]", url
+              , new Guid("1A881AB1-82F8-41E7-8AC4-62FF810AE636"));
         }
 
         if(response.StatusCode == HttpStatusCode.ServiceUnavailable){
-            throw new ServiceUnavailableException("remote service unavailable exception:" + response.ReasonPhrase, url,new Guid("26EAFB70-3796-4FB5-96F3-CEB7FC494507"));
+            throw new ServiceUnavailableException("remote service unavailable exception:" + response.ReasonPhrase, url
+                                                , new Guid("26EAFB70-3796-4FB5-96F3-CEB7FC494507"));
         }
 
         if(response.StatusCode != HttpStatusCode.OK){
             if(content?.Contains("success") ?? false){
                 var error = JsonConvert.DeserializeObject<R>(content);
-                throw new UserFriendlyException(error.Message,new Guid("234EFD3B-FB23-4F62-91D4-A42F9FB37206"));
+                throw new ServiceUnavailableException(error.Message, url
+                                                    , new Guid("FE3809E3-7710-4BD7-9CF4-754AD4FE5F93")
+                                                    , new Exception(error.Message));
             }
 
-            throw new ServiceUnavailableException($"other remote service exception:{response.ReasonPhrase};{content}", url,new Guid("F4867E20-4A56-4263-86F1-EF7A7830EAA6"));
+            throw new ServiceUnavailableException($"other remote service exception:{response.ReasonPhrase};{content}"
+                                                , url, new Guid("F4867E20-4A56-4263-86F1-EF7A7830EAA6"));
         }
     }
 
@@ -175,7 +179,8 @@ public class HttpClientService : IHttpClientService, ITransientDependency{
     /// <returns></returns>
     /// <exception cref="AuthenticationException"></exception>
     /// <exception cref="UserFriendlyException"></exception>
-    public async Task<T> PostContentFormAsync<T>(string url, List<KeyValuePair<string, string>> data, bool weatherToPackage = false){
+    public async Task<T> PostContentFormAsync<T>(
+        string url, List<KeyValuePair<string, string>> data, bool weatherToPackage = false){
         var watch = new Stopwatch();
         watch.Start();
         using var client = _httpClientFactory.CreateClient();
@@ -191,52 +196,56 @@ public class HttpClientService : IHttpClientService, ITransientDependency{
         response.Dispose();
         return GetReturnResult<T>(content, url, weatherToPackage);
     }
-    
-     private void BindDefaultHeader(HttpClient client){
-                if(!string.IsNullOrWhiteSpace(_loginInfo.LangKey)){
-                    client.DefaultRequestHeaders.Add("langKey"
-                                                   , _loginInfo.LangKey);
-                }
 
-                if(_loginInfo.Permissions is{ Count: > 0 }){
-                    client.DefaultRequestHeaders.Add("permissions"
-                                                   , string.Join(',', _loginInfo.Permissions));
-                }
+    private void BindDefaultHeader(HttpClient client){
+        if(!string.IsNullOrWhiteSpace(_loginInfo.LangKey)){
+            client.DefaultRequestHeaders.Add("langKey"
+                                           , _loginInfo.LangKey);
+        }
 
-                if(!string.IsNullOrWhiteSpace(_loginInfo.Name)){
-                    client.DefaultRequestHeaders.Add("name", _loginInfo.Name);
-                }
+        if(_loginInfo.Permissions is{ Count: > 0 }){
+            client.DefaultRequestHeaders.Add("permissions"
+                                           , string.Join(',', _loginInfo.Permissions));
+        }
 
-                if(_loginInfo.UserId.HasValue){
-                    client.DefaultRequestHeaders.Add("userId", _loginInfo.UserId.ToString());
-                }
+        if(!string.IsNullOrWhiteSpace(_loginInfo.Name)){
+            client.DefaultRequestHeaders.Add("name", _loginInfo.Name);
+        }
 
-
-                if(!string.IsNullOrWhiteSpace(_loginInfo.Email)){
-                    client.DefaultRequestHeaders.Add("email", _loginInfo.Email);
-                }
-
-                if(!string.IsNullOrWhiteSpace(_loginInfo.Authorization)){
-                    client.DefaultRequestHeaders.Add("authorization"
-                                                   , _loginInfo.Authorization);
-                }
-                if(_loginInfo.TenantId.HasValue){
-                    client.DefaultRequestHeaders.Add(
-                        "tenantId"
-                      , _loginInfo.TenantId.HasValue ? _loginInfo.TenantId.ToString() : "1");
-                }
-             
-                if(!string.IsNullOrWhiteSpace(_loginInfo.TraceId)){
-                    client.DefaultRequestHeaders.Add("traceId",$"{_loginInfo.TraceId} {Randoms.GetRandomCode(3)}");
-                }
-     }
+        if(_loginInfo.UserId.HasValue){
+            client.DefaultRequestHeaders.Add("userId", _loginInfo.UserId.ToString());
+        }
 
 
-     private T GetReturnResult<T>(string content, string url, bool weatherToPackage = false){
-         try{
-             return !weatherToPackage ? JsonConvert.DeserializeObject<T>(content) : JsonConvert.DeserializeObject<R<T>>(content).Data;
-         } catch(Exception ex){
-             throw new ServiceUnavailableException($"反序列化失败,序列化字符串:{content}", url,new Guid("2972C188-8707-4D1E-89E0-F495DD5CBCBA"),ex);
-         }
-     }
+        if(!string.IsNullOrWhiteSpace(_loginInfo.Email)){
+            client.DefaultRequestHeaders.Add("email", _loginInfo.Email);
+        }
+
+        if(!string.IsNullOrWhiteSpace(_loginInfo.Authorization)){
+            client.DefaultRequestHeaders.Add("authorization"
+                                           , _loginInfo.Authorization);
+        }
+
+        if(_loginInfo.TenantId.HasValue){
+            client.DefaultRequestHeaders.Add(
+                "tenantId"
+              , _loginInfo.TenantId.HasValue ? _loginInfo.TenantId.ToString() : "1");
+        }
+
+        if(!string.IsNullOrWhiteSpace(_loginInfo.TraceId)){
+            client.DefaultRequestHeaders.Add("traceId", $"{_loginInfo.TraceId} {Randoms.GetRandomCode(6,"0123456789abcdefghijklmnopqrstuvwxyz")}");
+        }
+    }
+
+
+    private T GetReturnResult<T>(string content, string url, bool weatherToPackage = false){
+        try{
+            return !weatherToPackage
+                ? JsonConvert.DeserializeObject<T>(content)
+                : JsonConvert.DeserializeObject<R<T>>(content).Data;
+        } catch(Exception ex){
+            throw new ServiceUnavailableException($"反序列化失败,序列化字符串:{content}", url
+                                                , new Guid("2972C188-8707-4D1E-89E0-F495DD5CBCBA"), ex);
+        }
+    }
 }

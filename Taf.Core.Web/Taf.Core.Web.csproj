@@ -14,6 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNetCore.CAP" Version="7.1.0" />
         <PackageReference Include="DotNetCore.CAP.MySql" Version="7.1.0" />
         <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="7.1.0" />
         <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
@@ -32,6 +33,12 @@
     <ItemGroup>
       <ProjectReference Include="..\..\TAF.Core\Taf.Core.Extension\Taf.Core.Extension.csproj" />
       <ProjectReference Include="..\..\TAF.Core\Taf.Core.Utility\Taf.Core.Utility.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="JWT">
+        <HintPath>C:\Users\thorn\.nuget\packages\jwt\10.0.2\lib\net6.0\JWT.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

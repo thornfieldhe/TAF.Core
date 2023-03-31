@@ -6,14 +6,15 @@
 //    数组扩展类
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+
 namespace Taf.Core.Utility
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
-
     /// <summary>
     /// IEnumerable<T> 扩展
     /// </summary>

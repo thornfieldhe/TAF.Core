@@ -20,9 +20,6 @@ using System.Text.RegularExpressions;
 
 namespace Taf.Core.Utility;
 
-using System;
-
-
 /// <summary>
 /// 字符串正则操作
 /// </summary>

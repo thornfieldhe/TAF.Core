@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -16,8 +17,6 @@ using System.Text;
 // GZipCompress.cs
 
 namespace Taf.Core.Utility{
-    using System;
-
     /// <summary>
     /// 字符串
     /// </summary>

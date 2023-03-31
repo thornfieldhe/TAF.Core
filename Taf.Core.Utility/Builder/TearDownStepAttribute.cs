@@ -1,8 +1,8 @@
-﻿namespace Taf.Core.Utility
-{
-    using System;
-    using System.Reflection;
+﻿using System;
+using System.Reflection;
 
+namespace Taf.Core.Utility
+{
     /// <summary>
     /// 卸载步骤
     /// </summary>

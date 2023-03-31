@@ -7,15 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+
 
 // 何翔华
 // Taf.Core.Utility
 // Extensions.Decimal.Format.cs
 
 namespace Taf.Core.Utility;
-
-using System;
 
 /// <summary>
 /// decimal格式化
@@ -99,7 +97,7 @@ public static class DecimalFormat{
     /// <param name="v">数值</param>
     /// <param name="sd">有效位数</param>
     /// <returns></returns>
-    public static string FormatScience(this IDecimalFormat v, int sd =3) => v.GetValue().ToString("E" + sd.ToString());
+    public static string FormatScience(this IDecimalFormat v, int sd =3) => v.GetValue().ToString("E" + sd);
 
-    public static string FormatPercent(this IDecimalFormat v, int sd =2) => v.GetValue().ToString("P" + sd.ToString());
+    public static string FormatPercent(this IDecimalFormat v, int sd =2) => v.GetValue().ToString("P" + sd);
 }

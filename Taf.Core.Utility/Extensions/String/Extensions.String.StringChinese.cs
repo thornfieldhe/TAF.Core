@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -16,8 +16,6 @@ using System.Text;
 // Extensions.String.StringChinese.cs
 
 namespace Taf.Core.Utility;
-
-using System;
 
 /// <summary>
 /// 中文字符扩展

@@ -6,10 +6,11 @@
 //   bool扩展类
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 namespace Taf.Core.Utility
 {
-    using System;
-
     /// <summary>
     /// Set of very useful extension methods for hour by hour use in .NET code.
     /// </summary>

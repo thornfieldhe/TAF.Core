@@ -114,13 +114,13 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
                                                 , new Guid("D62AAAAF-48D9-4BC0-868F-E5123115A39F"));
             }
 
-            Mapper.Map<TR, T>(item, data);
+            Mapper.Map(item, data);
             return await UpdateAsync(data);
-        } else{
-            data = new T();
-            Mapper.Map<TR, T>(item, data);
-            return await InsertAsync(data);
         }
+
+        data = new T();
+        Mapper.Map(item, data);
+        return await InsertAsync(data);
     }
 
 #endregion
@@ -128,9 +128,9 @@ public class Repository<T> : IRepository<T> where T : DbEntity, new(){
 #region delete
 
     public virtual async Task DeleteAllAsync(Expression<Func<T, bool>> whereExpression) =>
-        await Db.Deleteable<T>().Where(whereExpression).ExcuteDeleteAsync<T>();
+        await Db.Deleteable<T>().Where(whereExpression).ExcuteDeleteAsync();
 
-    public async Task<bool> DeleteAsync(Guid id) => await Db.Deleteable<T>().In(id).ExcuteDeleteAsync<T>();
+    public async Task<bool> DeleteAsync(Guid id) => await Db.Deleteable<T>().In(id).ExcuteDeleteAsync();
 
     public async Task<bool> DeleteAsync(T item) => await DeleteAsync(item.Id);
 

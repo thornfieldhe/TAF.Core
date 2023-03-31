@@ -7,14 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Taf.Core.Utility
 {
-    using System;
-
     /// <summary>
     /// RSA加解密
     /// </summary>

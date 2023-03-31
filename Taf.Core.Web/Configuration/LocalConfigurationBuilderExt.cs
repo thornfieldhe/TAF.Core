@@ -1,11 +1,3 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
-using System;
-using Taf.Core.Utility;
-
 namespace Taf.Core.Web;
 
 /// <summary>
@@ -27,7 +19,7 @@ public static class LocalConfigurationBuilderExt{
             throw new ArgumentException("配置文件路径不能为空", nameof(path));
         }
 
-        var source = new LocalConfigurationSource(){
+        var source = new LocalConfigurationSource{
             FileProvider = null, Optional = optional, Path = $"appsettings.{path}.json", ReloadOnChange = reloadOnChange
         };
  
@@ -37,8 +29,8 @@ public static class LocalConfigurationBuilderExt{
         return builder;
     }
     
-    public static void AddLocalConfiguration(this ConfigureWebHostBuilder host) =>
-        host.ConfigureAppConfiguration((contex, configBuilder)=> {
+    public static void AddLocalConfiguration(this WebApplicationBuilder builder) =>
+        builder.WebHost.ConfigureAppConfiguration((contex, configBuilder)=> {
             configBuilder.AddLocalConfiguration(contex.HostingEnvironment.EnvironmentName, true); //注入本地配置
         });
 }

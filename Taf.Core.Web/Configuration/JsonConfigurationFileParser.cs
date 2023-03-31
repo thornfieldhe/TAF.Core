@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Globalization;
 
 // 何翔华
@@ -17,49 +16,45 @@ using System.Globalization;
 
 namespace Taf.Core.Web;
 
-using System;
-
 /// <summary>
 /// 
 /// </summary>
 public class JsonConfigurationFileParser{
     private readonly IDictionary<string, string> _data =
-        (IDictionary<string, string>)new SortedDictionary<string, string>(
-            (IComparer<string>)StringComparer.OrdinalIgnoreCase);
+        new SortedDictionary<string, string>(
+            StringComparer.OrdinalIgnoreCase);
     private readonly Stack<string> _context = new();
     private          string        _currentPath;
     private          string        jsonText;
 
-    private JsonConfigurationFileParser(string jsonText){
-        this.jsonText = jsonText;
-    }
+    private JsonConfigurationFileParser(string jsonText) => this.jsonText = jsonText;
 
     public static IDictionary<string, string> Parse(string jsonText) =>
         new JsonConfigurationFileParser(jsonText).ParseStream();
 
     private IDictionary<string, string> ParseStream(){
-        this._data.Clear();
-        this.VisitJObject(JObject.Parse(jsonText));
-        return this._data;
+        _data.Clear();
+        VisitJObject(JObject.Parse(jsonText));
+        return _data;
     }
 
     private void VisitJObject(JObject jObject){
         foreach(JProperty property in jObject.Properties()){
-            this.EnterContext(property.Name);
-            this.VisitProperty(property);
-            this.ExitContext();
+            EnterContext(property.Name);
+            VisitProperty(property);
+            ExitContext();
         }
     }
 
-    private void VisitProperty(JProperty property) => this.VisitToken(property.Value);
+    private void VisitProperty(JProperty property) => VisitToken(property.Value);
 
     private void VisitToken(JToken token){
         switch(token.Type){
             case JTokenType.Object:
-                this.VisitJObject(token.Value<JObject>());
+                VisitJObject(token.Value<JObject>());
                 break;
             case JTokenType.Array:
-                this.VisitArray(token.Value<JArray>());
+                VisitArray(token.Value<JArray>());
                 break;
             case JTokenType.Integer:
             case JTokenType.Float:
@@ -68,7 +63,7 @@ public class JsonConfigurationFileParser{
             case JTokenType.Null:
             case JTokenType.Raw:
             case JTokenType.Bytes:
-                this.VisitPrimitive(token.Value<JValue>());
+                VisitPrimitive(token.Value<JValue>());
                 break;
             default:
                 throw new FormatException("JToken is error");
@@ -77,26 +72,26 @@ public class JsonConfigurationFileParser{
 
     private void VisitArray(JArray array){
         for(int index = 0; index < array.Count; ++index){
-            this.EnterContext(index.ToString());
-            this.VisitToken(array[index]);
-            this.ExitContext();
+            EnterContext(index.ToString());
+            VisitToken(array[index]);
+            ExitContext();
         }
     }
 
     private void VisitPrimitive(JValue data){
-        string currentPath = this._currentPath;
-        if(this._data.ContainsKey(currentPath))
+        string currentPath = _currentPath;
+        if(_data.ContainsKey(currentPath))
             throw new FormatException("JValue is Error");
-        this._data[currentPath] = data.ToString((IFormatProvider)CultureInfo.InvariantCulture);
+        _data[currentPath] = data.ToString(CultureInfo.InvariantCulture);
     }
 
     private void EnterContext(string context){
-        this._context.Push(context);
-        this._currentPath = ConfigurationPath.Combine(this._context.Reverse<string>());
+        _context.Push(context);
+        _currentPath = ConfigurationPath.Combine(_context.Reverse());
     }
 
     private void ExitContext(){
-        this._context.Pop();
-        this._currentPath = ConfigurationPath.Combine(this._context.Reverse<string>());
+        _context.Pop();
+        _currentPath = ConfigurationPath.Combine(_context.Reverse());
     }
 }

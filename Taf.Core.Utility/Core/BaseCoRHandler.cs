@@ -1,8 +1,8 @@
-﻿namespace Taf.Core.Utility
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Taf.Core.Utility
+{
     public abstract class BaseCoRHandler<Request>
     {
         protected BaseCoRHandler()

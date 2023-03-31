@@ -1,6 +1,4 @@
-﻿using Taf.Core.Extension;
-
-namespace Taf.Core.Web;
+﻿namespace Taf.Core.Web;
 
 /// <summary>
 /// 
@@ -64,8 +62,8 @@ public static class HttpObjectResult{
     /// 客户端错误
     /// </summary>
     /// <returns></returns>
-    public static R ShowMessage(string message, string traceId = "") =>
-        new(Message: message, TraceId: traceId, Code: WebConst.CodeBadRequest);
+    public static R ShowMessage(string message, int code =400, string traceId = "") =>
+        new(Message: message, TraceId: traceId, Code: code);
 
     /// <summary>
     /// 返回数据
@@ -77,49 +75,12 @@ public static class HttpObjectResult{
     public static R<T> GetResult<T>(T data, string traceId = "") => new(Data: data, TraceId: traceId);
 
     /// <summary>
-    /// 未授权,需要登录
+    /// 异常消息
     /// </summary>
     /// <param name="errorCode"></param>
+    /// <param name="message"></param>
     /// <param name="traceId"></param>
     /// <returns></returns>
-    public static R Unauthorized(string errorCode = "", string traceId = "") =>
-        new(Code: WebConst.CodeUnauthorized, $"Unauthorized error,error code:{errorCode}", TraceId: traceId);
-
-    /// <summary>
-    /// 操作拒绝
-    /// </summary>
-    /// <param name="errorCode"></param>
-    /// <param name="traceId"></param>
-    /// <returns></returns>
-    public static R Forbidden(string errorCode = "", string traceId = "") =>
-        new(Code: WebConst.CodeForbidden, Message: $"Forbidden error,error code:{errorCode}", TraceId: traceId);
-
-    /// <summary>
-    /// 对象不存在
-    /// </summary>
-    /// <param name="errorCode"></param>
-    /// <param name="traceId"></param>
-    /// <returns></returns>
-    public static R NotFound(string errorCode = "", string traceId = "") =>
-        new(Code: WebConst.CodeNotFound, Message: $"Not found error,error code:{errorCode}", TraceId: traceId);
-
-    /// <summary>
-    /// 拒绝服务
-    /// </summary>
-    /// <param name="errorCode"></param>
-    /// <param name="traceId"></param>
-    /// <returns></returns>
-    public static R ServiceUnavailable(string errorCode = "", string traceId = "") =>
-        new(Code: WebConst.CodeServiceUnavailable, Message: $"Denial of service,error code:{errorCode}"
-          , TraceId: traceId);
-
-    /// <summary>
-    /// 返回服务器异常
-    /// </summary>
-    /// <param name="errorCode"></param>
-    /// <param name="traceId"></param>
-    /// <returns></returns>
-    public static R InternalServerError(string errorCode, string traceId = "") =>
-        new(Code: WebConst.CodeInternalServerError, Message: $"Internal server error. error code:{errorCode}"
-          , TraceId: traceId);
+    public static R ShowErr(string message,string errorCode = "", string traceId = "") =>
+        new(Code: WebConst.CodeUnauthorized,Message:message, TraceId: traceId);
 }

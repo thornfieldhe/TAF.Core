@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security;
 
@@ -16,8 +15,6 @@ using System.Security;
 // TupleTaskAwaiterExtension.cs
 
 namespace Taf.Core.Extension;
-
-using System;
 
 /// <summary>
 /// 同时等待3个任务扩展类

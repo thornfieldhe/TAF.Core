@@ -1,7 +1,7 @@
-﻿namespace Taf.Core
-{
-    using System.Reflection;
+﻿using System.Reflection;
 
+namespace Taf.Core
+{
     public interface IBuildStep
     {
         int Sequence

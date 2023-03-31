@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace Taf.Core.Utility
 {
-    using System;
-    using System.Collections.Generic;
-
     /// <summary>
     /// 相等比较辅助类，用于快速创建<see cref="IEqualityComparer{T}"/>的实例
     /// </summary>

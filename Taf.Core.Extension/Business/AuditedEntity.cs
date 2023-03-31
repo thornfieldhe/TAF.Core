@@ -7,15 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+
 
 // 何翔华
 // Taf.Core.Extension
 // AuditedEntity.cs
 
 namespace Taf.Core.Extension;
-
-using System;
 
 /// <summary>
 /// This class can be used to simplify implementing <see cref="IAudited"/>.

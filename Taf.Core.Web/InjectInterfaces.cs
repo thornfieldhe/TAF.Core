@@ -7,15 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+
 
 // 何翔华
 // Taf.Core.Web
 // InjectInterfaces.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// 默认单例/瞬时接口注入扩展

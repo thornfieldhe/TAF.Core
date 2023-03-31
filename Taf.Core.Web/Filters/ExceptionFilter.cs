@@ -9,28 +9,24 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 using System.Reflection;
 using Taf.Core.Extension;
 using Taf.Core.Utility;
-using Taf.Core.Web;
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// 
 /// </summary>
 public class ExceptionFilter : IExceptionFilter{
-    private readonly ILogger    _logger;
-    private readonly ILoginInfo _loginInfo;
+    private readonly ILogger<ExceptionFilter> _logger;
+    private readonly ILoginInfo               _loginInfo;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="remoteEventPublisher"></param>
-    public ExceptionFilter(ILogger logger, ILoginInfo loginInfo){
+    public ExceptionFilter(ILogger<ExceptionFilter> logger, ILoginInfo loginInfo){
         _logger    = logger;
         _loginInfo = loginInfo;
     }
@@ -51,85 +47,89 @@ public class ExceptionFilter : IExceptionFilter{
     private void ExceptionAction(ExceptionContext context, Exception exception){
         var result    = new R();
         var message   = string.Empty;
-        var errorCode = $"ERR_{Randoms.GetRandomCode(6, "1234567890")}";
+        var errorCode = $"ERR_{Randoms.GetRandomCode(6, "0123456789abcdefghijklmnopqrstuvwxyz")}";
         switch(exception){
             case UserFriendlyException userException:
-                result = HttpObjectResult.ShowMessage(userException.Message, _loginInfo.TraceId);
+                result = HttpObjectResult.ShowMessage(userException.Message, userException.Code, _loginInfo.TraceId);
+                context.HttpContext.Response.StatusCode = WebConst.CodeBadRequest;
                 break;
             case AggregateException{ InnerException:{ } } aggregateException:
                 ExceptionAction(context, aggregateException.InnerException);
                 break;
             case UnauthorizedAccessException unauthorizedAccessException:
-                message = $"{new string('-', 30)}\n[系统异常]:{errorCode},{unauthorizedAccessException.Message}";
-                result  = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
-                _logger.LogError(message, unauthorizedAccessException);
+                message = $"{new string('-', 30)}\n[授权异常]:{errorCode},{unauthorizedAccessException.Message}";
+                result = GetInternalServerError(message, errorCode, unauthorizedAccessException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeUnauthorized;
                 break;
             case BussinessException bussinessException:
                 message =
-                    $"{new string('-', 30)}\n[系统异常]:{errorCode},{bussinessException.Message},Path:{bussinessException.ErrorCode}]";
-                result = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
-                _logger.LogError(message, bussinessException);
+                    $"{new string('-', 30)}\n[业务异常]:{errorCode},{bussinessException.Message},Path:{bussinessException.ErrorCode}]";
+                result = GetInternalServerError(message, errorCode, bussinessException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeInternalServerError;
                 break;
             case ArgumentNullException nullException:
                 message =
                     $"{new string('-', 30)}\n[系统异常]:{errorCode},{nullException.Message},参数不能为空错误:方法名:{nullException.TargetSite.Name},参数:{nullException.ParamName},来源:{nullException.Source}";
-                result = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
-                _logger.LogError(message, nullException);
+                result = HttpObjectResult.ShowErr(nullException.Message, errorCode, _loginInfo.TraceId);
+                GetInternalServerError(message, errorCode, nullException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeInternalServerError;
                 break;
             case EntityNotFoundException entityNotFoundException:
                 message =
-                    $"{new string('-', 30)}\n[系统异常]:{errorCode},{entityNotFoundException.Message},对象类型:{entityNotFoundException.Type.Name},Path:{entityNotFoundException.ErrorCode}";
-                result = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
-                _logger.LogError(message, entityNotFoundException);
+                    $"{new string('-', 30)}\n[数据异常]:{errorCode},{entityNotFoundException.Message},对象类型:{entityNotFoundException.Type.Name},Path:{entityNotFoundException.ErrorCode}";
+                result = GetInternalServerError(message, errorCode, entityNotFoundException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeNotFound;
                 break;
             case ValidationException validationException:
-                var files = string.Join(',', validationException.ValidationErrors);
+                var attributes = string.Join(',', validationException.ValidationErrors);
                 message =
-                    $"{new string('-', 30)}\n[系统异常]:{errorCode},参数验证未通过:{files},来源:{validationException.Source}";
-                result = HttpObjectResult.Unauthorized(errorCode, _loginInfo.TraceId);
-                _logger.LogError(message, validationException);
+                    $"{new string('-', 30)}\n[参数异常]:{errorCode},参数验证未通过:{attributes},来源:{validationException.Source}";
+                result = HttpObjectResult.ShowMessage(attributes, WebConst.CodeBadRequest
+                                                    , _loginInfo.TraceId);
+                context.HttpContext.Response.StatusCode = WebConst.CodeBadRequest;
                 break;
             case NullReferenceException referenceException:
-                context.HttpContext.Response.StatusCode = 500;
                 message =
                     $"{new string('-', 30)}\n[系统异常]:{errorCode},{referenceException.Message},对象不能为空错误";
-                result = GetInternalServerError(message, errorCode, exception);
+                result = GetInternalServerError(message, errorCode, referenceException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeInternalServerError;
                 break;
             case InvalidOperationException invalidOperationException:
-                context.HttpContext.Response.StatusCode = 500;
                 message =
                     $"{new string('-', 30)}\n[系统异常]:{errorCode},{invalidOperationException.Message},无效操作";
-                result = GetInternalServerError(message, errorCode, exception);
+                result = GetInternalServerError(message, errorCode, invalidOperationException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeInternalServerError;
                 break;
             case IndexOutOfRangeException invalidOperationException:
                 context.HttpContext.Response.StatusCode = 500;
                 message =
                     $"{new string('-', 30)}\n[系统异常]:{errorCode},{invalidOperationException.Message},数组越界";
-                result = GetInternalServerError(message, errorCode, exception);
+                result = GetInternalServerError(message, errorCode, invalidOperationException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeInternalServerError;
                 break;
             case TargetInvocationException targetInvocationException:
                 var innerException = targetInvocationException.InnerException ?? targetInvocationException;
                 ExceptionAction(context, innerException);
-
                 break;
             case ServiceUnavailableException serviceUnavailableException:
                 message =
-                    $"{new string('-', 30)}\n[系统异常]:{errorCode},{serviceUnavailableException.Message},url:{serviceUnavailableException.Url}";
-                result = GetInternalServerError(message, errorCode, exception);
+                    $"{new string('-', 30)}\n[远程服务异常]:{errorCode},{serviceUnavailableException.Message},url:{serviceUnavailableException.Url}";
+                result = GetInternalServerError(message, errorCode, serviceUnavailableException);
+                context.HttpContext.Response.StatusCode = WebConst.CodeServiceUnavailable;
                 break;
             default:
                 message =
                     $"{new string('-', 30)}\n[系统异常]:{errorCode}, 异常类型:{exception.GetType().Name},{exception.Message}";
-                result = GetInternalServerError(message, errorCode, exception);
+                result                                  = GetInternalServerError(message, errorCode, exception);
+                context.HttpContext.Response.StatusCode = WebConst.CodeServiceUnavailable;
                 break;
         }
 
-        context.HttpContext.Response.StatusCode = result.Code;
-        context.Result                          = new JsonResult(result);
+        context.Result = new JsonResult(result);
     }
 
     private R GetInternalServerError(string message, string errorCode, Exception exception){
         _logger.LogError(message, exception);
-        return HttpObjectResult.InternalServerError(errorCode, _loginInfo.TraceId);
+        return HttpObjectResult.ShowErr(exception.Message, errorCode, _loginInfo.TraceId);
     }
 }

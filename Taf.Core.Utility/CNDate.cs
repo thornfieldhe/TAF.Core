@@ -55,7 +55,7 @@ namespace Taf.Core.Utility
     internal class ChinaDate
     {
         #region 私有方法
-        private static long[] lunarInfo = new long[] { 0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554,
+        private static long[] lunarInfo = { 0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554,
                                                                0x056a0, 0x09ad0, 0x055d2, 0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0,
                                                                0x14977, 0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, 0x06566,
                                                                0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, 0x0d4a0, 0x1d8a6, 0x0b550,
@@ -69,17 +69,17 @@ namespace Taf.Core.Utility
                                                                0x0d260, 0x0ea65, 0x0d530, 0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520,
                                                                0x0dd45, 0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0 };
 
-        private static int[] year20 = new int[] { 1, 4, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1 };
-        private static int[] year19 = new int[] { 0, 3, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0 };
-        private static int[] year2000 = new int[] { 0, 3, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1 };
-        private static String[] nStr1 = new String[] { "", "正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" };
-        private static String[] Gan = new String[] { "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸" };
-        private static String[] Zhi = new String[] { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥" };
-        private static String[] Animals = new String[] { "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪" };
-        private static String[] solarTerm = new String[] { "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至" };
+        private static int[] year20 = { 1, 4, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1 };
+        private static int[] year19 = { 0, 3, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0 };
+        private static int[] year2000 = { 0, 3, 1, 2, 1, 2, 1, 1, 2, 1, 2, 1 };
+        private static String[] nStr1 = { "", "正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二" };
+        private static String[] Gan = { "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸" };
+        private static String[] Zhi = { "子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥" };
+        private static String[] Animals = { "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪" };
+        private static String[] solarTerm = { "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至" };
         private static int[] sTermInfo = { 0, 21208, 42467, 63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072, 240693, 263343, 285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758 };
-        private static String[] lFtv = new String[] { "0101农历春节", "0202 龙抬头节", "0115 元宵节", "0505 端午节", "0707 七夕情人节", "0815 中秋节", "0909 重阳节", "1208 腊八节", "1114 李君先生生日", "1224 小年", "0100除夕" };
-        private static String[] sFtv = new String[] { "0101 新年元旦",
+        private static String[] lFtv = { "0101农历春节", "0202 龙抬头节", "0115 元宵节", "0505 端午节", "0707 七夕情人节", "0815 中秋节", "0909 重阳节", "1208 腊八节", "1114 李君先生生日", "1224 小年", "0100除夕" };
+        private static String[] sFtv = { "0101 新年元旦",
                                                          "0202 世界湿地日",
                                                          "0207 国际声援南非日",
                                                          "0210 国际气象节",
@@ -194,17 +194,14 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年闰月的天数
         /// </summary>
-        private static int LeapDays(int y)
-        {
-            if (LeapMonth(y) != 0)
-            {
+        private static int LeapDays(int y){
+            if (LeapMonth(y) != 0){
                 if ((lunarInfo[y - 1900] & 0x10000) != 0)
                     return 30;
-                else
-                    return 29;
+                return 29;
             }
-            else
-                return 0;
+
+            return 0;
         }
 
         /// <summary>
@@ -215,12 +212,10 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年m月的总天数
         /// </summary>
-        private static int MonthDays(int y, int m)
-        {
+        private static int MonthDays(int y, int m){
             if ((lunarInfo[y - 1900] & (0x10000 >> m)) == 0)
                 return 29;
-            else
-                return 30;
+            return 30;
         }
 
         /// <summary>
@@ -652,7 +647,7 @@ namespace Taf.Core.Utility
         /// 第16位-第5位（共12位）表示12个月，其中第16位表示第一月，如果该月为30天则为1，29天为0
         /// 第4位-第1位（共4位）表示闰月是哪个月，如果当年没有闰月，则置0
         ///</remarks>
-        private static int[] LunarDateArray = new int[]{
+        private static int[] LunarDateArray = {
                 0x04BD8,0x04AE0,0x0A570,0x054D5,0x0D260,0x0D950,0x16554,0x056A0,0x09AD0,0x055D2,
                 0x04AE0,0x0A5B6,0x0A4D0,0x0D250,0x1D255,0x0B540,0x0D6A0,0x0ADA2,0x095B0,0x14977,
                 0x04970,0x0A4B0,0x0B4B5,0x06A50,0x06D40,0x1AB54,0x02B60,0x09570,0x052F2,0x04970,
@@ -707,8 +702,8 @@ namespace Taf.Core.Utility
         #endregion
 
         #region 节气数据
-        private static string[] SolarTerm = new string[] { "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至" };
-        private static int[] sTermInfo = new int[] { 0, 21208, 42467, 63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072, 240693, 263343, 285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758 };
+        private static string[] SolarTerm = { "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至" };
+        private static int[] sTermInfo = { 0, 21208, 42467, 63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072, 240693, 263343, 285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758 };
         #endregion
 
         #region 农历相关数据
@@ -724,7 +719,7 @@ namespace Taf.Core.Utility
         #endregion
 
         #region 按公历计算的节日
-        private static SolarHolidayStruct[] sHolidayInfo = new SolarHolidayStruct[]{
+        private static SolarHolidayStruct[] sHolidayInfo = {
             new(1, 1, 1, "元旦"),
             new(2, 2, 0, "世界湿地日"),
             new(2, 10, 0, "国际气象节"),
@@ -780,7 +775,7 @@ namespace Taf.Core.Utility
         #endregion
 
         #region 按农历计算的节日
-        private static LunarHolidayStruct[] lHolidayInfo = new LunarHolidayStruct[]{
+        private static LunarHolidayStruct[] lHolidayInfo = {
             new(1, 1, 1, "春节"),
             new(1, 15, 0, "元宵节"),
             new(5, 5, 0, "端午节"),
@@ -796,7 +791,7 @@ namespace Taf.Core.Utility
         #endregion
 
         #region 按某月第几个星期几
-        private static WeekHolidayStruct[] wHolidayInfo = new WeekHolidayStruct[]{
+        private static WeekHolidayStruct[] wHolidayInfo = {
             new(5, 2, 1, "母亲节"),
             new(5, 3, 1, "全国助残日"),
             new(6, 3, 1, "父亲节"),
@@ -840,10 +835,7 @@ namespace Taf.Core.Utility
                 temp = GetChineseYearDays(i);
                 if (offset - temp < 1)
                     break;
-                else
-                {
-                    offset = offset - temp;
-                }
+                offset = offset - temp;
             }
             _cYear = i;
 
@@ -982,7 +974,7 @@ namespace Taf.Core.Utility
                 else
                 {
                     //如果需要计算的是闰月，则应首先加上与闰月对应的普通月的天数
-                    if (_cIsLeapMonth == true)         //计算月为闰月
+                    if (_cIsLeapMonth)         //计算月为闰月
                     {
                         Temp = GetChineseMonthDays(cy, cm); //计算非闰月天数
                         offset = offset + Temp;
@@ -1005,16 +997,13 @@ namespace Taf.Core.Utility
         /// <summary>
         /// //传回农历y年m月的总天数
         /// </summary>
-        private int GetChineseMonthDays(int year, int month)
-        {
+        private int GetChineseMonthDays(int year, int month){
             if (BitTest32((LunarDateArray[year - MinYear] & 0x0000FFFF), (16 - month)))
             {
                 return 30;
             }
-            else
-            {
-                return 29;
-            }
+
+            return 29;
         }
         #endregion
 
@@ -1030,23 +1019,17 @@ namespace Taf.Core.Utility
         /// <summary>
         /// 传回农历y年闰月的天数
         /// </summary>
-        private int GetChineseLeapMonthDays(int year)
-        {
-            if (GetChineseLeapMonth(year) != 0)
-            {
+        private int GetChineseLeapMonthDays(int year){
+            if (GetChineseLeapMonth(year) != 0){
                 if ((LunarDateArray[year - MinYear] & 0x10000) != 0)
                 {
                     return 30;
                 }
-                else
-                {
-                    return 29;
-                }
+
+                return 29;
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
         }
         #endregion
 
@@ -1101,7 +1084,7 @@ namespace Taf.Core.Utility
             var tmpGan = ganStr.Substring(indexGan) + ganStr.Substring(0, indexGan + 2);
             //ganHour = ganStr[((i % 10 + 1) * 2 - 1) % 10 - 1].ToString();
 
-            return tmpGan[offset].ToString() + zhiStr[offset].ToString();
+            return tmpGan[offset] + zhiStr[offset].ToString();
         }
         #endregion
 
@@ -1187,7 +1170,7 @@ namespace Taf.Core.Utility
         private bool BitTest32(int num, int bitpostion)
         {
             if ((bitpostion > 31) || (bitpostion < 0))
-                throw new Exception("Error Param: bitpostion[0-31]:" + bitpostion.ToString());
+                throw new Exception("Error Param: bitpostion[0-31]:" + bitpostion);
 
             var bit = 1 << bitpostion;
 
@@ -1195,10 +1178,8 @@ namespace Taf.Core.Utility
             {
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
         #endregion
 
@@ -1491,7 +1472,7 @@ namespace Taf.Core.Utility
                     case 30:
                         return "三十";
                     default:
-                        return nStr2[(int)(_cDay / 10)].ToString() + nStr1[_cDay % 10].ToString();
+                        return nStr2[_cDay / 10] + nStr1[_cDay % 10].ToString();
 
                 }
             }
@@ -1547,16 +1528,13 @@ namespace Taf.Core.Utility
         /// </summary>
         public string ChineseDateString
         {
-            get
-            {
-                if (_cIsLeapMonth == true)
+            get{
+                if (_cIsLeapMonth)
                 {
                     return "农历" + ChineseYearString + "闰" + ChineseMonthString + ChineseDayString;
                 }
-                else
-                {
-                    return "农历" + ChineseYearString + ChineseMonthString + ChineseDayString;
-                }
+
+                return "农历" + ChineseYearString + ChineseMonthString + ChineseDayString;
             }
         }
         #endregion
@@ -1779,7 +1757,7 @@ namespace Taf.Core.Utility
             {
                 string tempStr;
                 var i = (_cYear - GanZhiStartYear) % 60; //计算干支
-                tempStr = ganStr[i % 10].ToString() + zhiStr[i % 12].ToString() + "年";
+                tempStr = ganStr[i % 10] + zhiStr[i % 12].ToString() + "年";
                 return tempStr;
             }
         }
@@ -1864,7 +1842,7 @@ namespace Taf.Core.Utility
                 var ts = _date - GanZhiStartDay;
                 offset = ts.Days;
                 i = offset % 60;
-                return ganStr[i % 10].ToString() + zhiStr[i % 12].ToString() + "日";
+                return ganStr[i % 10] + zhiStr[i % 12].ToString() + "日";
             }
         }
         #endregion

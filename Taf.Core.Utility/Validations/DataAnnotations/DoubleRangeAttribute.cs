@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+
 namespace System.ComponentModel.DataAnnotations
 {
-    using Globalization;
-
     /// <summary>
     /// 范围不包含边界
     /// </summary>

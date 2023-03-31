@@ -7,8 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -16,8 +14,6 @@ using Taf.Core.Utility;
 // ApplicationService.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// 登录后用户信息
@@ -71,7 +67,11 @@ public class LoginInfo : ILoginInfo,ITransientDependency{
             var traceId = _httpContextAccessor?.HttpContext.Request.Headers
                                                .SingleOrDefault(r => r.Key.ToLower() == "traceid").Value
                                                .FirstOrDefault();
-            return !string.IsNullOrWhiteSpace(traceId) ? traceId : Randoms.GetRandomCode(3);
+            Fx.If(string.IsNullOrWhiteSpace(traceId)).Then(() => {
+                traceId = Randoms.GetRandomCode(6,"0123456789abcdefghijklmnopqrstuvwxyz");
+                _httpContextAccessor?.HttpContext.Request.Headers.TryAdd("traceid", traceId);
+            });
+            return traceId;
         }
     }
 

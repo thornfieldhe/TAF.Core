@@ -22,7 +22,7 @@ public static class RegisterExt{
                 && !type.IsAbstract){
                     DbEntityTypes.Add(type); //数据库对象
                 } else if(typeof(IDataSeedContributor).IsAssignableFrom(type) && !type.IsAbstract){
-                    DataSeedContributors.Add(System.Activator.CreateInstance(type) as IDataSeedContributor); // 种子对象
+                    DataSeedContributors.Add(Activator.CreateInstance(type) as IDataSeedContributor); // 种子对象
                 }
             }
         }

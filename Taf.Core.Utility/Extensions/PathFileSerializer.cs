@@ -6,15 +6,15 @@
 //   序列化对象到文件
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Text;
+using System.Xml.Serialization;
+
 namespace Taf.Core.Utility
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Xml.Serialization;
-
-    using Newtonsoft.Json;
-
     /// <summary>
     /// 序列化对象到文件
     /// </summary>

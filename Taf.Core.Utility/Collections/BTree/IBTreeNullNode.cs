@@ -4,11 +4,6 @@
     {
         private IBTreeNode<T> _Parent;
 
-        public IBTreeNullNode()
-        {
-            
-        }
-
         public bool IsNull => true;
 
         public BTreeNodeColor Color => BTreeNodeColor.Black;

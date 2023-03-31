@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Taf.Core.Validation;
+
 namespace Taf.Core
 {
-    using Validation;
-
     /// <summary>
     /// 验证处理器
     /// </summary>

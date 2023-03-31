@@ -6,14 +6,13 @@
 //   基本类型转换扩展
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Taf.Core.Utility
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Utility;
-
     /// <summary>
     /// 类型判断和转换
     /// </summary>

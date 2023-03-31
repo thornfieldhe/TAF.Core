@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace Taf.Core.Utility
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// 正则上下文
     /// </summary>

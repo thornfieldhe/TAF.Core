@@ -18,7 +18,7 @@ public static class RemoteConfigurationChangeToken{
     public static IChangeToken Watch(){
         var tokenSource = new CancellationTokenSource();
         var changeToken = new CancellationChangeToken(tokenSource.Token);
-        _watchToken = new WatchTokenInfo(){ CancellationTokenSource = tokenSource, ChangeToken = changeToken };
+        _watchToken = new WatchTokenInfo{ CancellationTokenSource = tokenSource, ChangeToken = changeToken };
         return _watchToken.ChangeToken;
     }
 

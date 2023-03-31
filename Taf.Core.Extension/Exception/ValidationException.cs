@@ -2,15 +2,12 @@
 // Taf.Core.Net.Utility
 // ValidationException.cs
 
-using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
-
 namespace Taf.Core.Extension;
 
 /// <summary>
 /// 数据校验异常
 /// </summary>
-public class ValidationException : System.Exception{
+public class ValidationException : Exception{
 
     /// <summary>
     /// Constructor.

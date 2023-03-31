@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using SqlSugar;
-using System.Collections.Generic;
 using System.Reflection;
 using Taf.Core.Utility;
 
@@ -17,8 +16,6 @@ using Taf.Core.Utility;
 // BaseEntity.cs
 
 namespace Taf.Core.Extension;
-
-using System;
 
 /// <summary>
 /// Entity只允许数据库对象继承

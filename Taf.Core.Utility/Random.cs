@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Taf.Core.Utility
 {
-    using System.Text;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// 使用Random类生成伪随机数
     /// </summary>
@@ -65,7 +64,7 @@ namespace Taf.Core.Utility
 
 
 
-        private static int rep = 0;
+        private static int rep;
         /// <summary>
         /// 生成不重复数字字符串 
         /// </summary>
@@ -79,7 +78,7 @@ namespace Taf.Core.Utility
             for (var i = 0; i < codeCount; i++)
             {
                 var num = random.Next();
-                str = str + ((char)(0x30 + ((ushort)(num % 10)))).ToString();
+                str = str + ((char)(0x30 + ((ushort)(num % 10))));
             }
             return str;
         }
@@ -107,7 +106,7 @@ namespace Taf.Core.Utility
                 {
                     ch = (char)(0x41 + ((ushort)(num % 0x1a)));
                 }
-                str = str + ch.ToString();
+                str = str + ch;
             }
             return str;
         }

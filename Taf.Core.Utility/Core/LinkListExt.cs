@@ -7,11 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace Taf.Core.Utility{
-    using System;
-
     /// <summary>
     /// 链表扩展类
     /// </summary>
@@ -30,11 +29,11 @@ namespace Taf.Core.Utility{
             var t     = link.Find(to);
             if (f==null)
             {  
-                throw new ArgumentNullException($"链表中不存在交换对象[from]");
+                throw new ArgumentNullException("链表中不存在交换对象[from]");
             }
             if (t==null)
             {  
-                throw new ArgumentNullException($"链表中不存在交换对象[to]");
+                throw new ArgumentNullException("链表中不存在交换对象[to]");
             }
 
             void NotAllowNull(LinkedListNode<T> itemA, LinkedListNode<T> itemB){

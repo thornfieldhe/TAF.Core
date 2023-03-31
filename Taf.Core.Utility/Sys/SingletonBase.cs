@@ -6,7 +6,7 @@
     /// <typeparam name="T"></typeparam>
     public class SingletonBase<T> where T : new()
     {
-        private static T instance = default(T);
+        private static          T      instance;
         private static readonly object padlock = new();
         protected SingletonBase()
         {

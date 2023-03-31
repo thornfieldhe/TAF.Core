@@ -1,5 +1,5 @@
 ﻿﻿using System;
-using System.Collections.Generic;
+ using System.Collections.Generic;
 
  namespace Taf.Core.Utility
 {
@@ -46,8 +46,7 @@ using System.Collections.Generic;
         /// <param name="data"></param>
         /// <returns></returns>
         public  IBTreeNode<T> CreateNode(T data) =>
-            new BIbTreeNode<T>()
-            {
+            new BIbTreeNode<T>{
                 Data = data
             };
 
@@ -75,16 +74,13 @@ using System.Collections.Generic;
         {
             var grandparent = GetGrandParent(targetNode);
 
-            if(!grandparent.IsNull && !targetNode.Parent.IsNull)
-            {
+            if(!grandparent.IsNull && !targetNode.Parent.IsNull){
                 if(targetNode.Parent == grandparent.Left)
                 {
                     return grandparent.Right;
                 }
-                else
-                {
-                    return grandparent.Left;
-                }
+
+                return grandparent.Left;
             }
 
             return new IBTreeNullNode<T>();
@@ -97,16 +93,13 @@ using System.Collections.Generic;
         /// <returns></returns>
         public IBTreeNode<T> GetSibling(IBTreeNode<T> targetNode)
         {
-            if(null != targetNode)
-            {
+            if(null != targetNode){
                 if(!targetNode.Parent.IsNull && targetNode == targetNode.Parent.Left)
                 {
                     return targetNode.Parent.Right;
                 }
-                else
-                {
-                    return targetNode.Parent.Left;
-                }
+
+                return targetNode.Parent.Left;
             }
 
             return new IBTreeNullNode<T>();
@@ -331,16 +324,13 @@ using System.Collections.Generic;
         /// 性质5也未受到威胁，尽管新节点N有两个黑色叶子子节点；
         /// 但由于新节点N是红色，通过它的每个子节点的路径就都有同通过它所取代的黑色的叶子的路径同样数目的黑色节点，所以依然满足这个性质。
         /// </remarks>
-        private void InsertCase2(IBTreeNode<T> targetNode)
-        {
+        private void InsertCase2(IBTreeNode<T> targetNode){
             if(BTreeNodeColor.Black == targetNode.Parent.Colour)
             {
                 return;
             }
-            else
-            {
-                InsertCase3(targetNode);
-            }
+
+            InsertCase3(targetNode);
         }
 
         /// <summary>

@@ -7,11 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Linq;
 
 namespace Taf.Core.Utility{
-    using System;
-
     /// <summary>
     /// The extensions.
     /// </summary>

@@ -8,12 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace Taf.Core.Web{
-    using System;
-
     /// <summary>
     /// 本地化语言过滤器
     /// </summary>

@@ -7,15 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+
 
 // 何翔华
 // Taf.Core.Net.Utility
 // IService.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// All classes implement this interface are automatically registered to dependency injection as transient object.

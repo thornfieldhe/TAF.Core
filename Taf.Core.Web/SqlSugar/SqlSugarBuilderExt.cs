@@ -9,11 +9,6 @@
 
 using Serilog;
 using SqlSugar;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-using System.Reflection;
 using Taf.Core.Extension;
 using Taf.Core.Utility;
 
@@ -22,8 +17,6 @@ using Taf.Core.Utility;
 // SqlSugarBuilderExt.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// 添加默认启动配置
@@ -35,9 +28,8 @@ public static class SqlSugarBuilderExt{
     /// <summary>
     /// 添加SqlSurgar数据库依赖
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    /// <param name="dbName"></param>
+    /// <param name="dbEntitTypes">数据表对象</param>
+    /// <param name="dbName">数据库连接名称,默认:MainConnection</param>
     public static void AddMySql<DbContex>(
         this WebApplicationBuilder builder
       , List<Type>                 dbEntitTypes
@@ -45,7 +37,7 @@ public static class SqlSugarBuilderExt{
       ) where DbContex : TafDbContext, new(){
         var connection = builder.Configuration.GetConnectionString(dbName);
         var sqlSugar = new SqlSugarScope(
-            new ConnectionConfig(){
+            new ConnectionConfig{
                 DbType                    = DbType.MySql
               , ConnectionString          = connection
               , IsAutoCloseConnection     = true
@@ -110,7 +102,7 @@ public static class SqlSugarBuilderExt{
             });
 
         ISugarUnitOfWork<DbContex> context = new SugarUnitOfWork<DbContex>(sqlSugar);
-        builder.Services.AddSingleton<ISugarUnitOfWork<DbContex>>(context);
+        builder.Services.AddSingleton(context);
         builder.Services.AddSingleton<ISqlSugarClient>(sqlSugar);
         
         var defaultEntityTypes = typeof(IRepository<DbEntity>).AssemblyQualifiedName;

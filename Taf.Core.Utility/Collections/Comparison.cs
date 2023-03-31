@@ -7,11 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace Taf.Core.Utility
 {
-    using System;
-    using System.Collections.Generic;
-
     /// <summary>
     /// 比较器辅助类，用于快速创建IComparer{T}接口的实例
     /// </summary>

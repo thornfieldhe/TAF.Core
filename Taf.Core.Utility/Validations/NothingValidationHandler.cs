@@ -9,8 +9,6 @@
 
 namespace Taf.Core.Validation
 {
-    using Core;
-
     /// <summary>
     /// 异常验证处理 - 什么也不做
     /// </summary>

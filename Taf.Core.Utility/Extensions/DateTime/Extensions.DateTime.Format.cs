@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 using System.Text;
 
 // 何翔华
@@ -16,7 +16,6 @@ using System.Text;
 
 namespace Taf.Core.Utility;
 
-using System;
 /// <summary>
 /// DateTime格式化
 /// </summary>

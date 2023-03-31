@@ -10,8 +10,6 @@
 using Newtonsoft.Json;
 
 namespace Taf.Core.Share{
-    using System;
-
     /// <summary>
     /// 提供模板名称和对象json化字符串
     /// </summary>

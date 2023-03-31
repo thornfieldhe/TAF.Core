@@ -7,11 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Core.Utility{
-    using System;
-    using System.Globalization;
-    using System.Text;
+using System;
 
+namespace Taf.Core.Utility{
     /// <summary>
     /// The extensions.
     /// </summary>
@@ -74,9 +72,13 @@ namespace Taf.Core.Utility{
             if(long.TryParse(timeStamp, out _)){
                 if(timeStamp.Length == 13){
                     return ConvertString(4);
-                } else if(timeStamp.Length == 18){
+                }
+
+                if(timeStamp.Length == 18){
                     return new DateTime(timeStamp.ToLong());
-                } else if(timeStamp.Length == 10){
+                }
+
+                if(timeStamp.Length == 10){
                     return ConvertString(7);
                 }
             }

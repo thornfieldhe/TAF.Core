@@ -7,13 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace Taf.Core.Utility
 {
-    using System;
-
-  /// 红黑树定义：
+    /// 红黑树定义：
       /// 性质1.节点是红色或黑色
       /// 性质2.根是黑色
       /// 性质3.所有叶子都是黑色（叶子是NIL节点）
@@ -353,16 +352,13 @@ namespace Taf.Core.Utility
    
           public int Count => CountLeafNode(mRoot);
 
-          private int CountLeafNode(RedBlackTreeNode<T> root)
-          {
+          private int CountLeafNode(RedBlackTreeNode<T> root){
               if (root == null)
               {
                   return 0;
               }
-              else
-              {
-                  return CountLeafNode(root.LeftChild) + CountLeafNode(root.RightChild) + 1;
-              }
+
+              return CountLeafNode(root.LeftChild) + CountLeafNode(root.RightChild) + 1;
           }
    
           public int Depth => GetHeight(mRoot);
@@ -393,17 +389,14 @@ namespace Taf.Core.Utility
    
           public T Min
           {
-              get
-              {
+              get{
                   if (mRoot != null)
                   {
                       var node = GetMinNode(mRoot);
                       return node.Data;
                   }
-                  else
-                  {
-                      return default(T);
-                  }
+
+                  return default(T);
               }
           }
    
@@ -443,8 +436,7 @@ namespace Taf.Core.Utility
               {
                   node.LeftChild = Delete(node.LeftChild, value);
               }
-              else
-              {
+              else{
                   // a.如果删除节点没有子节点，直接返回null
                   // b.如果只有一个子节点，返回其子节点代替删除节点即可
                   if (node.LeftChild == null)
@@ -455,7 +447,8 @@ namespace Taf.Core.Utility
                       }
                       return node.RightChild;
                   }
-                  else if (node.RightChild == null)
+
+                  if (node.RightChild == null)
                   {
                       if (node.LeftChild != null)
                       {
@@ -463,86 +456,84 @@ namespace Taf.Core.Utility
                       }
                       return node.LeftChild;
                   }
+
+                  // c.被删除的节点“左右子节点都不为空”的情况  
+                  RedBlackTreeNode<T> child;
+                  RedBlackTreeNode<T> parent;
+                  bool                color;
+                  // 1. 先找到“删除节点的右子树中的最小节点”，用它来取代被删除节点的位置
+                  // 注意：这里也可以选择“删除节点的左子树中的最大节点”作为被删除节点的替换节点
+                  var replace = node;
+                  replace = GetMinNode(replace.RightChild);
+   
+                  // 2. 更新删除父节点及其子节点
+                  // 要删除的节点不是根节点  
+                  if (node.Parent != null)
+                  {
+                      // 要删除的节点是：删除节点的父节点的左子节点 
+                      if (node == node.Parent.LeftChild)
+                      {
+                          // 把“删除节点的右子树中的最小节点”赋值给“删除节点的父节点的左子节点” 
+                          node.Parent.LeftChild = replace;
+                      }
+                      else
+                      {
+                          // 把“删除节点的右子树中的最小节点”赋值给“删除节点的父节点的右子节点”
+                          node.Parent.RightChild = replace;
+                      }
+                  }
                   else
                   {
-                      // c.被删除的节点“左右子节点都不为空”的情况  
-                      RedBlackTreeNode<T> child;
-                      RedBlackTreeNode<T> parent;
-                      bool color;
-                      // 1. 先找到“删除节点的右子树中的最小节点”，用它来取代被删除节点的位置
-                      // 注意：这里也可以选择“删除节点的左子树中的最大节点”作为被删除节点的替换节点
-                      var replace = node;
-                      replace = GetMinNode(replace.RightChild);
-   
-                      // 2. 更新删除父节点及其子节点
-                      // 要删除的节点不是根节点  
-                      if (node.Parent != null)
-                      {
-                          // 要删除的节点是：删除节点的父节点的左子节点 
-                          if (node == node.Parent.LeftChild)
-                          {
-                              // 把“删除节点的右子树中的最小节点”赋值给“删除节点的父节点的左子节点” 
-                              node.Parent.LeftChild = replace;
-                          }
-                          else
-                          {
-                              // 把“删除节点的右子树中的最小节点”赋值给“删除节点的父节点的右子节点”
-                              node.Parent.RightChild = replace;
-                          }
-                      }
-                      else
-                      {
-                          // 要删除的节点是根节点
-                          // 如果只有一个根节点，把mRoot赋值为null，这时replace为null
-                          // 如果不止一个节点，返回根节点的右子树中的最小节点
-                          mRoot = replace;
-                      }
-   
-                      // 记录被删除节点的右子树中的最小节点的右子节点，父亲节点及颜色，没有左子节点
-                      child = replace.RightChild;
-                      parent = replace.Parent;
-                      color = replace.Color;
-   
-                      // 3. 删除“被删除节点的右子树中的最小节点”，同时更新替换节点的左右子节点，父亲节点及颜色
-                      // 替换节点 也就是 最小节点
-                      if (parent == node)
-                      {
-                          // 被删除节点的右子树中的最小节点是被删除节点的子节点
-                          parent = replace;
-                      }
-                      else
-                      {
-                          //如果最小节点的右子节点不为空，更新其父节点
-                          if (child != null)
-                          {
-                              child.Parent = parent;
-                          }
-                          //更新最小节点的父节点的左子节点，指向最小节点的右子节点
-                          parent.LeftChild = child;
-                          //更新替换节点的右子节点
-                          replace.RightChild = node.RightChild;
-                          //更新删除节点的右子节点的父节点
-                          node.RightChild.Parent = replace;
-                      }
-                      //更新替换节点的左右子节点，父亲节点及颜色
-                      replace.Parent = node.Parent;
-                      //保持原来位置的颜色
-                      replace.Color = node.Color;
-                      replace.LeftChild = node.LeftChild;
-                      //更新删除节点的左子节点的父节点
-                      node.LeftChild.Parent = replace;
-   
-                      //红黑树平衡修复
-                      //如果删除的最小节点颜色是黑色，需要重新平衡红黑树
-                      //如果删除的最小节点颜色是红色，只需要替换删除节点后，涂黑即可
-                      //上面的保持原来位置的颜色已经处理了这种情况，这里只需要判断最小节点是黑色的情况
-                      if (color == BLACK)
-                      {
-                          //将最小节点的child和parent传进去
-                          RemoveFixUp(child, parent);
-                      }
-                      return replace;
+                      // 要删除的节点是根节点
+                      // 如果只有一个根节点，把mRoot赋值为null，这时replace为null
+                      // 如果不止一个节点，返回根节点的右子树中的最小节点
+                      mRoot = replace;
                   }
+   
+                  // 记录被删除节点的右子树中的最小节点的右子节点，父亲节点及颜色，没有左子节点
+                  child  = replace.RightChild;
+                  parent = replace.Parent;
+                  color  = replace.Color;
+   
+                  // 3. 删除“被删除节点的右子树中的最小节点”，同时更新替换节点的左右子节点，父亲节点及颜色
+                  // 替换节点 也就是 最小节点
+                  if (parent == node)
+                  {
+                      // 被删除节点的右子树中的最小节点是被删除节点的子节点
+                      parent = replace;
+                  }
+                  else
+                  {
+                      //如果最小节点的右子节点不为空，更新其父节点
+                      if (child != null)
+                      {
+                          child.Parent = parent;
+                      }
+                      //更新最小节点的父节点的左子节点，指向最小节点的右子节点
+                      parent.LeftChild = child;
+                      //更新替换节点的右子节点
+                      replace.RightChild = node.RightChild;
+                      //更新删除节点的右子节点的父节点
+                      node.RightChild.Parent = replace;
+                  }
+                  //更新替换节点的左右子节点，父亲节点及颜色
+                  replace.Parent = node.Parent;
+                  //保持原来位置的颜色
+                  replace.Color     = node.Color;
+                  replace.LeftChild = node.LeftChild;
+                  //更新删除节点的左子节点的父节点
+                  node.LeftChild.Parent = replace;
+   
+                  //红黑树平衡修复
+                  //如果删除的最小节点颜色是黑色，需要重新平衡红黑树
+                  //如果删除的最小节点颜色是红色，只需要替换删除节点后，涂黑即可
+                  //上面的保持原来位置的颜色已经处理了这种情况，这里只需要判断最小节点是黑色的情况
+                  if (color == BLACK)
+                  {
+                      //将最小节点的child和parent传进去
+                      RemoveFixUp(child, parent);
+                  }
+                  return replace;
               }
               return node;
           }

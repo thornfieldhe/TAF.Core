@@ -7,14 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using Taf.Core.Utility;
+
 namespace Taf.Core.Validation
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Reflection;
-
-    using Core;
-    using Utility;
-
     /// <summary>
     /// 验证操作
     /// </summary>

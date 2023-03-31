@@ -25,6 +25,8 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
 
     public ISqlSugarClient GetDbContex() => Context;
 
+    public ISugarQueryable<T> Queryable => Context.Queryable<T>();
+
     public virtual async Task<TR> FindAsync<TR>(Guid id){
         var result = await Context.Queryable<T>().InSingleAsync(id);
         if(result == null){
@@ -88,7 +90,7 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
 
 #region insert
 
-    public virtual async Task<bool> InsertAsync(T item) => await Context.Insertable<T>(item).ExecuteCommandAsync()==1;
+    public virtual async Task<bool> InsertAsync(T item) => await Context.Insertable(item).ExecuteCommandAsync()==1;
 
 #endregion
 
@@ -96,7 +98,7 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
 
     public virtual async Task<bool> UpdateAsync(T item){
         var concurrencyStamp = item.ConcurrencyStamp;
-        return await Context.Updateable<T>(item).Where(i => i.Id == item.Id && i.ConcurrencyStamp == concurrencyStamp)
+        return await Context.Updateable(item).Where(i => i.Id == item.Id && i.ConcurrencyStamp == concurrencyStamp)
                              .ExecuteCommandAsync()==1;
     }
 
@@ -113,13 +115,13 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
                                                 , new Guid("D62AAAAF-48D9-4BC0-868F-E5123115A39F"));
             }
 
-            Mapper.Map<TR, T>(item, data);
+            Mapper.Map(item, data);
             return await UpdateAsync(data);
-        } else{
-            data = new T();
-            Mapper.Map<TR, T>(item, data);
-            return await InsertAsync(data);
         }
+
+        data = new T();
+        Mapper.Map(item, data);
+        return await InsertAsync(data);
     }
 
 #endregion
@@ -127,9 +129,9 @@ public class DbSet<T> : SimpleClient<T>, IRepository<T> where T : DbEntity, new(
 #region delete
 
     public virtual async Task DeleteAllAsync(Expression<Func<T, bool>> whereExpression) =>
-        await Context.Deleteable<T>().Where(whereExpression).ExcuteDeleteAsync<T>();
+        await Context.Deleteable<T>().Where(whereExpression).ExcuteDeleteAsync();
 
-    public async Task<bool> DeleteAsync(Guid id) => await Context.Deleteable<T>().In(id).ExcuteDeleteAsync<T>();
+    public async Task<bool> DeleteAsync(Guid id) => await Context.Deleteable<T>().In(id).ExcuteDeleteAsync();
 
     public async Task<bool> DeleteAsync(T item) => await DeleteAsync(item.Id);
 

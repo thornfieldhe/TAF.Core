@@ -62,7 +62,7 @@ public static class ExtensionGroup{
         var valueFiled = tb.DefineField("value", typeof(V), FieldAttributes.Private);
         //构造函数
         var ctor = tb.DefineConstructor(MethodAttributes.Public,
-                                        CallingConventions.Standard, new Type[]{ typeof(V) });
+                                        CallingConventions.Standard, new[]{ typeof(V) });
         var ctor1IL = ctor.GetILGenerator();
         ctor1IL.Emit(OpCodes.Ldarg_0);
         ctor1IL.Emit(OpCodes.Call, typeof(object).GetConstructor(Type.EmptyTypes));

@@ -1,8 +1,8 @@
-﻿namespace Taf.Core.Utility
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+namespace Taf.Core.Utility
+{
     public class CommonEqualityComparer<T, V> : IEqualityComparer<T>
     {
         private readonly Func<T, V> _keySelector;

@@ -10,7 +10,6 @@
 using MassTransit;
 using MassTransit.NewIdProviders;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -18,8 +17,6 @@ using Taf.Core.Utility;
 // GuidGanerator.cs
 
 namespace Taf.Core.Extension;
-
-using System;
 
 /// <summary>
 /// Guid生成器

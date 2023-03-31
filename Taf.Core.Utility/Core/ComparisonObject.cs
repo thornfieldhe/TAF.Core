@@ -7,12 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace Taf.Core.Utility
 {
-    using System;
-
     /// <summary>
     /// 比较对象
     /// </summary>

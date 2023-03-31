@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Taf.Core.Utility{
-    using System;
+using System;
 
+namespace Taf.Core.Utility{
     public class Node{
         public int Data{ get; set; }
 

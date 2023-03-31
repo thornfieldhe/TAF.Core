@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 
 // 何翔华
 // Taf.Core.Utility
@@ -15,7 +15,6 @@ using System.Collections.Generic;
 
 namespace Taf.Core.Utility.Double;
 
-using System;
 /// <summary>
 /// double格式化
 /// </summary>

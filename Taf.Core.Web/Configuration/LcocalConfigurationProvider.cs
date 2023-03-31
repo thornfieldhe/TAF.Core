@@ -7,10 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
-using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -18,8 +15,6 @@ using Taf.Core.Utility;
 // LcocalConfigurationLoader.cs
 
 namespace Taf.Core.Web;
-
-using System;
 
 /// <summary>
 /// 本地配置文档加载器
@@ -32,7 +27,7 @@ public class LcocalConfigurationProvider : JsonConfigurationProvider{
         base.Load(stream);
         if(IsEncrypted()){
             foreach(var item in Data){
-                if(item.Key != ConfigurationKey.IsEncrypted){
+                if(item.Key != SystemKeys.IsEncrypted){
                     Data[item.Key] = Encrypt.DesDecrypt(item.Value);
                 }
             }
@@ -49,7 +44,7 @@ public class LcocalConfigurationProvider : JsonConfigurationProvider{
     }
 
     private bool IsEncrypted(){
-        if(Data.TryGetValue(ConfigurationKey.IsEncrypted, out var encryptedValue)
+        if(Data.TryGetValue(SystemKeys.IsEncrypted, out var encryptedValue)
         && bool.TryParse(encryptedValue, out var isEncrypted)){
             return isEncrypted;
         }

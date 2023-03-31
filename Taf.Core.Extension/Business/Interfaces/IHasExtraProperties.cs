@@ -13,7 +13,6 @@
 // Taf.Core.Net.Utility
 // IHasExtraProperties.cs
 
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Taf.Core.Utility;
 

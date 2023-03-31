@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Dynamic;
 
 namespace Taf.Core.Utility{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Dynamic;
-
-
     /// <summary>
     /// The extensions.
     /// </summary>

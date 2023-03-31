@@ -7,13 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Taf.Core.Web
 {
-    using System;
-
     /// <summary>
     /// 健康检查
     /// </summary>
@@ -35,13 +33,12 @@ namespace Taf.Core.Web
           private static WebApplication UseHealthCheck(this WebApplication webApplication,string serviceName, PathString path)
           {
               webApplication.MapGet(path, 
-                                         (context) => {
-                                             var host = System
-                                                       .Net.Dns.GetHostEntry(System.Net.Dns.GetHostName()).AddressList
-                                                       .FirstOrDefault(
-                                                            address => address.AddressFamily
-                                                                    == System.Net.Sockets.AddressFamily.InterNetwork)
-                                                      ?.ToString();
+                                         context => {
+                                             var host = Dns.GetHostEntry(Dns.GetHostName()).AddressList
+                                                           .FirstOrDefault(
+                                                                address => address.AddressFamily
+                                                                        == AddressFamily.InterNetwork)
+                                                          ?.ToString();
                                              context.Response.StatusCode = 200;
                                              context.Response.Headers.Add("Content-Type","text/ plain;charset=utf-8");
                                              return context.Response.WriteAsync($"[{serviceName}]{host}:healthy");

@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -15,8 +14,6 @@ using Taf.Core.Utility;
 // ServiceLocator.cs
 
 namespace Taf.Core.Extension;
-
-using System;
 
 public  class ServiceLocator:SingletonBase<ServiceLocator>
 {

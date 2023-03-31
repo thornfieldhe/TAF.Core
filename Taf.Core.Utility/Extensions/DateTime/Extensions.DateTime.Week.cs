@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 using System.Globalization;
 
 // 何翔华
@@ -15,8 +15,6 @@ using System.Globalization;
 // Extensions.DateTime.YearMonth.cs
 
 namespace Taf.Core.Utility;
-
-using System;
 
 /// <summary>
 /// 周相关函数

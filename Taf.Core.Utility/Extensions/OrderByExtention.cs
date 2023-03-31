@@ -7,12 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Taf.Core.Utility{
-    using System;
-
     /// <summary>
     /// 针对List OrderBy的扩展
     /// </summary>

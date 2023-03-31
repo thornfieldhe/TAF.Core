@@ -1,7 +1,7 @@
-﻿namespace Taf.Core.Utility
-{
-    using System;
+﻿using System;
 
+namespace Taf.Core.Utility
+{
     /// <summary>
     /// 序列化内容访问器接口
     /// </summary>

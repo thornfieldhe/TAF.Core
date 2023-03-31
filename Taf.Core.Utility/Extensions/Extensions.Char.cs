@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+
 namespace Taf.Core.Utility
 {
-    using System.Globalization;
-
     /// <summary>
     /// The extensions.
     /// </summary>

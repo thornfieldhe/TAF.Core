@@ -1,8 +1,8 @@
-﻿namespace Taf.Core.Utility
-{
-    using System.Collections.Generic;
-    using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
+namespace Taf.Core.Utility
+{
     /// <summary>
     /// Dictionary扩展
     /// </summary>

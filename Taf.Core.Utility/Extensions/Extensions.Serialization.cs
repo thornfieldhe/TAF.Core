@@ -7,17 +7,15 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Xml.Serialization;
 
 namespace Taf.Core.Utility{
-    using System;
-    using System.IO;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Xml.Serialization;
-    using Newtonsoft.Json;
-
     /// <summary>
     /// The extensions.
     /// </summary>
@@ -58,8 +56,7 @@ namespace Taf.Core.Utility{
                 var memberInitExpression =
                     Expression.MemberInit(Expression.New(typeof(TOut)), memberBindingList.ToArray());
                 var lambda =
-                    Expression.Lambda<Func<TIn, TOut>>(memberInitExpression
-                                                     , new ParameterExpression[]{parameterExpression});
+                    Expression.Lambda<Func<TIn, TOut>>(memberInitExpression, parameterExpression);
                 var func = lambda.Compile();
 
                 _dic[key] = func;

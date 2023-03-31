@@ -2,7 +2,6 @@
 // Taf.Core.Web
 // DefaultDataSeedContributor.cs
 
-using SqlSugar;
 using Taf.Core.Extension;
 
 namespace Taf.Core.Web;

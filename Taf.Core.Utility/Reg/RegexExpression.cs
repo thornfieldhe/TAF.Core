@@ -7,12 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+
 namespace Taf.Core.Utility
 {
-    using System;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-
     /// <summary>
     /// 正则匹配基类
     /// </summary>

@@ -1,9 +1,8 @@
-﻿namespace Taf.Core.Utility
-{
-    using System;
-    using System.Globalization;
-    using Utility;
+﻿using System;
+using System.Globalization;
 
+namespace Taf.Core.Utility
+{
     /// <summary>
     /// 进制转换器
     /// </summary>
