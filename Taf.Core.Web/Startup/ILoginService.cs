@@ -4,7 +4,7 @@
 
 namespace Taf.Core.Web;
 
-public interface ILoginInfo{
+public interface ILoginService{
 
     /// <summary>
     /// 
