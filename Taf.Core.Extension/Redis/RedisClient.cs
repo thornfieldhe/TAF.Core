@@ -28,15 +28,14 @@ public class RedisClientServer:SingletonBase<RedisClientServer>{
     private string      _connectionString;
     public  RedisClient Client{ get;private set; }
 
-    public void LoadConfig(string? connection,int? databaseId){
+    public void LoadConfig(string? connection){
         Fx.If(connection == null)
           .Then(() => {
                var config = ServiceLocator.Instance.ServiceProvider.GetService<IConfiguration>();
                connection = config["Redis:ConnectionString"];
-               databaseId = config["Redis:DatabaseId"].ToInt();
+           
            });
         Client        =  new RedisClient(connection);
-        Client.GetDatabase(databaseId);
         Client.Notice += (s, e) => Console.WriteLine(e.Log); //打印命令日志
     }
         

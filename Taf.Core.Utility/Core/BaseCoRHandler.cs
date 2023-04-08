@@ -20,12 +20,10 @@ namespace Taf.Core.Utility
         /// 
         /// </summary>
         /// <param name="request"></param>
-        public void Process(Request request)
-        {
-            if (AllowProcess(request))
-            {
+        public void Process(Request request){
+            if(AllowProcess(request)){
                 Excute(request);
-            }
+            } 
         }
 
         /// <summary>

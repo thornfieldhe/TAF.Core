@@ -60,15 +60,31 @@ public static class AppBuilderExtend{
         builder.AddRedis();                                                             //注入Redis配置
     }
 
-    public static void UseDefaultService(this WebApplication app){
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="allowOrigin">如果allowOrigin为空数组,则使用*</param>
+    public static void UseDefaultService(this WebApplication app, params string[] allowOrigin){
         if(app.Environment.IsDevelopment()){
             //使用swagger
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
-        app.MapControllers(); //使用controller
+        //IP白名单注入
+        Fx.If(allowOrigin.Length == 0
+           || allowOrigin.First() == "*").Then(() => app.UseCors(builder => builder
+                                                                   .AllowAnyOrigin()
+                                                                   .AllowAnyMethod()
+                                                                   .AllowAnyHeader()))
+          .Else(() => app.UseCors(builder => builder
+                                            .WithOrigins(allowOrigin)
+                                            .AllowAnyMethod()
+                                            .AllowAnyHeader()
+                                            .AllowCredentials()));
 
+        app.MapControllers(); //使用controller
         ServiceLocator.Instance.ServiceProvider = app.Services; //全局缓存注入服务,方便在任意地方使用注入对象    
     }
 
@@ -85,7 +101,7 @@ public static class AppBuilderExtend{
         var transientDependencyTypes = new List<Type>();                 //定义瞬态Application
         var dataSeedContributors     = new List<IDataSeedContributor>(); //数据库初始化种子对象
         var defaultTypes             = new List<Type>(){ typeof(DataSeedContributor), typeof(LoginInfo) };
-        var newTypes                 = allTypes.Union(defaultTypes);
+        var newTypes                 = allTypes.Union(defaultTypes).Distinct();
         foreach(var classType in newTypes){
             foreach(var type in classType.Assembly.GetTypes()){
                 if(typeof(DbEntity).IsAssignableFrom(type)

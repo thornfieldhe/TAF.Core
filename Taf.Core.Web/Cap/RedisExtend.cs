@@ -9,6 +9,6 @@ namespace Taf.Core.Web;
 
 public static class RedisExtend{
     public static void AddRedis(this WebApplicationBuilder builder){
-        RedisClientServer.Instance.LoadConfig(builder.Configuration["Redis:ConnectionString"],builder.Configuration["Redis:DatabaseId"].ToInt());
+        RedisClientServer.Instance.LoadConfig(builder.Configuration["Redis"]);
     }
 }

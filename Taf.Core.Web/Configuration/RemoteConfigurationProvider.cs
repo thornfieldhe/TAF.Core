@@ -63,8 +63,7 @@ public class RemoteConfigurationProvider : JsonConfigurationProvider{
                    }
 
                    Fx.If(hasRedisClient).Then(() => {
-                       RedisClientServer.Instance.LoadConfig(Data["Redis:ConnectionString"]
-                                                           , Data["Redis:DatabaseId"].ToInt());
+                       RedisClientServer.Instance.LoadConfig(Data["Redis"]);
                    });
 
                    //保存本地配置文件,方便在远程配置拉取失败时,从本地缓存中获取上次正确配置
