@@ -84,7 +84,7 @@ public static class AppBuilderExtend{
         var singletonDependencyTypes = new List<Type>();                 //定义单例Application
         var transientDependencyTypes = new List<Type>();                 //定义瞬态Application
         var dataSeedContributors     = new List<IDataSeedContributor>(); //数据库初始化种子对象
-        var defaultTypes             = new List<Type>(){ typeof(DataSeedContributor), typeof(LoginInfo) };
+        var defaultTypes             = new List<Type>(){ typeof(DataSeedContributor), typeof(LoginService) };
         var newTypes                 = allTypes.Union(defaultTypes);
         foreach(var classType in newTypes){
             foreach(var type in classType.Assembly.GetTypes()){

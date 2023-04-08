@@ -14,7 +14,7 @@ namespace Taf.Core.Web;
 public class HttpClientService : IHttpClientService, ISingletonDependency{
     private readonly IHttpClientFactory         _httpClientFactory;
     private readonly ILogger<HttpClientService> _logger;
-    private readonly ILoginInfo                 _loginInfo;
+    private readonly ILoginService                 _loginService;
 
 
     /// <summary>
@@ -23,10 +23,10 @@ public class HttpClientService : IHttpClientService, ISingletonDependency{
     public HttpClientService(
         IHttpClientFactory         httpClientFactory
       , ILogger<HttpClientService> logger
-      , ILoginInfo                 loginInfo){
+      , ILoginService                 loginService){
         _httpClientFactory = httpClientFactory;
         _logger            = logger;
-        _loginInfo         = loginInfo;
+        _loginService         = loginService;
     }
 
     /// <summary>
@@ -198,42 +198,42 @@ public class HttpClientService : IHttpClientService, ISingletonDependency{
     }
 
     private void BindDefaultHeader(HttpClient client){
-        if(!string.IsNullOrWhiteSpace(_loginInfo.LangKey)){
+        if(!string.IsNullOrWhiteSpace(_loginService.LangKey)){
             client.DefaultRequestHeaders.Add("langKey"
-                                           , _loginInfo.LangKey);
+                                           , _loginService.LangKey);
         }
 
-        if(_loginInfo.Permissions is{ Count: > 0 }){
+        if(_loginService.Permissions is{ Count: > 0 }){
             client.DefaultRequestHeaders.Add("permissions"
-                                           , string.Join(',', _loginInfo.Permissions));
+                                           , string.Join(',', _loginService.Permissions));
         }
 
-        if(!string.IsNullOrWhiteSpace(_loginInfo.Name)){
-            client.DefaultRequestHeaders.Add("name", _loginInfo.Name);
+        if(!string.IsNullOrWhiteSpace(_loginService.Name)){
+            client.DefaultRequestHeaders.Add("name", _loginService.Name);
         }
 
-        if(_loginInfo.UserId.HasValue){
-            client.DefaultRequestHeaders.Add("userId", _loginInfo.UserId.ToString());
+        if(_loginService.UserId.HasValue){
+            client.DefaultRequestHeaders.Add("userId", _loginService.UserId.ToString());
         }
 
 
-        if(!string.IsNullOrWhiteSpace(_loginInfo.Email)){
-            client.DefaultRequestHeaders.Add("email", _loginInfo.Email);
+        if(!string.IsNullOrWhiteSpace(_loginService.Email)){
+            client.DefaultRequestHeaders.Add("email", _loginService.Email);
         }
 
-        if(!string.IsNullOrWhiteSpace(_loginInfo.Authorization)){
+        if(!string.IsNullOrWhiteSpace(_loginService.Authorization)){
             client.DefaultRequestHeaders.Add("authorization"
-                                           , _loginInfo.Authorization);
+                                           , _loginService.Authorization);
         }
 
-        if(_loginInfo.TenantId.HasValue){
+        if(_loginService.TenantId.HasValue){
             client.DefaultRequestHeaders.Add(
                 "tenantId"
-              , _loginInfo.TenantId.HasValue ? _loginInfo.TenantId.ToString() : "1");
+              , _loginService.TenantId.HasValue ? _loginService.TenantId.ToString() : "1");
         }
 
-        if(!string.IsNullOrWhiteSpace(_loginInfo.TraceId)){
-            client.DefaultRequestHeaders.Add("traceId", $"{_loginInfo.TraceId} {Randoms.GetRandomCode(6,"0123456789abcdefghijklmnopqrstuvwxyz")}");
+        if(!string.IsNullOrWhiteSpace(_loginService.TraceId)){
+            client.DefaultRequestHeaders.Add("traceId", $"{_loginService.TraceId} {Randoms.GetRandomCode(6,"0123456789abcdefghijklmnopqrstuvwxyz")}");
         }
     }
 

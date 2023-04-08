@@ -20,15 +20,15 @@ namespace Taf.Core.Web;
 /// </summary>
 public class ExceptionFilter : IExceptionFilter{
     private readonly ILogger<ExceptionFilter> _logger;
-    private readonly ILoginInfo               _loginInfo;
+    private readonly ILoginService               _loginService;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="remoteEventPublisher"></param>
-    public ExceptionFilter(ILogger<ExceptionFilter> logger, ILoginInfo loginInfo){
+    public ExceptionFilter(ILogger<ExceptionFilter> logger, ILoginService loginService){
         _logger    = logger;
-        _loginInfo = loginInfo;
+        _loginService = loginService;
     }
 
     /// <summary>针对用户自定义异常进行封装</summary>
@@ -50,7 +50,7 @@ public class ExceptionFilter : IExceptionFilter{
         var errorCode = $"ERR_{Randoms.GetRandomCode(6, "0123456789abcdefghijklmnopqrstuvwxyz")}";
         switch(exception){
             case UserFriendlyException userException:
-                result = HttpObjectResult.ShowMessage(userException.Message, userException.Code, _loginInfo.TraceId);
+                result = HttpObjectResult.ShowMessage(userException.Message, userException.Code, _loginService.TraceId);
                 context.HttpContext.Response.StatusCode = WebConst.CodeBadRequest;
                 break;
             case AggregateException{ InnerException:{ } } aggregateException:
@@ -70,7 +70,7 @@ public class ExceptionFilter : IExceptionFilter{
             case ArgumentNullException nullException:
                 message =
                     $"{new string('-', 30)}\n[系统异常]:{errorCode},{nullException.Message},参数不能为空错误:方法名:{nullException.TargetSite.Name},参数:{nullException.ParamName},来源:{nullException.Source}";
-                result = HttpObjectResult.ShowErr(nullException.Message, errorCode, _loginInfo.TraceId);
+                result = HttpObjectResult.ShowErr(nullException.Message, errorCode, _loginService.TraceId);
                 GetInternalServerError(message, errorCode, nullException);
                 context.HttpContext.Response.StatusCode = WebConst.CodeInternalServerError;
                 break;
@@ -85,7 +85,7 @@ public class ExceptionFilter : IExceptionFilter{
                 message =
                     $"{new string('-', 30)}\n[参数异常]:{errorCode},参数验证未通过:{attributes},来源:{validationException.Source}";
                 result = HttpObjectResult.ShowMessage(attributes, WebConst.CodeBadRequest
-                                                    , _loginInfo.TraceId);
+                                                    , _loginService.TraceId);
                 context.HttpContext.Response.StatusCode = WebConst.CodeBadRequest;
                 break;
             case NullReferenceException referenceException:
@@ -130,6 +130,6 @@ public class ExceptionFilter : IExceptionFilter{
 
     private R GetInternalServerError(string message, string errorCode, Exception exception){
         _logger.LogError(message, exception);
-        return HttpObjectResult.ShowErr(exception.Message, errorCode, _loginInfo.TraceId);
+        return HttpObjectResult.ShowErr(exception.Message, errorCode, _loginService.TraceId);
     }
 }

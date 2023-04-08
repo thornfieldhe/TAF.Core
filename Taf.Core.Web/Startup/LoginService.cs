@@ -18,9 +18,9 @@ namespace Taf.Core.Web;
 /// <summary>
 /// 登录后用户信息
 /// </summary>
-public class LoginInfo : ILoginInfo,ITransientDependency{
+public class LoginService : ILoginService,ITransientDependency{
     private readonly IHttpContextAccessor _httpContextAccessor;
-    public LoginInfo(IHttpContextAccessor httpContextAccessor) => _httpContextAccessor = httpContextAccessor;
+    public LoginService(IHttpContextAccessor httpContextAccessor) => _httpContextAccessor = httpContextAccessor;
 
 
     /// <summary>
