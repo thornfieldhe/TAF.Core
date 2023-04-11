@@ -44,5 +44,5 @@ public interface ILoginService{
     /// <summary>
     /// 使用1_55,2_8表示权限
     /// </summary>
-    Dictionary<int, long> Permissions{ get; }
+    Dictionary<char, ulong> Permissions{ get; }
 }

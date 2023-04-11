@@ -9,6 +9,7 @@
 
 using System.Linq;
 using Taf.Test;
+using  static Taf.Core.Utility.StaticMethods;
 
 namespace Taf.Core.Test
 {
@@ -127,6 +128,16 @@ namespace Taf.Core.Test
             var list = new[] { 1, 2, 3 };
             list.Swap(0, 2);
             Assert.Equal(list[0], 3);
+        }
+        
+        /// <summary>
+        /// 测试将不定长对象数组转换成数组的方法
+        /// 需要引入using static Taf.Core.Utility.Extensions;
+        /// </summary>
+        [Fact]
+        public void Test_Arr(){
+            var list = Arr(1, 2, 3, 4).ToArray();
+            Assert.Equal(list.Length, 4);
         }
     }
 

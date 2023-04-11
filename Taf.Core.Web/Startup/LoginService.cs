@@ -29,7 +29,7 @@ public class LoginService : ILoginService,ITransientDependency{
     public Guid? UserId{
         get{
             var u = _httpContextAccessor?.HttpContext.Request.Headers
-                                         .SingleOrDefault(r => r.Key.ToLower() == "userid").Value
+                                         .SingleOrDefault(r => r.Key.ToLower() == "UserId").Value
                                          .FirstOrDefault();
             return Guid.TryParse(u, out var uId) ? uId : null;
         }
@@ -40,22 +40,17 @@ public class LoginService : ILoginService,ITransientDependency{
     /// </summary>
     public string? Name =>
         _httpContextAccessor?.HttpContext.Request.Headers
-                             .SingleOrDefault(r => r.Key.ToLower() == "name").Value.FirstOrDefault();
+                             .SingleOrDefault(r => r.Key.ToLower() == "Name").Value.FirstOrDefault();
 
-    /// <summary>
-    /// JWT Token 
-    /// </summary>
-    public string? Authorization =>
-        _httpContextAccessor?.HttpContext.Request.Headers
-                             .SingleOrDefault(r => r.Key.ToLower() == "authorization").Value
-                             .FirstOrDefault();
+    public string? Authorization{ get; }
+
 
     /// <summary>
     /// 邮箱
     /// </summary>
     public string? Email =>
         _httpContextAccessor?.HttpContext.Request.Headers
-                             .SingleOrDefault(r => r.Key.ToLower() == "email").Value
+                             .SingleOrDefault(r => r.Key.ToLower() == "Email").Value
                              .FirstOrDefault();
 
 
@@ -65,11 +60,11 @@ public class LoginService : ILoginService,ITransientDependency{
     public string TraceId{
         get{
             var traceId = _httpContextAccessor?.HttpContext.Request.Headers
-                                               .SingleOrDefault(r => r.Key.ToLower() == "traceid").Value
+                                               .SingleOrDefault(r => r.Key.ToLower() == "TraceId").Value
                                                .FirstOrDefault();
             Fx.If(string.IsNullOrWhiteSpace(traceId)).Then(() => {
                 traceId = Randoms.GetRandomCode(6,"0123456789abcdefghijklmnopqrstuvwxyz");
-                _httpContextAccessor?.HttpContext.Request.Headers.TryAdd("traceid", traceId);
+                _httpContextAccessor?.HttpContext.Request.Headers.TryAdd("TraceId", traceId);
             });
             return traceId;
         }
@@ -81,7 +76,7 @@ public class LoginService : ILoginService,ITransientDependency{
     public string LangKey{
         get{
             var langKey = _httpContextAccessor?.HttpContext.Request.Headers
-                                               .SingleOrDefault(r => r.Key.ToLower() == "langkey").Value
+                                               .SingleOrDefault(r => r.Key.ToLower() == "LangKey").Value
                                                .FirstOrDefault();
             return string.IsNullOrWhiteSpace(langKey) ? "zh-CN" : langKey;
         }
@@ -93,7 +88,7 @@ public class LoginService : ILoginService,ITransientDependency{
     public int? TenantId{
         get{
             var tenantId = _httpContextAccessor?.HttpContext.Request.Headers
-                                               .SingleOrDefault(r => r.Key.ToLower() == "tenantid").Value
+                                               .SingleOrDefault(r => r.Key.ToLower() == "TenantId").Value
                                                .FirstOrDefault();
             return int.TryParse(tenantId, out var id) ? id : null;
         }
@@ -104,29 +99,19 @@ public class LoginService : ILoginService,ITransientDependency{
     /// </summary>
     public string? PhoneNum =>
         _httpContextAccessor?.HttpContext.Request.Headers
-                             .SingleOrDefault(r => r.Key.ToLower() == "phonenum").Value
+                             .SingleOrDefault(r => r.Key.ToLower() == "PhoneNum").Value
                              .FirstOrDefault();
 
     /// <summary>
     /// 使用1_55,2_8表示权限
     /// </summary>
-    public Dictionary<int, long> Permissions{
+    public Dictionary<char, ulong> Permissions{
         get{
-            var permissions =_httpContextAccessor?.HttpContext.Request.Headers
-                                                 .SingleOrDefault(r => r.Key.ToLower() == "permissions").Value
+            return _httpContextAccessor?.HttpContext.Request.Headers
+                                                 .SingleOrDefault(r => r.Key.ToLower() == "Permissions").Value
                                                  .FirstOrDefault()
-                                                ?.Split(',').ToList()
-                          ?? new List<string>();
-            var result = new Dictionary<int, long>();
-            
-            foreach(var permission in permissions){
-                var group = permission.Split('_');
-                if(group.Length == 2){
-                    result.Add(group[0].ToInt(), group[1].ToLong());
-                }
-            }
-
-            return result;
+                                                ?.As<IStringExt>().SplitToList(',').ToDictionary(
+                                                    c => c[0], c => ulong.Parse(c.Substring(2)));
         }
     }
 }

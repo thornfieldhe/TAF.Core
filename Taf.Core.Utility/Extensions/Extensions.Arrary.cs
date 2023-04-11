@@ -316,6 +316,7 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="collection"></param>
         /// <returns></returns>
-        public static IList<T> AsList<T>(this IList<T> collection) => collection ?? new List<T>();
+        public static IList<T> AsList<T>(this IList<T>? collection) => collection ?? new List<T>();
+
     }
 }

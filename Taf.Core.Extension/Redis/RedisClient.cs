@@ -32,7 +32,7 @@ public class RedisClientServer:SingletonBase<RedisClientServer>{
         Fx.If(connection == null)
           .Then(() => {
                var config = ServiceLocator.Instance.ServiceProvider.GetService<IConfiguration>();
-               connection = config["Redis:ConnectionString"];
+               connection = config["Redis"];
            
            });
         Client        =  new RedisClient(connection);
