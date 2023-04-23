@@ -13,7 +13,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using Taf.Core.Utility;
 
 // 何翔华
 // Taf.Core.Net.Utility

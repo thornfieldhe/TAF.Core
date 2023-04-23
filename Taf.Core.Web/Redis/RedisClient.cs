@@ -9,7 +9,6 @@
 
 using FreeRedis;
 using Microsoft.Extensions.Configuration;
-using Taf.Core.Utility;
 using Microsoft.Extensions.DependencyInjection;
 
 // 何翔华

@@ -9,7 +9,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Taf.Core.Validation
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 空白验证规则，只需要传入需要返回的错误信息

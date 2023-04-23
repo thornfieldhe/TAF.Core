@@ -10,7 +10,6 @@
 using MassTransit;
 using MassTransit.NewIdProviders;
 using System.Collections.Concurrent;
-using Taf.Core.Utility;
 
 // 何翔华
 // Taf.Core.Extension

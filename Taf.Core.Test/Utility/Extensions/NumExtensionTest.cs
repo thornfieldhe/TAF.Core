@@ -1,4 +1,4 @@
-﻿using Taf.Core.Utility.Double;
+﻿using Taf.Core.Utility;
 
 namespace Taf.Core.Test;
 

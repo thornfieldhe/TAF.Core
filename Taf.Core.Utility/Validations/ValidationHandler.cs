@@ -10,7 +10,7 @@
 using System;
 using System.Linq;
 
-namespace Taf.Core.Validation
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 默认验证处理器，直接抛出异常

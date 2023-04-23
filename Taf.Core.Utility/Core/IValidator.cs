@@ -7,9 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Taf.Core.Validation;
 
-namespace Taf.Core
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 验证操作

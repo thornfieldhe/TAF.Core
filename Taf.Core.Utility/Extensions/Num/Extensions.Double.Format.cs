@@ -13,7 +13,7 @@ using System;
 // Taf.Core.Utility
 // Extensions.Double.Math.cs
 
-namespace Taf.Core.Utility.Double;
+namespace Taf.Core.Utility;
 
 /// <summary>
 /// double格式化

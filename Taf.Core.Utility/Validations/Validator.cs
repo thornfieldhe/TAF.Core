@@ -9,9 +9,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Taf.Core.Utility;
 
-namespace Taf.Core.Validation
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 验证操作

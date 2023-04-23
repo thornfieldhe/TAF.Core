@@ -3,7 +3,6 @@
 // RemoteConfigurationChangeToken.cs
 
 using Microsoft.Extensions.Primitives;
-using Taf.Core.Utility;
 
 namespace Taf.Core.Web;
 

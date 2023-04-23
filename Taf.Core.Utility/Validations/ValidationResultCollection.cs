@@ -12,7 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Taf.Core.Validation
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 验证结果集合
