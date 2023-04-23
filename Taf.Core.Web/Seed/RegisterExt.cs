@@ -2,8 +2,6 @@
 // Taf.Core.Web
 // RegisterExt.cs
 
-using Taf.Core.Extension;
-
 namespace Taf.Core.Web;
 
 public static class RegisterExt{

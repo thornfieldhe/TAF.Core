@@ -2,8 +2,6 @@
 // Taf.Core.Web
 // DefaultDataSeedContributor.cs
 
-using Taf.Core.Extension;
-
 namespace Taf.Core.Web;
 
 public abstract class DefaultDataSeed : IDataSeedContributor{

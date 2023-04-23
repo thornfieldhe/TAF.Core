@@ -19,7 +19,7 @@ namespace Taf.Core.Web{
         private string _langKey;
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            _langKey = context.HttpContext.Request.Headers.SingleOrDefault(r => r.Key == "langKey").Value
+            _langKey = context.HttpContext.Request.Headers.SingleOrDefault(r => r.Key == "LangKey").Value
                               .FirstOrDefault();
             if(string.IsNullOrWhiteSpace(_langKey)) return;
             var cultureInfo = new CultureInfo(_langKey); 

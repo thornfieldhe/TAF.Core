@@ -15,8 +15,6 @@ using System.Collections.Generic;
 
 namespace Taf.Core.Utility;
 
-using System;
-
 /// <summary>
 /// 扩展的静态方法
 /// </summary>

@@ -3,7 +3,6 @@
 // ModelValidFilter.cs
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using Taf.Core.Extension;
 
 namespace Taf.Core.Web;
 
@@ -14,7 +13,7 @@ public class ModelValidFilter:IActionFilter{
     public void OnActionExecuting(ActionExecutingContext context){
         if (!context.ModelState.IsValid){
             throw new ValidationException(
-                context.ModelState.SelectMany(s => s.Value.Errors).Select(s => s.ErrorMessage));
+                context.ModelState.Values.SelectMany(s => s.Errors).Select(s => s.ErrorMessage));
         } 
     }
 

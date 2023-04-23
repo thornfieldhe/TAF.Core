@@ -8,8 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Taf.Core.Extension;
 using Taf.Core.Utility;
 
 // 何翔华
@@ -26,21 +24,19 @@ public static class AppBuilderExtend{
     /// 
     /// </summary>
     /// <param name="builder"></param>
-    /// <param name="otherOptionslter">添加其他过滤器</param>
-    public static void AddFilters(this WebApplicationBuilder builder, Action<MvcOptions> otherOptions = null){
+    /// <param name="otherOptions">添加其他过滤器</param>
+    public static void AddFilters(this WebApplicationBuilder builder, Action<MvcOptions>? otherOptions = null){
         builder.Services.Configure<ApiBehaviorOptions>(options => {
-            options.SuppressModelStateInvalidFilter = true;//禁用系统的模型验证过滤器
-        });
+                                                           options.SuppressModelStateInvalidFilter =
+                                                               true; //禁用系统的模型验证过滤器
+                                                       });
         builder.Services.AddControllers(options => {
-            options.Filters.Add<LocalizationLangKeyFilter>(); //添加本地化语言处理
-            options.Filters.Add<ModelValidFilter>();          //添加模型验证
-            options.Filters.Add<EntityActionFilter>();        //添加结果包装
-            options.Filters.Add<ExceptionFilter>();           //添加异常处理
-            if(otherOptions != null){
-                otherOptions(options);
-            }
-        });
-       
+                                            options.Filters.Add<LocalizationLangKeyFilter>(); //添加本地化语言处理
+                                            options.Filters.Add<ModelValidFilter>();          //添加模型验证
+                                            options.Filters.Add<EntityActionFilter>();        //添加结果包装
+                                            options.Filters.Add<ExceptionFilter>();           //添加异常处理
+                                            otherOptions?.Invoke(options);
+                                        });
     }
 
     /// <summary>
@@ -73,33 +69,33 @@ public static class AppBuilderExtend{
         }
 
         //IP白名单注入
-        Fx.If(allowOrigin.Length == 0
+        Fx.If(allowOrigin.Length  == 0
            || allowOrigin.First() == "*").Then(() => app.UseCors(builder => builder
-                                                                   .AllowAnyOrigin()
-                                                                   .AllowAnyMethod()
-                                                                   .AllowAnyHeader()))
+                                                                           .AllowAnyOrigin()
+                                                                           .AllowAnyMethod()
+                                                                           .AllowAnyHeader()))
           .Else(() => app.UseCors(builder => builder
                                             .WithOrigins(allowOrigin)
                                             .AllowAnyMethod()
                                             .AllowAnyHeader()
                                             .AllowCredentials()));
 
-        app.MapControllers(); //使用controller
+        app.MapControllers();                                   //使用controller
         ServiceLocator.Instance.ServiceProvider = app.Services; //全局缓存注入服务,方便在任意地方使用注入对象    
     }
 
     /// <summary>
     /// 通过反射程序集获取系统需要的各类type对象
     /// </summary>
+    /// <param name="builder"></param>
     /// <param name="allTypes">筛选Application,Domain程序集class对象</param>
     /// <returns></returns>
-    public static (List<Type> DbEntityTypes, List<Type> SingletonDependencyTypes, List<Type> TransientDependencyTypes,
-        List<IDataSeedContributor> DataSeedContributors) GetAllTypes(
+    public static (List<Type> DbEntityTypes, List<Type> SingletonDependencyTypes, List<Type> TransientDependencyTypes, List<IDataSeedContributor?> DataSeedContributors) GetAllTypes(
             this WebApplicationBuilder builder, params Type[] allTypes){
-        var dbEntityTypes            = new List<Type>();                 //定义数据库实体对象
-        var singletonDependencyTypes = new List<Type>();                 //定义单例Application
-        var transientDependencyTypes = new List<Type>();                 //定义瞬态Application
-        var dataSeedContributors     = new List<IDataSeedContributor>(); //数据库初始化种子对象
+        var dbEntityTypes            = new List<Type>();                  //定义数据库实体对象
+        var singletonDependencyTypes = new List<Type>();                  //定义单例Application
+        var transientDependencyTypes = new List<Type>();                  //定义瞬态Application
+        var dataSeedContributors     = new List<IDataSeedContributor?>(); //数据库初始化种子对象
         var defaultTypes             = new List<Type>(){ typeof(DataSeedContributor), typeof(LoginService) };
         var newTypes                 = allTypes.Union(defaultTypes).Distinct();
         foreach(var classType in newTypes){

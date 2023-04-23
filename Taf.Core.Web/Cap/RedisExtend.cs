@@ -2,9 +2,6 @@
 // Taf.Core.Web
 // RedisExtend.cs
 
-using Taf.Core.Extension;
-using Taf.Core.Utility;
-
 namespace Taf.Core.Web;
 
 public static class RedisExtend{

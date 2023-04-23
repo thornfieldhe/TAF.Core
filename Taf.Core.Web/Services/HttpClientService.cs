@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Security.Authentication;
 using System.Text;
-using Taf.Core.Extension;
 using Taf.Core.Utility;
 
 namespace Taf.Core.Web;
@@ -37,6 +36,7 @@ public class HttpClientService : IHttpClientService, ISingletonDependency{
     public async Task<T> GetContentAsync<T>(string url, bool weatherToPackage = false){
         var       watch  = new Stopwatch();
         using var client = _httpClientFactory.CreateClient();
+        client.DefaultRequestHeaders.Add("charset", "utf-8");
         var       cts    = new CancellationTokenSource(300000);
         BindDefaultHeader(client);
         watch.Start();

@@ -9,6 +9,8 @@
 
 
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using Taf.Core.Extension;
 
 // 何翔华
@@ -25,7 +27,7 @@ public class TupleTaskAwaiterTest{
     public async Task TestAwait_2_Task(){
         var st = new Stopwatch();
         st.Start();
-        var (m1, m2) = await (Task1(), Task2());
+        var (m1, m2) =  (Task1(), Task2());
         var second = st.Elapsed.TotalSeconds;
         Assert.Equal(4, (int)second);
         

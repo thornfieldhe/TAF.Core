@@ -11,11 +11,9 @@ using JWT.Algorithms;
 using JWT.Builder;
 using JWT.Exceptions;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using Taf.Core.Web;
 
 // 何翔华
 // EfootprintPlus.HttpApi.Host

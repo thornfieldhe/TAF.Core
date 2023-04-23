@@ -1,3 +1,5 @@
+using Taf.Core.Web;
+
 namespace Taf.Core.Extension.Test;
 
 public class GuidTest{
