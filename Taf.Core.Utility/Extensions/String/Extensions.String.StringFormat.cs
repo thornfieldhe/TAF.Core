@@ -2,7 +2,8 @@
 // Taf.Core.Utility
 // StringFormat.cs
 
-using Humanizer;
+// using Humanizer;
+// using Humanizer.Inflections;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -132,20 +133,12 @@ public static class StringFormat{
     /// </summary>
     /// <param name="string"></param>
     /// <returns></returns> 
-    public static string ToUnderLine(this IStringFormat source){
-        var strItemTarget = ""; //目标字符串
-        var s             = source.GetValue();
-        foreach(var t in s){
-            var temp = t.ToString();
-            if(Regex.IsMatch(temp, "[A-Z]")){
-                temp = "_" + temp.ToLower();
-            }
-
-            strItemTarget += temp;
-        }
-
-        return strItemTarget.Trim('_');
-    }
+    public static string ToUnderscore(this IStringFormat source) =>
+        Regex.Replace(
+            Regex.Replace(
+                Regex.Replace(source.GetValue(), @"([\p{Lu}]+)([\p{Lu}][\p{Ll}])", "$1_$2"), @"([\p{Ll}\d])([\p{Lu}])"
+              , "$1_$2"), @"[-\s]", "_").ToLower();
+    
 
     /// <summary>
     /// mysql数据库表名转换成C#大驼峰命名
@@ -153,8 +146,10 @@ public static class StringFormat{
     /// <example>database_informations  =>DatabaseInformation</example>
     /// <param name="string"></param>
     /// <returns></returns>
-    public static string ToProperCaseFromUnderLine(this IStringFormat @string)=>
-        @string.GetValue().Singularize(inputIsKnownToBePlural: false).Pascalize();
+    public static string ToProperCaseFromUnderLine(this IStringFormat @string){
+        var str = Regex.Replace(@string.GetValue(), "(?:^|_| +)(.)", match => match.Groups[1].Value.ToUpper());
+        return Vocabularies.Default.Singularize(str);
+    }
     
     /// <summary>
     /// 对象属性转下划线小写复数
@@ -163,7 +158,7 @@ public static class StringFormat{
     /// <param name="string"></param>
     /// <returns></returns>
     public static string ToUnderLineFromProperCase(this IStringFormat @string) =>
-        @string.GetValue().Underscore().Pluralize();
+        Vocabularies.Default.Pluralize(ToUnderscore(@string));
     
     /// <summary>
     /// 单词变成单数形式
@@ -173,7 +168,7 @@ public static class StringFormat{
     /// <returns>
     /// The <see cref="string"/>.
     /// </returns>
-    public static string ToSingular(this IStringFormat word) => word.GetValue().Singularize();
+    public static string ToSingular(this IStringFormat word) =>Vocabularies.Default.Singularize( word.GetValue());
 
     /// <summary>
     /// 单词变成复数形式
@@ -184,5 +179,5 @@ public static class StringFormat{
     /// The <see cref="string"/>.
     /// </returns>
     public static string ToPlural(this IStringFormat word) =>
-         word.GetValue().Pluralize();
+        Vocabularies.Default.Pluralize(word.GetValue());
 }

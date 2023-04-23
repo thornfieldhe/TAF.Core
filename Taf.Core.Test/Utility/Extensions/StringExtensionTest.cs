@@ -111,6 +111,14 @@ namespace Taf.Core.Test
             var word = "computer";
             Assert.Equal("computers", word.As<IStringFormat>().ToPlural());
         }
+        /// <summary>
+        /// 测试转下划线分隔
+        /// </summary>
+        [Fact]
+        public void TestToUnderscore(){
+            var word = "BusinessDatabaseInformation";
+            Assert.Equal("business_database_information", word.As<IStringFormat>().ToUnderscore());
+        }
         
         #region ContainsChinese(是否包含中文)
 
@@ -118,9 +126,9 @@ namespace Taf.Core.Test
         /// 大驼峰转下划线小写
         /// </summary>
         [Fact]
-        public void TestToUnderLine(){
+        public void ToUnderscore(){
             var test = "BusinessDatabaseInformation";
-            Assert.Equal("business_database_information",test.As<IStringFormat>().ToUnderLine());
+            Assert.Equal("business_database_information",test.As<IStringFormat>().ToUnderscore());
         }
         
         /// <summary>
@@ -201,6 +209,8 @@ namespace Taf.Core.Test
             Assert.Equal("abcd..", "abcdef".As<IStringExt>().Truncate(4, 2));
             Assert.Equal("abcd--", "abcdef".As<IStringExt>().Truncate(4, 2, "-"));
             Assert.Equal("ab", "ab".As<IStringExt>().Truncate(4));
+            Assert.Equal("Long text ...", "Long text to truncate".As<IStringExt>().Truncate(10,3,"."));
+
         }
 
         #endregion
@@ -571,7 +581,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestCamelToUnderline(){
             var a = "AvideMdikeIkjg";
-            Assert.Equal("avide_mdike_ikjg", a.As<IStringFormat>().ToUnderLine());
+            Assert.Equal("avide_mdike_ikjg", a.As<IStringFormat>().ToUnderscore());
         }
         
         
