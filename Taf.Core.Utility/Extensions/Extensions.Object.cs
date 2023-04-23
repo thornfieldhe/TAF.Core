@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.Text.Json;
 
 namespace Taf.Core.Utility{
     /// <summary>
@@ -69,7 +69,7 @@ namespace Taf.Core.Utility{
         /// <typeparam name="T">动态类型</typeparam>
         /// <param name="value">动态类型对象</param>
         /// <returns>JSON字符串</returns>
-        public static string ToJsonString<T>(this T value) => JsonConvert.SerializeObject(value);
+        public static string ToJsonString<T>(this T value) => JsonSerializer.Serialize(value);
 
         /// <summary>
         /// 将对象[主要是匿名对象]转换为dynamic

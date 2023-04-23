@@ -7,12 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Json;
 using System.Xml.Serialization;
 
 namespace Taf.Core.Utility{
@@ -132,12 +132,7 @@ namespace Taf.Core.Utility{
         /// <typeparam name="T"></typeparam>
         /// <param name="jsonString"></param>
         /// <returns></returns>
-        public static T DeSerializesFromString<T>(string jsonString) where T : class{
-            var serializer = new JsonSerializer();
-            var sr         = new StringReader(jsonString);
-            var o          = serializer.Deserialize(new JsonTextReader(sr), typeof(T));
-            return o as T;
-        }
+        public static T DeSerializesFromString<T>(string jsonString) where T : class => JsonSerializer.Deserialize<T>(jsonString);
 
         /// <summary>
         /// json序列化（非二进制方式）
@@ -145,7 +140,7 @@ namespace Taf.Core.Utility{
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string SerializeToString<T>(T t) => JsonConvert.SerializeObject(t);
+        public static string SerializeToString<T>(T t) => JsonSerializer.Serialize(t);
 
     #endregion
     }

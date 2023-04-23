@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Coding4Fun.PluralizationServices;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -280,33 +279,6 @@ public static class StringReg{
         return reg.Replace(strText.GetValue(), myEvaluator);
     }
 
-    /// <summary>
-    /// 单词变成单数形式
-    /// </summary>
-    /// <param name="word">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToSingular(this IStringReg word){
-        var s      = word.GetValue();
-        var server = PluralizationService.CreateService(new CultureInfo("en"));
-        return server.IsPlural(s) ? server.Singularize(s) : s;
-    }
-
-    /// <summary>
-    /// 单词变成复数形式
-    /// </summary>
-    /// <param name="word">
-    /// </param>
-    /// <returns>
-    /// The <see cref="string"/>.
-    /// </returns>
-    public static string ToPlural(this IStringReg word){
-        var s      = word.GetValue();
-        var server = PluralizationService.CreateService(new CultureInfo("en"));
-        return server.IsPlural(s) ? s : server.Pluralize(s);
-    }
 
     /// <summary>
     /// The custom replace.

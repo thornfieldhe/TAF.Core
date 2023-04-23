@@ -7,10 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Xml.Serialization;
 
 namespace Taf.Core.Utility
@@ -122,7 +122,7 @@ namespace Taf.Core.Utility
 
                 using (var stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
-                    var json = JsonConvert.SerializeObject(obj);
+                    var json  = JsonSerializer.Serialize(obj);
                     var bytes = Encoding.UTF8.GetBytes(json);
                     stream.Write(bytes, 0, bytes.Length);
                     stream.Close();
@@ -154,7 +154,7 @@ namespace Taf.Core.Utility
                         var bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
                         var json = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                        t = JsonConvert.DeserializeObject<T>(json);
+                        t = JsonSerializer.Deserialize<T>(json);
                         stream.Close();
                     }
                 }

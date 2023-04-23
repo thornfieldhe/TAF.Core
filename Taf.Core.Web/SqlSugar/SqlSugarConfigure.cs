@@ -7,7 +7,6 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Coding4Fun.PluralizationServices;
 using SqlSugar;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -62,7 +61,7 @@ public static class SqlSugarConfigure{
                  && entity.DbTableName[0] <= 'Z')){
                     //未定义表名的对象,使用规则生成表名
                     entity.DbTableName =
-                        $"business_{PluralizationService.CreateService(new CultureInfo("en")).Pluralize(type.Name).As<IStringFormat>().ToUnderLine()}";
+                        $"business_{type.Name.As<IStringFormat>().ToUnderLine()}";
                 }
 
                 entity.IsDisabledUpdateAll    = isDisabledUpdateAll;

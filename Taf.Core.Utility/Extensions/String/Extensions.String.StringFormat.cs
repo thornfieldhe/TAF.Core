@@ -2,7 +2,7 @@
 // Taf.Core.Utility
 // StringFormat.cs
 
-using Coding4Fun.PluralizationServices;
+using Humanizer;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -153,19 +153,36 @@ public static class StringFormat{
     /// <example>database_informations  =>DatabaseInformation</example>
     /// <param name="string"></param>
     /// <returns></returns>
-    public static string ToProperCaseFromUnderLine(this IStringFormat @string){
-        var arrary = @string.GetValue().Split("_");
-        var server = PluralizationService.CreateService(new CultureInfo("en"));
-        for(var i = 0; i < arrary.Length; i++){
-            if(i == arrary.Length - 1){
-                if(server.IsPlural(arrary[i])){
-                    arrary[i] = server.Singularize(arrary[i]);
-                }
-            }
+    public static string ToProperCaseFromUnderLine(this IStringFormat @string)=>
+        @string.GetValue().Singularize(inputIsKnownToBePlural: false).Pascalize();
+    
+    /// <summary>
+    /// 对象属性转下划线小写复数
+    /// </summary>
+    /// <example>database_informations  =>DatabaseInformation</example>
+    /// <param name="string"></param>
+    /// <returns></returns>
+    public static string ToUnderLineFromProperCase(this IStringFormat @string) =>
+        @string.GetValue().Underscore().Pluralize();
+    
+    /// <summary>
+    /// 单词变成单数形式
+    /// </summary>
+    /// <param name="word">
+    /// </param>
+    /// <returns>
+    /// The <see cref="string"/>.
+    /// </returns>
+    public static string ToSingular(this IStringFormat word) => word.GetValue().Singularize();
 
-            arrary[i] = ToProperCase(arrary[i]);
-        }
-
-        return string.Join("", arrary);
-    }
+    /// <summary>
+    /// 单词变成复数形式
+    /// </summary>
+    /// <param name="word">
+    /// </param>
+    /// <returns>
+    /// The <see cref="string"/>.
+    /// </returns>
+    public static string ToPlural(this IStringFormat word) =>
+         word.GetValue().Pluralize();
 }

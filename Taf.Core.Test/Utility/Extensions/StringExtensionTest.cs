@@ -86,12 +86,21 @@ namespace Taf.Core.Test
         }
         
         /// <summary>
+        /// 测试属性转小驼峰写法
+        /// </summary>
+        [Fact]
+        public void TestToUnderLineFromProperCase(){
+            var test = "BusinessDatabaseInformation";
+            Assert.Equal("business_database_informations", test.As<IStringFormat>().ToUnderLineFromProperCase());
+        }
+        
+        /// <summary>
         /// 测试复数转单数
         /// </summary>
         [Fact]
         public void TestToSingular(){
             var word = "computers";
-            Assert.Equal("computer", word.As<IStringReg>().ToSingular());
+            Assert.Equal("computer", word.As<IStringFormat>().ToSingular());
         }
         
         /// <summary>
@@ -100,7 +109,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestToPlural(){
             var word = "computer";
-            Assert.Equal("computers", word.As<IStringReg>().ToPlural());
+            Assert.Equal("computers", word.As<IStringFormat>().ToPlural());
         }
         
         #region ContainsChinese(是否包含中文)
