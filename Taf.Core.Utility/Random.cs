@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +43,31 @@ namespace Taf.Core.Utility
         /// </summary>
         /// <typeparam name="T">数组的类型</typeparam>
         /// <param name="arr">需要随机排序的数组</param>
-        public static void GetRandomArray<T>(T[] arr)
+        internal static IList<T> GetRandomArray<T>(IList<T> arr)
+        {
+            //对数组进行随机排序的算法:随机选择两个位置，将两个位置上的值交换
+            //交换的次数,这里使用数组的长度作为交换次数
+            var count = arr.Count;
+
+            //开始交换
+            for (var i = 0; i < count; i++)
+            {
+                //生成两个随机数位置
+                var randomNum1 = GetRandomInt(0, arr.Count);
+                var randomNum2 = GetRandomInt(0, arr.Count);
+
+                //交换两个随机数位置的值
+                (arr[randomNum1], arr[randomNum2]) = (arr[randomNum2], arr[randomNum1]);
+            }
+
+            return arr;
+        }
+        /// <summary>
+        /// 对一个数组进行随机排序
+        /// </summary>
+        /// <typeparam name="T">数组的类型</typeparam>
+        /// <param name="arr">需要随机排序的数组</param>
+        internal static T[] GetRandomArray<T>(T[] arr)
         {
             //对数组进行随机排序的算法:随机选择两个位置，将两个位置上的值交换
             //交换的次数,这里使用数组的长度作为交换次数
@@ -56,10 +81,10 @@ namespace Taf.Core.Utility
                 var randomNum2 = GetRandomInt(0, arr.Length);
 
                 //交换两个随机数位置的值
-                var temp = arr[randomNum1];
-                arr[randomNum1] = arr[randomNum2];
-                arr[randomNum2] = temp;
+                (arr[randomNum1], arr[randomNum2]) = (arr[randomNum2], arr[randomNum1]);
             }
+
+            return arr;
         }
 
 

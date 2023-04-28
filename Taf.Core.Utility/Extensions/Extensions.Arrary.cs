@@ -318,5 +318,20 @@ namespace Taf.Core.Utility
         /// <returns></returns>
         public static IList<T> AsList<T>(this IList<T>? collection) => collection ?? new List<T>();
 
+        /// <summary>
+        /// 列表随机排序
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IList<T> GetRandom<T>(this IList<T> list) => Randoms.GetRandomArray(list);
+        
+        /// <summary>
+        /// 数组随机排序
+        /// </summary>
+        /// <param name="list"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T[] GetRandomArray<T>(this T[] list) => Randoms.GetRandomArray(list);
     }
 }

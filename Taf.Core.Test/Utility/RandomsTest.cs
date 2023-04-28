@@ -44,12 +44,17 @@ namespace Taf.Core.Test
         [Fact]
         public void TestRandomsRandomArray()
         {
-            var a = new[] { 1, 2, 3, 4, 5, 6 ,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-            Randoms.GetRandomArray(a);
-            var m1=a[0];  
-            Randoms.GetRandomArray(a);
-            var m2=a[0];
+            var a  = new[] { 1, 2, 3, 4, 5, 6 ,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+            var m1 = a[1];
+            a.GetRandomArray();
+            var m2=a[1];
             Assert.True(m1 != m2);
+            
+            var b  = new List<int> { 1, 2, 3, 4, 5, 6 ,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+            var m3 =b[0];  
+            b.GetRandom();
+            var m4=b[0];
+            Assert.True(m3 != m4);
         }
 
         /// <summary>
