@@ -29,7 +29,7 @@ namespace Taf.Core.Utility{
         /// <summary>
         /// 将源对象所有属性赋值给目标对象,【仅仅支持系统基本类型，不支持对象】
         /// 确保目标对象的属性名称与原对象的属性名称一致，且目标对象属性数量可以少于原对象属性数量
-        /// 【Dictionary克隆使用Dictionary<string, int> copy = new Dictionary<string, int>(dictionary);】
+        ///  【Dictionary克隆使用Dictionary<string, int> copy = new Dictionary<string, int>(dictionary);】
         /// 对象内部包含的对象需要分别使用Copy方法进行克隆
         /// </summary>
         /// <param name="tIn"></param>

@@ -17,36 +17,57 @@ namespace Taf.Core
     public interface IBusinessBase : IEntityBase, IBaseStatus
     {
 
+        /// <summary>
+        /// 
+        /// </summary>
         DateTime CreatedDate
         {
             get;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         DateTime ChangedDate
         {
             get;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         string Note
         {
             get;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         int Status
         {
             get; set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         Guid CreatedBy
         {
             get; set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         Guid ModifyBy
         {
             get; set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         byte[] Version
         {
             get;
@@ -58,6 +79,9 @@ namespace Taf.Core
     /// </summary>
     public interface IEntityBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
         Guid Id
         {
             get;

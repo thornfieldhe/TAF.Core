@@ -49,9 +49,9 @@ namespace Taf.Core.Utility
         /// <typeparam name="TP"></typeparam>
         /// <example>
         /// public override bool AllowExcute(ComparisonObject<ProductOutput, OutputEditDto> comparison)
-        ///{
+        ///
         ///    return comparison.Compare(r => r.Name, s => s.Name);
-        ///}
+        //
         ///</example>
         /// <returns></returns>
         public bool Compare<TP>(Func<T, TP> sourceProperty, Func<K, TP> targetProperty){

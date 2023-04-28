@@ -5,13 +5,7 @@ namespace Taf.Core.Utility
 {
     public abstract class BaseCoRHandler<Request>
     {
-        protected BaseCoRHandler()
-        {
-            if (Successors == null)
-            {
-                Successors = new List<BaseCoRHandler<Request>>();
-            }
-        }
+        protected BaseCoRHandler() => Successors ??= new List<BaseCoRHandler<Request>>();
 
         public abstract bool AllowProcess(Request request);
         public abstract void Excute(Request request);

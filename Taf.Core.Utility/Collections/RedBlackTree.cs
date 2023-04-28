@@ -39,7 +39,7 @@ namespace Taf.Core.Utility
               return Contain(value, out node);
           }
    
-          public bool Contain(T value, out RedBlackTreeNode<T> newNode)
+          public bool Contain(T value, out RedBlackTreeNode<T>? newNode )
           {
               if (value == null)
               {
@@ -86,7 +86,7 @@ namespace Taf.Core.Utility
               //遍历找到插入位置
               var node = mRoot;
               //插入节点的父节点
-              RedBlackTreeNode<T> parent = null;
+              RedBlackTreeNode<T>? parent = null;
               while (node != null)
               {
                   parent = node;
@@ -681,10 +681,10 @@ namespace Taf.Core.Utility
           public T Data { get; set; }
    
           //左子节点
-          public RedBlackTreeNode<T> LeftChild { get; set; }
+          public RedBlackTreeNode<T>? LeftChild{ get; set; }
    
           //右子节点
-          public RedBlackTreeNode<T> RightChild { get; set; }
+          public RedBlackTreeNode<T>? RightChild{ get; set; }
    
           //父节点
           public RedBlackTreeNode<T> Parent { get; set; }
