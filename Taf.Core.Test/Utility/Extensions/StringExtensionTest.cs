@@ -110,6 +110,8 @@ namespace Taf.Core.Test
         public void TestToPlural(){
             var word = "computer";
             Assert.Equal("computers", word.As<IStringFormat>().ToPlural());
+             word = "Computer";
+            Assert.Equal("Computers", word.As<IStringFormat>().ToPlural());
         }
         /// <summary>
         /// 测试转下划线分隔

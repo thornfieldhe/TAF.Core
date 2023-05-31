@@ -55,6 +55,7 @@ namespace Taf.Core.Utility
         ///</example>
         /// <returns></returns>
         public bool Compare<TP>(Func<T, TP> sourceProperty, Func<K, TP> targetProperty){
+            
             var source = sourceProperty(Source);
             if(source == null){
                 return targetProperty(Target) == null;
