@@ -9,10 +9,10 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/thornfieldhe/TAF.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thornfieldhe/TAF.Core</RepositoryUrl>
-    <AssemblyVersion>7.0.2</AssemblyVersion>
-    <FileVersion>7.0.2</FileVersion>
+    <AssemblyVersion>7.0.3</AssemblyVersion>
+    <FileVersion>7.0.3</FileVersion>
     <Version>1.0.7</Version>
-    <PackageVersion>7.0.2</PackageVersion>
+    <PackageVersion>7.0.3</PackageVersion>
     <LangVersion>default</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
