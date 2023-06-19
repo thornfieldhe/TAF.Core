@@ -61,6 +61,13 @@ public class NumExtensionTest{
     [Fact]
     public void TestEqual(){
         Assert.True(12.351111.EqualsEx(12.35642,2)); 
+        var a = 1.233056e3;
+        var b = 1.234054e3;
+        var c = 1.234066e3;
+        var d = 1.233056e3;
+        Assert.True(a.IsEqualWithPrecision(b)); 
+        Assert.False(a.IsEqualWithPrecision(c)); 
+        Assert.True(a.IsEqualWithPrecision(d)); 
     }
     
     

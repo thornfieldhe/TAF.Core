@@ -87,6 +87,20 @@ namespace Taf.Core.Utility{
             var diff = Math.Abs(self - dest);
             return diff < diffPre;
         }
+        
+        /// <summary>
+        /// 指定精度下是否相等
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        public static bool IsEqualWithPrecision(this double a, double b, int precision = 3){
+            var l      = Math.Abs(a - b);
+            var result = Math.Pow(10, Math.Floor(Math.Log10(a)));
+            var a1     = result / Math.Pow(10, precision);
+            return a1 >= l;
+        }
 
         public static double Magnitude(this double input) => Math.Log10(Math.Abs(input));
 
