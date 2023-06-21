@@ -68,6 +68,7 @@ public class NumExtensionTest{
         Assert.True(a.IsEqualWithPrecision(b)); 
         Assert.False(a.IsEqualWithPrecision(c)); 
         Assert.True(a.IsEqualWithPrecision(d)); 
+        Assert.True((-3.5187178179990243E-07).IsEqualWithPrecision(-3.5187178179990243E-07)); 
     }
     
     

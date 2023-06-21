@@ -97,7 +97,10 @@ namespace Taf.Core.Utility{
         /// <returns></returns>
         public static bool IsEqualWithPrecision(this double a, double b, int precision = 3){
             var l      = Math.Abs(a - b);
-            var result = Math.Pow(10, Math.Floor(Math.Log10(a)));
+            if(l < PrecisionDiff){
+                return true;
+            }
+            var result = Math.Pow(10, Math.Floor(Math.Log10(Math.Abs(a))));
             var a1     = result / Math.Pow(10, precision);
             return a1 >= l;
         }
