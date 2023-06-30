@@ -62,6 +62,12 @@ namespace Taf.Core.Utility{
         /// <param name="types"></param>
         public DefaultOrderComparer(R[] types) => _types = types;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public int Compare(R x, R y){
             var index1 = _types.FindIndex(r => r.Equals(x));
             var index2 = _types.FindIndex(r => r.Equals(y));

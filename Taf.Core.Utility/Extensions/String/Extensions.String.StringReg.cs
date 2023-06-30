@@ -228,7 +228,7 @@ public static class StringReg{
     /// <returns>
     /// The <see cref="List{T}"/>.
     /// </returns>
-    public static List<double> FindSubstringAsDouble(this IStringReg strText, string matchPattern, bool findAllUnique){
+    public static List<double> FindSubstringAsDouble(this IStringReg strText, string matchPattern, bool findAllUnique=false){
         var matchArry = FindSubstring(strText.GetValue(), matchPattern, findAllUnique);
         var retArry   = from match in matchArry select double.Parse(match.Value);
         return retArry.ToList();

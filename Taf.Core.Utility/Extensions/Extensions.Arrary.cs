@@ -34,7 +34,7 @@ namespace Taf.Core.Utility
         {
             if (@this == null)
             {
-                return default(T);
+                return default;
             }
 
             var index = new Random().Next(0, @this.Count());
@@ -333,5 +333,20 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static T[] GetRandomArray<T>(this T[] list) => Randoms.GetRandomArray(list);
+        
+        /// <summary>
+        /// 拼接新的项
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="item"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T[] Append<T>(this T[] array, T item)
+        {
+            var result = new T[array.Length + 1];
+            array.CopyTo(result, 0);
+            result[array.Length] = item;
+            return result;
+        }
     }
 }

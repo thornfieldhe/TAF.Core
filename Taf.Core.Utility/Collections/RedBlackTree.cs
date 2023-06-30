@@ -21,24 +21,30 @@ namespace Taf.Core.Utility
       public class RedBlackTree<T>
       {
           //根节点
-          private RedBlackTreeNode<T> mRoot;
+          private RedBlackTreeNode<T>? _mRoot;
           //比较器
-          private Comparer<T> mComparer;
-          private const bool RED = true;
-          private const bool BLACK = false;
+          private readonly Comparer<T> mComparer;
+          private const    bool        Red   = true;
+          private const    bool        Black = false;
    
+          /// <summary>
+          /// 
+          /// </summary>
           public RedBlackTree()
           {
-              mRoot = null;
+              _mRoot = null;
               mComparer = Comparer<T>.Default;
           }
    
-          public bool Contains(T value)
-          {
-              RedBlackTreeNode<T> node;
-              return Contain(value, out node);
-          }
-   
+          public bool Contains(T value) => Contain(value, out var node);
+
+          /// <summary>
+          /// 
+          /// </summary>
+          /// <param name="value"></param>
+          /// <param name="newNode"></param>
+          /// <returns></returns>
+          /// <exception cref="ArgumentNullException"></exception>
           public bool Contain(T value, out RedBlackTreeNode<T>? newNode )
           {
               if (value == null)
@@ -46,7 +52,7 @@ namespace Taf.Core.Utility
                   throw new ArgumentNullException();
               }
               newNode = null;
-              var node = mRoot;
+              var node = _mRoot;
               while (node != null)
               {
                   var comparer = mComparer.Compare(value, node.Data);
@@ -67,24 +73,28 @@ namespace Taf.Core.Utility
               return false;
           }
    
+          /// <summary>
+          /// 
+          /// </summary>
+          /// <param name="value"></param>
           public void Add(T value)
           {
-              if (mRoot == null)
+              if (_mRoot == null)
               {
                   // 根节点是黑色的
-                  mRoot = new RedBlackTreeNode<T>(value, BLACK);
+                  _mRoot = new RedBlackTreeNode<T>(value, Black);
               }
               else
               {
                   // 新插入节点是红色的
-                  Insert1(new RedBlackTreeNode<T>(value, RED), value);
+                  Insert1(new RedBlackTreeNode<T>(value, Red), value);
               }
           }
    
           private void Insert1(RedBlackTreeNode<T> newNode, T value)
           {
               //遍历找到插入位置
-              var node = mRoot;
+              var node = _mRoot;
               //插入节点的父节点
               RedBlackTreeNode<T>? parent = null;
               while (node != null)
@@ -140,9 +150,9 @@ namespace Taf.Core.Utility
                       if (uncle != null && IsRed(uncle))
                       {
                           //把父节点和叔叔节点涂黑,祖父节点涂红
-                          parent.Color = BLACK;
-                          uncle.Color = BLACK;
-                          gParent.Color = RED;
+                          parent.Color = Black;
+                          uncle.Color = Black;
+                          gParent.Color = Red;
                           //把祖父节点作为插入节点，向上继续遍历
                           newNode = gParent;
                           parent = newNode.Parent;
@@ -164,8 +174,8 @@ namespace Taf.Core.Utility
    
                       //case3: 叔叔节点是黑色，且当前节点是左子节点
                       // 父亲和祖父节点变色，从祖父节点处右旋
-                      parent.Color = BLACK;
-                      gParent.Color = RED;
+                      parent.Color = Black;
+                      gParent.Color = Red;
                       RotateRight(gParent);
                   }
                   else
@@ -177,9 +187,9 @@ namespace Taf.Core.Utility
                       if (uncle != null & IsRed(uncle))
                       {
                           //把父节点和叔叔节点涂黑,祖父节点涂红
-                          parent.Color = BLACK;
-                          uncle.Color = BLACK;
-                          gParent.Color = RED;
+                          parent.Color = Black;
+                          uncle.Color = Black;
+                          gParent.Color = Red;
                           //把祖父节点作为插入节点，向上继续遍历
                           newNode = gParent;
                           parent = newNode.Parent;
@@ -199,13 +209,13 @@ namespace Taf.Core.Utility
    
                       //case3: 叔叔节点是黑色的，且当前节点是右子节点  
                       // 父亲和祖父节点变色，从祖父节点处右旋
-                      parent.Color = BLACK;
-                      gParent.Color = RED;
+                      parent.Color = Black;
+                      gParent.Color = Red;
                       RotateLeft(gParent);
                   }
               }
               //将根节点设置为黑色
-              mRoot.Color = BLACK;
+              _mRoot.Color = Black;
           }
    
           public bool IsRed(RedBlackTreeNode<T> node)
@@ -214,7 +224,7 @@ namespace Taf.Core.Utility
               {
                   return false;
               }
-              if (node.Color == RED)
+              if (node.Color == Red)
               {
                   return true;
               }
@@ -227,7 +237,7 @@ namespace Taf.Core.Utility
               {
                   return false;
               }
-              if (node.Color == BLACK)
+              if (node.Color == Black)
               {
                   return true;
               }
@@ -269,7 +279,7 @@ namespace Taf.Core.Utility
    
               if (x.Parent == null)
               {
-                  mRoot = y; //如果x的父节点为空，则将y设为父节点
+                  _mRoot = y; //如果x的父节点为空，则将y设为父节点
                   y.Parent = null;//设置y的父节点为空  
               }
               else
@@ -327,7 +337,7 @@ namespace Taf.Core.Utility
               //如果y的父节点为空，则将x设为父节点
               if (y.Parent == null)
               {
-                  mRoot = x;
+                  _mRoot = x;
                   x.Parent = null;//设置x的父节点为空
               }
               else
@@ -350,7 +360,7 @@ namespace Taf.Core.Utility
               y.Parent = x;
           }
    
-          public int Count => CountLeafNode(mRoot);
+          public int Count => CountLeafNode(_mRoot);
 
           private int CountLeafNode(RedBlackTreeNode<T> root){
               if (root == null)
@@ -361,7 +371,7 @@ namespace Taf.Core.Utility
               return CountLeafNode(root.LeftChild) + CountLeafNode(root.RightChild) + 1;
           }
    
-          public int Depth => GetHeight(mRoot);
+          public int Depth => GetHeight(_mRoot);
 
           private int GetHeight(RedBlackTreeNode<T> root)
           {
@@ -378,7 +388,7 @@ namespace Taf.Core.Utility
           {
               get
               {
-                  var node = mRoot;
+                  var node = _mRoot;
                   while (node.RightChild != null)
                   {
                       node = node.RightChild;
@@ -390,9 +400,9 @@ namespace Taf.Core.Utility
           public T Min
           {
               get{
-                  if (mRoot != null)
+                  if (_mRoot != null)
                   {
-                      var node = GetMinNode(mRoot);
+                      var node = GetMinNode(_mRoot);
                       return node.Data;
                   }
 
@@ -402,7 +412,7 @@ namespace Taf.Core.Utility
    
           public void DelMin()
           {
-              mRoot = DelMin(mRoot);
+              _mRoot = DelMin(_mRoot);
           }
    
           private RedBlackTreeNode<T> DelMin(RedBlackTreeNode<T> node)
@@ -417,7 +427,7 @@ namespace Taf.Core.Utility
    
           public void Remove(T value)
           {
-              mRoot = Delete(mRoot, value);
+              _mRoot = Delete(_mRoot, value);
           }
    
           private RedBlackTreeNode<T> Delete(RedBlackTreeNode<T> node, T value)
@@ -487,7 +497,7 @@ namespace Taf.Core.Utility
                       // 要删除的节点是根节点
                       // 如果只有一个根节点，把mRoot赋值为null，这时replace为null
                       // 如果不止一个节点，返回根节点的右子树中的最小节点
-                      mRoot = replace;
+                      _mRoot = replace;
                   }
    
                   // 记录被删除节点的右子树中的最小节点的右子节点，父亲节点及颜色，没有左子节点
@@ -528,7 +538,7 @@ namespace Taf.Core.Utility
                   //如果删除的最小节点颜色是黑色，需要重新平衡红黑树
                   //如果删除的最小节点颜色是红色，只需要替换删除节点后，涂黑即可
                   //上面的保持原来位置的颜色已经处理了这种情况，这里只需要判断最小节点是黑色的情况
-                  if (color == BLACK)
+                  if (color == Black)
                   {
                       //将最小节点的child和parent传进去
                       RemoveFixUp(child, parent);
@@ -542,7 +552,7 @@ namespace Taf.Core.Utility
           {
               RedBlackTreeNode<T> brother;
               // 被删除节点的右子树中的最小节点 不是 被删除节点的子节点的情况
-              while ((node == null || IsBlack(node)) && (node != mRoot))
+              while ((node == null || IsBlack(node)) && (node != _mRoot))
               {
                   if (parent.LeftChild == node)
                   {
@@ -551,8 +561,8 @@ namespace Taf.Core.Utility
                       if (IsRed(brother))
                       {
                           //case1: node的兄弟节点brother是红色的 
-                          brother.Color = BLACK;
-                          parent.Color = RED;
+                          brother.Color = Black;
+                          parent.Color = Red;
                           RotateLeft(parent);
                           brother = parent.RightChild;
                       }
@@ -563,7 +573,7 @@ namespace Taf.Core.Utility
                           (brother.RightChild == null || IsBlack(brother.RightChild)))
                       {
                           //把兄弟节点设置为黑色，平衡红黑树
-                          brother.Color = RED;
+                          brother.Color = Red;
                           node = parent;
                           parent = node.Parent;
                       }
@@ -572,18 +582,18 @@ namespace Taf.Core.Utility
                           //case3: node的兄弟节点brother是黑色的，且brother的左子节点是红色，右子节点是黑色  
                           if (brother.RightChild == null || IsBlack(brother.RightChild))
                           {
-                              brother.LeftChild.Color = BLACK;
-                              brother.Color = RED;
+                              brother.LeftChild.Color = Black;
+                              brother.Color = Red;
                               RotateRight(brother);
                               brother = parent.RightChild;
                           }
    
                           //case4: node的兄弟节点brother是黑色的，且brother的右子节点是红色，左子节点任意颜色  
                           brother.Color = parent.Color;
-                          parent.Color = BLACK;
-                          brother.RightChild.Color = BLACK;
+                          parent.Color = Black;
+                          brother.RightChild.Color = Black;
                           RotateLeft(parent);
-                          node = mRoot;
+                          node = _mRoot;
                           break;
                       }
                   }
@@ -594,8 +604,8 @@ namespace Taf.Core.Utility
                       if (IsRed(brother))
                       {
                           // Case 1: node的兄弟brother是红色的   
-                          brother.Color = BLACK;
-                          parent.Color = RED;
+                          brother.Color = Black;
+                          parent.Color = Red;
                           RotateRight(parent);
                           brother = parent.LeftChild;
                       }
@@ -604,7 +614,7 @@ namespace Taf.Core.Utility
                           (brother.RightChild == null || IsBlack(brother.RightChild)))
                       {
                           //把兄弟节点设置为黑色，平衡红黑树
-                          brother.Color = RED;
+                          brother.Color = Red;
                           node = parent;
                           parent = node.Parent;
                       }
@@ -613,18 +623,18 @@ namespace Taf.Core.Utility
                           // Case 3: node的兄弟brother是黑色的，并且brother的左子节点是红色，右子节点为黑色。
                           if (brother.LeftChild == null || IsBlack(brother.LeftChild))
                           {
-                              brother.RightChild.Color = BLACK;
-                              brother.Color = RED;
+                              brother.RightChild.Color = Black;
+                              brother.Color = Red;
                               RotateLeft(brother);
                               brother = parent.LeftChild;
                           }
    
                           // Case 4: node的兄弟brother是黑色的；并且brother的左子节点是红色的，右子节点任意颜色  
                           brother.Color = parent.Color;
-                          parent.Color = BLACK;
-                          brother.LeftChild.Color = BLACK;
+                          parent.Color = Black;
+                          brother.LeftChild.Color = Black;
                           RotateRight(parent);
-                          node = mRoot;
+                          node = _mRoot;
                           break;
                       }
                   }
@@ -632,7 +642,7 @@ namespace Taf.Core.Utility
               //如果删除的最小节点的右子节点是红色，只需要替换最小节点后，涂黑即可
               if (node != null)
               {
-                  node.Color = BLACK;
+                  node.Color = Black;
               }
           }
    
@@ -649,7 +659,7 @@ namespace Taf.Core.Utility
           // 递归方法实现体内再次调用方法本身的本质是多个方法的简写，递归一定要有出口
           public void ShowTree()
           {
-              ShowTree(mRoot);
+              ShowTree(_mRoot);
           }
    
           private void ShowTree(RedBlackTreeNode<T> node)
@@ -659,7 +669,7 @@ namespace Taf.Core.Utility
                   return;
               }
               ShowTree(node.LeftChild);
-              var nodeColor = node.Color == RED ? "red" : "black";
+              var nodeColor = node.Color == Red ? "red" : "black";
               string log;
               if (node.Parent != null)
               {

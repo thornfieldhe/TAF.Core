@@ -56,6 +56,14 @@ namespace Taf.Core.Test
             var m4=b[0];
             Assert.True(m3 != m4);
         }
+        
+        [Fact]
+        public void TestArrary(){
+            var a=new []{"1","2","3"};
+            a=a.Append("4");
+            Assert.Equal(4,a.Length);
+            Assert.Equal("4",a[3]);
+        }
 
         /// <summary>
         /// The test randoms generate check code num.

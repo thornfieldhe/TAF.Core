@@ -372,6 +372,10 @@ namespace Taf.Core.Test
             Assert.Equal(2, b.As<IStringReg>().FindSubstringAsSInt(@"\d\d").Count);
             Assert.Equal(22, b.As<IStringReg>().FindSubstringAsSInt(@"\d\d")[1]);
             Assert.Equal(3, b.As<IStringReg>().FindSubstringAsSInt(@"\d{2}", false).Count); // 2*子串出现了3次
+            var c = "1.22/21.22_1.22";
+            Assert.Equal(2, c.As<IStringReg>().FindSubstringAsDouble(@"\d+.\d+",true).Count);// 1.22,21.22
+            Assert.Equal(21.22, c.As<IStringReg>().FindSubstringAsDouble(@"\d+.\d+")[1]);
+            Assert.Equal(3, c.As<IStringReg>().FindSubstringAsDouble(@"\d+.\d+").Count); // 1.22,21.22,1.22
         }
 
         /// <summary>

@@ -13,13 +13,11 @@ using System.Text;
 using System.Text.Json;
 using System.Xml.Serialization;
 
-namespace Taf.Core.Utility
-{
+namespace Taf.Core.Utility{
     /// <summary>
     /// 序列化对象到文件
     /// </summary>
-    public class PathFileSerializer
-    {
+    public class PathFileSerializer{
         /// <summary>
         /// 对象序列化成 XML 
         /// </summary>
@@ -34,30 +32,24 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        public static bool XMLSerialize<T>(T obj, string path)
-        {
-            try
-            {
+        public static bool XmlSerialize<T>(T obj, string path){
+            try{
                 var xmlSerializer = new XmlSerializer(typeof(T));
 
                 path = path.Replace('\\', '/');
                 var dir = string.Empty;
-                if (path.LastIndexOf('/') != -1)
-                {
+                if(path.LastIndexOf('/') != -1){
                     dir = path.Substring(0, path.LastIndexOf('/'));
                 }
 
-                if (!Directory.Exists(dir))
-                {
+                if(!Directory.Exists(dir)){
                     Directory.CreateDirectory(dir);
                 }
 
                 var stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
                 xmlSerializer.Serialize(stream, obj);
                 stream.Close();
-            }
-            catch
-            {
+            } catch{
                 return false;
             }
 
@@ -74,25 +66,20 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static T XMLDeserialize<T>(string path)
-        {
+        public static T? XmlDeserialize<T>(string path){
             var t = default(T);
-            try
-            {
+            try{
                 var xmlSerializer = new XmlSerializer(typeof(T));
-                if (!File.Exists(path))
-                {
-                    return default(T);
+                if(!File.Exists(path)){
+                    return default;
                 }
 
                 var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                var obj = xmlSerializer.Deserialize(stream);
+                var obj    = xmlSerializer.Deserialize(stream);
                 t = (T)obj;
                 stream.Close();
-            }
-            catch
-            {
-                return default(T);
+            } catch{
+                return default;
             }
 
             return t;
@@ -105,35 +92,23 @@ namespace Taf.Core.Utility
         /// <param name="obj"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool JsonSerialize<T>(T obj, string path)
-        {
-            try
-            {
-                path = path.Replace('\\', '/');
-                var dir = string.Empty;
-                if (path.LastIndexOf('/') != -1)
-                {
-                    dir = path.Substring(0, path.LastIndexOf('/'));
-                }
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-
-                using (var stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-                {
-                    var json  = JsonSerializer.Serialize(obj);
-                    var bytes = Encoding.UTF8.GetBytes(json);
-                    stream.Write(bytes, 0, bytes.Length);
-                    stream.Close();
-                }
-                return true;
-
+        public static bool JsonSerialize<T>(T obj, string path){
+            path = path.Replace('\\', '/');
+            var dir = string.Empty;
+            if(path.LastIndexOf('/') != -1){
+                dir = path.Substring(0, path.LastIndexOf('/'));
             }
-            catch (Exception ex)
-            {
-                throw ex;
+
+            if(!Directory.Exists(dir)){
+                Directory.CreateDirectory(dir);
             }
+
+            using var stream = File.Open(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+            var       json   = JsonSerializer.Serialize(obj);
+            var       bytes  = Encoding.UTF8.GetBytes(json);
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Close();
+            return true;
         }
 
         /// <summary>
@@ -142,15 +117,11 @@ namespace Taf.Core.Utility
         /// <typeparam name="T"></typeparam>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static T JsonDeSerialize<T>(string path)
-        {
+        public static T? JsonDeSerialize<T>(string path){
             var t = default(T);
-            try
-            {
-                if (File.Exists(path))
-                {
-                    using (var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
-                    {
+            try{
+                if(File.Exists(path)){
+                    using(var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite)){
                         var bytes = new byte[stream.Length];
                         stream.Read(bytes, 0, bytes.Length);
                         var json = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
@@ -158,11 +129,10 @@ namespace Taf.Core.Utility
                         stream.Close();
                     }
                 }
+            } catch(Exception ex){
+                return default;
             }
-            catch (Exception ex)
-            {
-                return default(T);
-            }
+
             return t;
         }
     }
