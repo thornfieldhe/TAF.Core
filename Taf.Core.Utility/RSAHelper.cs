@@ -37,7 +37,7 @@ namespace Taf.Core.Utility
         /// <param name="encoding">编码类型</param>
         /// <param name="privateKey">私钥</param>
         /// <param name="publicKey">公钥</param>
-        public RsaHelper(RsaType rsaType, Encoding encoding, string privateKey, string publicKey = null)
+        public RsaHelper(RsaType rsaType, Encoding encoding, string privateKey, string? publicKey = null)
         {
             _encoding = encoding;
             if(!string.IsNullOrEmpty(privateKey))
@@ -137,6 +137,12 @@ namespace Taf.Core.Utility
 
         #region 使用私钥创建RSA实例
 
+        /// <summary>
+        /// 使用私钥创建RSA实例
+        /// </summary>
+        /// <param name="privateKey"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private RSA CreateRsaProviderFromPrivateKey(string privateKey)
         {
             var privateKeyBits = Convert.FromBase64String(privateKey);
