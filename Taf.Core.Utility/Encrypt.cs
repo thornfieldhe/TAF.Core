@@ -85,7 +85,7 @@ namespace Taf.Core.Utility{
                 Encoding encoding = new UTF8Encoding();
                 return encoding.GetString(ms.ToArray()); 
             } catch{
-                return null;
+                return strText;
             }
         }
 
