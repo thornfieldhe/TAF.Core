@@ -53,6 +53,8 @@ public class NumExtensionTest{
     public void TestFormatPercent(){
         Assert.Equal("12.00%", (0.12M).As<IDecimalFormat>().FormatPercent()); 
         Assert.Equal("12.1%", (0.1213M).As<IDecimalFormat>().FormatPercent(1)); 
+        Assert.Equal("12.00%", (0.12D).As<IDoubleFormat>().FormatPercent()); 
+        Assert.Equal("12.1%", (0.1213D).As<IDoubleFormat>().FormatPercent(1)); 
     }
     
     /// <summary>

@@ -80,16 +80,6 @@ public static class DecimalFormat{
         /// </returns>
         public static string FormatRmb(this decimal? number) => FormatRmb(number.SafeValue());
 
-        /// <summary>
-        /// 获取格式化字符串,x.xx%
-        /// </summary>
-        /// <param name="number">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatPercent(this decimal? number,int sd=0) => FormatPercent(number.SafeValue(),sd);
 
         /// <summary>
     /// 把Decimal表示为科学计数法的字符串
@@ -99,5 +89,14 @@ public static class DecimalFormat{
     /// <returns></returns>
     public static string FormatScience(this IDecimalFormat v, int sd =3) => v.GetValue().ToString("E" + sd);
 
-    public static string FormatPercent(this IDecimalFormat v, int sd =2) => v.GetValue().ToString("P" + sd);
+        /// <summary>
+        /// 获取格式化字符串,x.xx%
+        /// </summary>
+        /// <param name="sd">
+        /// 数值
+        /// </param>
+        /// <returns>
+        /// The <see cref="string"/>.
+        /// </returns>
+    public static string FormatPercent(this IDecimalFormat v, int sd=2) => v.GetValue().ToString("P" + sd);
 }

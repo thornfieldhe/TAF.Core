@@ -58,30 +58,17 @@ public static class DoubleFormat{
         public static string Format(this double? number, string defaultValue = "") =>
             Format(number.SafeValue(), defaultValue);
         
-        /// <summary>
-        /// 获取格式化字符串,x.xx%
-        /// </summary>
-        /// <param name="s">
-        /// 数值
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// </returns>
-        public static string FormatPercent(this IDoubleFormat s){
-            var number = s.GetValue();
-           return number == 0 ? string.Empty : string.Format("{0:0.##}%", number); 
-        }
             
         /// <summary>
         /// 获取格式化字符串,带%
         /// </summary>
-        /// <param name="number">
+        /// <param name="v">
         /// 数值
         /// </param>
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string FormatPercent(this double? number, int sd = 2) => FormatPercent(number.SafeValue(), sd);
+        public static string FormatPercent(this IDoubleFormat v, int sd=2) => v.GetValue().ToString("P" + sd);
 
         /// <summary>
         /// 转换成科学计数法
