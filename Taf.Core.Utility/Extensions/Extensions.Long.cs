@@ -30,7 +30,7 @@ namespace Taf.Core.Utility
         /// </param>
         /// <returns>
         /// </returns>
-        public static double MinutesToSeconds(this long obj) => obj * 60D;
+        public static long MinutesToSeconds(this long obj) => obj * 60;
         /// <summary>
         /// 间隔秒转小时
         /// </summary>

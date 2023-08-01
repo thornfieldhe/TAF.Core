@@ -282,6 +282,26 @@ public static class DateOfWeek{
         var dateBegin = GetWeekday(dt, DayOfWeek.Monday);
         return dateBegin.AddDays(7 * count);
     }
+    
+    /// <summary>
+    /// 根据年份和周数获取当前周一日期
+    /// </summary>
+    /// <param name="year"></param>
+    /// <param name="weekNumber"></param>
+    /// <returns></returns>
+    public static DateTime GetMondayOfWeekOfYear( int year, int weekNumber)
+    {
+        DateTime januaryFirst = new DateTime(year, 1, 1);
+        int daysOffset = (int) DayOfWeek.Monday - (int) januaryFirst.DayOfWeek;
+        DateTime firstMonday = januaryFirst.AddDays(daysOffset);
+        int firstWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(januaryFirst, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        if (firstWeek <= 1)
+        {
+            weekNumber -= 1;
+        }
+        DateTime result = firstMonday.AddDays(7 * weekNumber -2);
+        return result;
+    } 
 
     /// <summary>
     /// 获取下周周末

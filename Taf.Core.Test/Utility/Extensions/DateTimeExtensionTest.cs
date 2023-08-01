@@ -199,5 +199,16 @@ namespace Taf.Core.Test
             Assert.Equal(date8, date.As<IDateOfWeek>().GetLastDayOfWeek());
             Assert.Equal(date9, date.As<IDateOfWeek>().GetWeekday(DayOfWeek.Thursday));
         }
+        
+        /// <summary>
+        /// 根据年份和周数获取当前周一日期
+        /// </summary>
+        [Fact]
+        public void TestGetMondayOfWeekOfYear(){
+          
+            var monday = DateOfWeek.GetMondayOfWeekOfYear(2023, 19);
+            var weekOfYear=monday.As<IDateOfWeek>().WeekOfYear();
+            Assert.Equal(19, weekOfYear);
+        }
     }
 }
