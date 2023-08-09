@@ -299,7 +299,7 @@ public static class DateOfWeek{
         {
             weekNumber -= 1;
         }
-        DateTime result = firstMonday.AddDays(7 * weekNumber -2);
+        DateTime result = firstMonday.AddDays(7 *( weekNumber-1));
         return result;
     } 
 

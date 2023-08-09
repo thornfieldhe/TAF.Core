@@ -206,9 +206,10 @@ namespace Taf.Core.Test
         [Fact]
         public void TestGetMondayOfWeekOfYear(){
           
-            var monday = DateOfWeek.GetMondayOfWeekOfYear(2023, 19);
+            var monday = DateOfWeek.GetMondayOfWeekOfYear(2023, 31);
             var weekOfYear=monday.As<IDateOfWeek>().WeekOfYear();
-            Assert.Equal(19, weekOfYear);
+            Console.WriteLine(monday.ToString("yyyy-M-d"));
+            Assert.Equal(31, weekOfYear);
         }
     }
 }
