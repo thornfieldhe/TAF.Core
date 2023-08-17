@@ -9,10 +9,10 @@
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/thornfieldhe/TAF.Core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thornfieldhe/TAF.Core</RepositoryUrl>
-    <AssemblyVersion>7.0.11</AssemblyVersion>
-    <FileVersion>7.0.11</FileVersion>
+    <AssemblyVersion>7.0.13</AssemblyVersion>
+    <FileVersion>7.0.13</FileVersion>
     <Version>1.0.7</Version>
-    <PackageVersion>7.0.11</PackageVersion>
+    <PackageVersion>7.0.13</PackageVersion>
     <LangVersion>default</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
@@ -32,6 +32,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="KYSharp.SM.Core" Version="1.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

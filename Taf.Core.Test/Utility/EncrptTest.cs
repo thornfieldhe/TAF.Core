@@ -15,7 +15,7 @@ namespace Taf.Core.Test
     /// 测试Md5算法
     /// </summary>
     
-    public class Md5Test
+    public class EncrptTest
     {
         /// <summary>
         /// 验证空值
@@ -112,6 +112,19 @@ w3c9EpEued0VHhW1uwIDAQAB
             var signVerify = rsa.Verify(str, signStr);
 
             Assert.True(signVerify);
+        }
+        
+        /// <summary>
+        /// 测试国密加密/解密
+        /// </summary>
+        [Fact]
+        public void TestSm(){
+            var txt  = "abcdef";
+            Assert.Equal("aa04b90b3546a6e010e6c2c5af045c2b",Encrypt.Sm4Encrypt(txt));
+            Assert.Equal(txt, Encrypt.Sm4Decrypt("aa04b90b3546a6e010e6c2c5af045c2b"));
+            var txt2 = Encrypt.Sm2Encrypt(txt);
+            Assert.Equal(txt, Encrypt.Sm2Decrypt(txt2));
+            
         }
     }
 }

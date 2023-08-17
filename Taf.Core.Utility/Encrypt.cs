@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using KYSharp.SM;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -21,6 +22,22 @@ namespace Taf.Core.Utility{
         /// 加密字符串长度应该大于8
         /// </summary>
         public const string EncrKey = "P@ssw0rd+";
+        /// <summary>
+        /// 国密SM4加密密钥
+        /// </summary>
+        private const string Sm4SecretKey = "j5vmjdLczPJgs3IM";
+        /// <summary>
+        /// 国密SM4加密向量
+        /// </summary>
+        private const string Sm4IvKey = "JGh6O3ohb6IxME7O";
+        /// <summary>
+        /// 国密SM2加密公钥
+        /// </summary>
+        private const string Sm2PublicKey = "04499F83EBF37604B775597B67E3A0EA90488E0AF8A162601EC2730472A5B16E9344A9082883F08523DBA21472962F8458F5E382F819DE7887AD7E5D560DE13A10";
+        /// <summary>
+        /// 国密SM2加密私钥
+        /// </summary>
+        private const string Sm2PrivateKey = "00DAA773A775704C8A9A3B11D0D39E14A5628F367882A823E0B4AC36D28C34B1E7";
 
         /// <summary>
         /// 获取新密码
@@ -215,6 +232,52 @@ namespace Taf.Core.Utility{
             return enText.ToString();
         }
 
+    #region SM加密解密
+
+        /// <summary>
+        /// SM4加密,使用CBC模式
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <param name="secretKey"></param>
+        /// <returns></returns>
+        public static string Sm4Encrypt(string plainText, string? secretKey =null){
+            var sm4 = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey,iv = Sm2PublicKey};
+            return sm4.Encrypt_CBC(plainText);
+        }
+
+        /// <summary>
+        /// SM4解密,使用CBC模式
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <param name="secretKey"></param>
+        /// <returns></returns>
+        public static string Sm4Decrypt(string plainText, string? secretKey =null){
+            var sm4 = new SM4Utils{ secretKey = secretKey?? Sm4SecretKey,iv = Sm2PublicKey};
+            return sm4.Decrypt_CBC(plainText);
+        }
+        
+        /// <summary>
+        /// SM4加密,使用CBC模式
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <param name="publicKey"></param>
+        /// <returns></returns>
+        public static string Sm2Encrypt(string plainText, string? publicKey =null) => 
+            SM2Utils.Encrypt_Hex( publicKey ??Sm2PublicKey,plainText,Encoding.UTF8 );
+
+        /// <summary>
+        /// SM4解密,使用CBC模式
+        /// </summary>
+        /// <param name="plainText"></param>
+        /// <param name="privateKey"></param>
+        /// <returns></returns>
+        public static string Sm2Decrypt(string plainText, string? privateKey =null) => 
+            SM2Utils.Decrypt_Hex( privateKey ??Sm2PrivateKey,plainText,Encoding.UTF8 );
+        
+        
+    #endregion
+        
+        
     #region RSA加密解密
 
     #endregion
