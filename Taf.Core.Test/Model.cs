@@ -203,6 +203,7 @@ namespace Taf.Test{
         string Name{ get; set; }
     }
 
+    [Serializable]
     public class TestInfo{
         public string Name{ get; set; }
 

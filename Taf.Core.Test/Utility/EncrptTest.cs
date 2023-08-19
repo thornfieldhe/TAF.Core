@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Text;
+using Taf.Test;
 
 namespace Taf.Core.Test
 {
@@ -55,6 +56,16 @@ namespace Taf.Core.Test
         {
             Assert.Equal("0CC175B9C0F1B6A831C399E269772661", Encrypt.Md5By32("a"));
             Assert.Equal("C13DCEABCB143ACD6C9298265D618A9F", Encrypt.Md5By32("中国"));
+        }
+
+
+        /// <summary>
+        /// 返回对象32位MD5
+        /// </summary>
+        [Fact]
+        public void TestMd5_Obj()
+        {
+            Assert.Equal("14C69320B1870690F52978B7652C87BD", Encrypt.Md5(new TestInfo { Id = new Guid("F6E44232-34D6-4384-A4D3-E9E935D32C48"), Name = "a" }));
         }
 
         /// <summary>

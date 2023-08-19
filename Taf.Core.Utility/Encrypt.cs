@@ -12,6 +12,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace Taf.Core.Utility{
     /// <summary>
@@ -136,6 +137,13 @@ namespace Taf.Core.Utility{
         /// The <see cref="string"/>.
         /// </returns>
         public static string Md5By16(string text) => Md5By16(text, Encoding.UTF8);
+        
+        /// <summary>
+        /// 获取对象的Md5值
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static string Md5(object obj) => Md5By32(JsonSerializer.Serialize(obj));
 
         /// <summary>
         /// Md5加密，返回16位结果
