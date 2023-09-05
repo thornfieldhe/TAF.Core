@@ -85,8 +85,8 @@ namespace Taf.Core.Test.Business
             handler.Successors = null;
             handler.HandleRequest(e.Request);
         }
-
-    }
+    
+}
 
     public class InternalHandler : BaseCoRHandler<Request>
     {

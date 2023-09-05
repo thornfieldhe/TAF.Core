@@ -14,9 +14,13 @@ namespace Taf.Core.Utility
         /// 
         /// </summary>
         /// <param name="request"></param>
-        public void Process(Request request){
+        private void Process(Request request){
             if(AllowProcess(request)){
                 Excute(request);
+                foreach (var successor in Successors)
+                {
+                    successor.HandleRequest(request);
+                }
             } 
         }
 
@@ -35,14 +39,7 @@ namespace Taf.Core.Utility
                 return;
             }
             Process(request);
-
-            if (Successors != null)
-            {
-                foreach (var successor in Successors)
-                {
-                    successor.HandleRequest(request);
-                }
-            }
+       
         }
 
         /// <summary>
@@ -60,10 +57,6 @@ namespace Taf.Core.Utility
         /// <param name="success"></param>
         public void AddSuccessor(BaseCoRHandler<Request> success)
         {
-            if (Successors == null)
-            {
-                Successors = new List<BaseCoRHandler<Request>>();
-            }
             Successors.Add(success);
         }
 
@@ -74,8 +67,7 @@ namespace Taf.Core.Utility
         public IEnumerable<BaseCoRHandler<Request>> Enumerate()
         {
             yield return this;
-            if((Successors       == null)
-            || (Successors.Count <= 0)) yield break;
+            if((Successors.Count <= 0)) yield break;
             foreach (var child in Successors)
             {
                 foreach (var item in child.Enumerate())
