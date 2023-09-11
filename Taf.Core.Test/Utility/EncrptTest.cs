@@ -78,6 +78,8 @@ namespace Taf.Core.Test
             Assert.NotNull(pass);
             Assert.Equal(Encrypt.DesEncrypt("149162536"), "yNoRIOe2AZbE1DouLrHENQ==");
             Assert.Equal(Encrypt.DesDecrypt("yNoRIOe2AZbE1DouLrHENQ=="), "149162536");
+            Assert.Equal(Encrypt.DesEncrypt("149162536",2), "Yzg5YTI3MWU3MzJmZTEzZTI2MjVlNGU1ZTFhOWExNTE=");
+            Assert.Equal(Encrypt.DesDecrypt("Yzg5YTI3MWU3MzJmZTEzZTI2MjVlNGU1ZTFhOWExNTE=",2), "149162536");
         }
 
         [Fact]
@@ -131,8 +133,8 @@ w3c9EpEued0VHhW1uwIDAQAB
         [Fact]
         public void TestSm(){
             var txt  = "abcdef";
-            Assert.Equal("aa04b90b3546a6e010e6c2c5af045c2b",Encrypt.Sm4Encrypt(txt));
-            Assert.Equal(txt, Encrypt.Sm4Decrypt("aa04b90b3546a6e010e6c2c5af045c2b"));
+            Assert.Equal("MDVmZDgyYjlkYzllMWQyZmE5MDQ0YjEyOGQ3NzY1NGQ=",Encrypt.Sm4Encrypt(txt));
+            Assert.Equal(txt, Encrypt.Sm4Decrypt("MDVmZDgyYjlkYzllMWQyZmE5MDQ0YjEyOGQ3NzY1NGQ="));
             var txt2 = Encrypt.Sm2Encrypt(txt);
             Assert.Equal(txt, Encrypt.Sm2Decrypt(txt2));
             

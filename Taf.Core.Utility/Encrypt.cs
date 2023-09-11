@@ -66,20 +66,28 @@ namespace Taf.Core.Utility{
         /// </summary>
         /// <param name="strText">
         /// </param>
+        /// <param name="encrKey">盐</param>
+        /// <param name="version">v2版本使用国密</param>
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string DesEncrypt(string strText){
-            byte[] iv ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+        public static string DesEncrypt(string strText, int version = 1, string? encrKey = null){
+            if(version != 2){
+                byte[] iv ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
-            var byKey          = Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8));
-            var des            = new DESCryptoServiceProvider();
-            var inputByteArray = Encoding.UTF8.GetBytes(strText);
-            var ms             = new MemoryStream();
-            var cs             = new CryptoStream(ms, des.CreateEncryptor(byKey, iv), CryptoStreamMode.Write);
-            cs.Write(inputByteArray, 0, inputByteArray.Length);
-            cs.FlushFinalBlock();
-            return Convert.ToBase64String(ms.ToArray());
+                var byKey = encrKey == null
+                    ? Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8))
+                    : Encoding.UTF8.GetBytes(encrKey.Substring(0, 8));
+                var des            = new DESCryptoServiceProvider();
+                var inputByteArray = Encoding.UTF8.GetBytes(strText);
+                var ms             = new MemoryStream();
+                var cs             = new CryptoStream(ms, des.CreateEncryptor(byKey, iv), CryptoStreamMode.Write);
+                cs.Write(inputByteArray, 0, inputByteArray.Length);
+                cs.FlushFinalBlock();
+                return Convert.ToBase64String(ms.ToArray());
+            }
+
+            return Sm4Encrypt(strText, encrKey); //使用国密SM4加密
         }
 
         /// <summary>
@@ -87,21 +95,29 @@ namespace Taf.Core.Utility{
         /// </summary>
         /// <param name="strText">
         /// </param>
+        /// <param name="encrKey">盐</param>
+        /// <param name="version">v2版本使用国密</param>
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string DesDecrypt(string strText){
+        public static string DesDecrypt(string strText, int version = 1, string? encrKey = null){
             try{
-                byte[] iv             ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
-                var    byKey          = Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8));
-                var    des            = new DESCryptoServiceProvider();
-                var    inputByteArray = Convert.FromBase64String(strText);
-                var    ms             = new MemoryStream();
-                var    cs             = new CryptoStream(ms, des.CreateDecryptor(byKey, iv), CryptoStreamMode.Write);
-                cs.Write(inputByteArray, 0, inputByteArray.Length);
-                cs.FlushFinalBlock();
-                Encoding encoding = new UTF8Encoding();
-                return encoding.GetString(ms.ToArray()); 
+                if(version == 1){
+                    byte[] iv ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+                    var byKey = encrKey == null
+                        ? Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8))
+                        : Encoding.UTF8.GetBytes(encrKey.Substring(0, 8));
+                    var    des = new DESCryptoServiceProvider();
+                    var    inputByteArray = Convert.FromBase64String(strText);
+                    var    ms = new MemoryStream();
+                    var    cs = new CryptoStream(ms, des.CreateDecryptor(byKey, iv), CryptoStreamMode.Write);
+                    cs.Write(inputByteArray, 0, inputByteArray.Length);
+                    cs.FlushFinalBlock();
+                    Encoding encoding = new UTF8Encoding();
+                    return encoding.GetString(ms.ToArray());
+                }
+
+                return Sm4Decrypt(strText, encrKey); //使用国密SM4解密 
             } catch{
                 return strText;
             }
@@ -248,9 +264,11 @@ namespace Taf.Core.Utility{
         /// <param name="plainText"></param>
         /// <param name="secretKey"></param>
         /// <returns></returns>
-        public static string Sm4Encrypt(string plainText, string? secretKey =null){
-            var sm4 = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey,iv = Sm2PublicKey};
-            return sm4.Encrypt_CBC(plainText);
+        public static string Sm4Encrypt(string plainText, string? secretKey = null){
+            var sm4            = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey, iv = Sm4IvKey };
+            var originalString = sm4.Encrypt_CBC(plainText);
+            var bytesToEncode  = Encoding.UTF8.GetBytes(originalString);
+            return Convert.ToBase64String(bytesToEncode);
         }
 
         /// <summary>
@@ -259,35 +277,38 @@ namespace Taf.Core.Utility{
         /// <param name="plainText"></param>
         /// <param name="secretKey"></param>
         /// <returns></returns>
-        public static string Sm4Decrypt(string plainText, string? secretKey =null){
-            var sm4 = new SM4Utils{ secretKey = secretKey?? Sm4SecretKey,iv = Sm2PublicKey};
-            return sm4.Decrypt_CBC(plainText);
+        public static string Sm4Decrypt(string plainText, string? secretKey = null){
+            var decodedBytes = Convert.FromBase64String(plainText);
+            var targetText   = Encoding.UTF8.GetString(decodedBytes);
+            var sm4          = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey, iv = Sm4IvKey };
+            return sm4.Decrypt_CBC(targetText);
         }
         
         /// <summary>
-        /// SM4加密,使用CBC模式
+        /// SM2加密,使用CBC模式
         /// </summary>
         /// <param name="plainText"></param>
         /// <param name="publicKey"></param>
         /// <returns></returns>
-        public static string Sm2Encrypt(string plainText, string? publicKey =null) => 
-            SM2Utils.Encrypt_Hex( publicKey ??Sm2PublicKey,plainText,Encoding.UTF8 );
+        public static string Sm2Encrypt(string plainText, string? publicKey = null){
+            var originalString = SM2Utils.Encrypt_Hex(publicKey ?? Sm2PublicKey, plainText, Encoding.UTF8);
+            var bytesToEncode  = Encoding.UTF8.GetBytes(originalString);
+            return Convert.ToBase64String(bytesToEncode);
+        }
 
         /// <summary>
-        /// SM4解密,使用CBC模式
+        /// SM2解密,使用CBC模式
         /// </summary>
         /// <param name="plainText"></param>
         /// <param name="privateKey"></param>
         /// <returns></returns>
-        public static string Sm2Decrypt(string plainText, string? privateKey =null) => 
-            SM2Utils.Decrypt_Hex( privateKey ??Sm2PrivateKey,plainText,Encoding.UTF8 );
-        
+        public static string Sm2Decrypt(string plainText, string? privateKey = null){
+            var decodedBytes = Convert.FromBase64String(plainText);
+            var targetText   = Encoding.UTF8.GetString(decodedBytes);
+            return SM2Utils.Decrypt_Hex(privateKey ?? Sm2PrivateKey, targetText, Encoding.UTF8);
+        }
         
     #endregion
         
-        
-    #region RSA加密解密
-
-    #endregion
     }
 }
