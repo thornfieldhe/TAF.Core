@@ -18,21 +18,43 @@ namespace Taf.Core.Utility;
 using System;
 
 /// <summary>
-/// 邻接矩阵实现的图（默认按照有向图，弧不带权重）
+/// 邻接矩阵实现的图（默认按照有向图，弧不带权重）,
+/// 顶点的上游只支持单顶点,即:不支持多条边指向同一个顶点
 /// </summary>
 [Serializable]
 public class MatrixGraph<T>{
-    //最大顶点数量
+    /// <summary>
+    /// 最大顶点数量
+    /// </summary>
     public int MaxVertexNum;
-    //存储顶点的数组
+
+    /// <summary>
+    /// 存储顶点的数组
+    /// </summary>
     public T[] Vertex;
-    //邻接矩阵
+
+    /// <summary>
+    /// 邻接矩阵
+    /// </summary>
     public int[,] AdjacecntMatrix;
-    //顶点数量
+
+    /// <summary>
+    /// 顶点数量
+    /// </summary>
     public int Count = 0;
+    
     //遍历时该节点是否访问过
-    private bool[]             _visited;
-    public  Dictionary<T, int> Index;
+    private bool[] _visited;
+
+    /// <summary>
+    /// 存储对象与下标映射表
+    /// </summary>
+    public Dictionary<T, int> Index;
+    
+    /// <summary>
+    /// 空节点下标列表
+    /// </summary>
+    public List<int> EmptyVertex = new();
 
     /// <summary>
     /// 自定义大小的矩阵,默认10
@@ -45,7 +67,7 @@ public class MatrixGraph<T>{
         Index           = new Dictionary<T, int>();
     }
 
-    public MatrixGraph() : this(10){}
+    public MatrixGraph() : this(10){ }
 
     /// <summary>
     /// 增加顶点
@@ -54,26 +76,56 @@ public class MatrixGraph<T>{
         //自动扩容,如果容量达到上限,自动扩容1倍,若果总条数超过500条,一次性增加100条
         if(Count >= MaxVertexNum){
             var old = MaxVertexNum;
-            if (MaxVertexNum<=500){
+            if(MaxVertexNum <= 500){
                 MaxVertexNum *= 2;
-            }else{
+            } else{
                 MaxVertexNum += 100;
-            } 
+            }
+
             var arrary = new T[MaxVertexNum];
-            Array.Copy(Vertex, 0,arrary,0, old);
+            Array.Copy(Vertex, 0, arrary, 0, old);
             Vertex          = arrary;
-            AdjacecntMatrix = Expanding2DimensionalArrary(AdjacecntMatrix,new int[MaxVertexNum,MaxVertexNum]);
-          
+            AdjacecntMatrix = Expanding2DimensionalArrary(AdjacecntMatrix, new int[MaxVertexNum, MaxVertexNum]);
         }
 
         if(Index.ContainsKey(vertex)){
             throw new Exception($"重复添加定点:{vertex}");
         }
 
-        Index[vertex]   = Count;
-        Vertex[Count++] = vertex;
+        if(EmptyVertex.Count > 0){
+            for(var i = 0; i < EmptyVertex.Count; i++){
+                var index = EmptyVertex[i];
+                Index[vertex] = index;
+                Vertex[index] = vertex;
+                EmptyVertex.RemoveAt(i);
+                Count++;
+                return;
+            }
+        } else{
+            Index[vertex]   = Count;
+            Vertex[Count++] = vertex;
+        }
     }
-    
+
+    /// <summary>
+    /// 移出中间节点及其上游所有子节点
+    /// </summary>
+    /// <param name="item"></param>
+    public void RemoveVertex(T item){
+        var index = Index[item];
+        EmptyVertex.Add(index);
+        Vertex[index] = default;
+        for(var i = 0; i < AdjacecntMatrix.GetLength(1); i++){
+            if(AdjacecntMatrix[index, i] == 1){
+                RemoveVertex(Vertex[i]);
+                AdjacecntMatrix[index, i] = 0;
+            }
+        }
+
+        Index.Remove(item);
+        Count--;
+    }
+
     private int[,] Expanding2DimensionalArrary(int[,] source, int[,] target){
         for(var i = 0; i < source.GetLength(0); i++){
             for(var j = 0; j < source.GetLength(1); j++){
