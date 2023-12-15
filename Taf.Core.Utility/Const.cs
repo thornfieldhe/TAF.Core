@@ -1,4 +1,6 @@
-﻿namespace Taf.Core.Utility
+﻿using System.Text.RegularExpressions;
+
+namespace Taf.Core.Utility
 {
     /// <summary>
     /// 常量
@@ -21,5 +23,15 @@
         /// 数字
         /// </summary>
         public const string Numbers = "0123456789";
+
+        /// <summary>
+        /// 密码复杂度
+        /// </summary>
+        public static readonly Regex PasswordComplexity = new Regex(@"
+    (?=.*[0-9])                     #必须包含数字
+    (?=.*[a-zA-Z])                  #必须包含小写或大写字母
+    (?=([\x21-\x7e]+)[^a-zA-Z0-9])  #必须包含特殊符号
+    .{8,30}                         #至少8个字符，最多30个字符
+    ", RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
     }
 }

@@ -13,17 +13,14 @@ namespace Taf.Core.Utility
     /// <summary>
     /// 验证操作
     /// </summary>
-    public interface IValidator
+    public interface IValidator<T>
     {
         /// <summary>
         /// 验证
         /// </summary>
-        /// <param name="target">
-        /// 验证目标
-        /// </param>
         /// <returns>
         /// The <see cref="ValidationResultCollection"/>.
         /// </returns>
-        ValidationResultCollection Validate(object target);
+        ValidationResultCollection Validate();
     }
 }

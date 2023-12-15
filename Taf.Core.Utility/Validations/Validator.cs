@@ -7,16 +7,20 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
 
-namespace Taf.Core.Utility
-{
+namespace Taf.Core.Utility{
     /// <summary>
     /// 验证操作
     /// </summary>
-    public class Validator : IValidator
-    {
+    public class Validator<T> : IValidator<T>{
+        private readonly T                          _target;
+        private readonly ValidationResultCollection _result = new();
+        public Validator(T target) => _target = target;
+
         /// <summary>
         /// 验证
         /// </summary>
@@ -26,19 +30,24 @@ namespace Taf.Core.Utility
         /// <returns>
         /// The <see cref="ValidationResultCollection"/>.
         /// </returns>
-        public ValidationResultCollection Validate(object target)
-        {
-            target.CheckNull("target");
-            var result = new ValidationResultCollection();
+        public ValidationResultCollection Validate(){
+            _target.CheckNull("target");
             var validationResults = new List<ValidationResult>();
-            var context = new ValidationContext(target, null, null);
-            var isValid = System.ComponentModel.DataAnnotations.Validator.TryValidateObject(target, context, validationResults, true);
-            if (!isValid)
-            {
-                result.AddResults(validationResults);
+            var context           = new ValidationContext(_target, null, null);
+            var isValid           = Validator.TryValidateObject(_target, context, validationResults, true);
+            if(!isValid){
+                _result.AddResults(validationResults);
             }
 
-            return result;
+            return _result;
+        }
+
+        public Validator<T> AddRule(Predicate<T> validator,  string errMessage, string[] memberNames){
+            if(!validator(_target)){
+                _result.Add(new ValidationResult(errMessage, memberNames));
+            }
+
+            return this;
         }
     }
 }

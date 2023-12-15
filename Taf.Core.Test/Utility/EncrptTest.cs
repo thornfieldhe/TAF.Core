@@ -76,10 +76,13 @@ namespace Taf.Core.Test
         {
             var pass = Encrypt.GetNewPassword(10);
             Assert.NotNull(pass);
-            Assert.Equal(Encrypt.DesEncrypt("149162536"), "yNoRIOe2AZbE1DouLrHENQ==");
-            Assert.Equal(Encrypt.DesDecrypt("yNoRIOe2AZbE1DouLrHENQ=="), "149162536");
-            Assert.Equal(Encrypt.DesEncrypt("149162536",2), "Yzg5YTI3MWU3MzJmZTEzZTI2MjVlNGU1ZTFhOWExNTE=");
-            Assert.Equal(Encrypt.DesDecrypt("Yzg5YTI3MWU3MzJmZTEzZTI2MjVlNGU1ZTFhOWExNTE=",2), "149162536");
+            Assert.Equal(Encrypt.DesEncrypt("149162536",SecurityVersion.V1), "yNoRIOe2AZbE1DouLrHENQ==");
+            Assert.Equal(Encrypt.DesDecrypt("yNoRIOe2AZbE1DouLrHENQ==",SecurityVersion.V1), "149162536");
+            Assert.Equal(Encrypt.DesEncrypt("123!@#qweQWE",SecurityVersion.V2,"team_member3@ike-global.com")
+                       , "NGYzMGZlOGI0ZTFiYzViZTMyYmY4ZGUzYzc2M2VlNDk=");
+            Assert.Equal(Encrypt.DesDecrypt("NGYzMGZlOGI0ZTFiYzViZTMyYmY4ZGUzYzc2M2VlNDk="
+                                           ,SecurityVersion.V2,"team_member3@ike-global.com"), "123!@#qweQWE");
+            
         }
 
         [Fact]

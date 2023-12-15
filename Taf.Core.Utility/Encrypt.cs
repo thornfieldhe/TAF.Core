@@ -9,6 +9,7 @@
 
 using KYSharp.SM;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -71,8 +72,8 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string DesEncrypt(string strText, int version = 1, string? encrKey = null){
-            if(version != 2){
+        public static string DesEncrypt(string strText, SecurityVersion version = SecurityVersion.V2, string? encrKey = null){
+            if(version == SecurityVersion.V1){
                 byte[] iv ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
                 var byKey = encrKey == null
@@ -100,9 +101,9 @@ namespace Taf.Core.Utility{
         /// <returns>
         /// The <see cref="string"/>.
         /// </returns>
-        public static string DesDecrypt(string strText, int version = 1, string? encrKey = null){
+        public static string DesDecrypt(string strText, SecurityVersion version = SecurityVersion.V2, string? encrKey = null){
             try{
-                if(version == 1){
+                if(version == SecurityVersion.V1){
                     byte[] iv ={ 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
                     var byKey = encrKey == null
                         ? Encoding.UTF8.GetBytes(EncrKey.Substring(0, 8))
@@ -265,8 +266,10 @@ namespace Taf.Core.Utility{
         /// <param name="secretKey"></param>
         /// <returns></returns>
         public static string Sm4Encrypt(string plainText, string? secretKey = null){
-            var sm4            = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey, iv = Sm4IvKey };
-            var originalString = sm4.Encrypt_CBC(plainText);
+            Fx.If(!string.IsNullOrWhiteSpace(secretKey) && secretKey.Length < 16)
+              .Then(() => secretKey = secretKey.PadRight(16, '0'));
+            var sm4            = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey ,iv = Sm4IvKey,hexString = false};
+            var originalString = sm4.Encrypt_ECB( plainText);
             var bytesToEncode  = Encoding.UTF8.GetBytes(originalString);
             return Convert.ToBase64String(bytesToEncode);
         }
@@ -278,10 +281,12 @@ namespace Taf.Core.Utility{
         /// <param name="secretKey"></param>
         /// <returns></returns>
         public static string Sm4Decrypt(string plainText, string? secretKey = null){
+            Fx.If(!string.IsNullOrWhiteSpace(secretKey) && secretKey.Length < 16)
+              .Then(() => secretKey = secretKey.PadRight(16, '0'));
             var decodedBytes = Convert.FromBase64String(plainText);
             var targetText   = Encoding.UTF8.GetString(decodedBytes);
-            var sm4          = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey, iv = Sm4IvKey };
-            return sm4.Decrypt_CBC(targetText);
+            var sm4          = new SM4Utils{ secretKey = secretKey ?? Sm4SecretKey ,hexString = false};
+            return sm4.Decrypt_ECB(targetText);
         }
         
         /// <summary>
@@ -310,5 +315,10 @@ namespace Taf.Core.Utility{
         
     #endregion
         
+    }
+    
+    public enum SecurityVersion{
+        [Description("V1版本使用SHA1CryptoServiceProvider")]V1,
+        [Description("V2版本使用国密Sm4")]V2
     }
 }
