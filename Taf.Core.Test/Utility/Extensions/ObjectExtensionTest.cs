@@ -41,4 +41,16 @@ public class ObjectExtensionTest{
         a.IfNotNull(r => a = r + "__");
         Assert.Equal("ccc__", a);
     }
+    
+    /// <summary>
+    /// 测试克隆
+    /// </summary>
+    [Fact]
+    public void TestClone(){
+        var user  = new User(){ Email = "1@a.com", Name = "hi" };
+        var user2 = user.Clone();
+        user.Email = "2@a.cn";
+        Assert.Equal(user2.Name,user.Name);
+        Assert.NotEqual(user2.Email,user.Email);
+    }
 }

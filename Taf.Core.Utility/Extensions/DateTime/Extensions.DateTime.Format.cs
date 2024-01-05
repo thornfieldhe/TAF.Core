@@ -120,6 +120,14 @@ public static class DateTimeFormat{
         /// <returns></returns>
         public static string ToDateTimeString(this IDateTimeFormat dateTime) => dateTime.GetValue().ToString("yyyyMMddHHmm");
 
+
+        /// <summary>
+        /// 格式化成Utc时间："yyyy-MM-ddTHH:mm:ssZ"
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string ToUtcDateTimeString(this IDateTimeFormat dateTime) => dateTime.GetValue().ToString("yyyy-MM-ddTHH:mm:ssZ");
+
         /// <summary>
         /// 获取格式化字符串，带时分秒，格式："yyyy-MM-dd HH:mm:ss"
         /// </summary>

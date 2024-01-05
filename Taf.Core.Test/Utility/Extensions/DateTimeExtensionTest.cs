@@ -25,6 +25,7 @@ namespace Taf.Core.Test
             Assert.Equal("201201021111", date.ToDate().As<IDateTimeFormat>().ToDateTimeString());
             Assert.Equal("2012-01-02 11:11", date.ToDate().As<IDateTimeFormat>().ToDateTimeString(true));
             Assert.Equal("2012-01-02 11:11:11", date.ToDate().As<IDateTimeFormat>().ToDateTimeString(false));
+            Assert.Equal("2012-01-02T11:11:11Z", date.ToDate().As<IDateTimeFormat>().ToUtcDateTimeString());
         }
         
         /// <summary>

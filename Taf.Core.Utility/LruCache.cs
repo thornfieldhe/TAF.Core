@@ -32,8 +32,8 @@ public class LruCache<TKey, TValue> where TKey : notnull{
 
     private readonly Dictionary<TKey, DoubleLinkedListNode<TKey, TValue>> _dictionary;
 
-    private readonly int _capacity;
-
+    private readonly int    _capacity;
+    private readonly object _locker = new();
     /// <summary>
     /// 
     /// </summary>
@@ -76,26 +76,23 @@ public class LruCache<TKey, TValue> where TKey : notnull{
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    public void Put(TKey key, TValue value)
-    {
-        if (_dictionary.TryGetValue(key, out var node))
-        {
-            RemoveNode(node);
-            AddLastNode(node);
-            node.Value = value;
-        }
-        else
-        {
-            if (_dictionary.Count == _capacity)
-            {
-                var firstNode = RemoveFirstNode();
+    public void Put(TKey key, TValue value){
+        lock(_locker){
+            if(_dictionary.TryGetValue(key, out var node)){
+                RemoveNode(node);
+                AddLastNode(node);
+                node.Value = value;
+            } else{
+                if(_dictionary.Count == _capacity){
+                    var firstNode = RemoveFirstNode();
 
-                _dictionary.Remove(firstNode.Key);
+                    _dictionary.Remove(firstNode.Key);
+                }
+
+                var newNode = new DoubleLinkedListNode<TKey, TValue>(key, value);
+                AddLastNode(newNode);
+                _dictionary.TryAdd(key, newNode);
             }
-
-            var newNode = new DoubleLinkedListNode<TKey, TValue>(key, value);
-            AddLastNode(newNode);
-            _dictionary.Add(key, newNode);
         }
     }
 
@@ -103,12 +100,12 @@ public class LruCache<TKey, TValue> where TKey : notnull{
     /// 
     /// </summary>
     /// <param name="key"></param>
-    public void Remove(TKey key)
-    {
-        if (_dictionary.TryGetValue(key, out var node))
-        {
-            _dictionary.Remove(key);
-            RemoveNode(node);
+    public void Remove(TKey key){
+        lock(_locker){
+            if(_dictionary.TryGetValue(key, out var node)){
+                _dictionary.Remove(key);
+                RemoveNode(node);
+            }
         }
     }
 

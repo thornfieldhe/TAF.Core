@@ -56,6 +56,8 @@ public class MatrixGraphTest{
     [Fact]
     public void TestRemoveItem(){
         var myGraph = GanerateMatrixGrap();
+       Assert.True(myGraph.HasChildren("A2")); 
+       Assert.False(myGraph.HasChildren("A4")); 
         myGraph.RemoveVertex("A1");//移出A1节点及A1的上游节点A6
         Assert.Equal(5, myGraph.Count);
         

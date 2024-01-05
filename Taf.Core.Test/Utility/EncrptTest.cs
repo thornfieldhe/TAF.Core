@@ -66,6 +66,13 @@ namespace Taf.Core.Test
         public void TestMd5_Obj()
         {
             Assert.Equal("14C69320B1870690F52978B7652C87BD", Encrypt.Md5(new TestInfo { Id = new Guid("F6E44232-34D6-4384-A4D3-E9E935D32C48"), Name = "a" }));
+            var list1 = new List<Guid>(){
+                new Guid("4592B6E7-34F8-4075-BD7D-86D458A8252E"), new Guid("3C7268C6-67CA-4A15-84CE-759A60FB35FB")
+            };
+            var list2 = new List<Guid>(){
+                new Guid("4592B6E7-34F8-4075-BD7D-86D458A8252E"), new Guid("3C7268C6-67CA-4A15-84CE-759A60FB35FB")
+            };
+            Assert.Equal( Encrypt.Md5(list1), Encrypt.Md5(list2));
         }
 
         /// <summary>
@@ -88,7 +95,7 @@ namespace Taf.Core.Test
         [Fact]
         public void TestRsa()
         {
-            //2048 公钥
+            //2048 私钥
             const string privateKey = @"
 MIICXgIBAAKBgQDiPLElDNs/7sL9ODdGZuLGnuUg1xuMyP+wBcvejpjKG6Lpnp/c
 z5tLBwFK4nWdGJaflnWRTQEgQWXI3asTFTu9tQfxitB220L+G2llZQnfczSewkTk
@@ -104,7 +111,7 @@ kImy2nKcYER6llzJwZ2ioZYfbAXMpL3O+8Z8oh3k0TNGJ8dJQpD1TmlEnmFqQeI4
 QTpccz4qLwnW38/5BooUNQJAF0bwvrp8rjmxxqKPtQ9Gy93v+ISLPpVhY1ewxd3R
 347epX5aCDVVNcdu/ZJEi7flngqG0uSC2ai7s9OqBA9vRA==
                 ";
-            //2048 私钥
+            //2048 公钥
             const string publicKey = @"
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDiPLElDNs/7sL9ODdGZuLGnuUg
 1xuMyP+wBcvejpjKG6Lpnp/cz5tLBwFK4nWdGJaflnWRTQEgQWXI3asTFTu9tQfx
@@ -126,8 +133,23 @@ w3c9EpEued0VHhW1uwIDAQAB
             var signStr = rsa.Sign(str);
             //公钥验证签名
             var signVerify = rsa.Verify(str, signStr);
-
             Assert.True(signVerify);
+            
+            var rsa2 = new RsaHelper(RsaType.Rsa, Encoding.UTF8, privateKey, publicKey);
+            
+            //加密字符串
+            var enStr2 = rsa2.Encrypt(str);
+
+            //解密字符串
+            var deStr2 = rsa2.Decrypt("tU7rvnkjfPoqLjRElHOuXu0fVarbmmJYTQFl9jgqjF4O+IWecuydNp1y4hZ6Ajr2QwMkEAWj/nzYq+ppI67mEkr/2gIeuZ5YI9Nk4RA0FGfhbVHRvuUMYfi3xIlz6GN51H/tfjKo9MzkWET5m/TdTCmLtAFp/ORXQdr4ZxlmwV4=");
+            Assert.Equal(str,deStr2);
+
+            //私钥签名
+            var signStr2 = rsa2.Sign(str);
+            //公钥验证签名
+            var signVerify2 = rsa2.Verify(str, signStr2);
+            Assert.True(signVerify2); 
+            
         }
         
         /// <summary>

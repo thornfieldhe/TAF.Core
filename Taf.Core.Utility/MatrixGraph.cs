@@ -125,6 +125,24 @@ public class MatrixGraph<T>{
         Index.Remove(item);
         Count--;
     }
+    
+    /// <summary>
+    /// 当前节点是否包含子节点
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool HasChildren(T item){
+        var index  = Index[item];
+        var result = false;
+        for(var i = 0; i < AdjacecntMatrix.GetLength(1); i++){
+            if(AdjacecntMatrix[index, i] == 1){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
 
     private int[,] Expanding2DimensionalArrary(int[,] source, int[,] target){
         for(var i = 0; i < source.GetLength(0); i++){

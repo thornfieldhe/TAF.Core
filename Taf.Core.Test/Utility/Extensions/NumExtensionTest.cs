@@ -99,4 +99,19 @@ public class NumExtensionTest{
         Assert.Equal("1.214E+005", 121350D.As<IDoubleFormat>().FormatScience()); 
 
     }
+    
+    /// <summary>
+    /// 测试二维数组
+    /// </summary>
+    [Fact]
+    public void TestTwoDimensionalArray(){
+        var arrary = new double[2, 3]{
+            {0,1,2},
+            {10,11,12}
+        };
+     var newArrary=   arrary.Sub(Extensions.ArrayDirection.X, 1);
+     Assert.Equal(newArrary[2],12);
+     var newArrary2=   arrary.Sub(Extensions.ArrayDirection.Y, 1);
+     Assert.Equal(newArrary2[1],11);
+    }
 }

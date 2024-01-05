@@ -26,6 +26,10 @@ namespace Taf.Core.Utility{
 
         private static readonly Dictionary<string, object> _dic = new();
 
+        public static T Clone<T>(this T tIn, params string[] skipProperties) => Clone<T, T>(tIn,skipProperties);
+            
+        
+        
         /// <summary>
         /// 将源对象所有属性赋值给目标对象,【仅仅支持系统基本类型，不支持对象】
         /// 确保目标对象的属性名称与原对象的属性名称一致，且目标对象属性数量可以少于原对象属性数量
