@@ -298,11 +298,9 @@ namespace Taf.Core.Utility
         /// <param name="this">
         /// 数据
         /// </param>
-        /// <param name="defaultValue">
-        /// </param>
         /// <returns>
         /// </returns>
-        public static Guid ToGuid(this string @this, Guid defaultValue = default) => Guid.TryParse(@this, out var x) ? x : defaultValue;
+        public static Guid ToGuid(this string @this) => Guid.TryParse(@this, out var x) ? x : Guid.Empty;
 
         /// <summary>
         /// 转换为可空Guid
@@ -310,29 +308,28 @@ namespace Taf.Core.Utility
         /// <param name="this">
         /// 数据
         /// </param>
-        /// <param name="defaultValue">
-        /// </param>
         /// <returns>
         /// </returns>
-        public static Guid? ToGuidOrNull(this string? @this, Guid defaultValue = default(Guid))
+        public static Guid? ToGuidOrNull(this string? @this)
         {
             if (@this == null)
             {
                 return null;
             }
 
-            return Guid.TryParse(@this, out var x) ? x : defaultValue;
+            return Guid.TryParse(@this, out var x) ? x : null;
         }
 
         /// <summary>
         /// 转换为Guid集合
         /// </summary>
         /// <param name="this">
-        /// 字符串集合
+        ///     类似[B239A6FA-A965-4FAB-85AB-B150247A2669,70E530B0-3BFD-473B-9E73-76AC23C7F183]的字符串集合
         /// </param>
+        /// <param name="delimiter"></param>
         /// <returns>
         /// </returns>
-        public static List<Guid> ToGuidList(this string @this)
+        public static List<Guid> ToGuidList(this string @this, char delimiter=',')
         {
             var listGuid = new List<Guid>();
             if (string.IsNullOrWhiteSpace(@this))
@@ -340,7 +337,7 @@ namespace Taf.Core.Utility
                 return listGuid;
             }
 
-            var arrayGuid = @this.Split(',');
+            var arrayGuid = @this.Split(delimiter);
             listGuid.AddRange(from each in arrayGuid where !string.IsNullOrWhiteSpace(each) select new Guid(each));
             return listGuid;
         }
