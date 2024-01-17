@@ -56,11 +56,13 @@ public class LruCache<TKey, TValue> where TKey : notnull{
     /// <returns></returns>
     public TValue? Get(TKey key, Func<TKey,TValue>? func=null)
     {
-        if (_dictionary.TryGetValue(key, out var node))
-        {
-            RemoveNode(node);
-            AddLastNode(node);
-            return node.Value;
+        lock(_locker){
+            if (_dictionary.TryGetValue(key, out var node))
+            {
+                RemoveNode(node);
+                AddLastNode(node);
+                return node.Value;
+            }
         }
 
         if (func!=null){
@@ -69,6 +71,14 @@ public class LruCache<TKey, TValue> where TKey : notnull{
             return value;
         }
         return default;
+    }
+    
+    public void Clear(){
+        lock(_locker){
+            _dictionary.Clear();
+            _head.Next = _tail;
+            _tail.Next = _head;
+        }
     }
 
     /// <summary>

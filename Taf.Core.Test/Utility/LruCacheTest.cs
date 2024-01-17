@@ -39,10 +39,14 @@ public class LruCacheTest{
          cache.Put(l, l);
       }
 
-      Assert.Equal(0, cache.Get(1));
+      Assert.Equal(0, cache.Get(1));//Grt(1)不存在,就给默认值
       Assert.Equal(2, cache.Get(2));
       Assert.Equal(4, cache.Get(4));
       Assert.Equal(5, cache.Get(5));
       Assert.Equal(6, cache.Get(6,(s)=>6));
+      
+      cache.Clear();
+      Assert.Equal(0, cache.Get(1));
+      Assert.Equal(0, cache.Get(5));
    }
 }
