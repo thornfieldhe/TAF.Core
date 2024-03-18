@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 
 // thornfield
 // EfV4.Application
@@ -73,6 +74,12 @@ public class MatrixGraph<T>{
     /// 增加顶点
     /// </summary>
     public void AddVertex(T vertex){
+        if (Count==0){
+            Count = Vertex.Count(s=>s!=null);
+        }
+        if (MaxVertexNum<Vertex.Length){
+            MaxVertexNum = Vertex.Length;
+        }
         //自动扩容,如果容量达到上限,自动扩容1倍,若果总条数超过500条,一次性增加100条
         if(Count >= MaxVertexNum){
             var old = MaxVertexNum;
@@ -205,6 +212,9 @@ public class MatrixGraph<T>{
     public void Dfs(Action<T> myAct, T item, bool firstIn = false){
         //初始化辅助数组
         if(firstIn){
+            if (Count ==0){
+                Count = Vertex.Count(s=>s !=null);
+            }
             _visited = new bool[Count];
         }
 
@@ -229,6 +239,9 @@ public class MatrixGraph<T>{
         if(Index.TryGetValue(item, out var idx)){
             myQueue.Enqueue(idx);
             //初始化辅助数组
+            if (Count ==0){
+                Count = Vertex.Count(s=>s !=null);
+            }
             _visited      = new bool[Count];
             _visited[idx] = true;
 

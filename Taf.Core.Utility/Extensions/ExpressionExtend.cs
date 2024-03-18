@@ -10,6 +10,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 // 何翔华
 // Taf.Core.Test
@@ -18,7 +19,6 @@ using System.Linq.Expressions;
 namespace Taf.Core.Utility;
 
 using System;
-
 
 public static class ExpressionFuncExtender{
     private static Expression<T> Compose<T>(
@@ -42,9 +42,8 @@ public static class ExpressionFuncExtender{
     /// <param name="second">The second part of the expression.</param>
     /// <returns>The combined expression.</returns>
     public static Expression<Func<T, bool>> And<T>(
-        this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second){
-        return first.Compose(second, Expression.AndAlso);
-    }
+        this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second) =>
+        first.Compose(second, Expression.AndAlso);
 
     /// <summary>
     /// Combines two given expressions by using the OR semantics.
@@ -54,9 +53,37 @@ public static class ExpressionFuncExtender{
     /// <param name="second">The second part of the expression.</param>
     /// <returns>The combined expression.</returns>
     public static Expression<Func<T, bool>> Or<T>(
-        this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second){
-        return first.Compose(second, Expression.OrElse);
+        this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second) =>
+        first.Compose(second, Expression.OrElse);
+
+
+    public static Expression<Func<T, bool>> True<T>(){
+        return param => true;
     }
+
+    public static Expression<Func<T, bool>> False<T>(){
+        return param => false;
+    }
+
+    public static Expression<Func<T, bool>> AndAlso<T>(
+        this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second) =>
+        first.Compose(second, Expression.AndAlso);
+
+    public static Expression<Func<T, bool>> OrElse<T>(
+        this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second) =>
+        first.Compose(second, Expression.OrElse);
+
+    public static Expression Property(this Expression expression, string propertyName) =>
+        Expression.Property(expression, propertyName);
+
+    public static Expression AndAlso(this Expression left, Expression right) => Expression.AndAlso(left, right);
+
+    public static Expression OrElse(this Expression left, Expression right) => Expression.OrElse(left, right);
+
+    public static Expression Call(this Expression instance, string methodName, params Expression[] arguments) =>
+        Expression.Call(instance, instance.Type.GetMethod(methodName), arguments);
+
+    public static Expression GreaterThan(this Expression left, Expression right) => Expression.GreaterThan(left, right);
 }
 
 internal class ParameterRebinder : ExpressionVisitor{
@@ -80,4 +107,3 @@ internal class ParameterRebinder : ExpressionVisitor{
         return base.VisitParameter(p);
     }
 }
-
